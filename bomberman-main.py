@@ -63,6 +63,7 @@ def displayMap():
         if(TheMap[tile[1],tile[0]]==0):
             crate(32*tile[0],32*tile[1])
 
+
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
 
@@ -82,15 +83,27 @@ while(runningMain):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                print('KEYDOWN,K_LEFT')
+            if event.key == pygame.K_RIGHT:
+                print('KEYDOWN,K_RIGHT')
+        else:
+            # print('KEYDOWN,K_LEFT')
+            # print('KEYDOWN,K_RIGHT')
+            pass
+
     if(keyboard.is_pressed('esc')):
         runningMain = False
         print("issuing the esc key")
 
-    gameDisplay.fill(white)
+    gameDisplay.fill(black)
     # car(x, y)
     # crate(0,0)
 
     displayMap()
+
+
 
     pygame.display.update()
     print('time:',str(st_time-time.time()))
