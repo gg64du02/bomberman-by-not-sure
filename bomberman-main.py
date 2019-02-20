@@ -56,6 +56,7 @@ crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 # time.sleep(1)
 # crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
 # crateImg = pygame.image.fromstring(bytes('a'),1,[])
+playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 
 def displayMap():
     for tile in tileGen():
@@ -70,10 +71,15 @@ def car(x, y):
 def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
 
-x = (display_width * 0.45)
-y = (display_height * 0.8)
+def playerRed(x,y):
+    gameDisplay.blit(playerRedImg, (x, y))
+
+# x = (display_width * 0.45)
+# y = (display_height * 0.8)
 
 runningMain = True
+
+redPlayerPos = [0,0]
 
 TheMap = currentMap()
 print("TheMap\n",TheMap)
@@ -90,12 +96,16 @@ while(runningMain):
             #     print('KEYDOWN,K_RIGHT')
             if event.key == pygame.K_e:
                 print('KEYDOWN,K_e')
+                redPlayerPos[1] -= 1
             if event.key == pygame.K_s:
                 print('KEYDOWN,K_s')
+                redPlayerPos[0] -= 1
             if event.key == pygame.K_f:
                 print('KEYDOWN,K_f')
+                redPlayerPos[0] += 1
             if event.key == pygame.K_d:
                 print('KEYDOWN,K_d')
+                redPlayerPos[1] += 1
         else:
             pass
 
@@ -108,11 +118,12 @@ while(runningMain):
     # crate(0,0)
 
     displayMap()
+    playerRed(redPlayerPos[0],redPlayerPos[1])
 
 
 
     pygame.display.update()
-    print('time:',str(st_time-time.time()))
+    print('time:',str(time.time()-st_time))
     clock.tick(60)
     st_time = time.time()
     # print('lol')
