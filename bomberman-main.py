@@ -17,6 +17,7 @@ import pygame
 import keyboard
 import numpy as np
 
+import time
 
 def currentMap():
     map = np.ones((15,20))
@@ -50,7 +51,17 @@ clock = pygame.time.Clock()
 crashed = False
 # carImg = pygame.image.load('racecar.png')
 carImg = pygame.image.load('./sdkskin/Sprites.bmp')
-crateImg = pygame.image.load('./sdkskin/Sprites.bmp')
+# crateImg = pygame.image.load('./sdkskin/Sprites.bmp')
+crateImg = pygame.image.load('./sdkskin/Crate.bmp')
+# time.sleep(1)
+# crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
+# crateImg = pygame.image.fromstring(bytes('a'),1,[])
+
+def displayMap():
+    for tile in tileGen():
+        # print(type(TheMap))
+        if(TheMap[tile[1],tile[0]]==0):
+            crate(32*tile[0],32*tile[1])
 
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
@@ -65,7 +76,7 @@ runningMain = True
 
 TheMap = currentMap()
 print("TheMap\n",TheMap)
-
+st_time = time.time()
 
 while(runningMain):
     for event in pygame.event.get():
@@ -76,11 +87,16 @@ while(runningMain):
         print("issuing the esc key")
 
     gameDisplay.fill(white)
-    car(x, y)
+    # car(x, y)
+    # crate(0,0)
+
+    displayMap()
 
     pygame.display.update()
+    print('time:',str(st_time-time.time()))
     clock.tick(60)
-    print('lol')
+    st_time = time.time()
+    # print('lol')
 
 pygame.quit()
 quit()
