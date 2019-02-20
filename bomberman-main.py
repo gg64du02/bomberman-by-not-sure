@@ -84,13 +84,19 @@ while(runningMain):
         if event.type == pygame.QUIT:
             crashed = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                print('KEYDOWN,K_LEFT')
-            if event.key == pygame.K_RIGHT:
-                print('KEYDOWN,K_RIGHT')
+            # if event.key == pygame.K_LEFT:
+            #     print('KEYDOWN,K_LEFT')
+            # if event.key == pygame.K_RIGHT:
+            #     print('KEYDOWN,K_RIGHT')
+            if event.key == pygame.K_e:
+                print('KEYDOWN,K_e')
+            if event.key == pygame.K_s:
+                print('KEYDOWN,K_s')
+            if event.key == pygame.K_f:
+                print('KEYDOWN,K_f')
+            if event.key == pygame.K_d:
+                print('KEYDOWN,K_d')
         else:
-            # print('KEYDOWN,K_LEFT')
-            # print('KEYDOWN,K_RIGHT')
             pass
 
     if(keyboard.is_pressed('esc')):
