@@ -15,6 +15,7 @@
 import pygame
 
 import keyboard
+import numpy as np
 
 pygame.init()
 
@@ -43,11 +44,31 @@ def car(x, y):
 def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
 
+def currentMap():
+    map = np.ones((15,20))
+    for tile in tileGen():
+        if(tile[1]%2==1):
+            if(tile[0]<10):
+                if(tile[0]%2==1):
+                    map[tile[1],tile[0]]=0
+            else:
+                if((tile[0]+1)%2==1):
+                    map[tile[1],tile[0]]=0
+    return map
+
+def tileGen():
+    for line in range(15):
+        for row in range(20):
+            yield(row,line)
 
 x = (display_width * 0.45)
 y = (display_height * 0.8)
 
 runningMain = True
+
+TheMap = currentMap()
+print("TheMap\n",TheMap)
+
 
 while(runningMain):
     for event in pygame.event.get():
