@@ -42,7 +42,7 @@ display_width = 640
 display_height = 480
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('A bit Racey')
+pygame.display.set_caption('Bomberman-by-not-sure')
 
 black = (0, 0, 0)
 white = (255, 255, 255)
