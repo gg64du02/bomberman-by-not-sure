@@ -85,6 +85,9 @@ TheMap = currentMap()
 print("TheMap\n",TheMap)
 st_time = time.time()
 
+# [[player position_y,player position_x],[bombs available,bombs blast radius]]
+Players = [ [[0,0],[1,1]] for i in range(4)]
+
 while(runningMain):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -96,16 +99,16 @@ while(runningMain):
             #     print('KEYDOWN,K_RIGHT')
             if event.key == pygame.K_e:
                 print('KEYDOWN,K_e')
-                redPlayerPos[1] -= 1
+                redPlayerPos[1] -= 1*4
             if event.key == pygame.K_s:
                 print('KEYDOWN,K_s')
-                redPlayerPos[0] -= 1
+                redPlayerPos[0] -= 1*4
             if event.key == pygame.K_f:
                 print('KEYDOWN,K_f')
-                redPlayerPos[0] += 1
+                redPlayerPos[0] += 1*4
             if event.key == pygame.K_d:
                 print('KEYDOWN,K_d')
-                redPlayerPos[1] += 1
+                redPlayerPos[1] += 1*4
         else:
             pass
 
