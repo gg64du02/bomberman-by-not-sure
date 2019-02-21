@@ -74,6 +74,23 @@ def crate(x,y):
 def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
 
+def ColisionCheckAndMovement():
+    # in : Players, Controls
+    # out: Players
+    i=0
+    # for player in Players:
+    #     # player[]
+    #     print('')
+    #     # if(i==1):
+    #     #     player[1] = []
+    #     #     control = Controls[1]
+    for player,control in zip(Players,Controls):
+
+        # player[0] = [Controls]
+        print('')
+
+    pass
+
 def keyboardRead():
     # sfde ctrl shift
     Controls = [ [0,0,0,0,0,0] for i in range(4)]
@@ -136,7 +153,7 @@ Controls = [ [0,0,0,0,0,0] for i in range(4)]
 while(runningMain):
     Controls = keyboardRead()
 
-
+    ColisionCheckAndMovement()
 
     if(keyboard.is_pressed('esc')):
         runningMain = False
