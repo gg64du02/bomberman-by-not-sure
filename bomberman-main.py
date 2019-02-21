@@ -79,16 +79,26 @@ def ColisionCheckAndMovement():
     # in : Players, Controls
     # out: Players
     i=0
-    for player,control in zip(Players,itertools.repeat(Controls)):
+    # print(Controls.lengh)
+    # Controls_from_kbd
+    # print("Controls[0]",str(Controls[0]))
+    # for player,control in zip(Players,itertools.repeat(Controls_from_kbd)):
+    for player,control in zip(Players,Controls_from_kbd):
+    # for player,control in zip(Players,Controls):
+        print("player,control",player,control)
+        # for moveDir,key in zip(player,itertools.repeat(control)):
+        #     moveDir += 4 * key
+
 
         # player[0] = [Controls]
-        print('')
+        playerRed(0,0)
+        pass
 
     pass
 
 def keyboardRead():
     # sfde ctrl shift
-    global Controls
+    global Controls_from_kbd
     # Controls = [ [0,0,0,0,0,0] for i in range(4)]
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -146,7 +156,8 @@ Players = [ [[0,0],[1,1]] for i in range(4)]
 # global Controls
 
 # sfde ctrl shift
-Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+# Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 # testControls = np.zeros_like(Controls)
 # print("test",test)
 # test1 = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
@@ -169,7 +180,7 @@ while(runningMain):
     # crate(0,0)
 
     displayMap()
-    playerRed(redPlayerPos[0],redPlayerPos[1])
+    # playerRed(redPlayerPos[0],redPlayerPos[1])
 
 
 
