@@ -74,6 +74,48 @@ def crate(x,y):
 def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
 
+def keyboardRead():
+    # sfde ctrl shift
+    Controls = [ [0,0,0,0,0,0] for i in range(4)]
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            crashed = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_e:
+                print('KEYDOWN,K_e')
+                redPlayerPos[1] -= 1 * 4
+                Controls[1][3] = 1
+            if event.key == pygame.K_s:
+                print('KEYDOWN,K_s')
+                redPlayerPos[0] -= 1 * 4
+                Controls[1][0] = 1
+            if event.key == pygame.K_f:
+                print('KEYDOWN,K_f')
+                redPlayerPos[0] += 1 * 4
+                Controls[1][1] = 1
+            if event.key == pygame.K_d:
+                print('KEYDOWN,K_d')
+                redPlayerPos[1] += 1 * 4
+                Controls[1][2] = 1
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_e:
+                # print('KEYUP,K_e')
+                # redPlayerPos[1] -= 1 * 4
+                Controls[1][3] = 0
+            if event.key == pygame.K_s:
+                # print('KEYUP,K_s')
+                # redPlayerPos[0] -= 1 * 4
+                Controls[1][0] = 0
+            if event.key == pygame.K_f:
+                # print('KEYUP,K_f')
+                # redPlayerPos[0] += 1 * 4
+                Controls[1][1] = 0
+            if event.key == pygame.K_d:
+                # print('KEYUP,K_d')
+                # redPlayerPos[1] += 1 * 4
+                Controls[1][2] = 0
+
+
 # x = (display_width * 0.45)
 # y = (display_height * 0.8)
 
@@ -88,29 +130,13 @@ st_time = time.time()
 # [[player position_y,player position_x],[bombs available,bombs blast radius]]
 Players = [ [[0,0],[1,1]] for i in range(4)]
 
+# sfde ctrl shift
+Controls = [ [0,0,0,0,0,0] for i in range(4)]
+
 while(runningMain):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            crashed = True
-        if event.type == pygame.KEYDOWN:
-            # if event.key == pygame.K_LEFT:
-            #     print('KEYDOWN,K_LEFT')
-            # if event.key == pygame.K_RIGHT:
-            #     print('KEYDOWN,K_RIGHT')
-            if event.key == pygame.K_e:
-                print('KEYDOWN,K_e')
-                redPlayerPos[1] -= 1*4
-            if event.key == pygame.K_s:
-                print('KEYDOWN,K_s')
-                redPlayerPos[0] -= 1*4
-            if event.key == pygame.K_f:
-                print('KEYDOWN,K_f')
-                redPlayerPos[0] += 1*4
-            if event.key == pygame.K_d:
-                print('KEYDOWN,K_d')
-                redPlayerPos[1] += 1*4
-        else:
-            pass
+    Controls = keyboardRead()
+
+
 
     if(keyboard.is_pressed('esc')):
         runningMain = False
