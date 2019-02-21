@@ -18,6 +18,7 @@ import keyboard
 import numpy as np
 
 import time
+import itertools
 
 def currentMap():
     map = np.ones((15,20))
@@ -78,13 +79,7 @@ def ColisionCheckAndMovement():
     # in : Players, Controls
     # out: Players
     i=0
-    # for player in Players:
-    #     # player[]
-    #     print('')
-    #     # if(i==1):
-    #     #     player[1] = []
-    #     #     control = Controls[1]
-    for player,control in zip(Players,Controls):
+    for player,control in zip(Players,itertools.repeat(Controls)):
 
         # player[0] = [Controls]
         print('')
@@ -93,7 +88,8 @@ def ColisionCheckAndMovement():
 
 def keyboardRead():
     # sfde ctrl shift
-    Controls = [ [0,0,0,0,0,0] for i in range(4)]
+    global Controls
+    # Controls = [ [0,0,0,0,0,0] for i in range(4)]
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
@@ -101,36 +97,36 @@ def keyboardRead():
             if event.key == pygame.K_e:
                 print('KEYDOWN,K_e')
                 redPlayerPos[1] -= 1 * 4
-                Controls[1][3] = 1
+                Controls_from_kbd[0][1][3] = 1
             if event.key == pygame.K_s:
                 print('KEYDOWN,K_s')
                 redPlayerPos[0] -= 1 * 4
-                Controls[1][0] = 1
+                Controls_from_kbd[0][1][0] = 1
             if event.key == pygame.K_f:
                 print('KEYDOWN,K_f')
                 redPlayerPos[0] += 1 * 4
-                Controls[1][1] = 1
+                Controls_from_kbd[0][1][1] = 1
             if event.key == pygame.K_d:
                 print('KEYDOWN,K_d')
                 redPlayerPos[1] += 1 * 4
-                Controls[1][2] = 1
+                Controls_from_kbd[0][1][2] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_e:
-                # print('KEYUP,K_e')
+                print('KEYUP,K_e')
                 # redPlayerPos[1] -= 1 * 4
-                Controls[1][3] = 0
+                Controls_from_kbd[0][1][3] = 0
             if event.key == pygame.K_s:
-                # print('KEYUP,K_s')
+                print('KEYUP,K_s')
                 # redPlayerPos[0] -= 1 * 4
-                Controls[1][0] = 0
+                Controls_from_kbd[0][1][0] = 0
             if event.key == pygame.K_f:
-                # print('KEYUP,K_f')
+                print('KEYUP,K_f')
                 # redPlayerPos[0] += 1 * 4
-                Controls[1][1] = 0
+                Controls_from_kbd[0][1][1] = 0
             if event.key == pygame.K_d:
-                # print('KEYUP,K_d')
+                print('KEYUP,K_d')
                 # redPlayerPos[1] += 1 * 4
-                Controls[1][2] = 0
+                Controls_from_kbd[0][1][2] = 0
 
 
 # x = (display_width * 0.45)
@@ -147,13 +143,22 @@ st_time = time.time()
 # [[player position_y,player position_x],[bombs available,bombs blast radius]]
 Players = [ [[0,0],[1,1]] for i in range(4)]
 
+# global Controls
+
 # sfde ctrl shift
-Controls = [ [0,0,0,0,0,0] for i in range(4)]
+Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+# testControls = np.zeros_like(Controls)
+# print("test",test)
+# test1 = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
+# Controls = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
+# print("test1",test1)
 
 while(runningMain):
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
+
+    # Controls_from_kbd[0][0][0] = 1
 
     if(keyboard.is_pressed('esc')):
         runningMain = False
