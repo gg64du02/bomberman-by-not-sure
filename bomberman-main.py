@@ -79,18 +79,12 @@ def ColisionCheckAndMovement():
     # in : Players, Controls
     # out: Players
     i=0
-    # print(Controls.lengh)
-    # Controls_from_kbd
-    # print("Controls[0]",str(Controls[0]))
-    # for player,control in zip(Players,itertools.repeat(Controls_from_kbd)):
     for player,control in zip(Players,Controls_from_kbd):
     # for player,control in zip(Players,Controls):
         print("player,control",player,control)
         # for moveDir,key in zip(player,itertools.repeat(control)):
         #     moveDir += 4 * key
 
-
-        # player[0] = [Controls]
         playerRed(0,0)
         pass
 
@@ -139,9 +133,6 @@ def keyboardRead():
                 Controls_from_kbd[0][1][2] = 0
 
 
-# x = (display_width * 0.45)
-# y = (display_height * 0.8)
-
 runningMain = True
 
 redPlayerPos = [0,0]
@@ -158,18 +149,11 @@ Players = [ [[0,0],[1,1]] for i in range(4)]
 # sfde ctrl shift
 Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
-# testControls = np.zeros_like(Controls)
-# print("test",test)
-# test1 = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
-# Controls = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
-# print("test1",test1)
 
 while(runningMain):
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
-
-    # Controls_from_kbd[0][0][0] = 1
 
     if(keyboard.is_pressed('esc')):
         runningMain = False
