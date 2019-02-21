@@ -156,8 +156,8 @@ Players = [ [[0,0],[1,1]] for i in range(4)]
 # global Controls
 
 # sfde ctrl shift
-# Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
-Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
+Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+# Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 # testControls = np.zeros_like(Controls)
 # print("test",test)
 # test1 = [[np.zeros(4),np.zeros(2)] for aaa in range (4)]
