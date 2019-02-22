@@ -64,23 +64,24 @@ def playerRed(x,y):
 def ColisionCheckAndMovement():
     # in : Players, Controls
     # out: Players
+    global Players
     # i=0
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        # print("player,control",player,control)
+        print("player,control",player,control)
         # print("i:",i)
         # sfde ctrl shift
         # s
-        if(control[0][0]):
-            player[0][1] += 4
+        if(control[0][0]==1):
+            player[1][1] += 4
         # f
-        if(control[0][1]):
-            player[0][1] -= 4
+        if(control[0][1]==1):
+            player[1][1] -= 4
         # d
-        if(control[0][2]):
-            player[0][0] += 4
+        if(control[0][2]==1):
+            player[1][0] += 4
         # e
-        if(control[0][3]):
-            player[0][0] -= 4
+        if(control[0][3]==1):
+            player[1][0] -= 4
         # for key in control[0]:
         #     print(key.length)
         #
@@ -88,13 +89,15 @@ def ColisionCheckAndMovement():
         #     # sfde ctrl shift
         #     # if(np.equal(control[0],[1,0,0,0])):
 
+
         # pass
         i+= 1
+    # playerRed(player[1][1],player[1][0])
 
-    i=0
-    for player in Players:
-        if(i==1):
-            playerRed(player[0][0],player[0][1])
+    # i=0
+    # for player in Players:
+    #     if(i==1):
+    #         playerRed(player[0][0],player[0][1])
 
     pass
 
@@ -172,7 +175,9 @@ while(runningMain):
     # crate(0,0)
 
     displayMap()
+    print("redPlayerPos",redPlayerPos)
     # playerRed(redPlayerPos[0],redPlayerPos[1])
+    playerRed(Players[1][0],Players[1][1])
 
 
 
