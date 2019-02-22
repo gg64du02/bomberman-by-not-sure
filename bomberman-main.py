@@ -113,7 +113,8 @@ def ColisionCheckAndMovement():
             # player[0][0] -= step
             if(player[0][0]<0):
                 player[0][0] =0
-            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+            # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+            if((TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0)or(TheMap[int((player[0][1]+24)/32),int(player[0][0]/32)]==0)):
                 player[0][0]+= step
         # f
         if(control[0][1]==1):
