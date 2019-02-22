@@ -72,16 +72,16 @@ def ColisionCheckAndMovement():
         # sfde ctrl shift
         # s
         if(control[0][0]==1):
-            player[0][1] += 4
+            player[0][0] -= 4
         # f
         if(control[0][1]==1):
-            player[0][1] -= 4
+            player[0][0] += 4
         # d
         if(control[0][2]==1):
-            player[0][0] += 4
+            player[0][1] += 4
         # e
         if(control[0][3]==1):
-            player[0][0] -= 4
+            player[0][1] -= 4
 
 
 def keyboardRead():
