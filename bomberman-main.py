@@ -1,17 +1,3 @@
-# import pygame
-# import numpy as np
-# import keyboard
-#
-# def main():
-#     print("starting")
-#     running = True
-#     while(running):
-#         if(keyboard.is_pressed('esc')):
-#             running = False
-#             print("stopping issued")
-#
-# main()
-
 import pygame
 
 import keyboard
