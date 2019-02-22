@@ -64,26 +64,32 @@ def playerRed(x,y):
 def ColisionCheckAndMovement():
     # in : Players, Controls
     # out: Players
-    i=0
-    for player,control in zip(Players,Controls_from_kbd):
-    # for player,control in zip(Players,Controls):
-        print("player,control",player,control)
-        for key in control[0]:
-
-            pass
-        # for moveDir,key in zip(player,control):
-        #     # moveDir += 4 * 1
-        #     print(control[0])
-        #     print("moveDir",moveDir)
+    # i=0
+    for player,control,i in zip(Players,Controls_from_kbd,range(4)):
+        # print("player,control",player,control)
+        # print("i:",i)
+        # sfde ctrl shift
+        # s
+        if(control[0][0]):
+            player[0][1] += 4
+        # f
+        if(control[0][1]):
+            player[0][1] -= 4
+        # d
+        if(control[0][2]):
+            player[0][0] += 4
+        # e
+        if(control[0][3]):
+            player[0][0] -= 4
+        # for key in control[0]:
+        #     print(key.length)
+        #
+        #     pass
         #     # sfde ctrl shift
         #     # if(np.equal(control[0],[1,0,0,0])):
-        #     #     moveDir[0]
-        #     # if(np.equal(control[0],[0,1,0,0])):
-        #     # if(np.equal(control[0],[0,0,1,0])):
-        #     # if(np.equal(control[0],[0,0,0,1])):
-        #     #     pass
 
         # pass
+        i+= 1
 
     i=0
     for player in Players:
@@ -103,36 +109,36 @@ def keyboardRead():
             if event.key == pygame.K_e:
                 print('KEYDOWN,K_e')
                 redPlayerPos[1] -= 1 * 4
-                Controls_from_kbd[0][1][3] = 1
+                Controls_from_kbd[1][0][3] = 1
             if event.key == pygame.K_s:
                 print('KEYDOWN,K_s')
                 redPlayerPos[0] -= 1 * 4
-                Controls_from_kbd[0][1][0] = 1
+                Controls_from_kbd[1][0][0] = 1
             if event.key == pygame.K_f:
                 print('KEYDOWN,K_f')
                 redPlayerPos[0] += 1 * 4
-                Controls_from_kbd[0][1][1] = 1
+                Controls_from_kbd[1][0][1] = 1
             if event.key == pygame.K_d:
                 print('KEYDOWN,K_d')
                 redPlayerPos[1] += 1 * 4
-                Controls_from_kbd[0][1][2] = 1
+                Controls_from_kbd[1][0][2] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_e:
                 print('KEYUP,K_e')
                 # redPlayerPos[1] -= 1 * 4
-                Controls_from_kbd[0][1][3] = 0
+                Controls_from_kbd[1][0][3] = 0
             if event.key == pygame.K_s:
                 print('KEYUP,K_s')
                 # redPlayerPos[0] -= 1 * 4
-                Controls_from_kbd[0][1][0] = 0
+                Controls_from_kbd[1][0][0] = 0
             if event.key == pygame.K_f:
                 print('KEYUP,K_f')
                 # redPlayerPos[0] += 1 * 4
-                Controls_from_kbd[0][1][1] = 0
+                Controls_from_kbd[1][0][1] = 0
             if event.key == pygame.K_d:
                 print('KEYUP,K_d')
                 # redPlayerPos[1] += 1 * 4
-                Controls_from_kbd[0][1][2] = 0
+                Controls_from_kbd[1][0][2] = 0
 
 
 runningMain = True
