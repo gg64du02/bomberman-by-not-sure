@@ -82,11 +82,27 @@ def ColisionCheckAndMovement():
     for player,control in zip(Players,Controls_from_kbd):
     # for player,control in zip(Players,Controls):
         print("player,control",player,control)
-        # for moveDir,key in zip(player,itertools.repeat(control)):
-        #     moveDir += 4 * key
+        for key in control[0]:
 
-        playerRed(0,0)
-        pass
+            pass
+        # for moveDir,key in zip(player,control):
+        #     # moveDir += 4 * 1
+        #     print(control[0])
+        #     print("moveDir",moveDir)
+        #     # sfde ctrl shift
+        #     # if(np.equal(control[0],[1,0,0,0])):
+        #     #     moveDir[0]
+        #     # if(np.equal(control[0],[0,1,0,0])):
+        #     # if(np.equal(control[0],[0,0,1,0])):
+        #     # if(np.equal(control[0],[0,0,0,1])):
+        #     #     pass
+
+        # pass
+
+    i=0
+    for player in Players:
+        if(i==1):
+            playerRed(player[0][0],player[0][1])
 
     pass
 
