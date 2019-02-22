@@ -73,15 +73,23 @@ def ColisionCheckAndMovement():
         # s
         if(control[0][0]==1):
             player[0][0] -= 4
+            if(player[0][0]<0):
+                player[0][0] =0
         # f
         if(control[0][1]==1):
             player[0][0] += 4
+            if(player[0][0]+32>640):
+                player[0][0] =640-32
         # d
         if(control[0][2]==1):
             player[0][1] += 4
+            if(player[0][1]+32>480):
+                player[0][1] =480-32
         # e
         if(control[0][3]==1):
             player[0][1] -= 4
+            if(player[0][1]<0):
+                player[0][1] =0
 
 
 def keyboardRead():
