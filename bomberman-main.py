@@ -76,6 +76,13 @@ def ColisionCheckAndMovement():
             player[0][0] -= step
             if(player[0][0]<0):
                 player[0][0] =0
+            # print("i",i)
+            # print("player[0]",player[0])
+            # print(player[0][1],player[0][0])
+            # print(player[0][1]/32,player[0][0]/32)
+            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+                player[0][0]+= step
+            # if(player[0][0])
         # f
         if(control[0][1]==1):
             player[0][0] += step
@@ -167,8 +174,7 @@ while(runningMain):
     # crate(0,0)
 
     displayMap()
-    print("redPlayerPos",redPlayerPos)
-    # playerRed(redPlayerPos[0],redPlayerPos[1])
+
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
 
