@@ -71,26 +71,65 @@ def ColisionCheckAndMovement():
         # print("i:",i)
         # sfde ctrl shift
         step = 8
+        # # s
+        # if(control[0][0]==1):
+        #     player[0][0] -= step
+        #     if(player[0][0]<0):
+        #         player[0][0] =0
+        #     # print("i",i)
+        #     # print("player[0]",player[0])
+        #     # print(player[0][1],player[0][0])
+        #     # print(player[0][1]/32,player[0][0]/32)
+        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+        #         player[0][0]+= step
+        #     # if(player[0][0])
+        # # f
+        # if(control[0][1]==1):
+        #     player[0][0] += step
+        #     if(player[0][0]+32>640):
+        #         player[0][0] =640-32
+        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+        #         player[0][0]-= step
+        # # d
+        # if(control[0][2]==1):
+        #     player[0][1] += step
+        #     if(player[0][1]+32>480):
+        #         player[0][1] =480-32
+        #     # if(TheMap[int(player[0][1]/32),int(player[0][1]/32)]==0):
+        #     #     player[0][1]-= step
+        # # e
+        # if(control[0][3]==1):
+        #     player[0][1] -= step
+        #     if(player[0][1]<0):
+        #         player[0][1] =0
+        #     # if(TheMap[int(player[0][1]/32),int(player[0][1]/32)]==0):
+        #     #     player[0][1]+= step
+
+        # ==============================================================
         # s
         if(control[0][0]==1):
-            player[0][0] -= step
+            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
+                player[0][0]-= step
+            # player[0][0] -= step
             if(player[0][0]<0):
                 player[0][0] =0
+            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+                player[0][0]+= step
             # print("i",i)
             # print("player[0]",player[0])
             # print(player[0][1],player[0][0])
             # print(player[0][1]/32,player[0][0]/32)
-            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
-                player[0][0]+= step
+            # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+            #     player[0][0]+= step
             # if(player[0][0])
         # f
         if(control[0][1]==1):
-            # if(TheMap[int(player[0][1]/32),int(player[0][0]/32))
-            player[0][0] += step
+            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
+                player[0][0] += step
             if(player[0][0]+32>640):
                 player[0][0] =640-32
-            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
-                player[0][0]-= step
+            # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+            #     player[0][0]-= step
         # d
         if(control[0][2]==1):
             player[0][1] += step
@@ -105,6 +144,7 @@ def ColisionCheckAndMovement():
                 player[0][1] =0
             # if(TheMap[int(player[0][1]/32),int(player[0][1]/32)]==0):
             #     player[0][1]+= step
+
 
 
 def keyboardRead():
