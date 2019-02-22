@@ -82,24 +82,7 @@ def ColisionCheckAndMovement():
         # e
         if(control[0][3]==1):
             player[0][0] -= 4
-        # for key in control[0]:
-        #     print(key.length)
-        #
-        #     pass
-        #     # sfde ctrl shift
-        #     # if(np.equal(control[0],[1,0,0,0])):
 
-
-        # pass
-        i+= 1
-    # playerRed(player[1][1],player[1][0])
-
-    # i=0
-    # for player in Players:
-    #     if(i==1):
-    #         playerRed(player[0][0],player[0][1])
-
-    pass
 
 def keyboardRead():
     # sfde ctrl shift
