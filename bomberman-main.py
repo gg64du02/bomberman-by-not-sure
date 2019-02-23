@@ -84,6 +84,10 @@ def ColisionCheckAndMovement():
                 xTmp =0
             # if(TheMap[int(yTmp/32),int(xTmp/32)]==0):
             if((TheMap[int(yTmp/32),int(xTmp/32)]==0)or(TheMap[int((yTmp+24)/32),int(xTmp/32)]==0)):
+                if((TheMap[int(yTmp/32),int(xTmp/32)]==1)):
+                    if(yTmp%32<=16):
+                        if(yTmp%32!=0):
+                            yTmp-= step
                 xTmp+= step
         # f
         if(control[0][1]==1):
@@ -200,7 +204,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(20)
     st_time = time.time()
     # print('lol')
 
