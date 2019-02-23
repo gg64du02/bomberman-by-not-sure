@@ -71,46 +71,6 @@ def ColisionCheckAndMovement():
         # print("i:",i)
         # sfde ctrl shift
         step = 8
-        # ==============================================================
-        # # s
-        # if(control[0][0]==1):
-        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
-        #         player[0][0]-= step
-        #     # player[0][0] -= step
-        #     if(player[0][0]<0):
-        #         player[0][0] =0
-        #     # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
-        #     if((TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0)or(TheMap[int((player[0][1]+24)/32),int(player[0][0]/32)]==0)):
-        #         player[0][0]+= step
-        # # f
-        # if(control[0][1]==1):
-        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
-        #         player[0][0] += step
-        #     if(player[0][0]+32>640):
-        #         player[0][0] =640-32
-        #     # if (TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +0)/ 32)] == 0):
-        #     if((TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +24)/ 32)] == 0)or(TheMap[int((player[0][1] +24)/ 32), int((player[0][0] +24)/ 32)] == 0)):
-        #         player[0][0] -= step
-        # # d
-        # if(control[0][2]==1):
-        #     # if(TheMap[int((player[0][1] +24)/32),int((player[0][0] +24)/32)]==1):
-        #     if(TheMap[int((player[0][1])/32),int((player[0][0])/32)]==1):
-        #         player[0][1] += step
-        #     if(player[0][1]+32>480):
-        #         player[0][1] =480-32
-        #     # if(TheMap[int((player[0][1] +24)/32),int((player[0][1] +24)/32)]==0):
-        #     if((TheMap[int((player[0][1]+24)/32),int((player[0][0]+0)/32)]==0)or(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0)):
-        #         player[0][1]-= step
-        #     # if(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0):
-        #     #     player[0][1]-= step
-        # # e
-        # if(control[0][3]==1):
-        #     if (TheMap[int(player[0][1] / 32), int(player[0][0] / 32)] == 1):
-        #         player[0][1] -= step
-        #     if(player[0][1]<0):
-        #         player[0][1] =0
-        #     if((TheMap[int((player[0][1]+0)/32),int((player[0][0])/32)]==0)or(TheMap[int((player[0][1]+0)/32),int((player[0][0]+24)/32)]==0)):
-        #         player[0][1]+= step
 
         # ==============================================================
         yTmp = player[0][1]
