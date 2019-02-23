@@ -88,6 +88,10 @@ def ColisionCheckAndMovement():
                     if(yTmp%32<=16):
                         if(yTmp%32!=0):
                             yTmp-= step
+                if((TheMap[int((yTmp+24)/32),int(xTmp/32)]==1)):
+                    if(yTmp%32>=16):
+                        if(yTmp%32!=0):
+                            yTmp+= step
                 xTmp+= step
         # f
         if(control[0][1]==1):
