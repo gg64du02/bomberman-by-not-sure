@@ -72,46 +72,90 @@ def ColisionCheckAndMovement():
         # sfde ctrl shift
         step = 8
         # ==============================================================
+        # # s
+        # if(control[0][0]==1):
+        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
+        #         player[0][0]-= step
+        #     # player[0][0] -= step
+        #     if(player[0][0]<0):
+        #         player[0][0] =0
+        #     # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
+        #     if((TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0)or(TheMap[int((player[0][1]+24)/32),int(player[0][0]/32)]==0)):
+        #         player[0][0]+= step
+        # # f
+        # if(control[0][1]==1):
+        #     if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
+        #         player[0][0] += step
+        #     if(player[0][0]+32>640):
+        #         player[0][0] =640-32
+        #     # if (TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +0)/ 32)] == 0):
+        #     if((TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +24)/ 32)] == 0)or(TheMap[int((player[0][1] +24)/ 32), int((player[0][0] +24)/ 32)] == 0)):
+        #         player[0][0] -= step
+        # # d
+        # if(control[0][2]==1):
+        #     # if(TheMap[int((player[0][1] +24)/32),int((player[0][0] +24)/32)]==1):
+        #     if(TheMap[int((player[0][1])/32),int((player[0][0])/32)]==1):
+        #         player[0][1] += step
+        #     if(player[0][1]+32>480):
+        #         player[0][1] =480-32
+        #     # if(TheMap[int((player[0][1] +24)/32),int((player[0][1] +24)/32)]==0):
+        #     if((TheMap[int((player[0][1]+24)/32),int((player[0][0]+0)/32)]==0)or(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0)):
+        #         player[0][1]-= step
+        #     # if(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0):
+        #     #     player[0][1]-= step
+        # # e
+        # if(control[0][3]==1):
+        #     if (TheMap[int(player[0][1] / 32), int(player[0][0] / 32)] == 1):
+        #         player[0][1] -= step
+        #     if(player[0][1]<0):
+        #         player[0][1] =0
+        #     if((TheMap[int((player[0][1]+0)/32),int((player[0][0])/32)]==0)or(TheMap[int((player[0][1]+0)/32),int((player[0][0]+24)/32)]==0)):
+        #         player[0][1]+= step
+
+        # ==============================================================
+        yTmp = player[0][1]
+        xTmp = player[0][0]
         # s
         if(control[0][0]==1):
-            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
-                player[0][0]-= step
-            # player[0][0] -= step
-            if(player[0][0]<0):
-                player[0][0] =0
-            # if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0):
-            if((TheMap[int(player[0][1]/32),int(player[0][0]/32)]==0)or(TheMap[int((player[0][1]+24)/32),int(player[0][0]/32)]==0)):
-                player[0][0]+= step
+            if(TheMap[int(yTmp/32),int(xTmp/32)]==1):
+                xTmp-= step
+            # xTmp -= step
+            if(xTmp<0):
+                xTmp =0
+            # if(TheMap[int(yTmp/32),int(xTmp/32)]==0):
+            if((TheMap[int(yTmp/32),int(xTmp/32)]==0)or(TheMap[int((yTmp+24)/32),int(xTmp/32)]==0)):
+                xTmp+= step
         # f
         if(control[0][1]==1):
-            if(TheMap[int(player[0][1]/32),int(player[0][0]/32)]==1):
-                player[0][0] += step
-            if(player[0][0]+32>640):
-                player[0][0] =640-32
-            # if (TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +0)/ 32)] == 0):
-            if((TheMap[int((player[0][1] +0)/ 32), int((player[0][0] +24)/ 32)] == 0)or(TheMap[int((player[0][1] +24)/ 32), int((player[0][0] +24)/ 32)] == 0)):
-                player[0][0] -= step
+            if(TheMap[int(yTmp/32),int(xTmp/32)]==1):
+                xTmp += step
+            if(xTmp+32>640):
+                xTmp =640-32
+            # if (TheMap[int((yTmp +0)/ 32), int((xTmp +0)/ 32)] == 0):
+            if((TheMap[int((yTmp +0)/ 32), int((xTmp +24)/ 32)] == 0)or(TheMap[int((yTmp +24)/ 32), int((xTmp +24)/ 32)] == 0)):
+                xTmp -= step
         # d
         if(control[0][2]==1):
-            # if(TheMap[int((player[0][1] +24)/32),int((player[0][0] +24)/32)]==1):
-            if(TheMap[int((player[0][1])/32),int((player[0][0])/32)]==1):
-                player[0][1] += step
-            if(player[0][1]+32>480):
-                player[0][1] =480-32
-            # if(TheMap[int((player[0][1] +24)/32),int((player[0][1] +24)/32)]==0):
-            if((TheMap[int((player[0][1]+24)/32),int((player[0][0]+0)/32)]==0)or(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0)):
-                player[0][1]-= step
-            # if(TheMap[int((player[0][1]+24)/32),int((player[0][0]+24)/32)]==0):
-            #     player[0][1]-= step
+            # if(TheMap[int((yTmp +24)/32),int((xTmp +24)/32)]==1):
+            if(TheMap[int((yTmp)/32),int((xTmp)/32)]==1):
+                yTmp += step
+            if(yTmp+32>480):
+                yTmp =480-32
+            # if(TheMap[int((yTmp +24)/32),int((yTmp +24)/32)]==0):
+            if((TheMap[int((yTmp+24)/32),int((xTmp+0)/32)]==0)or(TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0)):
+                yTmp-= step
+            # if(TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0):
+            #     yTmp-= step
         # e
         if(control[0][3]==1):
-            if (TheMap[int(player[0][1] / 32), int(player[0][0] / 32)] == 1):
-                player[0][1] -= step
-            if(player[0][1]<0):
-                player[0][1] =0
-            if((TheMap[int((player[0][1]+0)/32),int((player[0][0])/32)]==0)or(TheMap[int((player[0][1]+0)/32),int((player[0][0]+24)/32)]==0)):
-                player[0][1]+= step
-
+            if (TheMap[int(yTmp / 32), int(xTmp / 32)] == 1):
+                yTmp -= step
+            if(yTmp<0):
+                yTmp =0
+            if((TheMap[int((yTmp+0)/32),int((xTmp)/32)]==0)or(TheMap[int((yTmp+0)/32),int((xTmp+24)/32)]==0)):
+                yTmp+= step
+        player[0][1] = yTmp
+        player[0][0] = xTmp
 
 
 def keyboardRead():
@@ -196,7 +240,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
     # print('lol')
 
