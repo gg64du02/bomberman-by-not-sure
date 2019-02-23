@@ -141,10 +141,10 @@ def ColisionCheckAndMovement():
                     if (xTmp % 32 <= 16):
                         if (xTmp % 32 != 0):
                             xTmp -= step
-                    # if ((TheMap[int((yTmp + 24) / 32), int((xTmp + 24) / 32)] == 1)):
-                    #     if (xTmp % 32 >= 16):
-                    #         if (xTmp % 32 != 0):
-                    #             xTmp += step
+                if ((TheMap[int((yTmp + 0) / 32), int((xTmp + 24) / 32)] == 1)):
+                    if (xTmp % 32 >= 16):
+                        if (xTmp % 32 != 0):
+                            xTmp += step
                 yTmp+= step
         player[0][1] = yTmp
         player[0][0] = xTmp
