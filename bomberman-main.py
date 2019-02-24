@@ -89,13 +89,13 @@ def generatedCrateMap():
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
     for tile in tileGened:
-        print("tile",tile)
+        # print("tile",tile)
         xTile = tile[0]
         yTile = tile[1]
         # randNp = np.random.rand(20,15)
         # print("randNp:\n",randNp)
         randomNumber = random.randint(0,255)
-        print("randomNumber",randomNumber)
+        # print("randomNumber",randomNumber)
         if((100*randomNumber/255)>(pourcentageOfCrate)):
             if(crateMap[yTile,xTile]==1):
                 crateMap[yTile, xTile] = 0
@@ -104,6 +104,17 @@ def generatedCrateMap():
     # pass
     return crateMap
 crateMap = generatedCrateMap()
+
+def displayCrates():
+    # in: crateMap
+    # out: None
+    tileGened = tileGen()
+    for tile in tileGened:
+        xTile = tile[0]
+        yTile = tile[1]
+        if(crateMap[yTile,xTile]):
+            crate(32*xTile,32*yTile)
+
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
@@ -266,6 +277,7 @@ while(runningMain):
     # crate(0,0)
 
     displayMap()
+    displayCrates()
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
