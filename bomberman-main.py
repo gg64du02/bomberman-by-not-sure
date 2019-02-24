@@ -6,6 +6,8 @@ import numpy as np
 import time
 import itertools
 
+import random
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -46,6 +48,10 @@ crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 # crateImg = pygame.image.fromstring(bytes('a'),1,[])
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 
+
+TheMap = currentMap()
+print("TheMap\n",TheMap)
+
 def displayMap():
     for tile in tileGen():
         # print(type(TheMap))
@@ -65,6 +71,39 @@ def crate(x,y):
 def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
 # ======================================================
+
+def displayCrate():
+    # in: TheMap
+    # out: None
+    # crateMap = []
+    # for crate in crateMap:
+    #
+    #     pass
+    pass
+
+def generatedCrateMap():
+    # in: TheMap
+    # out: crateMap
+    pourcentageOfCrate = 50
+    minFreeSpot = 12
+    tileGened = tileGen()
+    crateMap = np.copy(TheMap)
+    for tile in tileGened:
+        print("tile",tile)
+        xTile = tile[0]
+        yTile = tile[1]
+        # randNp = np.random.rand(20,15)
+        # print("randNp:\n",randNp)
+        randomNumber = random.randint(0,255)
+        print("randomNumber",randomNumber)
+        if((100*randomNumber/255)>(pourcentageOfCrate)):
+            if(crateMap[yTile,xTile]==1):
+                crateMap[yTile, xTile] = 0
+            # pass
+    print("crateMap",crateMap)
+    # pass
+    return crateMap
+crateMap = generatedCrateMap()
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
@@ -202,8 +241,6 @@ runningMain = True
 
 redPlayerPos = [0,0]
 
-TheMap = currentMap()
-print("TheMap\n",TheMap)
 st_time = time.time()
 
 # [[player position_y,player position_x],[bombs available,bombs blast radius]]
