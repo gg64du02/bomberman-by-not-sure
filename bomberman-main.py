@@ -39,7 +39,8 @@ crashed = False
 # carImg = pygame.image.load('racecar.png')
 carImg = pygame.image.load('./sdkskin/Sprites.bmp')
 # crateImg = pygame.image.load('./sdkskin/Sprites.bmp')
-blockImg = pygame.image.load('./sdkskin/Crate.bmp')
+blockImg = pygame.image.load('./sdkskin/Block.bmp')
+crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 # time.sleep(1)
 # crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
 # crateImg = pygame.image.fromstring(bytes('a'),1,[])
@@ -51,15 +52,19 @@ def displayMap():
         if(TheMap[tile[1],tile[0]]==0):
             block(32*tile[0],32*tile[1])
 
-
+# =============================TILES====================
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
 
 def block(x,y):
     gameDisplay.blit(blockImg, (x, y))
 
+def crate(x,y):
+    gameDisplay.blit(crateImg, (x, y))
+
 def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
+# ======================================================
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
