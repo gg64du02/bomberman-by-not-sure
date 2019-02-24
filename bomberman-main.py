@@ -72,18 +72,10 @@ def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
 # ======================================================
 
-def displayCrate():
-    # in: TheMap
-    # out: None
-    # crateMap = []
-    # for crate in crateMap:
-    #
-    #     pass
-    pass
-
 def generatedCrateMap():
     # in: TheMap
     # out: crateMap
+    # todo: add a proper threshold to respect the pourcentageOfCrate
     pourcentageOfCrate = 50
     minFreeSpot = 12
     tileGened = tileGen()
