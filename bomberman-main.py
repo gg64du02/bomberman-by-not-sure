@@ -234,9 +234,11 @@ def tryingToPutBomb(player):
 
 def displayBombs():
     # in: listOfBombs
-    # out: Nonee
+    # out: None
     for bombDis in listOfBombs:
-        bomb(bombDis[0][1],bombDis[0][0])
+        # print("bombDis",bombDis)
+        # print(bombDis[0][1],bombDis[0][0])
+        bomb(32*bombDis[0][1],32*bombDis[0][0])
     # pass
 
 listOfBombs = []
@@ -329,7 +331,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(5)
+    clock.tick(1)
     st_time = time.time()
     # print('lol')
 
