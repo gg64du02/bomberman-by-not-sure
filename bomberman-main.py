@@ -220,13 +220,24 @@ def tryingToPutBomb(player):
     yPos = int((player[0][1] +16)/32)
     print("tryingToPutBomb:xPos,yPos",xPos,yPos)
     if(listOfBombs!=[]):
-        print("listOfBombs[:,0]",listOfBombs[:,0])
+        # print("listOfBombs[:,0]",listOfBombs[:,0])
+        pass
+    else:
+        listOfBombs.append([[yPos,xPos],time.time()])
+
     # if(not([yPos,xPos] in listOfBombs[:,0])):
     #     pass
     # for bomb in listOfBombs:
     #     print("bomb",bomb)
     #     if():
     pass
+
+def displayBombs():
+    # in: listOfBombs
+    # out: Nonee
+    for bombDis in listOfBombs:
+        bomb(bombDis[0][1],bombDis[0][0])
+    # pass
 
 listOfBombs = []
 
@@ -309,6 +320,7 @@ while(runningMain):
 
     displayCrates()
     displayMap()
+    displayBombs()
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
