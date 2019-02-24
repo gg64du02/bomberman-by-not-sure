@@ -132,71 +132,71 @@ def ColisionCheckAndMovement():
         xTmp = player[0][0]
         # s
         if(control[0][0]==1):
-            if(TheMap[int(yTmp/32),int(xTmp/32)]==1):
+            if(crateMap[int(yTmp/32),int(xTmp/32)]==1):
                 xTmp-= step
             # xTmp -= step
             if(xTmp<0):
                 xTmp =0
-            # if(TheMap[int(yTmp/32),int(xTmp/32)]==0):
-            if((TheMap[int(yTmp/32),int(xTmp/32)]==0)or(TheMap[int((yTmp+24)/32),int(xTmp/32)]==0)):
-                if((TheMap[int(yTmp/32),int(xTmp/32)]==1)):
+            # if(crateMap[int(yTmp/32),int(xTmp/32)]==0):
+            if((crateMap[int(yTmp/32),int(xTmp/32)]==0)or(crateMap[int((yTmp+24)/32),int(xTmp/32)]==0)):
+                if((crateMap[int(yTmp/32),int(xTmp/32)]==1)):
                     if(yTmp%32<=16):
                         if(yTmp%32!=0):
                             yTmp-= step
-                if((TheMap[int((yTmp+24)/32),int(xTmp/32)]==1)):
+                if((crateMap[int((yTmp+24)/32),int(xTmp/32)]==1)):
                     if(yTmp%32>=16):
                         if(yTmp%32!=0):
                             yTmp+= step
                 xTmp+= step
         # f
         if(control[0][1]==1):
-            if(TheMap[int(yTmp/32),int(xTmp/32)]==1):
+            if(crateMap[int(yTmp/32),int(xTmp/32)]==1):
                 xTmp += step
             if(xTmp+32>640):
                 xTmp =640-32
-            # if (TheMap[int((yTmp +0)/ 32), int((xTmp +0)/ 32)] == 0):
-            if((TheMap[int((yTmp +0)/ 32), int((xTmp +24)/ 32)] == 0)or(TheMap[int((yTmp +24)/ 32), int((xTmp +24)/ 32)] == 0)):
-                if((TheMap[int(yTmp/32),int((xTmp+24)/32)]==1)):
+            # if (crateMap[int((yTmp +0)/ 32), int((xTmp +0)/ 32)] == 0):
+            if((crateMap[int((yTmp +0)/ 32), int((xTmp +24)/ 32)] == 0)or(crateMap[int((yTmp +24)/ 32), int((xTmp +24)/ 32)] == 0)):
+                if((crateMap[int(yTmp/32),int((xTmp+24)/32)]==1)):
                     if(yTmp%32<=16):
                         if(yTmp%32!=0):
                             yTmp-= step
-                if((TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==1)):
+                if((crateMap[int((yTmp+24)/32),int((xTmp+24)/32)]==1)):
                     if(yTmp%32>=16):
                         if(yTmp%32!=0):
                             yTmp+= step
                 xTmp -= step
         # d
         if(control[0][2]==1):
-            # if(TheMap[int((yTmp +24)/32),int((xTmp +24)/32)]==1):
-            if(TheMap[int((yTmp)/32),int((xTmp)/32)]==1):
+            # if(crateMap[int((yTmp +24)/32),int((xTmp +24)/32)]==1):
+            if(crateMap[int((yTmp)/32),int((xTmp)/32)]==1):
                 yTmp += step
             if(yTmp+32>480):
                 yTmp =480-32
-            # if(TheMap[int((yTmp +24)/32),int((yTmp +24)/32)]==0):
-            if((TheMap[int((yTmp+24)/32),int((xTmp+0)/32)]==0)or(TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0)):
-                if((TheMap[int((yTmp+24)/32),int((xTmp+0)/32)]==1)):
+            # if(crateMap[int((yTmp +24)/32),int((yTmp +24)/32)]==0):
+            if((crateMap[int((yTmp+24)/32),int((xTmp+0)/32)]==0)or(crateMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0)):
+                if((crateMap[int((yTmp+24)/32),int((xTmp+0)/32)]==1)):
                     if(xTmp%32<=16):
                         if(xTmp%32!=0):
                             xTmp-= step
-                if((TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==1)):
+                if((crateMap[int((yTmp+24)/32),int((xTmp+24)/32)]==1)):
                     if(xTmp%32>=16):
                         if(xTmp%32!=0):
                             xTmp+= step
                 yTmp-= step
-            # if(TheMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0):
+            # if(crateMap[int((yTmp+24)/32),int((xTmp+24)/32)]==0):
             #     yTmp-= step
         # e
         if(control[0][3]==1):
-            if (TheMap[int(yTmp / 32), int(xTmp / 32)] == 1):
+            if (crateMap[int(yTmp / 32), int(xTmp / 32)] == 1):
                 yTmp -= step
             if(yTmp<0):
                 yTmp =0
-            if((TheMap[int((yTmp+0)/32),int((xTmp)/32)]==0)or(TheMap[int((yTmp+0)/32),int((xTmp+24)/32)]==0)):
-                if ((TheMap[int((yTmp + 0) / 32), int((xTmp + 0) / 32)] == 1)):
+            if((crateMap[int((yTmp+0)/32),int((xTmp)/32)]==0)or(crateMap[int((yTmp+0)/32),int((xTmp+24)/32)]==0)):
+                if ((crateMap[int((yTmp + 0) / 32), int((xTmp + 0) / 32)] == 1)):
                     if (xTmp % 32 <= 16):
                         if (xTmp % 32 != 0):
                             xTmp -= step
-                if ((TheMap[int((yTmp + 0) / 32), int((xTmp + 24) / 32)] == 1)):
+                if ((crateMap[int((yTmp + 0) / 32), int((xTmp + 24) / 32)] == 1)):
                     if (xTmp % 32 >= 16):
                         if (xTmp % 32 != 0):
                             xTmp += step
