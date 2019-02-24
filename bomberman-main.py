@@ -88,18 +88,21 @@ def generatedCrateMap():
     minFreeSpot = 12
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
+    # freePoints = [[0,0],[0,1],[1,0], [19,14],[18,14],[19,13]]
+    freePoints = [[0,0],[0,1],[1,0], [19,14],[18,14],[19,13], [19,0],[18,0],[19,1], [0,14],[1,13],[1,14]]
     for tile in tileGened:
-        # print("tile",tile)
+        print("tile",tile)
         xTile = tile[0]
         yTile = tile[1]
         # randNp = np.random.rand(20,15)
         # print("randNp:\n",randNp)
         randomNumber = random.randint(0,255)
         # print("randomNumber",randomNumber)
-        if((100*randomNumber/255)>(pourcentageOfCrate)):
-            if(crateMap[yTile,xTile]==1):
-                crateMap[yTile, xTile] = 0
-            # pass
+        if(not([xTile,yTile] in freePoints)):
+            print([xTile,yTile])
+            if((100*randomNumber/255)>(pourcentageOfCrate)):
+                if(crateMap[yTile,xTile]==1):
+                    crateMap[yTile, xTile] = 0
     print("crateMap",crateMap)
     # pass
     return crateMap
@@ -112,7 +115,7 @@ def displayCrates():
     for tile in tileGened:
         xTile = tile[0]
         yTile = tile[1]
-        if(crateMap[yTile,xTile]):
+        if(crateMap[yTile,xTile]==0):
             crate(32*xTile,32*yTile)
 
 
@@ -276,8 +279,8 @@ while(runningMain):
     # car(x, y)
     # crate(0,0)
 
-    displayMap()
     displayCrates()
+    displayMap()
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
