@@ -222,11 +222,10 @@ def tryingToPutBomb(player):
     if(player[1][0] != 0):
         if(listOfBombs!=[]):
             # print("listOfBombs[:,0]",listOfBombs[:,0])
-            # pass
             alreadyBusy = False
             for tmpBomb in listOfBombs:
                 print([yPos,xPos],tmpBomb[0])
-                if(np.equal([yPos,xPos],tmpBomb[0])==1):
+                if(np.array_equal([yPos,xPos],tmpBomb[0])==1):
                     alreadyBusy = True
             if(alreadyBusy==False):
                 listOfBombs.append([[yPos,xPos],time.time()])
@@ -234,16 +233,7 @@ def tryingToPutBomb(player):
 
         else:
             listOfBombs.append([[yPos,xPos],time.time()])
-            # listOfBombs.append([yPos,xPos])
-            # listOfBombsTS.append(time.time())
-            # player[1][0] -=1
-
-    # if(not([yPos,xPos] in listOfBombs[:,0])):
-    #     pass
-    # for bomb in listOfBombs:
-    #     print("bomb",bomb)
-    #     if():
-    pass
+            player[1][0] -=1
 
 def displayBombs():
     # in: listOfBombs
