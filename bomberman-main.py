@@ -205,8 +205,30 @@ def ColisionCheckAndMovement():
         player[0][0] = xTmp
 
         # ctrl
-        if(control[1][1]==1):
+        if(control[1][0]==1):
             print("if(control[1][1]==1):")
+            tryingToPutBomb(player)
+
+def tryingToPutBomb(player):
+    # in: player,
+    # in/out: (global) listOfBombs
+    # [[y, x], loop_time_11]
+    global listOfBombs
+    # xPos = player[0][0]
+    # yPos = player[0][1]
+    xPos = int((player[0][0] +16)/32)
+    yPos = int((player[0][1] +16)/32)
+    print("tryingToPutBomb:xPos,yPos",xPos,yPos)
+    if(listOfBombs!=[]):
+        print("listOfBombs[:,0]",listOfBombs[:,0])
+    # if(not([yPos,xPos] in listOfBombs[:,0])):
+    #     pass
+    # for bomb in listOfBombs:
+    #     print("bomb",bomb)
+    #     if():
+    pass
+
+listOfBombs = []
 
 
 def keyboardRead():
