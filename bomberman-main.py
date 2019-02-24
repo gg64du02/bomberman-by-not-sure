@@ -219,11 +219,24 @@ def tryingToPutBomb(player):
     xPos = int((player[0][0] +16)/32)
     yPos = int((player[0][1] +16)/32)
     print("tryingToPutBomb:xPos,yPos",xPos,yPos)
-    if(listOfBombs!=[]):
-        # print("listOfBombs[:,0]",listOfBombs[:,0])
-        pass
-    else:
-        listOfBombs.append([[yPos,xPos],time.time()])
+    if(player[1][0] != 0):
+        if(listOfBombs!=[]):
+            # print("listOfBombs[:,0]",listOfBombs[:,0])
+            # pass
+            alreadyBusy = False
+            for tmpBomb in listOfBombs:
+                print([yPos,xPos],tmpBomb[0])
+                if(np.equal([yPos,xPos],tmpBomb[0])==1):
+                    alreadyBusy = True
+            if(alreadyBusy==False):
+                listOfBombs.append([[yPos,xPos],time.time()])
+        #
+
+        else:
+            listOfBombs.append([[yPos,xPos],time.time()])
+            # listOfBombs.append([yPos,xPos])
+            # listOfBombsTS.append(time.time())
+            # player[1][0] -=1
 
     # if(not([yPos,xPos] in listOfBombs[:,0])):
     #     pass
@@ -242,6 +255,7 @@ def displayBombs():
     # pass
 
 listOfBombs = []
+listOfBombsTS = []
 
 
 def keyboardRead():
@@ -331,7 +345,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(1)
+    clock.tick(40)
     st_time = time.time()
     # print('lol')
 
