@@ -204,12 +204,17 @@ def ColisionCheckAndMovement():
         player[0][1] = yTmp
         player[0][0] = xTmp
 
+        # ctrl
+        if(control[1][1]==1):
+            print("if(control[1][1]==1):")
+
 
 def keyboardRead():
     # sfde ctrl shift
     global Controls_from_kbd
     # Controls = [ [0,0,0,0,0,0] for i in range(4)]
     for event in pygame.event.get():
+        print("event.type",event.type)
         if event.type == pygame.QUIT:
             crashed = True
         if event.type == pygame.KEYDOWN:
@@ -229,7 +234,7 @@ def keyboardRead():
                 print('KEYDOWN,K_d')
                 redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 1
-            if event.key == pygame.KMOD_CTRL:
+            if event.key == pygame.K_z:
                 Controls_from_kbd[1][1][0] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_e:
@@ -248,7 +253,7 @@ def keyboardRead():
                 print('KEYUP,K_d')
                 # redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 0
-            if event.key == pygame.KMOD_CTRL:
+            if event.key == pygame.K_z:
                 Controls_from_kbd[1][1][0] = 0
 
 
@@ -290,7 +295,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(40)
+    clock.tick(5)
     st_time = time.time()
     # print('lol')
 
