@@ -47,6 +47,7 @@ crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 # crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
 # crateImg = pygame.image.fromstring(bytes('a'),1,[])
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
+bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 
 
 TheMap = currentMap()
@@ -70,6 +71,10 @@ def crate(x,y):
 
 def playerRed(x,y):
     gameDisplay.blit(playerRedImg, (x, y))
+
+def bomb(x,y):
+    gameDisplay.blit(bombImg, (x, y))
+
 # ======================================================
 
 def generatedCrateMap():
@@ -224,6 +229,8 @@ def keyboardRead():
                 print('KEYDOWN,K_d')
                 redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 1
+            if event.key == pygame.KMOD_CTRL:
+                Controls_from_kbd[1][1][0] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_e:
                 print('KEYUP,K_e')
@@ -241,6 +248,8 @@ def keyboardRead():
                 print('KEYUP,K_d')
                 # redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 0
+            if event.key == pygame.KMOD_CTRL:
+                Controls_from_kbd[1][1][0] = 0
 
 
 runningMain = True
