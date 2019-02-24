@@ -219,6 +219,7 @@ def tryingToPutBomb(player):
     xPos = int((player[0][0] +16)/32)
     yPos = int((player[0][1] +16)/32)
     print("tryingToPutBomb:xPos,yPos",xPos,yPos)
+    # does the player still have remaining bombs to put
     if(player[1][0] != 0):
         if(listOfBombs!=[]):
             # print("listOfBombs[:,0]",listOfBombs[:,0])
@@ -227,10 +228,9 @@ def tryingToPutBomb(player):
                 print([yPos,xPos],tmpBomb[0])
                 if(np.array_equal([yPos,xPos],tmpBomb[0])==1):
                     alreadyBusy = True
+            # if the place is empty
             if(alreadyBusy==False):
                 listOfBombs.append([[yPos,xPos],time.time()])
-        #
-
         else:
             listOfBombs.append([[yPos,xPos],time.time()])
             player[1][0] -=1
@@ -242,10 +242,8 @@ def displayBombs():
         # print("bombDis",bombDis)
         # print(bombDis[0][1],bombDis[0][0])
         bomb(32*bombDis[0][1],32*bombDis[0][0])
-    # pass
 
 listOfBombs = []
-listOfBombsTS = []
 
 
 def keyboardRead():
