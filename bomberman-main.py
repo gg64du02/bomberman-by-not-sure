@@ -232,7 +232,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(20)
+    clock.tick(40)
     st_time = time.time()
     # print('lol')
 
