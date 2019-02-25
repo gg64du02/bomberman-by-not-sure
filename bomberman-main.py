@@ -130,6 +130,7 @@ def ColisionCheckAndMovement():
         # ==============================================================
         yTmp = player[0][1]
         xTmp = player[0][0]
+        # if(player[2][0]==1):
         # s
         if(control[0][0]==1):
             if(crateMap[int(yTmp/32),int(xTmp/32)]==1):
@@ -247,14 +248,20 @@ def checkForExplodingBomb():
     # in: (global) listOfBombs
     for bombExpOrNot in listOfBombs:
         print("bombExpOrNot",bombExpOrNot)
-        if((time.time()-bombExpOrNot[1])*1000<2000):
-            print("if((time.time()-bombExpOrNot[1])*1000<2000):")
-            # pass
+        if((time.time()-bombExpOrNot[1])*1000>2000):
+            # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
+            print("if((time.time()-bombExpOrNot[1])<2000):")
+            # # bomb exploding
+            # # explodingBomb(bombExpOrNot)
             listOfBombs.remove(bombExpOrNot)
     pass
 
-def explodingBomb():
+def explodingBomb(bombExpOrNot):
+    # in: bombExpOrNot
+    # in: (global) listOfBombs
+    # in: (global) Players (killing them) (and checking hitboxes)
     pass
+
 listOfBombs = []
 
 
@@ -313,7 +320,7 @@ redPlayerPos = [0,0]
 st_time = time.time()
 
 # [[player position_y,player position_x],[bombs available,bombs blast radius]]
-Players = [ [[0,0],[1,1]] for i in range(4)]
+Players = [ [[0,0],[1,1],[1]] for i in range(4)]
 
 # global Controls
 
@@ -346,7 +353,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(40)
+    clock.tick(5)
     st_time = time.time()
     # print('lol')
 
