@@ -283,7 +283,8 @@ def explodingBomb(bombExpOrNot):
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
 
-
+    # for bombExpOrNotExp in listOfBombs:
+    #     explodingBomb(bombExpOrNotExp)
     pass
 
 def hitboxes():
@@ -292,7 +293,7 @@ def hitboxes():
     outHitboxes =[]
     for player in Players:
         outHitboxes.append([player[0][1]+2,player[0][1]+2,player[3][0]])
-        outHitboxes.append([player[0][1]+29,player[0][1]+29,player[3][0]])
+        outHitboxes.append([player[0][1]+30,player[0][1]+30,player[3][0]])
         # pass
     return outHitboxes
 
