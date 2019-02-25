@@ -284,6 +284,12 @@ def explodingBomb(bombExpOrNot):
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
 
+    for hitbox in PlayersWhitboxesAindex:
+        if(np.array_equal([hitbox[0],hitbox[1]],[bombExpOrNot[0][0],bombExpOrNot[0][1]])==1):
+            Players[hitbox[2]][2] = 0
+            print("hitbox[2]",hitbox[2])
+            print("player",Players[hitbox[2]],"got killed")
+
     # kill anything under the bomb
     # extend the blast as long as the lengh allow it or if it one crate
 
