@@ -104,7 +104,7 @@ def generatedCrateMap():
     # freePoints = [[0,0],[0,1],[1,0], [19,14],[18,14],[19,13]]
     freePoints = [[0,0],[0,1],[1,0], [19,14],[18,14],[19,13], [19,0],[18,0],[19,1], [0,14],[1,13],[1,14]]
     for tile in tileGened:
-        print("tile",tile)
+        # print("tile",tile)
         xTile = tile[0]
         yTile = tile[1]
         # randNp = np.random.rand(20,15)
@@ -112,7 +112,7 @@ def generatedCrateMap():
         randomNumber = random.randint(0,255)
         # print("randomNumber",randomNumber)
         if(not([xTile,yTile] in freePoints)):
-            print([xTile,yTile])
+            # print([xTile,yTile])
             if((100*randomNumber/255)>(pourcentageOfCrate)):
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
@@ -296,9 +296,10 @@ def hitboxes():
     # out: PlayersWhitboxesAindex
     outHitboxes =[]
     for player in Players:
-        outHitboxes.append([player[0][1]+2,player[0][1]+2,player[3][0]])
-        outHitboxes.append([player[0][1]+30,player[0][1]+30,player[3][0]])
+        outHitboxes.append([int((player[0][1]+2)/32),int((player[0][1]+2)/32),player[3][0]])
+        outHitboxes.append([int((player[0][1]+30)/32),int((player[0][1]+30)/32),player[3][0]])
         # pass
+    print("outHitboxes",outHitboxes)
     return outHitboxes
 
 PlayersWhitboxesAindex = hitboxes()
