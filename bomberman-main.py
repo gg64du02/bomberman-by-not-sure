@@ -50,6 +50,7 @@ playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 # playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
+blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 
 
 TheMap = currentMap()
@@ -70,6 +71,9 @@ def block(x,y):
 
 def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
+
+def airBlast(x,y):
+    gameDisplay.blit(blastingAirImg, (x, y))
 
 def playerRed(x,y):
     if(Players[1][2][0]!=0):
@@ -137,6 +141,7 @@ def displayCrates():
         yTile = tile[1]
         if(crateMap[yTile,xTile]==0):
             crate(32*xTile,32*yTile)
+
 
 
 def ColisionCheckAndMovement():
@@ -299,6 +304,8 @@ def explodingBomb(bombExpOrNot):
             Players[hitbox[2]][2] = [0]
             print("hitbox[2]",hitbox[2])
             print("player",Players[hitbox[2]],"got killed")
+            # displaying the local blast
+            airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     global listOfBombs
 
@@ -464,7 +471,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(40)
+    clock.tick(5)
     st_time = time.time()
     # print('lol')
 
