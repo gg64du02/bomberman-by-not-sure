@@ -230,9 +230,9 @@ def tryingToPutBomb(player):
                     alreadyBusy = True
             # if the place is empty
             if(alreadyBusy==False):
-                listOfBombs.append([[yPos,xPos],time.time()])
+                listOfBombs.append([[yPos,xPos],time.time(),player[1][1]])
         else:
-            listOfBombs.append([[yPos,xPos],time.time()])
+            listOfBombs.append([[yPos,xPos],time.time(),player[1][1]])
             player[1][0] -=1
 
 def displayBombs():
@@ -243,6 +243,18 @@ def displayBombs():
         # print(bombDis[0][1],bombDis[0][0])
         bomb(32*bombDis[0][1],32*bombDis[0][0])
 
+def checkForExplodingBomb():
+    # in: (global) listOfBombs
+    for bombExpOrNot in listOfBombs:
+        print("bombExpOrNot",bombExpOrNot)
+        if((time.time()-bombExpOrNot[1])*1000<2000):
+            print("if((time.time()-bombExpOrNot[1])*1000<2000):")
+            # pass
+            listOfBombs.remove(bombExpOrNot)
+    pass
+
+def explodingBomb():
+    pass
 listOfBombs = []
 
 
@@ -325,6 +337,7 @@ while(runningMain):
     displayCrates()
     displayMap()
     displayBombs()
+    checkForExplodingBomb()
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
