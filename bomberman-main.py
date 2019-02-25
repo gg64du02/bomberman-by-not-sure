@@ -47,6 +47,8 @@ crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 # crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
 # crateImg = pygame.image.fromstring(bytes('a'),1,[])
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
+# playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.bmp')
+playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 
 
@@ -70,7 +72,11 @@ def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
 
 def playerRed(x,y):
-    gameDisplay.blit(playerRedImg, (x, y))
+    if(Players[1][2][0]!=0):
+        gameDisplay.blit(playerRedImg, (x, y))
+    else:
+        print("playerRedDeadImg")
+        gameDisplay.blit(playerRedDeadImg, (x, y))
 
 def bomb(x,y):
     gameDisplay.blit(bombImg, (x, y))
