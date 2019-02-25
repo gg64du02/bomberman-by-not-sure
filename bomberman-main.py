@@ -85,7 +85,8 @@ st_time = time.time()
 
 # [[player position_y,player position_x],[bombs available,bombs blast radius]
 # ,[alive=1],[i=index for a player]]
-Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
+# Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
+Players = [ [[0,0],[3,3],[1],[i]] for i in range(4)]
 
 # global Controls
 
@@ -97,7 +98,7 @@ def generatedCrateMap():
     # in: TheMap
     # out: crateMap
     # todo: add a proper threshold to respect the pourcentageOfCrate
-    pourcentageOfCrate = 50
+    pourcentageOfCrate = 80
     minFreeSpot = 12
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
@@ -275,7 +276,8 @@ def checkForExplodingBomb():
             print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
             explodingBomb(bombExpOrNot)
-            Players[bombExpOrNot[2]][1][0] +=1
+            print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
+            Players[bombExpOrNot[3]][1][0] +=1
     pass
 
 def explodingBomb(bombExpOrNot):
@@ -452,7 +454,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(5)
+    clock.tick(40)
     st_time = time.time()
     # print('lol')
 
