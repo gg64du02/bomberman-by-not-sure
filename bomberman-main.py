@@ -296,9 +296,65 @@ def explodingBomb(bombExpOrNot):
 
     # extend the blast as long as the lengh allow it or if it one crate
 
+    # pathInBlasts = np.zeros_like(potentialPath)
+    # for bombPosition in listOfBombs:
+    # yBomb = bombPosition[0]
+    # xBomb = bombPosition[1]
+    print("bombExpOrNot",bombExpOrNot)
+    yBomb = bombExpOrNot[0][0]
+    xBomb = bombExpOrNot[0][1]
+
+    pathInBlasts = np.zeros_like(crateMap)
+
+    # notsorted
+    # TODO: sort the result
+    # upwward, downward, rightward, leftward
+    for i in range(4):
+        xTmp = xBomb
+        yTmp = yBomb
+
+        tileBombOnce = True
+        # DONE bugfix: while ((potentialPath[xTmp, yTmp] == 1) & (isIndexesRange((xTmp, yTmp)))):
+        # DONE bugfix: IndexError: index 15 is out of bounds for axis 0 with size 15
+        while((crateMap[yTmp, xTmp] == 1) and ( isIndexesRange((yTmp, xTmp)) == True) or (tileBombOnce == True)):
+            tileBombOnce = False
+            # trigger everything in those blast
+            pathInBlasts[yTmp, xTmp] = 1
+            explodingBomb()
+            if (i == 0):
+                xTmp += 1
+                if (isIndexesRange((0, xTmp)) == False):
+                    break
+            if (i == 1):
+                xTmp -= 1
+                if (isIndexesRange((0, xTmp)) == False):
+                    break
+            if (i == 2):
+                yTmp += 1
+                if (isIndexesRange((yTmp, 0)) == False):
+                    break
+            if (i == 3):
+                yTmp -= 1
+                if (isIndexesRange((yTmp, 0)) == False):
+                    break
+            # print("[yTmp, xTmp]:",[yTmp, xTmp])
+
+    print("pathInBlasts\n",pathInBlasts)
+
+
     # for bombExpOrNotExp in listOfBombs:
     #     explodingBomb(bombExpOrNotExp)
     pass
+
+def isIndexesRange(point):
+    isInsideIndexRange = False
+    if (point[1] >= 0):
+        if (point[1] < 20):
+            if (point[0] >= 0):
+                if (point[0] < 15):
+                    # print("ii in (0,0) and (19,15)")
+                    isInsideIndexRange = True
+    return isInsideIndexRange
 
 def hitboxes():
     # in: Players
