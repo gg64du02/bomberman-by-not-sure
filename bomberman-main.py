@@ -77,6 +77,22 @@ def bomb(x,y):
 
 # ======================================================
 
+runningMain = True
+
+redPlayerPos = [0,0]
+
+st_time = time.time()
+
+# [[player position_y,player position_x],[bombs available,bombs blast radius]
+# ,[alive=1],[i=index for a player]]
+Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
+
+# global Controls
+
+# sfde ctrl shift
+Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+# Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
+
 def generatedCrateMap():
     # in: TheMap
     # out: crateMap
@@ -246,9 +262,12 @@ def displayBombs():
 
 def checkForExplodingBomb():
     # in: (global) listOfBombs
+    # in: (global) PlayersWhitboxesAindex
+    global PlayersWhitboxesAindex
     for bombExpOrNot in listOfBombs:
         print("bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
+            PlayersWhitboxesAindex = hitboxes()
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
             print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
@@ -263,6 +282,17 @@ def explodingBomb(bombExpOrNot):
 
 
     pass
+
+def hitboxes():
+    # in: Players
+    # out: PlayersWhitboxesAindex
+    outHitboxes =[]
+    for player in Players:
+        outHitboxes.append([player[0][1],player[0][1],player[3][0]])
+        # pass
+    return outHitboxes
+
+PlayersWhitboxesAindex = hitboxes()
 
 listOfBombs = []
 
@@ -315,21 +345,6 @@ def keyboardRead():
                 Controls_from_kbd[1][1][0] = 0
 
 
-runningMain = True
-
-redPlayerPos = [0,0]
-
-st_time = time.time()
-
-# [[player position_y,player position_x],[bombs available,bombs blast radius]
-# ,[alive=1],[i=index for a player]]
-Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
-
-# global Controls
-
-# sfde ctrl shift
-Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
-# Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 
 while(runningMain):
     Controls = keyboardRead()
