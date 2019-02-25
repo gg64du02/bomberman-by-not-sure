@@ -247,9 +247,10 @@ def tryingToPutBomb(player):
                     alreadyBusy = True
             # if the place is empty
             if(alreadyBusy==False):
-                listOfBombs.append([[yPos,xPos],time.time(),player[1][1]])
+                # pos, timestamp, blast lenght, owner
+                listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
         else:
-            listOfBombs.append([[yPos,xPos],time.time(),player[1][1]])
+            listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
             player[1][0] -=1
 
 def displayBombs():
@@ -282,6 +283,9 @@ def explodingBomb(bombExpOrNot):
     # in: bombExpOrNot
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
+
+    # kill anything under the bomb
+    # extend the blast as long as the lengh allow it or if it one crate
 
     # for bombExpOrNotExp in listOfBombs:
     #     explodingBomb(bombExpOrNotExp)
