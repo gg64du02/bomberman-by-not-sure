@@ -276,8 +276,6 @@ def checkForExplodingBomb():
             # bomb exploding
             explodingBomb(bombExpOrNot)
             Players[bombExpOrNot[2]][1][0] +=1
-            print("Players[bombExpOrNot[2]][1][0]",Players[bombExpOrNot[2]][1][0])
-            listOfBombs.remove(bombExpOrNot)
     pass
 
 def explodingBomb(bombExpOrNot):
@@ -291,6 +289,9 @@ def explodingBomb(bombExpOrNot):
             Players[hitbox[2]][2] = [0]
             print("hitbox[2]",hitbox[2])
             print("player",Players[hitbox[2]],"got killed")
+
+    print("Players[bombExpOrNot[2]][1][0]", Players[bombExpOrNot[2]][1][0])
+    listOfBombs.remove(bombExpOrNot)
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
@@ -320,7 +321,10 @@ def explodingBomb(bombExpOrNot):
             tileBombOnce = False
             # trigger everything in those blast
             pathInBlasts[yTmp, xTmp] = 1
-            explodingBomb()
+            if(listOfBombs!=[]):
+                for checkingBomb in listOfBombs:
+                    if(np.array_equal([checkingBomb[0][1],checkingBomb[0][0]],[yTmp,xTmp])):
+                        explodingBomb(checkingBomb)
             if (i == 0):
                 xTmp += 1
                 if (isIndexesRange((0, xTmp)) == False):
