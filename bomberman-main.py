@@ -75,6 +75,12 @@ def crate(x,y):
 def airBlast(x,y):
     gameDisplay.blit(blastingAirImg, (x, y))
 
+def diplayAllAirBlast():
+    tileGen4  =tileGen()
+    for tile in tileGen4:
+        if(airBlastDisplay[tile[1],tile[0]]==1):
+            airBlast(32*tile[1],32*tile[0])
+
 def playerRed(x,y):
     if(Players[1][2][0]!=0):
         gameDisplay.blit(playerRedImg, (x, y))
@@ -293,10 +299,16 @@ def checkForExplodingBomb():
             Players[bombExpOrNot[3]][1][0] +=1
     pass
 
+airBlastDisplay = np.zeros_like(TheMap)
+
 def explodingBomb(bombExpOrNot):
     # in: bombExpOrNot
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
+
+    # displaying the local blast
+    global airBlastDisplay
+    airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
 
     # kill anything under the bomb
     for hitbox in PlayersWhitboxesAindex:
@@ -304,8 +316,6 @@ def explodingBomb(bombExpOrNot):
             Players[hitbox[2]][2] = [0]
             print("hitbox[2]",hitbox[2])
             print("player",Players[hitbox[2]],"got killed")
-            # displaying the local blast
-            airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     global listOfBombs
 
@@ -460,6 +470,10 @@ while(runningMain):
     displayCrates()
     displayMap()
     displayBombs()
+    # for debugging purpose for now
+    diplayAllAirBlast()
+    print("airBlastDisplay\n",airBlastDisplay)
+
     checkForExplodingBomb()
 
     print("hitboxes():\n",hitboxes())
