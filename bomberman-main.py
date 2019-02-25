@@ -116,7 +116,7 @@ def generatedCrateMap():
             if((100*randomNumber/255)>(pourcentageOfCrate)):
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
-    print("crateMap",crateMap)
+    print("crateMap\n",crateMap)
     # pass
     return crateMap
 crateMap = generatedCrateMap()
@@ -296,8 +296,8 @@ def hitboxes():
     # out: PlayersWhitboxesAindex
     outHitboxes =[]
     for player in Players:
-        outHitboxes.append([int((player[0][1]+2)/32),int((player[0][1]+2)/32),player[3][0]])
-        outHitboxes.append([int((player[0][1]+30)/32),int((player[0][1]+30)/32),player[3][0]])
+        outHitboxes.append([int((player[0][1]+2)/32),int((player[0][0]+2)/32),player[3][0]])
+        outHitboxes.append([int((player[0][1]+30)/32),int((player[0][0]+30)/32),player[3][0]])
         # pass
     print("outHitboxes",outHitboxes)
     return outHitboxes
@@ -373,6 +373,8 @@ while(runningMain):
     displayMap()
     displayBombs()
     checkForExplodingBomb()
+
+    print("hitboxes():\n",hitboxes())
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
