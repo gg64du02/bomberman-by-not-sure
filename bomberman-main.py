@@ -226,13 +226,15 @@ def ColisionCheckAndMovement():
             # ctrl
             if(control[1][0]==1):
                 print("if(control[1][1]==1):")
-                tryingToPutBomb(player)
+                if(player[1][0]>0):
+                    tryingToPutBomb(player)
 
 def tryingToPutBomb(player):
     # in: player,
     # in/out: (global) listOfBombs
     # [[y, x], loop_time_11]
     global listOfBombs
+    global Players
     # xPos = player[0][0]
     # yPos = player[0][1]
     xPos = int((player[0][0] +16)/32)
@@ -251,9 +253,12 @@ def tryingToPutBomb(player):
             if(alreadyBusy==False):
                 # pos, timestamp, blast lenght, owner
                 listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
+                # player[1][0] -=1
+                Players[player[3][0]][1][0] -=1
         else:
             listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
-            player[1][0] -=1
+            # player[1][0] -=1
+            Players[player[3][0]][1][0] -=1
 
 def displayBombs():
     # in: listOfBombs
@@ -291,6 +296,8 @@ def explodingBomb(bombExpOrNot):
             Players[hitbox[2]][2] = [0]
             print("hitbox[2]",hitbox[2])
             print("player",Players[hitbox[2]],"got killed")
+
+    global listOfBombs
 
     print("Players[bombExpOrNot[2]][1][0]", Players[bombExpOrNot[2]][1][0])
     listOfBombs.remove(bombExpOrNot)
