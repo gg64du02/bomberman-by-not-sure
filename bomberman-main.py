@@ -251,8 +251,8 @@ def checkForExplodingBomb():
         if((time.time()-bombExpOrNot[1])*1000>2000):
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
             print("if((time.time()-bombExpOrNot[1])<2000):")
-            # # bomb exploding
-            # # explodingBomb(bombExpOrNot)
+            # bomb exploding
+            explodingBomb(bombExpOrNot)
             listOfBombs.remove(bombExpOrNot)
     pass
 
@@ -260,6 +260,8 @@ def explodingBomb(bombExpOrNot):
     # in: bombExpOrNot
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
+
+
     pass
 
 listOfBombs = []
@@ -319,8 +321,9 @@ redPlayerPos = [0,0]
 
 st_time = time.time()
 
-# [[player position_y,player position_x],[bombs available,bombs blast radius]]
-Players = [ [[0,0],[1,1],[1]] for i in range(4)]
+# [[player position_y,player position_x],[bombs available,bombs blast radius]
+# ,[alive=1],[i=index for a player]]
+Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
 
 # global Controls
 
