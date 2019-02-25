@@ -291,7 +291,8 @@ def hitboxes():
     # out: PlayersWhitboxesAindex
     outHitboxes =[]
     for player in Players:
-        outHitboxes.append([player[0][1],player[0][1],player[3][0]])
+        outHitboxes.append([player[0][1]+2,player[0][1]+2,player[3][0]])
+        outHitboxes.append([player[0][1]+29,player[0][1]+29,player[3][0]])
         # pass
     return outHitboxes
 
