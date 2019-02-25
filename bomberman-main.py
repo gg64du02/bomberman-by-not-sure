@@ -264,6 +264,7 @@ def checkForExplodingBomb():
     # in: (global) listOfBombs
     # in: (global) PlayersWhitboxesAindex
     global PlayersWhitboxesAindex
+    global Players
     for bombExpOrNot in listOfBombs:
         print("bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
@@ -272,6 +273,8 @@ def checkForExplodingBomb():
             print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
             explodingBomb(bombExpOrNot)
+            Players[bombExpOrNot[2]][1][0] +=1
+            print("Players[bombExpOrNot[2]][1][0]",Players[bombExpOrNot[2]][1][0])
             listOfBombs.remove(bombExpOrNot)
     pass
 
