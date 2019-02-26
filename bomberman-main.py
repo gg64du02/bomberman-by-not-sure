@@ -309,7 +309,8 @@ def explodingBomb(bombExpOrNot):
     # displaying the local blast
     # global airBlastDisplay
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
-    airBlast(32*bombExpOrNot[0][0],32*bombExpOrNot[0][1])
+    print("32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     # kill anything under the bomb
     for hitbox in PlayersWhitboxesAindex:
