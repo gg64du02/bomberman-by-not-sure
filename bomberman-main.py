@@ -52,8 +52,6 @@ playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 tileImg = pygame.image.load('./sdkskin/Tile.bmp')
-# tileImg2 = tileImg.subsurface(pygame.Rect(64,64,96,96))
-tileImg2 = tileImg.subsurface(pygame.Rect(0,0,32,32))
 
 
 TheMap = currentMap()
@@ -74,7 +72,6 @@ def block(x,y):
 
 def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
-    # gameDisplay.blit(tileImg2, (x, y))
 
 def airBlast(x,y):
     gameDisplay.blit(blastingAirImg, (x, y))
