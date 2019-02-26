@@ -324,20 +324,21 @@ def explodingBomb(bombExpOrNot):
 
     global listOfBombs
 
-    print("explodingBomb:Players[bombExpOrNot[2]][1][0]", Players[bombExpOrNot[2]][1][0])
+    # remaining amount of bombs for the current player
+    print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
     listOfBombs.remove(bombExpOrNot)
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
     # extend the blast as long as the lengh allow it or if it one crate
 
-    # pathInBlasts = np.zeros_like(potentialPath)
     # for bombPosition in listOfBombs:
     # yBomb = bombPosition[0]
     # xBomb = bombPosition[1]
     print("explodingBomb:bombExpOrNot",bombExpOrNot)
     yBomb = bombExpOrNot[0][0]
     xBomb = bombExpOrNot[0][1]
+    print("explodingBomb:yBomb,xBomb",yBomb,xBomb)
 
     pathInBlasts = np.zeros_like(crateMap)
 
@@ -467,6 +468,7 @@ def keyboardRead():
 lolilol = 0
 
 while(runningMain):
+    print("==========================================================")
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
