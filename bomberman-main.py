@@ -294,6 +294,7 @@ def checkForExplodingBomb():
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
             print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
+            print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             Players[bombExpOrNot[3]][1][0] +=1
@@ -306,22 +307,24 @@ def explodingBomb(bombExpOrNot):
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
 
+    print("explodingBomb:bombExpOrNot",bombExpOrNot)
+
     # displaying the local blast
     # global airBlastDisplay
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
-    print("32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
     airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     # kill anything under the bomb
     for hitbox in PlayersWhitboxesAindex:
         if(np.array_equal([hitbox[0],hitbox[1]],[bombExpOrNot[0][0],bombExpOrNot[0][1]])==1):
             Players[hitbox[2]][2] = [0]
-            print("hitbox[2]",hitbox[2])
-            print("player",Players[hitbox[2]],"got killed")
+            print("explodingBomb:hitbox[2]",hitbox[2])
+            print("explodingBomb:player",Players[hitbox[2]],"got killed")
 
     global listOfBombs
 
-    print("Players[bombExpOrNot[2]][1][0]", Players[bombExpOrNot[2]][1][0])
+    print("explodingBomb:Players[bombExpOrNot[2]][1][0]", Players[bombExpOrNot[2]][1][0])
     listOfBombs.remove(bombExpOrNot)
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -332,11 +335,11 @@ def explodingBomb(bombExpOrNot):
     # for bombPosition in listOfBombs:
     # yBomb = bombPosition[0]
     # xBomb = bombPosition[1]
-    print("bombExpOrNot",bombExpOrNot)
+    print("explodingBomb:bombExpOrNot",bombExpOrNot)
     yBomb = bombExpOrNot[0][0]
     xBomb = bombExpOrNot[0][1]
 
-    # pathInBlasts = np.zeros_like(crateMap)
+    pathInBlasts = np.zeros_like(crateMap)
 
     # notsorted
     # TODO: sort the result
@@ -351,11 +354,14 @@ def explodingBomb(bombExpOrNot):
         while((crateMap[yTmp, xTmp] == 1) and ( isIndexesRange((yTmp, xTmp)) == True) or (tileBombOnce == True)):
             tileBombOnce = False
             # trigger everything in those blast
-            # pathInBlasts[yTmp, xTmp] = 1
+            pathInBlasts[yTmp, xTmp] = 1
             if(listOfBombs!=[]):
                 for checkingBomb in listOfBombs:
+                    print("explodingBomb:[checkingBomb[0][1],checkingBomb[0][0]]",[checkingBomb[0][1],checkingBomb[0][0]])
                     if(np.array_equal([checkingBomb[0][1],checkingBomb[0][0]],[yTmp,xTmp])):
                         explodingBomb(checkingBomb)
+                        # explodingBomb([[checkingBomb[0][1],checkingBomb[0][0]],checkingBomb[1],
+                        #                checkingBomb[2],checkingBomb[3]])
             if (i == 0):
                 xTmp += 1
                 # airBlast(0, xTmp)
@@ -378,7 +384,7 @@ def explodingBomb(bombExpOrNot):
                     break
             # print("[yTmp, xTmp]:",[yTmp, xTmp])
 
-    # print("pathInBlasts\n",pathInBlasts)
+    print("pathInBlasts\n",pathInBlasts)
 
 
     # for bombExpOrNotExp in listOfBombs:
