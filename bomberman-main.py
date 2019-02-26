@@ -268,7 +268,7 @@ def tryingToPutBomb(player):
                     alreadyBusy = True
             # if the place is empty
             if(alreadyBusy==False):
-                # pos, timestamp, blast lenght, owner
+                # pos, timestamp, blast length, owner
                 listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
                 Players[player[3][0]][1][0] -=1
         else:
@@ -342,6 +342,8 @@ def explodingBomb(bombExpOrNot):
 
     pathInBlasts = np.zeros_like(crateMap)
 
+    # todo: add blast length support
+    # todo: stop on crate
     # notsorted
     # TODO: sort the result
     # upwward, downward, rightward, leftward
