@@ -312,7 +312,6 @@ def checkForExplodingBomb():
             print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
-            Players[bombExpOrNot[3]][1][0] +=1
     pass
 
 airBlastDisplay = np.zeros_like(TheMap)
@@ -323,6 +322,7 @@ def explodingBomb(bombExpOrNot):
     # in: (global) Players (killing them) (and checking hitboxes)
 
     print("explodingBomb:bombExpOrNot",bombExpOrNot)
+    Players[bombExpOrNot[3]][1][0] +=1
 
     # displaying the local blast
     # global airBlastDisplay
