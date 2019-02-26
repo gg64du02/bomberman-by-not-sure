@@ -64,6 +64,13 @@ def displayMap():
             block(32*tile[0],32*tile[1])
 
 # =============================TILES====================
+Tiles = []
+for iTiles in range(256):
+    x= iTiles%16
+    y= int(iTiles/16)
+    print("(x,y)",x,y)
+    Tiles.append(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
+
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
 
@@ -72,6 +79,7 @@ def block(x,y):
 
 def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
+    # gameDisplay.blit(Tiles[20], (x, y))
 
 def airBlast(x,y):
     gameDisplay.blit(blastingAirImg, (x, y))
