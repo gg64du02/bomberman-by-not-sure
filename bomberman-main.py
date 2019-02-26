@@ -336,7 +336,7 @@ def explodingBomb(bombExpOrNot):
     yBomb = bombExpOrNot[0][0]
     xBomb = bombExpOrNot[0][1]
 
-    pathInBlasts = np.zeros_like(crateMap)
+    # pathInBlasts = np.zeros_like(crateMap)
 
     # notsorted
     # TODO: sort the result
@@ -351,30 +351,34 @@ def explodingBomb(bombExpOrNot):
         while((crateMap[yTmp, xTmp] == 1) and ( isIndexesRange((yTmp, xTmp)) == True) or (tileBombOnce == True)):
             tileBombOnce = False
             # trigger everything in those blast
-            pathInBlasts[yTmp, xTmp] = 1
+            # pathInBlasts[yTmp, xTmp] = 1
             if(listOfBombs!=[]):
                 for checkingBomb in listOfBombs:
                     if(np.array_equal([checkingBomb[0][1],checkingBomb[0][0]],[yTmp,xTmp])):
                         explodingBomb(checkingBomb)
             if (i == 0):
                 xTmp += 1
+                # airBlast(0, xTmp)
                 if (isIndexesRange((0, xTmp)) == False):
                     break
             if (i == 1):
                 xTmp -= 1
+                # airBlast(0, xTmp)
                 if (isIndexesRange((0, xTmp)) == False):
                     break
             if (i == 2):
                 yTmp += 1
+                # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
             if (i == 3):
                 yTmp -= 1
+                # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
             # print("[yTmp, xTmp]:",[yTmp, xTmp])
 
-    print("pathInBlasts\n",pathInBlasts)
+    # print("pathInBlasts\n",pathInBlasts)
 
 
     # for bombExpOrNotExp in listOfBombs:
