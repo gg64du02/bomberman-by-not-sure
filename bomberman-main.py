@@ -358,8 +358,9 @@ def explodingBomb(bombExpOrNot):
             pathInBlasts[yTmp, xTmp] = 1
             if(listOfBombs!=[]):
                 for checkingBomb in listOfBombs:
-                    print("explodingBomb:[checkingBomb[0][1],checkingBomb[0][0]]",[checkingBomb[0][1],checkingBomb[0][0]])
-                    if(np.array_equal([checkingBomb[0][1],checkingBomb[0][0]],[yTmp,xTmp])):
+                    print("explodingBomb:[checkingBomb[0][0],checkingBomb[0][1]]",[checkingBomb[0][0],checkingBomb[0][1]])
+                    if (np.array_equal([checkingBomb[0][0], checkingBomb[0][1]], [yTmp, xTmp])):
+                        print("issuing:explodingBomb(checkingBomb)")
                         explodingBomb(checkingBomb)
                         # explodingBomb([[checkingBomb[0][1],checkingBomb[0][0]],checkingBomb[1],
                         #                checkingBomb[2],checkingBomb[3]])
@@ -383,7 +384,7 @@ def explodingBomb(bombExpOrNot):
                 # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
-            # print("[yTmp, xTmp]:",[yTmp, xTmp])
+            print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
     print("pathInBlasts\n",pathInBlasts)
 
