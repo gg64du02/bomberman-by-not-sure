@@ -29,6 +29,7 @@ for i in range(256):
     x= i%16
     y= int(i/16)
     print("(x,y)",x,y)
-    box = (x, y, x+width, y+height)
+    box = (32*x, 32*y, 32*x+width, 32*y+height)
     a = im2.crop(box)
-    a.show()
+    # a.show()
+    a.save('tile_'+x+'_'+y+'.bmp','BMP')
