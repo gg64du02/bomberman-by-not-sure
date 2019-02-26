@@ -21,3 +21,14 @@ print("lol2")
 #Viewing EXIF data embedded in image
 # exif_data = im._getexif()
 # exif_data
+i = 0
+width = 32
+height = 32
+for i in range(256):
+    im2 = im
+    x= i%16
+    y= int(i/16)
+    print("(x,y)",x,y)
+    box = (x, y, x+width, y+height)
+    a = im2.crop(box)
+    a.show()
