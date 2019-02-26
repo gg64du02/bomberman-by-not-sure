@@ -307,8 +307,9 @@ def explodingBomb(bombExpOrNot):
     # in: (global) Players (killing them) (and checking hitboxes)
 
     # displaying the local blast
-    global airBlastDisplay
-    airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
+    # global airBlastDisplay
+    # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
+    airBlast(32*bombExpOrNot[0][0],32*bombExpOrNot[0][1])
 
     # kill anything under the bomb
     for hitbox in PlayersWhitboxesAindex:
@@ -452,7 +453,7 @@ def keyboardRead():
             if event.key == pygame.K_z:
                 Controls_from_kbd[1][1][0] = 0
 
-
+lolilol = 0
 
 while(runningMain):
     Controls = keyboardRead()
@@ -471,8 +472,13 @@ while(runningMain):
     displayMap()
     displayBombs()
     # for debugging purpose for now
-    diplayAllAirBlast()
-    print("airBlastDisplay\n",airBlastDisplay)
+    # diplayAllAirBlast()
+    # print("airBlastDisplay\n",airBlastDisplay)
+    if(lolilol%4==0):
+        airBlast(0,0)
+
+    lolilol += 1
+
 
     checkForExplodingBomb()
 
