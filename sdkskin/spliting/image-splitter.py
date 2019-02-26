@@ -32,4 +32,4 @@ for i in range(256):
     box = (32*x, 32*y, 32*x+width, 32*y+height)
     a = im2.crop(box)
     # a.show()
-    a.save('tile_'+x+'_'+y+'.bmp','BMP')
+    a.save('tile_' + str(x) + '_' + str(y) + '.bmp', 'BMP')
