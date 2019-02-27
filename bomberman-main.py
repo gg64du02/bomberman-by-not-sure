@@ -82,8 +82,27 @@ def crate(x,y):
     gameDisplay.blit(crateImg, (x, y))
     # gameDisplay.blit(Tiles[1][1], (x, y))
 
+def displayCrates():
+    # in: crateMap
+    # out: None
+    tileGened = tileGen()
+    for tile in tileGened:
+        xTile = tile[0]
+        yTile = tile[1]
+        if(crateMap[yTile,xTile]==0):
+            crate(32*xTile,32*yTile)
+
 def airBlast(x,y):
     gameDisplay.blit(blastingAirImg, (x, y))
+
+def displayAirBlasts():
+    global airBlasts
+    for airBlast in airBlasts:
+        # Tiles[3][0-5]
+        timePassed = time.time() - airBlast[2]
+        gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+        if(timePassed*1000>200):
+            airBlasts.remove(airBlast)
 
 def diplayAllAirBlast():
     tileGen4  =tileGen()
@@ -100,6 +119,30 @@ def playerRed(x,y):
 
 def bomb(x,y):
     gameDisplay.blit(bombImg, (x, y))
+
+def displayBombs():
+    # in: listOfBombs
+    # out: None
+    for bombDis in listOfBombs:
+        print("bombDis",bombDis)
+        # bomb(32*bombDis[0][1],32*bombDis[0][0])
+        timePassed =  time.time() - bombDis[1]
+        print("timePassed",timePassed)
+        # bomb(32*bombDis[0][1],32*bombDis[0][0])
+        # max 5+something =11
+        gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
+
+def displayBrokenCratesAndUpdateCollision():
+    global brokenCrates
+    global crateMap
+    for brokenCrate in brokenCrates:
+        # Tiles[3][0-7]
+        timePassed = time.time() - brokenCrate[2]
+        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        if(timePassed*1000>200):
+            if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
+                crateMap[brokenCrate[0],brokenCrate[1]]=1
+            brokenCrates.remove(brokenCrate)
 
 # ======================================================
 
@@ -147,18 +190,6 @@ def generatedCrateMap():
     # pass
     return crateMap
 crateMap = generatedCrateMap()
-
-def displayCrates():
-    # in: crateMap
-    # out: None
-    tileGened = tileGen()
-    for tile in tileGened:
-        xTile = tile[0]
-        yTile = tile[1]
-        if(crateMap[yTile,xTile]==0):
-            crate(32*xTile,32*yTile)
-
-
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
@@ -284,18 +315,6 @@ def tryingToPutBomb(player):
         else:
             listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
             Players[player[3][0]][1][0] -=1
-
-def displayBombs():
-    # in: listOfBombs
-    # out: None
-    for bombDis in listOfBombs:
-        print("bombDis",bombDis)
-        # bomb(32*bombDis[0][1],32*bombDis[0][0])
-        timePassed =  time.time() - bombDis[1]
-        print("timePassed",timePassed)
-        # bomb(32*bombDis[0][1],32*bombDis[0][0])
-        # max 5+something =11
-        gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
 def checkForExplodingBomb():
     # in: (global) listOfBombs
@@ -449,27 +468,6 @@ def isIndexesRange(point):
                     # print("ii in (0,0) and (19,15)")
                     isInsideIndexRange = True
     return isInsideIndexRange
-
-def displayBrokenCratesAndUpdateCollision():
-    global brokenCrates
-    global crateMap
-    for brokenCrate in brokenCrates:
-        # Tiles[3][0-7]
-        timePassed = time.time() - brokenCrate[2]
-        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
-        if(timePassed*1000>200):
-            if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
-                crateMap[brokenCrate[0],brokenCrate[1]]=1
-            brokenCrates.remove(brokenCrate)
-
-def displayAirBlasts():
-    global airBlasts
-    for airBlast in airBlasts:
-        # Tiles[3][0-5]
-        timePassed = time.time() - airBlast[2]
-        gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
-        if(timePassed*1000>200):
-            airBlasts.remove(airBlast)
 
 def hitboxes():
     # in: Players
