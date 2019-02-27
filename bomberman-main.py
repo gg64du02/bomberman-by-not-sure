@@ -362,12 +362,11 @@ def explodingBomb(bombExpOrNot):
 
 
     # done: add blast length support
-    # todo: stop on crate
-    # todo: show crate destruction
+    # done: stop on crate
+    # done: show crate destruction
     # todo: air blast display
     # todo: killing any players in blasts
-    # notsorted
-    # TODO: sort the result
+    # todo: bug hard block destruction display
     # upwward, downward, rightward, leftward
     for i in range(4):
         xTmp = xBomb
