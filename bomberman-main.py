@@ -484,53 +484,81 @@ PlayersWhitboxesAindex = hitboxes()
 
 listOfBombs = []
 
+controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
+controlsRedPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
+# controlsBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
+# controlsCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
+
+# controlsForPlayers = [controlsGreenPlayer,controlsRedPlayer,controlsBluePlayer,controlsCyanPlayer]
+controlsForPlayers = [controlsGreenPlayer, controlsRedPlayer]
 
 def keyboardRead():
     # sfde ctrl shift
     global Controls_from_kbd
     # Controls = [ [0,0,0,0,0,0] for i in range(4)]
 
-    # controlGreenPlayer = [pygame.K_4,pygame.K_6,pygame.K_5,pygame.K_8,pygame.K_0,pygame.K_n]
-    # controlRedPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
-    # controlBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
-    # controlCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
-
-    # controlsForPlayers = [controlGreenPlayer,controlRedPlayer,controlBluePlayer,controlCyanPlayer]
-
     for event in pygame.event.get():
         print("event.type",event.type)
         if event.type == pygame.QUIT:
             crashed = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_e:
-                print('KEYDOWN,K_e')
-                Controls_from_kbd[1][0][3] = 1
-            if event.key == pygame.K_s:
-                print('KEYDOWN,K_s')
-                Controls_from_kbd[1][0][0] = 1
-            if event.key == pygame.K_f:
-                print('KEYDOWN,K_f')
-                Controls_from_kbd[1][0][1] = 1
-            if event.key == pygame.K_d:
-                print('KEYDOWN,K_d')
-                Controls_from_kbd[1][0][2] = 1
-            if event.key == pygame.K_z:
-                Controls_from_kbd[1][1][0] = 1
+            for controls in controlsForPlayers:
+                print("controls",controls)
+                for control,index in zip(controls,range(0,5)):
+                    print("control",control)
+                    if event.key == control :
+                        # sfde ctrl shift
+                        print("index",index)
+                        if(index<4):
+                            Controls_from_kbd[1][0][index]=1
+                        else:
+                            Controls_from_kbd[1][1][0]=1
+                        # print()
+                        # if
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_e:
-                print('KEYUP,K_e')
-                Controls_from_kbd[1][0][3] = 0
-            if event.key == pygame.K_s:
-                print('KEYUP,K_s')
-                Controls_from_kbd[1][0][0] = 0
-            if event.key == pygame.K_f:
-                print('KEYUP,K_f')
-                Controls_from_kbd[1][0][1] = 0
-            if event.key == pygame.K_d:
-                print('KEYUP,K_d')
-                Controls_from_kbd[1][0][2] = 0
-            if event.key == pygame.K_z:
-                Controls_from_kbd[1][1][0] = 0
+            for controls in controlsForPlayers:
+                print("controls",controls)
+                for control,index in zip(controls,range(0,5)):
+                    print("control",control)
+                    if event.key == control :
+                        # sfde ctrl shift
+                        print("index",index)
+                        if(index<4):
+                            Controls_from_kbd[1][0][index]=0
+                        else:
+                            Controls_from_kbd[1][1][0]=0
+                        # print()
+                        # if
+
+        #     if event.key == pygame.K_e:
+        #         print('KEYDOWN,K_e')
+        #         Controls_from_kbd[1][0][3] = 1
+        #     if event.key == pygame.K_s:
+        #         print('KEYDOWN,K_s')
+        #         Controls_from_kbd[1][0][0] = 1
+        #     if event.key == pygame.K_f:
+        #         print('KEYDOWN,K_f')
+        #         Controls_from_kbd[1][0][1] = 1
+        #     if event.key == pygame.K_d:
+        #         print('KEYDOWN,K_d')
+        #         Controls_from_kbd[1][0][2] = 1
+        #     if event.key == pygame.K_z:
+        #         Controls_from_kbd[1][1][0] = 1
+        # if event.type == pygame.KEYUP:
+        #     if event.key == pygame.K_e:
+        #         print('KEYUP,K_e')
+        #         Controls_from_kbd[1][0][3] = 0
+        #     if event.key == pygame.K_s:
+        #         print('KEYUP,K_s')
+        #         Controls_from_kbd[1][0][0] = 0
+        #     if event.key == pygame.K_f:
+        #         print('KEYUP,K_f')
+        #         Controls_from_kbd[1][0][1] = 0
+        #     if event.key == pygame.K_d:
+        #         print('KEYUP,K_d')
+        #         Controls_from_kbd[1][0][2] = 0
+        #     if event.key == pygame.K_z:
+        #         Controls_from_kbd[1][1][0] = 0
 
 lolilol = 0
 
