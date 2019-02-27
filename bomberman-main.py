@@ -124,7 +124,7 @@ def generatedCrateMap():
     # in: TheMap
     # out: crateMap
     # todo: add a proper threshold to respect the pourcentageOfCrate
-    pourcentageOfCrate = 100
+    pourcentageOfCrate = 80
     minFreeSpot = 12
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
@@ -315,6 +315,7 @@ def checkForExplodingBomb():
     pass
 
 airBlastDisplay = np.zeros_like(TheMap)
+brokenCrates = []
 
 def explodingBomb(bombExpOrNot):
     # in: bombExpOrNot
@@ -338,6 +339,8 @@ def explodingBomb(bombExpOrNot):
             print("explodingBomb:player",Players[hitbox[2]],"got killed")
 
     global listOfBombs
+
+    global brokenCrates
 
     # remaining amount of bombs for the current player
     print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
@@ -409,9 +412,16 @@ def explodingBomb(bombExpOrNot):
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
             cBL += 1
-
+            # air blast length
             if(cBL>bombExpOrNot[2]):
                 break
+            # stopping on crate
+            if(isIndexesRange((yTmp,xTmp))==True):
+                if(crateMap[yTmp,xTmp]==0):
+                    # adding the crate to broken one to be later on destroyed upon displaying
+                    # and collision removed
+                    brokenCrates.append([yTmp,xTmp,time.time()])
+                    break
             print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
     print("pathInBlasts\n",pathInBlasts)
@@ -430,6 +440,19 @@ def isIndexesRange(point):
                     # print("ii in (0,0) and (19,15)")
                     isInsideIndexRange = True
     return isInsideIndexRange
+
+def displayBrokenCratesAndUpdateCollision():
+    global brokenCrates
+    global crateMap
+    for brokenCrate in brokenCrates:
+        # Tiles[3][0-7]
+        timePassed = time.time() - brokenCrate[2]
+        gameDisplay.blit(Tiles[3][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        if(timePassed*1000>200):
+            if(TheMap[brokenCrate[1],brokenCrate[0]]==1):
+                crateMap[brokenCrate[0],brokenCrate[1]]=1
+            brokenCrates.remove(brokenCrate)
+
 
 def hitboxes():
     # in: Players
@@ -513,6 +536,8 @@ while(runningMain):
     displayCrates()
     displayMap()
     displayBombs()
+    print("brokenCrates",brokenCrates)
+    displayBrokenCratesAndUpdateCollision()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
