@@ -399,26 +399,20 @@ def explodingBomb(bombExpOrNot):
                     if (np.array_equal([checkingBomb[0][0], checkingBomb[0][1]], [yTmp, xTmp])):
                         print("issuing:explodingBomb(checkingBomb)")
                         explodingBomb(checkingBomb)
-                        # explodingBomb([[checkingBomb[0][1],checkingBomb[0][0]],checkingBomb[1],
-                        #                checkingBomb[2],checkingBomb[3]])
             if (i == 0):
                 xTmp += 1
-                # airBlast(0, xTmp)
                 if (isIndexesRange((0, xTmp)) == False):
                     break
             if (i == 1):
                 xTmp -= 1
-                # airBlast(0, xTmp)
                 if (isIndexesRange((0, xTmp)) == False):
                     break
             if (i == 2):
                 yTmp += 1
-                # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
             if (i == 3):
                 yTmp -= 1
-                # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
             cBL += 1
