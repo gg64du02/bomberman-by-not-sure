@@ -124,7 +124,7 @@ def generatedCrateMap():
     # in: TheMap
     # out: crateMap
     # todo: add a proper threshold to respect the pourcentageOfCrate
-    pourcentageOfCrate = 80
+    pourcentageOfCrate = 100
     minFreeSpot = 12
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
@@ -357,6 +357,7 @@ def explodingBomb(bombExpOrNot):
 
     pathInBlasts = np.zeros_like(crateMap)
 
+
     # todo: add blast length support
     # todo: stop on crate
     # notsorted
@@ -365,6 +366,9 @@ def explodingBomb(bombExpOrNot):
     for i in range(4):
         xTmp = xBomb
         yTmp = yBomb
+
+        # currentBlastLength
+        cBL = 0
 
         tileBombOnce = True
         # DONE bugfix: while ((potentialPath[xTmp, yTmp] == 1) & (isIndexesRange((xTmp, yTmp)))):
@@ -401,6 +405,10 @@ def explodingBomb(bombExpOrNot):
                 # airBlast(yTmp, 0)
                 if (isIndexesRange((yTmp, 0)) == False):
                     break
+            cBL += 1
+
+            if(cBL>bombExpOrNot[2]):
+                break
             print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
     print("pathInBlasts\n",pathInBlasts)
