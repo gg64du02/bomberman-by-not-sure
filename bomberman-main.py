@@ -461,17 +461,12 @@ def displayBrokenCratesAndUpdateCollision():
 
 def displayAirBlasts():
     global airBlasts
-    # global crateMap
     for airBlast in airBlasts:
         # Tiles[3][0-5]
         timePassed = time.time() - airBlast[2]
         gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
-            # if(TheMap[brokenCrate[1],brokenCrate[0]]==1):
-            #     crateMap[brokenCrate[0],brokenCrate[1]]=1
             airBlasts.remove(airBlast)
-    pass
-
 
 def hitboxes():
     # in: Players
