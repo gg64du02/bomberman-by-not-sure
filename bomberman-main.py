@@ -506,35 +506,35 @@ def keyboardRead():
         if event.type == pygame.QUIT:
             crashed = True
         if event.type == pygame.KEYDOWN:
-            for controls in controlsForPlayers:
+            for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
                 print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
-                    # print("control",control)
+                    print("control",control)
+                    print("index",index)
                     # 262 is 6 in numpad
                     print("int(event.key)",int(event.key))
                     if event.key == pygame.K_6:
                         print()
                     if event.key == control :
                         # sfde ctrl shift
-                        # print("index",index)
                         if(index<4):
-                            Controls_from_kbd[1][0][index]=1
+                            Controls_from_kbd[playerNumber][0][index]=1
                         else:
-                            Controls_from_kbd[1][1][0]=1
+                            Controls_from_kbd[playerNumber][1][0]=1
                         # print()
                         # if
         if event.type == pygame.KEYUP:
-            for controls in controlsForPlayers:
+            for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
-                    # print("control",control)
+                    print("control",control)
+                    print("index",index)
                     if event.key == control :
                         # sfde ctrl shift
-                        # print("index",index)
                         if(index<4):
-                            Controls_from_kbd[1][0][index]=0
+                            Controls_from_kbd[playerNumber][0][index]=0
                         else:
-                            Controls_from_kbd[1][1][0]=0
+                            Controls_from_kbd[playerNumber][1][0]=0
                         # print()
                         # if
 
