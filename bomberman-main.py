@@ -498,38 +498,30 @@ def keyboardRead():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_e:
                 print('KEYDOWN,K_e')
-                redPlayerPos[1] -= 1 * 4
                 Controls_from_kbd[1][0][3] = 1
             if event.key == pygame.K_s:
                 print('KEYDOWN,K_s')
-                redPlayerPos[0] -= 1 * 4
                 Controls_from_kbd[1][0][0] = 1
             if event.key == pygame.K_f:
                 print('KEYDOWN,K_f')
-                redPlayerPos[0] += 1 * 4
                 Controls_from_kbd[1][0][1] = 1
             if event.key == pygame.K_d:
                 print('KEYDOWN,K_d')
-                redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 1
             if event.key == pygame.K_z:
                 Controls_from_kbd[1][1][0] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_e:
                 print('KEYUP,K_e')
-                # redPlayerPos[1] -= 1 * 4
                 Controls_from_kbd[1][0][3] = 0
             if event.key == pygame.K_s:
                 print('KEYUP,K_s')
-                # redPlayerPos[0] -= 1 * 4
                 Controls_from_kbd[1][0][0] = 0
             if event.key == pygame.K_f:
                 print('KEYUP,K_f')
-                # redPlayerPos[0] += 1 * 4
                 Controls_from_kbd[1][0][1] = 0
             if event.key == pygame.K_d:
                 print('KEYUP,K_d')
-                # redPlayerPos[1] += 1 * 4
                 Controls_from_kbd[1][0][2] = 0
             if event.key == pygame.K_z:
                 Controls_from_kbd[1][1][0] = 0
