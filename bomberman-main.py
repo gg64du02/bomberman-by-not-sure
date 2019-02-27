@@ -117,6 +117,13 @@ def playerRed(x,y):
         print("playerRedDeadImg")
         gameDisplay.blit(playerRedDeadImg, (x, y))
 
+def playerGreen(x,y):
+    if(Players[0][2][0]!=0):
+        gameDisplay.blit(Tiles[9][0], (x, y))
+    else:
+        print("playerRedDeadImg")
+        gameDisplay.blit(Tiles[10][5], (x, y))
+
 def bomb(x,y):
     gameDisplay.blit(bombImg, (x, y))
 
@@ -604,6 +611,7 @@ while(runningMain):
 
     print("Players[1]",Players[1])
     playerRed(Players[1][0],Players[1][1])
+    playerGreen(Players[0][0],Players[0][1])
 
 
 
