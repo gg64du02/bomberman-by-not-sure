@@ -302,17 +302,25 @@ def checkForExplodingBomb():
     # in: (global) PlayersWhitboxesAindex
     global PlayersWhitboxesAindex
     global Players
+    PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
         print("bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
-            PlayersWhitboxesAindex = hitboxes()
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
             print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
             print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
-    pass
+    print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+    # airblasts kills
+    for hitbox in PlayersWhitboxesAindex:
+        for airBlast in airBlasts:
+            # print("checkForExplodingBomb:[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]]",[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])
+            if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):
+                # print("checkForExplodingBomb:if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):")
+                # killing players
+                Players[hitbox[2]][2] = [0]
 
 airBlastDisplay = np.zeros_like(TheMap)
 brokenCrates = []
@@ -368,7 +376,7 @@ def explodingBomb(bombExpOrNot):
     # done: stop on crate
     # done: show crate destruction
     # done: air blast display
-    # todo: killing any players in blasts
+    # done: killing any players in blasts
     # todo: bug hard block destruction display
     # upwward, downward, rightward, leftward
     for i in range(4):
