@@ -316,6 +316,7 @@ def checkForExplodingBomb():
 
 airBlastDisplay = np.zeros_like(TheMap)
 brokenCrates = []
+airBlasts = []
 
 def explodingBomb(bombExpOrNot):
     # in: bombExpOrNot
@@ -342,6 +343,8 @@ def explodingBomb(bombExpOrNot):
 
     global brokenCrates
 
+    global airBlasts
+
     # remaining amount of bombs for the current player
     print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
     listOfBombs.remove(bombExpOrNot)
@@ -364,7 +367,7 @@ def explodingBomb(bombExpOrNot):
     # done: add blast length support
     # done: stop on crate
     # done: show crate destruction
-    # todo: air blast display
+    # done: air blast display
     # todo: killing any players in blasts
     # todo: bug hard block destruction display
     # upwward, downward, rightward, leftward
@@ -421,6 +424,10 @@ def explodingBomb(bombExpOrNot):
                     # and collision removed
                     brokenCrates.append([yTmp,xTmp,time.time()])
                     break
+                else:
+                    # airBlast
+                    airBlasts.append([yTmp,xTmp,time.time()])
+
             print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
     print("pathInBlasts\n",pathInBlasts)
@@ -446,11 +453,24 @@ def displayBrokenCratesAndUpdateCollision():
     for brokenCrate in brokenCrates:
         # Tiles[3][0-7]
         timePassed = time.time() - brokenCrate[2]
-        gameDisplay.blit(Tiles[3][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
         if(timePassed*1000>200):
             if(TheMap[brokenCrate[1],brokenCrate[0]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
+
+def displayAirBlasts():
+    global airBlasts
+    # global crateMap
+    for airBlast in airBlasts:
+        # Tiles[3][0-5]
+        timePassed = time.time() - airBlast[2]
+        gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+        if(timePassed*1000>200):
+            # if(TheMap[brokenCrate[1],brokenCrate[0]]==1):
+            #     crateMap[brokenCrate[0],brokenCrate[1]]=1
+            airBlasts.remove(airBlast)
+    pass
 
 
 def hitboxes():
@@ -537,6 +557,7 @@ while(runningMain):
     displayBombs()
     print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
+    displayAirBlasts()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
