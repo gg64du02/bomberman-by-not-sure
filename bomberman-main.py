@@ -124,7 +124,7 @@ def generatedCrateMap():
     # in: TheMap
     # out: crateMap
     # todo: add a proper threshold to respect the pourcentageOfCrate
-    pourcentageOfCrate = 80
+    pourcentageOfCrate = 20
     minFreeSpot = 12
     tileGened = tileGen()
     crateMap = np.copy(TheMap)
@@ -140,7 +140,7 @@ def generatedCrateMap():
         # print("randomNumber",randomNumber)
         if(not([xTile,yTile] in freePoints)):
             # print([xTile,yTile])
-            if((100*randomNumber/255)>(pourcentageOfCrate)):
+            if((100*randomNumber/255)<(pourcentageOfCrate)):
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
     print("crateMap\n",crateMap)
