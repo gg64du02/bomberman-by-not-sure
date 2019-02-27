@@ -424,8 +424,9 @@ def explodingBomb(bombExpOrNot):
                 if(crateMap[yTmp,xTmp]==0):
                     # adding the crate to broken one to be later on destroyed upon displaying
                     # and collision removed
-                    brokenCrates.append([yTmp,xTmp,time.time()])
-                    break
+                    if(TheMap[yTmp,xTmp]==1):
+                        brokenCrates.append([yTmp,xTmp,time.time()])
+                        break
                 else:
                     # airBlast
                     airBlasts.append([yTmp,xTmp,time.time()])
