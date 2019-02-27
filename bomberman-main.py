@@ -463,7 +463,7 @@ def displayBrokenCratesAndUpdateCollision():
         timePassed = time.time() - brokenCrate[2]
         gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
         if(timePassed*1000>200):
-            if(TheMap[brokenCrate[1],brokenCrate[0]]==1):
+            if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
 
