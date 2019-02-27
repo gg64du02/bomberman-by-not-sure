@@ -358,8 +358,11 @@ def explodingBomb(bombExpOrNot):
     pathInBlasts = np.zeros_like(crateMap)
 
 
-    # todo: add blast length support
+    # done: add blast length support
     # todo: stop on crate
+    # todo: show crate destruction
+    # todo: air blast display
+    # todo: killing any players in blasts
     # notsorted
     # TODO: sort the result
     # upwward, downward, rightward, leftward
