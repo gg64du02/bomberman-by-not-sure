@@ -484,7 +484,10 @@ PlayersWhitboxesAindex = hitboxes()
 
 listOfBombs = []
 
-controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
+# controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
+# +0xD0 allow to use the numpad (todo: bug controlling the red player)
+# controlsGreenPlayer = [pygame.K_4+0xD0, pygame.K_6+0xD0, pygame.K_5+0xD0, pygame.K_8+0xD0, pygame.K_0+0xD0, pygame.K_n]
+controlsGreenPlayer = [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_UP, pygame.K_0, pygame.K_n]
 controlsRedPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
 # controlsBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
 # controlsCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
@@ -505,10 +508,14 @@ def keyboardRead():
             for controls in controlsForPlayers:
                 print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
-                    print("control",control)
+                    # print("control",control)
+                    # 262 is 6 in numpad
+                    print("int(event.key)",int(event.key))
+                    if event.key == pygame.K_6:
+                        print()
                     if event.key == control :
                         # sfde ctrl shift
-                        print("index",index)
+                        # print("index",index)
                         if(index<4):
                             Controls_from_kbd[1][0][index]=1
                         else:
@@ -517,12 +524,12 @@ def keyboardRead():
                         # if
         if event.type == pygame.KEYUP:
             for controls in controlsForPlayers:
-                print("controls",controls)
+                # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
-                    print("control",control)
+                    # print("control",control)
                     if event.key == control :
                         # sfde ctrl shift
-                        print("index",index)
+                        # print("index",index)
                         if(index<4):
                             Controls_from_kbd[1][0][index]=0
                         else:
