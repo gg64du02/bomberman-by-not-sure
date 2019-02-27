@@ -196,8 +196,9 @@ def ColisionCheckAndMovement():
     # out: Players
     global Players
     # i=0
+    print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        print("player,control",player,control)
+        print("ColisionCheckAndMovement:player,control,i",player,control,i)
         # print("i:",i)
         # sfde ctrl shift
         step = 8
@@ -609,7 +610,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(5)
     st_time = time.time()
     # print('lol')
 
