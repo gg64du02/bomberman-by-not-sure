@@ -491,6 +491,14 @@ def keyboardRead():
     # sfde ctrl shift
     global Controls_from_kbd
     # Controls = [ [0,0,0,0,0,0] for i in range(4)]
+
+    # controlGreenPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
+    # controlRedPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
+    # controlBluePlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
+    # controlCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
+
+    # controlsForPlayers = [controlGreenPlayer,controlRedPlayer,controlBluePlayer,controlCyanPlayer]
+
     for event in pygame.event.get():
         print("event.type",event.type)
         if event.type == pygame.QUIT:
