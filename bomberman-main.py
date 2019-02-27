@@ -492,10 +492,10 @@ def keyboardRead():
     global Controls_from_kbd
     # Controls = [ [0,0,0,0,0,0] for i in range(4)]
 
-    # controlGreenPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
-    # controlRedPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
-    # controlBluePlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
-    # controlCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_a]
+    # controlGreenPlayer = [pygame.K_4,pygame.K_6,pygame.K_5,pygame.K_8,pygame.K_0,pygame.K_n]
+    # controlRedPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
+    # controlBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
+    # controlCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
 
     # controlsForPlayers = [controlGreenPlayer,controlRedPlayer,controlBluePlayer,controlCyanPlayer]
 
