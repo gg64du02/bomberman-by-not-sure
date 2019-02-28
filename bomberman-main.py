@@ -381,18 +381,24 @@ def checkForExplodingBomb():
                 if(responsibleBomb!=[]):
                     # scoreUpdate
                     if(responsibleBomb[3]==hitbox[2]):
+                        # suicide:works
                         # score
-                        Players[hitbox[2]][4][0]-=1
+                        Players[responsibleBomb[3]][4][0]-=1
                         # kill: none (suicide)
                         # death
-                        Players[hitbox[2]][4][2]+=1
+                        Players[responsibleBomb[3]][4][2]+=1
                     else:
                         # killing another player
+                        print()
                         # score
-                        Players[hitbox[2]][4][0]+=2
+                        Players[responsibleBomb[3]][4][0]+=2
                         # kill: killed another player
-                        Players[hitbox[2]][4][1]+=1
+                        Players[responsibleBomb[3]][4][1]+=1
                         # death: none (still alive)
+
+                        # adding a death to the killed player
+                        Players[hitbox[2]][4][2]+=1
+
 
 
 airBlastDisplay = np.zeros_like(TheMap)
