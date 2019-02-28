@@ -128,10 +128,10 @@ def displayPlayers():
     for player in Players:
         if (player[2][0] != 0):
             # alive
-            gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[1][0]))
+            gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[0][1]))
         else:
             # dead
-            gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[1][0]))
+            gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
 
 
 def bomb(x,y):
@@ -207,10 +207,10 @@ st_time = time.time()
 Players = [ [[0,0],[3,3],[1],[i],[0,0,0]] for i in range(4)]
 
 # Settings starting position
-Players[3][0] = [0,32*14]
-Players[2][0] = [32*19,0]
-Players[1][0] = [0,0]
-Players[0][0] = [32*19,32*14]
+Players[3][0] = [32*0 ,32*14]
+Players[2][0] = [32*19,32*0]
+Players[1][0] = [32*19,32*14]
+Players[0][0] = [32*0 ,32*0]
 
 # global Controls
 
@@ -574,9 +574,9 @@ listOfBombs = []
 
 # controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
 # +0xD0 allow to use the numpad (done: bug fix controlling the red player)
-controlsGreenPlayer = [pygame.K_4+0xD0, pygame.K_6+0xD0, pygame.K_5+0xD0, pygame.K_8+0xD0, pygame.K_0+0xD0, pygame.K_n]
+controlsGreenPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
 # controlsGreenPlayer = [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_UP, pygame.K_0, pygame.K_n]
-controlsRedPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
+controlsRedPlayer = [pygame.K_4+0xD0, pygame.K_6+0xD0, pygame.K_5+0xD0, pygame.K_8+0xD0, pygame.K_0+0xD0, pygame.K_n]
 # controlsBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
 # controlsCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
 
@@ -691,7 +691,7 @@ while(runningMain):
         print("displayScores()")
         displayScores()
     # needs to be debugged
-    # displayPlayers()
+    displayPlayers()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
@@ -706,8 +706,10 @@ while(runningMain):
     print("hitboxes():\n",hitboxes())
 
     print("Players[1]",Players[1])
-    playerRed(Players[1][0],Players[1][1])
-    playerGreen(Players[0][0],Players[0][1])
+    # playerRed(Players[3][0],Players[3][1])
+    # playerRed(Players[2][0],Players[2][1])
+    # playerRed(Players[1][0],Players[1][1])
+    # playerGreen(Players[0][0],Players[0][1])
 
 
 
