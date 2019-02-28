@@ -173,7 +173,7 @@ def displayText(text,x,y):
     # pass
 
 # todo: display scores
-# todo: scores supports
+# done: scores supports
 # todo: multiplayers
 # todo: items spawns and pickup
 
@@ -461,7 +461,7 @@ def explodingBomb(bombExpOrNot):
     # done: show crate destruction
     # done: air blast display
     # done: killing any players in blasts
-    # todo: bug hard block destruction display
+    # done: bug hard block destruction display
     # upwward, downward, rightward, leftward
     for i in range(4):
         xTmp = xBomb
@@ -550,7 +550,7 @@ PlayersWhitboxesAindex = hitboxes()
 listOfBombs = []
 
 # controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
-# +0xD0 allow to use the numpad (todo: bug controlling the red player)
+# +0xD0 allow to use the numpad (done: bug fix controlling the red player)
 controlsGreenPlayer = [pygame.K_4+0xD0, pygame.K_6+0xD0, pygame.K_5+0xD0, pygame.K_8+0xD0, pygame.K_0+0xD0, pygame.K_n]
 # controlsGreenPlayer = [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_UP, pygame.K_0, pygame.K_n]
 controlsRedPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
