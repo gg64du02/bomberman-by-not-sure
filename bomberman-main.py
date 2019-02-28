@@ -151,6 +151,28 @@ def displayBrokenCratesAndUpdateCollision():
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
 
+
+def displayScores():
+    displayText("lol",(display_width/2),(display_height/2))
+    pass
+
+def displayText(text,x,y):
+    def text_objects(text, font):
+        textSurface = font.render(text, True, white)
+        return textSurface, textSurface.get_rect()
+    # text = "lol"
+    largeText = pygame.font.Font('freesansbold.ttf',20)
+    TextSurf, TextRect = text_objects(text, largeText)
+    # TextRect.center = ((display_width/2),(display_height/2))
+    TextRect.center = (x,y)
+    gameDisplay.blit(TextSurf, TextRect)
+    # pass
+
+# todo: display scores
+# todo: scores supports
+# todo: multiplayers
+# todo: items spawns and pickup
+
 # ======================================================
 
 runningMain = True
@@ -596,6 +618,7 @@ while(runningMain):
     print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     displayAirBlasts()
+    displayScores()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
@@ -617,7 +640,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(5)
+    clock.tick(60)
     st_time = time.time()
     # print('lol')
 
