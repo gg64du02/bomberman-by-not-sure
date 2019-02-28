@@ -201,6 +201,7 @@ Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 def generatedCrateMap():
     # in: TheMap
     # out: crateMap
+    # done: little better generation
     # todo: add a proper threshold to respect the pourcentageOfCrate
     pourcentageOfCrate = 20
     minFreeSpot = 12
@@ -665,7 +666,7 @@ while(runningMain):
     print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     displayAirBlasts()
-    # todoScore display is slow
+    # done:Score display is slow
     if(boolDisplayScores == True):
         print("displayScores()")
         displayScores()
