@@ -182,9 +182,9 @@ redPlayerPos = [0,0]
 st_time = time.time()
 
 # [[player position_y,player position_x],[bombs available,bombs blast radius]
-# ,[alive=1],[i=index for a player]]
+# ,[alive=1],[i=index for a player],[score,kill,death]]
 # Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
-Players = [ [[0,0],[3,3],[1],[i]] for i in range(4)]
+Players = [ [[0,0],[3,3],[1],[i],[0,0,0]] for i in range(4)]
 
 # global Controls
 
@@ -351,6 +351,7 @@ def checkForExplodingBomb():
     # in: (global) PlayersWhitboxesAindex
     global PlayersWhitboxesAindex
     global Players
+    responsibleBomb = []
     PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
         print("bombExpOrNot",bombExpOrNot)
@@ -361,8 +362,11 @@ def checkForExplodingBomb():
             print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
+            responsibleBomb = bombExpOrNot
     print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
+
+    # todo: fix the double score count
     for hitbox in PlayersWhitboxesAindex:
         for airBlast in airBlasts:
             # print("checkForExplodingBomb:[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]]",[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])
@@ -370,6 +374,22 @@ def checkForExplodingBomb():
                 # print("checkForExplodingBomb:if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):")
                 # killing players
                 Players[hitbox[2]][2] = [0]
+                if(responsibleBomb!=[]):
+                    # scoreUpdate
+                    if(responsibleBomb[3]==hitbox[2]):
+                        # score
+                        Players[hitbox[2]][4][0]-=1
+                        # kill: none (suicide)
+                        # death
+                        Players[hitbox[2]][4][2]+=1
+                    else:
+                        # killing another player
+                        # score
+                        Players[hitbox[2]][4][0]+=2
+                        # kill: killed another player
+                        Players[hitbox[2]][4][1]+=1
+                        # death: none (still alive)
+
 
 airBlastDisplay = np.zeros_like(TheMap)
 brokenCrates = []
