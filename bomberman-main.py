@@ -172,7 +172,8 @@ def displayText(text,x,y):
     gameDisplay.blit(TextSurf, TextRect)
     # pass
 
-# todo: display scores
+# done: display scores
+# todo:improve score displaying
 # done: scores supports
 # todo: multiplayers
 # todo: items spawns and pickup
@@ -560,15 +561,23 @@ controlsRedPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z,
 # controlsForPlayers = [controlsGreenPlayer,controlsRedPlayer,controlsBluePlayer,controlsCyanPlayer]
 controlsForPlayers = [controlsGreenPlayer, controlsRedPlayer]
 
+boolDisplayScores = False
+
 def keyboardRead():
     # sfde ctrl shift
     global Controls_from_kbd
+
+    global boolDisplayScores
 
     for event in pygame.event.get():
         print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
         if event.type == pygame.KEYDOWN:
+            print("pygame.K_TAB",pygame.K_TAB)
+            print("event.key",event.key)
+            if event.key == pygame.K_TAB:
+                boolDisplayScores = True
             for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
@@ -587,6 +596,8 @@ def keyboardRead():
                         # print()
                         # if
         if event.type == pygame.KEYUP:
+            if event.key == pygame.K_TAB:
+                boolDisplayScores = False
             for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
@@ -653,7 +664,10 @@ while(runningMain):
     print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     displayAirBlasts()
-    displayScores()
+    # todoScore display is slow
+    if(boolDisplayScores == True):
+        print("displayScores()")
+        displayScores()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
