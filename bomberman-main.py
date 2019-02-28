@@ -124,6 +124,16 @@ def playerGreen(x,y):
         print("playerRedDeadImg")
         gameDisplay.blit(Tiles[10][5], (x, y))
 
+def displayPlayers():
+    for player in Players:
+        if (player[2][0] != 0):
+            # alive
+            gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[1][0]))
+        else:
+            # dead
+            gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[1][0]))
+
+
 def bomb(x,y):
     gameDisplay.blit(bombImg, (x, y))
 
@@ -680,6 +690,8 @@ while(runningMain):
     if(boolDisplayScores == True):
         print("displayScores()")
         displayScores()
+    # needs to be debugged
+    # displayPlayers()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
