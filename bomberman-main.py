@@ -181,6 +181,7 @@ def text_objects(text, font):
 # todo: adding a single files loading all the sprite
 # todo: adding aplha support for sprites
 # todo: display all the players
+# todo: set all the players starting position
 
 # ======================================================
 
