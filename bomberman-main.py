@@ -161,9 +161,6 @@ def displayScores():
     pass
 
 def displayText(text,x,y):
-    def text_objects(text, font):
-        textSurface = font.render(text, True, white)
-        return textSurface, textSurface.get_rect()
     # text = "lol"
     largeText = pygame.font.Font('freesansbold.ttf',20)
     TextSurf, TextRect = text_objects(text, largeText)
@@ -171,6 +168,10 @@ def displayText(text,x,y):
     TextRect.center = (x,y)
     gameDisplay.blit(TextSurf, TextRect)
     # pass
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, white)
+    return textSurface, textSurface.get_rect()
 
 # done: display scores
 # todo:improve score displaying
