@@ -190,7 +190,7 @@ def text_objects(text, font):
 # todo: items spawns and pickup
 # todo: adding a single files loading all the sprite
 # todo: adding aplha support for sprites
-# todo: display all the players
+# done: display all the players
 # done: set all the players starting position
 
 # ======================================================
@@ -572,10 +572,9 @@ PlayersWhitboxesAindex = hitboxes()
 
 listOfBombs = []
 
-# controlsGreenPlayer = [pygame.K_4, pygame.K_6, pygame.K_5, pygame.K_8, pygame.K_0, pygame.K_n]
-# +0xD0 allow to use the numpad (done: bug fix controlling the red player)
 controlsGreenPlayer = [pygame.K_s, pygame.K_f, pygame.K_d, pygame.K_e, pygame.K_z, pygame.K_n]
 # controlsGreenPlayer = [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_UP, pygame.K_0, pygame.K_n]
+# +0xD0 allow to use the numpad (done: bug fix controlling the red player)
 controlsRedPlayer = [pygame.K_4+0xD0, pygame.K_6+0xD0, pygame.K_5+0xD0, pygame.K_8+0xD0, pygame.K_0+0xD0, pygame.K_n]
 # controlsBluePlayer = [pygame.K_j,pygame.K_l,pygame.K_k,pygame.K_i,pygame.K_SPACE,pygame.K_n]
 # controlsCyanPlayer = [pygame.K_s,pygame.K_f,pygame.K_d,pygame.K_e,pygame.K_z,pygame.K_n]
@@ -615,8 +614,6 @@ def keyboardRead():
                             Controls_from_kbd[playerNumber][0][index]=1
                         else:
                             Controls_from_kbd[playerNumber][1][0]=1
-                        # print()
-                        # if
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_TAB:
                 boolDisplayScores = False
@@ -631,40 +628,6 @@ def keyboardRead():
                             Controls_from_kbd[playerNumber][0][index]=0
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
-                        # print()
-                        # if
-
-        #     if event.key == pygame.K_e:
-        #         print('KEYDOWN,K_e')
-        #         Controls_from_kbd[1][0][3] = 1
-        #     if event.key == pygame.K_s:
-        #         print('KEYDOWN,K_s')
-        #         Controls_from_kbd[1][0][0] = 1
-        #     if event.key == pygame.K_f:
-        #         print('KEYDOWN,K_f')
-        #         Controls_from_kbd[1][0][1] = 1
-        #     if event.key == pygame.K_d:
-        #         print('KEYDOWN,K_d')
-        #         Controls_from_kbd[1][0][2] = 1
-        #     if event.key == pygame.K_z:
-        #         Controls_from_kbd[1][1][0] = 1
-        # if event.type == pygame.KEYUP:
-        #     if event.key == pygame.K_e:
-        #         print('KEYUP,K_e')
-        #         Controls_from_kbd[1][0][3] = 0
-        #     if event.key == pygame.K_s:
-        #         print('KEYUP,K_s')
-        #         Controls_from_kbd[1][0][0] = 0
-        #     if event.key == pygame.K_f:
-        #         print('KEYUP,K_f')
-        #         Controls_from_kbd[1][0][1] = 0
-        #     if event.key == pygame.K_d:
-        #         print('KEYUP,K_d')
-        #         Controls_from_kbd[1][0][2] = 0
-        #     if event.key == pygame.K_z:
-        #         Controls_from_kbd[1][1][0] = 0
-
-lolilol = 0
 
 while(runningMain):
     print("==========================================================")
@@ -695,23 +658,10 @@ while(runningMain):
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
-    if(lolilol%4==0):
-        airBlast(0,0)
-
-    lolilol += 1
-
 
     checkForExplodingBomb()
 
     print("hitboxes():\n",hitboxes())
-
-    print("Players[1]",Players[1])
-    # playerRed(Players[3][0],Players[3][1])
-    # playerRed(Players[2][0],Players[2][1])
-    # playerRed(Players[1][0],Players[1][1])
-    # playerGreen(Players[0][0],Players[0][1])
-
-
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
