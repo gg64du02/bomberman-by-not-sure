@@ -180,6 +180,7 @@ def text_objects(text, font):
 # todo: items spawns and pickup
 # todo: adding a single files loading all the sprite
 # todo: adding aplha support for sprites
+# todo: display all the players
 
 # ======================================================
 
