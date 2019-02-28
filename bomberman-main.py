@@ -178,6 +178,8 @@ def text_objects(text, font):
 # done: scores supports
 # todo: multiplayers
 # todo: items spawns and pickup
+# todo: adding a single files loading all the sprite
+# todo: adding aplha support for sprites
 
 # ======================================================
 
