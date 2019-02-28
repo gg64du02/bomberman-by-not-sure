@@ -181,7 +181,7 @@ def text_objects(text, font):
 # todo: adding a single files loading all the sprite
 # todo: adding aplha support for sprites
 # todo: display all the players
-# todo: set all the players starting position
+# done: set all the players starting position
 
 # ======================================================
 
@@ -195,6 +195,12 @@ st_time = time.time()
 # ,[alive=1],[i=index for a player],[score,kill,death]]
 # Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
 Players = [ [[0,0],[3,3],[1],[i],[0,0,0]] for i in range(4)]
+
+# Settings starting position
+Players[3][0] = [0,32*14]
+Players[2][0] = [32*19,0]
+Players[1][0] = [0,0]
+Players[0][0] = [32*19,32*14]
 
 # global Controls
 
