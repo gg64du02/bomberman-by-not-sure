@@ -154,8 +154,9 @@ def displayBrokenCratesAndUpdateCollision():
 
 def displayScores():
     for player in Players:
-        tmpString = "Player "+str(player[3][0])+":"+str(player[4][0])+"/kill(s):"+str(player[4][1])+"/deaths(s):"+str(player[4][2])
-        displayText(tmpString,(display_width / 2), (display_height / 2))
+        tmpString = "Player "+str(player[3][0])+" score:"+str(player[4][0])+" | kill(s):"+str(player[4][1])+" | deaths(s):"+str(player[4][2])
+        # displayText(tmpString,(display_width / 2), (display_height / 2))
+        displayText(tmpString,(display_width / 2), (display_height / 6)+32*player[3][0])
     # displayText("lol",(display_width/2),(display_height/2))
     pass
 
