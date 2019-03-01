@@ -37,6 +37,7 @@ gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('Bomberman-by-not-sure')
 
 black = (0, 0, 0)
+gray = (127, 127, 127)
 white = (255, 255, 255)
 
 clock = pygame.time.Clock()
@@ -771,7 +772,7 @@ while(runningMain):
         runningMain = False
         print("issuing the esc key")
 
-    gameDisplay.fill(white)
+    gameDisplay.fill(gray)
     # crate(0,0)
 
     displayCrates()
