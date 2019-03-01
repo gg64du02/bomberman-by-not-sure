@@ -144,7 +144,8 @@ def displayBrokenCratesAndUpdateCollision():
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
-            lighterMapDisplayList.append([brokenCrate[0],brokenCrate[1]])
+            # lighterMapDisplayList.append([brokenCrate[0],brokenCrate[1]])
+            generateItem(brokenCrate[0],brokenCrate[1])
 
 
 def displayScores():
@@ -249,16 +250,38 @@ crateMap = generatedCrateMap()
 
 lighterMap = []
 lighterMapDisplayList =[]
-def generatedLighterMap():
+additionnalBombMap=[]
+additionnalBombMapDisplayList=[]
+def generatedItemsMap():
     global lighterMap
+    global additionnalBombMap
     lighterMap = np.zeros_like(TheMap)
+    additionnalBombMap = np.zeros_like(TheMap)
     tileGened5 = tileGen()
     for tile in tileGened5:
         if(TheMap[tile[1],tile[0]]!=0):
             if(crateMap[tile[1],tile[0]]==1):
+                # if(random.randint(0,2)%2==0):
                 lighterMap[tile[1],tile[0]] = 1
     print("lighterMap\n",lighterMap)
-generatedLighterMap()
+generatedItemsMap()
+
+def generateItem(x,y):
+    print("generateItem")
+    global lighterMap
+    global lighterMapDisplayList
+    global additionnalBombMap
+    global additionnalBombMapDisplayList
+    if(TheMap[y,x]!=0):
+        if(crateMap[y,x]==1):
+            if(random.randint(0,2)%2==0):
+                lighterMap[y,x] = 1
+                lighterMapDisplayList.append([y,x])
+            else:
+                print("[y,x]",[y,x])
+                print("additionnalBombMap\n",additionnalBombMap)
+                additionnalBombMap[y][x] = 1
+                additionnalBombMapDisplayList.append([y,x])
 
 def playersPickupsItems():
     # for hitboxes()
