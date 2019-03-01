@@ -184,7 +184,7 @@ def displayItems():
     for additionnalBomb in additionnalBombMapDisplayList:
         displayAdditionnalBomb(additionnalBomb[1],additionnalBomb[0])
 
-# todo: add round restart after there one/no players left alive
+# doen: add round restart after there one/no players left alive
 # todo: remove useless/un-used functions
 # done: display scores
 # todo:improve score displaying
