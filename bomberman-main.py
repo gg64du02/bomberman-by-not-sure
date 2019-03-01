@@ -733,7 +733,8 @@ def keyboardRead():
             print("event.key",event.key)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
-            for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
+            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
+                print("playerNumber",playerNumber)
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
                     # print("control",control)
@@ -751,7 +752,7 @@ def keyboardRead():
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_TAB:
                 boolDisplayScores = False
-            for controls,playerNumber in zip(controlsForPlayers,range(0,3)):
+            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
                     # print("control",control)
