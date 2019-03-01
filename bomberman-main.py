@@ -263,8 +263,8 @@ generatedLighterMap()
 def playersPickupsItems():
     # for hitboxes()
     # PlayersWhitboxesAindex
-    for hitbox in PlayersWhitboxesAindex:
-        for lighter in lighterMapDisplayList:
+    for lighter in lighterMapDisplayList:
+        for hitbox in PlayersWhitboxesAindex:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
             if(np.array_equal([hitbox[1],hitbox[0]],[lighter[1],lighter[0]])):
                 Players[hitbox[2]][1][1] += 1
