@@ -41,14 +41,12 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-carImg = pygame.image.load('./sdkskin/Sprites.bmp')
 blockImg = pygame.image.load('./sdkskin/Block.bmp')
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 tileImg = pygame.image.load('./sdkskin/Tile.bmp')
 
-carImg = pygame.image.load('./sdkskin/Sprites.bmp')
 blockImg = pygame.image.load('./sdkskin/Block.bmp')
 bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
@@ -94,9 +92,6 @@ for iTiles in range(256):
     Tiles[y][x] = (py_image)
 
     # Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
-
-def car(x, y):
-    gameDisplay.blit(carImg, (x, y))
 
 def block(x,y):
     gameDisplay.blit(blockImg, (x, y))
@@ -656,7 +651,6 @@ while(runningMain):
         print("issuing the esc key")
 
     gameDisplay.fill(black)
-    # car(x, y)
     # crate(0,0)
 
     displayCrates()
