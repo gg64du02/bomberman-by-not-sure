@@ -168,7 +168,7 @@ def displayText(text,x,y):
     # pass
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, white)
+    textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
 
 # done: display scores
@@ -627,7 +627,7 @@ while(runningMain):
         runningMain = False
         print("issuing the esc key")
 
-    gameDisplay.fill(black)
+    gameDisplay.fill(white)
     # crate(0,0)
 
     displayCrates()
