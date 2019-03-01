@@ -41,9 +41,6 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
-playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
-blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 
 
 TheMap = currentMap()
@@ -104,7 +101,7 @@ def displayCrates():
             crate(32*xTile,32*yTile)
 
 def airBlast(x,y):
-    gameDisplay.blit(blastingAirImg, (x, y))
+    gameDisplay.blit(Tiles[3][0], (x, y))
 
 def displayAirBlasts():
     global airBlasts
