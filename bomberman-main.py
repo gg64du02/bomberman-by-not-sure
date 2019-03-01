@@ -202,7 +202,7 @@ st_time = time.time()
 # [[player position_y,player position_x],[bombs available,bombs blast radius]
 # ,[alive=1],[i=index for a player],[score,kill,death]]
 # Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
-Players = [ [[0,0],[3,3],[1],[i],[0,0,0]] for i in range(4)]
+Players = [ [[0,0],[3,4],[1],[i],[0,0,0]] for i in range(4)]
 
 # Settings starting position
 Players[3][0] = [32*0 ,32*14]
@@ -259,6 +259,20 @@ def generatedLighterMap():
                 lighterMap[tile[1],tile[0]] = 1
     print("lighterMap\n",lighterMap)
 generatedLighterMap()
+
+def playersPickupsItems():
+    # for hitboxes()
+    # PlayersWhitboxesAindex
+    for hitbox in PlayersWhitboxesAindex:
+        for lighter in lighterMapDisplayList:
+            # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
+            if(np.array_equal([hitbox[1],hitbox[0]],[lighter[1],lighter[0]])):
+                Players[hitbox[2]][1][1] += 1
+                # updating the lightMap generated
+                lighterMap[lighter[0],lighter[1]] = 0
+                # removing the lighter
+                lighterMapDisplayList.remove(lighter)
+
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
@@ -660,6 +674,7 @@ while(runningMain):
     displayBombs()
     print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
+    playersPickupsItems()
     displayAirBlasts()
     # done:Score display is slow
     if(boolDisplayScores == True):
