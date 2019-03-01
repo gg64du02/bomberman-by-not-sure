@@ -8,6 +8,9 @@ import itertools
 
 import random
 
+# image processing and skin loading
+from PIL import Image
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -66,11 +69,33 @@ def displayMap():
 # =============================TILES====================
 Tiles = [[[] for lol in range(16)] for lil in range(16)]
 print(Tiles)
+
+
 for iTiles in range(256):
+    image = Image.open("./sdkskin/spliting/Tile.png")
+    # Pile image
     x= iTiles%16
     y= int(iTiles/16)
     print("(x,y)",x,y)
+
+    image2 = image
+
+    width = 32
+    height = 32
+    box = (32 * x, 32 * y, 32 * x + width, 32 * y + height)
+    image2.crop(box)
+
+    mode = image2.mode
+    size = image2.size
+    data = image2.tobytes()
+    py_image = pygame.image.fromstring(data, size, mode)
+    # Surface py_image
+    # Tiles[y][x] = (py_image)
+    #
     Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
+    # box = (32*x, 32*y, 32*x+width, 32*y+height)
+    # a = im2.crop(box)
+    # Tiles[y][x] = ( )
 
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
@@ -79,8 +104,9 @@ def block(x,y):
     gameDisplay.blit(blockImg, (x, y))
 
 def crate(x,y):
-    gameDisplay.blit(crateImg, (x, y))
+    # gameDisplay.blit(crateImg, (x, y))
     # gameDisplay.blit(Tiles[1][1], (x, y))
+    gameDisplay.blit(Tiles[4][0], (x, y))
 
 def displayCrates():
     # in: crateMap
