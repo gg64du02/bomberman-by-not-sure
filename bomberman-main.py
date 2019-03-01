@@ -57,23 +57,18 @@ Tiles = [[[] for lol in range(16)] for lil in range(16)]
 print(Tiles)
 
 image = Image.open("./skin/Tile.png")
+# PIL image
 
 for iTiles in range(256):
-    # Pile image
     x= iTiles%16
     y= int(iTiles/16)
-    print("(x,y)",x,y)
 
     image2 = image
-    print("image\n",image)
-    print("type(image)\n",type(image))
 
     width = 32
     height = 32
     box = (32 * x, 32 * y, 32 * x + width, 32 * y + height)
     image3 = image2.crop(box)
-    print("image3\n",image3)
-    print("type(image3)\n",type(image3))
 
     mode = image3.mode
     size = image3.size
@@ -171,6 +166,17 @@ def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
 
+def displayLighter(x,y):
+    gameDisplay.blit(Tiles[6][2], (32*x,32*y))
+
+
+def displayLighters():
+    print("displayLighters")
+    for lighter in lighterMapDisplayList:
+        displayLighter(lighter[1],lighter[0])
+    #     pass
+    # pass
+
 # done: display scores
 # todo:improve score displaying
 # done: scores supports
@@ -206,6 +212,7 @@ Players[0][0] = [32*0 ,32*0]
 Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 
+
 def generatedCrateMap():
     # in: TheMap
     # out: crateMap
@@ -234,6 +241,20 @@ def generatedCrateMap():
     # pass
     return crateMap
 crateMap = generatedCrateMap()
+
+
+lighterMap = []
+lighterMapDisplayList =[]
+def generatedLighterMap():
+    global lighterMap
+    lighterMap = np.zeros_like(TheMap)
+    tileGened5 = tileGen()
+    for tile in tileGened5:
+        if(TheMap[tile[1],tile[0]]!=0):
+            if(crateMap[tile[1],tile[0]]==1):
+                lighterMap[tile[1],tile[0]] = 1
+    print("lighterMap\n",lighterMap)
+generatedLighterMap()
 
 def ColisionCheckAndMovement():
     # in : Players, Controls
