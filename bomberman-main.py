@@ -222,6 +222,64 @@ Players[0][0] = [32*0 ,32*0]
 Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 
+def newRound():
+    global runningMain
+    global redPlayerPos
+    global st_time
+    global Players
+    global Controls_from_kbd
+    # global runningMain
+    runningMain = True
+
+    redPlayerPos = [0,0]
+
+    st_time = time.time()
+
+    # [[player position_y,player position_x],[bombs available,bombs blast radius]
+    # ,[alive=1],[i=index for a player],[score,kill,death]]
+    # Players = [ [[0,0],[1,1],[1],[i]] for i in range(4)]
+    Players = [ [[0,0],[3,4],[1],[i],[0,0,0]] for i in range(4)]
+
+    # Settings starting position
+    Players[3][0] = [32*0 ,32*14]
+    Players[2][0] = [32*19,32*0]
+    Players[1][0] = [32*19,32*14]
+    Players[0][0] = [32*0 ,32*0]
+
+    # global Controls
+
+    # sfde ctrl shift
+    Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
+    # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
+
+    global TheMap
+    global crateMap
+    global lighterMap
+    global lighterMapDisplayList
+    global additionnalBombMap
+    global additionnalBombMapDisplayList
+    global lighterMap
+    global additionnalBombMap
+    TheMap = currentMap()
+
+    crateMap = generatedCrateMap()
+
+    lighterMap = []
+    lighterMapDisplayList = []
+    additionnalBombMap = []
+    additionnalBombMapDisplayList = []
+    lighterMap = np.zeros_like(TheMap)
+    additionnalBombMap = np.zeros_like(TheMap)
+
+    global airBlastDisplay
+    global brokenCrates
+    global airBlasts
+    global listOfBombs
+    airBlastDisplay = np.zeros_like(TheMap)
+    brokenCrates = []
+    airBlasts = []
+    listOfBombs = []
+    pass
 
 def generatedCrateMap():
     # in: TheMap
