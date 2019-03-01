@@ -773,7 +773,9 @@ while(runningMain):
     # done:Score display is slow
     if(boolDisplayScores == True):
         print("displayScores()")
-        displayScores()
+        # displayScores()
+        # debugging/testing purposes
+        newRound()
     # done: needs to be debugged
     displayPlayers()
     displayItems()
