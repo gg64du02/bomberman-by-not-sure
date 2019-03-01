@@ -41,29 +41,17 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-# carImg = pygame.image.load('racecar.png')
 carImg = pygame.image.load('./sdkskin/Sprites.bmp')
-# crateImg = pygame.image.load('./sdkskin/Sprites.bmp')
 blockImg = pygame.image.load('./sdkskin/Block.bmp')
-crateImg = pygame.image.load('./sdkskin/Crate.bmp')
-# time.sleep(1)
-# crateImg = pygame.image.load(r'C:/Users/jerome/Documents/GitHub/bomberman-by-not-sure/sdkskin/block.bmp')
-# crateImg = pygame.image.fromstring(bytes('a'),1,[])
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
-# playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
-# bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 tileImg = pygame.image.load('./sdkskin/Tile.bmp')
 
 carImg = pygame.image.load('./sdkskin/Sprites.bmp')
 blockImg = pygame.image.load('./sdkskin/Block.bmp')
-crateImg = pygame.image.load('./sdkskin/Crate.bmp')
-# playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
-# playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
-# tileImg = pygame.image.load('./sdkskin/Tile.bmp')
 
 
 TheMap = currentMap()
@@ -114,8 +102,6 @@ def block(x,y):
     gameDisplay.blit(blockImg, (x, y))
 
 def crate(x,y):
-    # gameDisplay.blit(crateImg, (x, y))
-    # gameDisplay.blit(Tiles[1][1], (x, y))
     gameDisplay.blit(Tiles[4][0], (x, y))
 
 def displayCrates():
