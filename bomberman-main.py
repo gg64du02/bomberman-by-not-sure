@@ -72,27 +72,34 @@ print(Tiles)
 
 
 for iTiles in range(256):
-    image = Image.open("./sdkskin/spliting/Tile.png")
+    image = Image.open("./sdkskin/spliting/Tile.bmp")
     # Pile image
     x= iTiles%16
     y= int(iTiles/16)
     print("(x,y)",x,y)
 
     image2 = image
+    print("image\n",image)
+    print("type(image)\n",type(image))
 
     width = 32
     height = 32
     box = (32 * x, 32 * y, 32 * x + width, 32 * y + height)
+    # box = (32 * y, 32 * x, 32 * y + width, 32 * x + height)
     image2.crop(box)
+    print("image2\n",image2)
+    print("type(image2)\n",type(image2))
 
     mode = image2.mode
     size = image2.size
     data = image2.tobytes()
     py_image = pygame.image.fromstring(data, size, mode)
     # Surface py_image
+    # if(y==0 and x==0):
     # Tiles[y][x] = (py_image)
+    Tiles[y][x] = (py_image)
     #
-    Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
+    # Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
     # box = (32*x, 32*y, 32*x+width, 32*y+height)
     # a = im2.crop(box)
     # Tiles[y][x] = ( )
