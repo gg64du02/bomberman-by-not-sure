@@ -304,18 +304,18 @@ def playersPickupsItems():
                 # removing the lighter
                 lighterMapDisplayList.remove(lighter)
 
-    # global additionnalBombMap
-    # global additionnalBombMapDisplayList
-    # for additionnalBomb in additionnalBombMapDisplayList:
-    #     for hitbox in PlayersWhitboxesAindex:
-    #         # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
-    #         if(np.array_equal([hitbox[1],hitbox[0]],[additionnalBomb[1],additionnalBomb[0]])):
-    #             # modifying bombs count
-    #             Players[hitbox[2]][1][0] += 1
-    #             # updating the lightMap generated
-    #             additionnalBombMap[additionnalBomb[0],additionnalBomb[1]] = 0
-    #             # removing the lighter
-    #             additionnalBombMapDisplayList.remove(additionnalBomb)
+    global additionnalBombMap
+    global additionnalBombMapDisplayList
+    for additionnalBomb in additionnalBombMapDisplayList:
+        for hitbox in PlayersWhitboxesAindex:
+            # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
+            if(np.array_equal([hitbox[1],hitbox[0]],[additionnalBomb[1],additionnalBomb[0]])):
+                # modifying bombs count
+                Players[hitbox[2]][1][0] += 1
+                # updating the lightMap generated
+                additionnalBombMap[additionnalBomb[0],additionnalBomb[1]] = 0
+                # removing the lighter
+                additionnalBombMapDisplayList.remove(additionnalBomb)
 
 
 def ColisionCheckAndMovement():
