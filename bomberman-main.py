@@ -257,19 +257,8 @@ lighterMap = []
 lighterMapDisplayList =[]
 additionnalBombMap=[]
 additionnalBombMapDisplayList=[]
-def generatedItemsMap():
-    global lighterMap
-    global additionnalBombMap
-    lighterMap = np.zeros_like(TheMap)
-    additionnalBombMap = np.zeros_like(TheMap)
-    tileGened5 = tileGen()
-    for tile in tileGened5:
-        if(TheMap[tile[1],tile[0]]!=0):
-            if(crateMap[tile[1],tile[0]]==1):
-                # if(random.randint(0,2)%2==0):
-                lighterMap[tile[1],tile[0]] = 1
-    print("lighterMap\n",lighterMap)
-generatedItemsMap()
+lighterMap = np.zeros_like(TheMap)
+additionnalBombMap = np.zeros_like(TheMap)
 
 def generateItem(y,x):
     print("generateItem")
