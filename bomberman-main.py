@@ -281,6 +281,15 @@ def newRound():
     listOfBombs = []
     pass
 
+def numberOfPlayersAlive():
+    alivePlayersCount = 0
+    for player in Players:
+        if (player[2][0]!=0):
+            alivePlayersCount +=1
+    print("alivePlayersCount",alivePlayersCount)
+    return alivePlayersCount
+
+
 def generatedCrateMap():
     # in: TheMap
     # out: crateMap
@@ -773,12 +782,13 @@ while(runningMain):
     # done:Score display is slow
     if(boolDisplayScores == True):
         print("displayScores()")
-        # displayScores()
+        displayScores()
         # debugging/testing purposes
-        newRound()
+        # newRound()
     # done: needs to be debugged
     displayPlayers()
     displayItems()
+    numberOfPlayersAlive()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
