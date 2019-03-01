@@ -525,8 +525,7 @@ def checkForExplodingBomb():
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             responsibleBomb = bombExpOrNot
             # adding the bomb position to the airBlasts (to fix score count about suicide)
-            print("checkForExplodingBomb:bombExpOrNot[0],bombExpOrNot[1]",bombExpOrNot[0],bombExpOrNot[1])
-            # airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
+            airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
     print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
 
@@ -539,11 +538,11 @@ def checkForExplodingBomb():
             for airBlast in airBlasts:
                 # print("checkForExplodingBomb:[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]]",[hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])
                 if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):
-                    print("checkForExplodingBomb:if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):")
+                    # print("checkForExplodingBomb:if(np.array_equal([hitbox[1],hitbox[0]],[airBlast[1],airBlast[0]])):")
                     # scoreUpdate
                     if(responsibleBomb[3]==hitbox[2]):
                         # count once
-                        print("Players[hitbox[2]][2][0]",Players[hitbox[2]][2][0])
+                        # print("Players[hitbox[2]][2][0]",Players[hitbox[2]][2][0])
                         if(Players[hitbox[2]][2][0]!=0):
                             # suicide:works
                             # score
@@ -556,7 +555,7 @@ def checkForExplodingBomb():
                             Players[hitbox[2]][2] = [0]
                     else:
                         # count once
-                        print("Players[hitbox[2]][2][0]",Players[hitbox[2]][2][0])
+                        # print("Players[hitbox[2]][2][0]",Players[hitbox[2]][2][0])
                         if(Players[hitbox[2]][2][0]!=0):
                             # killing another player:works
                             # score
@@ -589,13 +588,6 @@ def explodingBomb(bombExpOrNot):
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
     print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
     airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
-
-    # kill anything under the bomb
-    for hitbox in PlayersWhitboxesAindex:
-        if(np.array_equal([hitbox[0],hitbox[1]],[bombExpOrNot[0][0],bombExpOrNot[0][1]])==1):
-            Players[hitbox[2]][2] = [0]
-            print("explodingBomb:hitbox[2]",hitbox[2])
-            print("explodingBomb:player",Players[hitbox[2]],"got killed")
 
     global listOfBombs
 
