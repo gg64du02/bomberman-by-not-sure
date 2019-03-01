@@ -52,9 +52,18 @@ crateImg = pygame.image.load('./sdkskin/Crate.bmp')
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 # playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
-bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
+# bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 tileImg = pygame.image.load('./sdkskin/Tile.bmp')
+
+carImg = pygame.image.load('./sdkskin/Sprites.bmp')
+blockImg = pygame.image.load('./sdkskin/Block.bmp')
+crateImg = pygame.image.load('./sdkskin/Crate.bmp')
+# playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
+# playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
+bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
+blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
+# tileImg = pygame.image.load('./sdkskin/Tile.bmp')
 
 
 TheMap = currentMap()
@@ -160,19 +169,13 @@ def displayPlayers():
             # dead
             gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
 
-
-def bomb(x,y):
-    gameDisplay.blit(bombImg, (x, y))
-
 def displayBombs():
     # in: listOfBombs
     # out: None
     for bombDis in listOfBombs:
         print("bombDis",bombDis)
-        # bomb(32*bombDis[0][1],32*bombDis[0][0])
         timePassed =  time.time() - bombDis[1]
         print("timePassed",timePassed)
-        # bomb(32*bombDis[0][1],32*bombDis[0][0])
         # max 5+something =11
         gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
