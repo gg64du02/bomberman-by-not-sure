@@ -72,7 +72,7 @@ print(Tiles)
 
 
 for iTiles in range(256):
-    image = Image.open("./sdkskin/spliting/Tile.bmp")
+    image = Image.open("./sdkskin/spliting/Tile.png")
     # Pile image
     x= iTiles%16
     y= int(iTiles/16)
