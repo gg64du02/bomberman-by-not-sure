@@ -70,9 +70,9 @@ def displayMap():
 Tiles = [[[] for lol in range(16)] for lil in range(16)]
 print(Tiles)
 
+image = Image.open("./skin/Tile.png")
 
 for iTiles in range(256):
-    image = Image.open("./sdkskin/spliting/Tile.png")
     # Pile image
     x= iTiles%16
     y= int(iTiles/16)
@@ -85,7 +85,6 @@ for iTiles in range(256):
     width = 32
     height = 32
     box = (32 * x, 32 * y, 32 * x + width, 32 * y + height)
-    # box = (32 * y, 32 * x, 32 * y + width, 32 * x + height)
     image3 = image2.crop(box)
     print("image3\n",image3)
     print("type(image3)\n",type(image3))
@@ -95,14 +94,9 @@ for iTiles in range(256):
     data = image3.tobytes()
     py_image = pygame.image.fromstring(data, size, mode)
     # Surface py_image
-    # if(y==0 and x==0):
-    # Tiles[y][x] = (py_image)
     Tiles[y][x] = (py_image)
-    #
+
     # Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
-    # box = (32*x, 32*y, 32*x+width, 32*y+height)
-    # a = im2.crop(box)
-    # Tiles[y][x] = ( )
 
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
@@ -221,8 +215,8 @@ def text_objects(text, font):
 # done: scores supports
 # todo: multiplayers
 # todo: items spawns and pickup
-# todo: adding a single file loading all the sprite
-# todo: adding alpha support for sprites
+# done: adding a single file loading all the sprite
+# done: adding alpha support for sprites
 # done: display all the players
 # done: set all the players starting position
 
