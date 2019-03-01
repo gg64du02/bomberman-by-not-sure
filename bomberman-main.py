@@ -41,14 +41,11 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-blockImg = pygame.image.load('./sdkskin/Block.bmp')
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 tileImg = pygame.image.load('./sdkskin/Tile.bmp')
 
-blockImg = pygame.image.load('./sdkskin/Block.bmp')
-bombImg = pygame.image.load('./sdkskin/Bomb.bmp')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 
 
@@ -94,7 +91,7 @@ for iTiles in range(256):
     # Tiles[y][x]=(pygame.image.load('./sdkskin/spliting/tile_' + str(x) + '_' + str(y) + '.bmp'))
 
 def block(x,y):
-    gameDisplay.blit(blockImg, (x, y))
+    gameDisplay.blit(Tiles[0][0], (x, y))
 
 def crate(x,y):
     gameDisplay.blit(Tiles[4][0], (x, y))
