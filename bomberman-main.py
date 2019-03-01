@@ -135,6 +135,7 @@ def displayBombs():
 def displayBrokenCratesAndUpdateCollision():
     global brokenCrates
     global crateMap
+    global lighterMapDisplayList
     for brokenCrate in brokenCrates:
         # Tiles[3][0-7]
         timePassed = time.time() - brokenCrate[2]
@@ -143,6 +144,7 @@ def displayBrokenCratesAndUpdateCollision():
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
+            lighterMapDisplayList.append([brokenCrate[0],brokenCrate[1]])
 
 
 def displayScores():
@@ -172,6 +174,8 @@ def displayLighter(x,y):
 
 def displayLighters():
     print("displayLighters")
+    # debugging purpose
+    # lighterMapDisplayList.append([4,4])
     for lighter in lighterMapDisplayList:
         displayLighter(lighter[1],lighter[0])
     #     pass
@@ -663,6 +667,7 @@ while(runningMain):
         displayScores()
     # done: needs to be debugged
     displayPlayers()
+    displayLighters()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
