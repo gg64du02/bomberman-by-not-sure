@@ -104,6 +104,8 @@ def displayAirBlasts():
     for airBlast in airBlasts:
         # Tiles[3][0-5]
         timePassed = time.time() - airBlast[2]
+        print("airBlast",airBlast)
+        print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
         gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
@@ -509,6 +511,7 @@ def checkForExplodingBomb():
     # in: (global) PlayersWhitboxesAindex
     global PlayersWhitboxesAindex
     global Players
+    global airBlasts
     responsibleBomb = []
     PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
@@ -521,6 +524,9 @@ def checkForExplodingBomb():
             explodingBomb(bombExpOrNot)
             print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             responsibleBomb = bombExpOrNot
+            # adding the bomb position to the airBlasts (to fix score count about suicide)
+            print("checkForExplodingBomb:bombExpOrNot[0],bombExpOrNot[1]",bombExpOrNot[0],bombExpOrNot[1])
+            # airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
     print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
 
