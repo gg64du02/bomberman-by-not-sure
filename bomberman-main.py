@@ -189,7 +189,7 @@ def displayItems():
 # todo: remove useless/un-used functions
 # done: display scores
 # todo:improve score displaying
-# todo: fix score counting
+# todo: fix score counting (when a bomb is exploding underneath)
 # done: scores supports
 # todo: multiplayers
 # done: items spawns and pickup
