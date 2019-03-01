@@ -86,13 +86,13 @@ for iTiles in range(256):
     height = 32
     box = (32 * x, 32 * y, 32 * x + width, 32 * y + height)
     # box = (32 * y, 32 * x, 32 * y + width, 32 * x + height)
-    image2.crop(box)
-    print("image2\n",image2)
-    print("type(image2)\n",type(image2))
+    image3 = image2.crop(box)
+    print("image3\n",image3)
+    print("type(image3)\n",type(image3))
 
-    mode = image2.mode
-    size = image2.size
-    data = image2.tobytes()
+    mode = image3.mode
+    size = image3.size
+    data = image3.tobytes()
     py_image = pygame.image.fromstring(data, size, mode)
     # Surface py_image
     # if(y==0 and x==0):
