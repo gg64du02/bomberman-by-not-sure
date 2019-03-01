@@ -266,13 +266,15 @@ def generatedItemsMap():
     print("lighterMap\n",lighterMap)
 generatedItemsMap()
 
-def generateItem(x,y):
+def generateItem(y,x):
     print("generateItem")
     global lighterMap
     global lighterMapDisplayList
     global additionnalBombMap
     global additionnalBombMapDisplayList
+    print("generateItem:[y,x]",[y,x])
     if(TheMap[y,x]!=0):
+        print("if(TheMap[y,x]!=0):")
         if(crateMap[y,x]==1):
             if(random.randint(0,2)%2==0):
                 lighterMap[y,x] = 1
