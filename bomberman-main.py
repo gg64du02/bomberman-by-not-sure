@@ -172,15 +172,17 @@ def text_objects(text, font):
 def displayLighter(x,y):
     gameDisplay.blit(Tiles[6][2], (32*x,32*y))
 
+def displayAdditionnalBomb(x,y):
+    gameDisplay.blit(Tiles[6][3], (32*x,32*y))
 
-def displayLighters():
+def displayItems():
     print("displayLighters")
     # debugging purpose
     # lighterMapDisplayList.append([4,4])
     for lighter in lighterMapDisplayList:
         displayLighter(lighter[1],lighter[0])
-    #     pass
-    # pass
+    for additionnalBomb in additionnalBombMapDisplayList:
+        displayAdditionnalBomb(additionnalBomb[1],additionnalBomb[0])
 
 # done: display scores
 # todo:improve score displaying
@@ -272,16 +274,16 @@ def generateItem(y,x):
     global lighterMapDisplayList
     global additionnalBombMap
     global additionnalBombMapDisplayList
-    print("generateItem:[y,x]",[y,x])
+    # print("generateItem:[y,x]",[y,x])
     if(TheMap[y,x]!=0):
-        print("if(TheMap[y,x]!=0):")
+        # print("if(TheMap[y,x]!=0):")
         if(crateMap[y,x]==1):
             if(random.randint(0,2)%2==0):
                 lighterMap[y,x] = 1
                 lighterMapDisplayList.append([y,x])
             else:
-                print("[y,x]",[y,x])
-                print("additionnalBombMap\n",additionnalBombMap)
+                # print("[y,x]",[y,x])
+                # print("additionnalBombMap\n",additionnalBombMap)
                 additionnalBombMap[y][x] = 1
                 additionnalBombMapDisplayList.append([y,x])
 
@@ -724,7 +726,7 @@ while(runningMain):
         displayScores()
     # done: needs to be debugged
     displayPlayers()
-    displayLighters()
+    displayItems()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
