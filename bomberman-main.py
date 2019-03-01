@@ -726,10 +726,6 @@ def keyboardRead():
             pass
         if event.type == pygame.KEYDOWN:
             print("pygame.K_TAB",pygame.K_TAB)
-            print("pygame.K_LEFT",pygame.K_LEFT)
-            print("pygame.K_RIGHT",pygame.K_RIGHT)
-            print("pygame.K_UP",pygame.K_UP)
-            print("pygame.K_DOWN",pygame.K_DOWN)
             print("event.key",event.key)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
