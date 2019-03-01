@@ -790,6 +790,7 @@ while(runningMain):
     # done: needs to be debugged
     displayPlayers()
     displayItems()
+    # if more than 1 players are alive, the round can continue
     if(numberOfPlayersAlive()>1):
         end_of_round_time = time.time()
     if((time.time() - end_of_round_time)*1000>3000):
