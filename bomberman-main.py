@@ -640,7 +640,7 @@ while(runningMain):
     if(boolDisplayScores == True):
         print("displayScores()")
         displayScores()
-    # needs to be debugged
+    # done: needs to be debugged
     displayPlayers()
     # for debugging purpose for now
     # diplayAllAirBlast()
