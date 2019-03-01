@@ -759,6 +759,8 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
+end_of_round_time = time.time()
+
 while(runningMain):
     print("==========================================================")
     Controls = keyboardRead()
@@ -788,7 +790,10 @@ while(runningMain):
     # done: needs to be debugged
     displayPlayers()
     displayItems()
-    numberOfPlayersAlive()
+    if(numberOfPlayersAlive()>1):
+        end_of_round_time = time.time()
+    if((time.time() - end_of_round_time)*1000>3000):
+        newRound()
     # for debugging purpose for now
     # diplayAllAirBlast()
     # print("airBlastDisplay\n",airBlastDisplay)
