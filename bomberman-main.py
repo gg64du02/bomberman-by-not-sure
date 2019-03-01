@@ -188,7 +188,7 @@ def displayItems():
 # todo:improve score displaying
 # done: scores supports
 # todo: multiplayers
-# todo: items spawns and pickup
+# done: items spawns and pickup
 # done: adding a single file loading all the sprite
 # done: adding alpha support for sprites
 # done: display all the players
@@ -278,7 +278,7 @@ def generateItem(y,x):
     if(TheMap[y,x]!=0):
         # print("if(TheMap[y,x]!=0):")
         if(crateMap[y,x]==1):
-            if(random.randint(0,2)%2==0):
+            if(random.randint(0,1)%2==0):
                 lighterMap[y,x] = 1
                 lighterMapDisplayList.append([y,x])
             else:
