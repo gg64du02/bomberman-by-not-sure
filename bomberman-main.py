@@ -44,9 +44,6 @@ crashed = False
 playerRedImg = pygame.image.load('./sdkskin/redPlayer.bmp')
 playerRedDeadImg = pygame.image.load('./sdkskin/redPDead.png')
 blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
-tileImg = pygame.image.load('./sdkskin/Tile.bmp')
-
-blastingAirImg = pygame.image.load('./sdkskin/BlastingAir.png')
 
 
 TheMap = currentMap()
@@ -123,20 +120,6 @@ def diplayAllAirBlast():
     for tile in tileGen4:
         if(airBlastDisplay[tile[1],tile[0]]==1):
             airBlast(32*tile[1],32*tile[0])
-
-def playerRed(x,y):
-    if(Players[1][2][0]!=0):
-        gameDisplay.blit(playerRedImg, (x, y))
-    else:
-        print("playerRedDeadImg")
-        gameDisplay.blit(playerRedDeadImg, (x, y))
-
-def playerGreen(x,y):
-    if(Players[0][2][0]!=0):
-        gameDisplay.blit(Tiles[9][0], (x, y))
-    else:
-        print("playerRedDeadImg")
-        gameDisplay.blit(Tiles[10][5], (x, y))
 
 def displayPlayers():
     for player in Players:
