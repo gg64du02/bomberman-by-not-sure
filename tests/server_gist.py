@@ -26,7 +26,7 @@ if __name__ == "__main__":
         while True:
             print("waiting1")
             # time.sleep(100)
-            time.sleep(1)
+            time.sleep(10)
             print("waiting2")
     except (KeyboardInterrupt, SystemExit):
         server.shutdown()
