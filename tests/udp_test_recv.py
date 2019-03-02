@@ -1,3 +1,4 @@
+# cons can't do anything when listening
 import socket
 
 UDP_IP = "127.0.0.1"

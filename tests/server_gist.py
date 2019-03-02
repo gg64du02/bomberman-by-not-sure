@@ -7,6 +7,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         socket = self.request[1]
         current_thread = threading.current_thread()
         print("{}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        print("threading.activeCount()",threading.activeCount())
         socket.sendto(data.upper(), self.client_address)
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
