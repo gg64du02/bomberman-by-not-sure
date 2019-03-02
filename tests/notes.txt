@@ -1,0 +1,7 @@
+https://docs.python.org/3/library/socketserver.html
+
+https://gist.github.com/arthurafarias/7258a2b83433dfda013f1954aaecd50a#file-server-py
+
+http://sametmax.com/les-context-managers-et-le-mot-cle-with-en-python/
+
+https://docs.python.org/3/reference/compound_stmts.html#the-with-statement
