@@ -24,8 +24,10 @@ if __name__ == "__main__":
         server_thread.start()
         print("Server started at {} port {}".format(HOST, PORT))
         while True:
-            time.sleep(100)
-            print("waiting")
+            print("waiting1")
+            # time.sleep(100)
+            time.sleep(1)
+            print("waiting2")
     except (KeyboardInterrupt, SystemExit):
         server.shutdown()
         server.server_close()
