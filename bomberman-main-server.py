@@ -766,53 +766,96 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
-while(runningMain):
-    print("==========================================================")
-    Controls = keyboardRead()
 
-    ColisionCheckAndMovement()
+import socketserver, threading, time
 
-    if(keyboard.is_pressed('esc')):
-        runningMain = False
-        print("issuing the esc key")
+class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
 
-    gameDisplay.fill(gray)
-    # crate(0,0)
+    def handle(self):
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        print("{} wrote:".format(self.client_address[0]))
+        print(self.data)
+        # just send back the same data, but upper-cased
+        self.request.sendall(self.data.upper())
+        #
+        # data4socket = self.request[0].strip()
+        # socket = self.request[1]
+        # current_thread = threading.current_thread()
+        # print("{}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data4socket))
+        # print("threading.activeCount()",threading.activeCount())
+        # socket.sendto(data.upper(), self.client_address)
 
-    displayCrates()
-    displayMap()
-    displayBombs()
-    print("brokenCrates",brokenCrates)
-    displayBrokenCratesAndUpdateCollision()
-    playersPickupsItems()
-    displayAirBlasts()
-    # done:Score display is slow
-    if(boolDisplayScores == True):
-        print("displayScores()")
-        displayScores()
-        # debugging/testing purposes
-        # newRound()
-    # done: needs to be debugged
-    displayPlayers()
-    displayItems()
-    # if more than 1 players are alive, the round can continue
-    if(numberOfPlayersAlive()>1):
-        end_of_round_time = time.time()
-    if((time.time() - end_of_round_time)*1000>3000):
-        newRound()
-    # for debugging purpose for now
-    # diplayAllAirBlast()
-    # print("airBlastDisplay\n",airBlastDisplay)
+class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
 
-    checkForExplodingBomb()
+if __name__ == "__main__":
+    HOST, PORT = "0.0.0.0", 8888
 
-    print("hitboxes():\n",hitboxes())
+    server = ThreadedUDPServer((HOST, PORT), ThreadedUDPRequestHandler)
 
-    pygame.display.update()
-    print('time:',str(time.time()-st_time))
-    clock.tick(60)
-    st_time = time.time()
-    # print('lol')
+    server_thread = threading.Thread(target=server.serve_forever)
+    server_thread.daemon = True
+
+    try:
+        server_thread.start()
+        print("Server started at {} port {}".format(HOST, PORT))
+
+        while(runningMain):
+            pass
+            time.sleep(1)
+            print("==========================================================")
+            # Controls = keyboardRead()
+            #
+            # ColisionCheckAndMovement()
+            #
+            # if(keyboard.is_pressed('esc')):
+            #     runningMain = False
+            #     print("issuing the esc key")
+            #
+            # gameDisplay.fill(gray)
+            # # crate(0,0)
+            #
+            # displayCrates()
+            # displayMap()
+            # displayBombs()
+            # print("brokenCrates",brokenCrates)
+            # displayBrokenCratesAndUpdateCollision()
+            # playersPickupsItems()
+            # displayAirBlasts()
+            # # done:Score display is slow
+            # if(boolDisplayScores == True):
+            #     print("displayScores()")
+            #     displayScores()
+            #     # debugging/testing purposes
+            #     # newRound()
+            # # done: needs to be debugged
+            # displayPlayers()
+            # displayItems()
+            # # if more than 1 players are alive, the round can continue
+            # if(numberOfPlayersAlive()>1):
+            #     end_of_round_time = time.time()
+            # if((time.time() - end_of_round_time)*1000>3000):
+            #     newRound()
+            # # for debugging purpose for now
+            # # diplayAllAirBlast()
+            # # print("airBlastDisplay\n",airBlastDisplay)
+            #
+            # checkForExplodingBomb()
+            #
+            # print("hitboxes():\n",hitboxes())
+            #
+            # pygame.display.update()
+            # print('time:',str(time.time()-st_time))
+            # clock.tick(60)
+            # st_time = time.time()
+            # # print('lol')
+
+    except (KeyboardInterrupt, SystemExit):
+        server.shutdown()
+        server.server_close()
+        exit()
+
 
 pygame.quit()
 quit()
