@@ -769,7 +769,7 @@ end_of_round_time = time.time()
 
 import socketserver, threading, time
 
-class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         # self.request is the TCP socket connected to the client
@@ -778,21 +778,14 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print(self.data)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
-        #
-        # data4socket = self.request[0].strip()
-        # socket = self.request[1]
-        # current_thread = threading.current_thread()
-        # print("{}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data4socket))
-        # print("threading.activeCount()",threading.activeCount())
-        # socket.sendto(data.upper(), self.client_address)
 
-class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
 if __name__ == "__main__":
     HOST, PORT = "0.0.0.0", 8888
 
-    server = ThreadedUDPServer((HOST, PORT), ThreadedUDPRequestHandler)
+    server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
 
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = True
