@@ -795,9 +795,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==PORT_UDP_server):
             print("if(socket.getsockname()[1]==PORT_UDP_server):")
-        # else:
-        #     print("!if(socket.getsockname()[1]==PORT_UDP_server):")
-        #     pass
+            UDP_server_queuing.append(data)
         current_thread = threading.current_thread()
         print("ThreadedUDPRequestHandler")
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
@@ -869,7 +867,7 @@ if __name__ == "__main__":
         server_thread_tcp.start()
         server_thread_udp.start()
         print("Server TCP started at {} port {}".format(HOST_TCP, PORT_TCP))
-        print("Server UDP started at {} port {}".format(HOST_UDP, PORT_UDP))
+        print("Server UDP started at {} port {}".format(HOST_UDP_server, PORT_UDP_server))
 
         # clients
         client_thread_udp.start()
