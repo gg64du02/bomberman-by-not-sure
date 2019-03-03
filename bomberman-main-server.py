@@ -820,6 +820,9 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
+# for sending packets
+import socket
+
 if __name__ == "__main__":
     HOST_TCP, PORT_TCP = "0.0.0.0", 8888
     server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
@@ -899,6 +902,22 @@ if __name__ == "__main__":
             # # print('lol')
 
             if(lolilol6fps%6==0):
+                UDP_IP = "127.0.0.1"
+                UDP_PORT = 8888
+                # MESSAGE = "Hello, World!"
+                # MESSAGE_bytes = MESSAGE.encode()
+                frame = [TheMap,crateMap,Players]
+                for x in frame:
+                    MESSAGE_bytes = str(x).encode()
+                    # MESSAGE_bytes = MESSAGE.encode()
+
+                    print("UDP target IP:", UDP_IP)
+                    print("UDP target port:", UDP_PORT)
+                    # print("message:", MESSAGE)
+
+                    sock = socket.socket(socket.AF_INET,  # Internet
+                                         socket.SOCK_DGRAM)  # UDP
+                    sock.sendto(MESSAGE_bytes, (UDP_IP, UDP_PORT))
                 pass
 
             lolilol6fps += 1
