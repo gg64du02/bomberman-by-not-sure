@@ -899,8 +899,14 @@ if __name__ == "__main__":
             # # print('lol')
 
     except (KeyboardInterrupt, SystemExit):
-        server.shutdown()
-        server.server_close()
+        server_thread_tcp.shutdown()
+        server_thread_tcp.server_close()
+        server_thread_udp.shutdown()
+        server_thread_udp.server_close()
+        client_thread_udp.shutdown()
+        client_thread_udp.server_close()
+        # server.shutdown()
+        # server.server_close()
         exit()
 
 
