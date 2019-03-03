@@ -766,20 +766,20 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
-def snedingTCPpacket():
-    print("sendingTCPpacket")
+def snedingTCPpacketAndQueuing():
+    print("snedingTCPpacketAndQueuing")
     pass
 
-def sendingUDPpacket():
-    print("sendingUDPpacket")
+def sendingUDPpacketAndQueuing():
+    print("sendingUDPpacketAndQueuing")
     pass
 
-def decodingTCPpacket():
-    print("decodingTCPpacket")
+def decodingTCPpacketAndQueuing():
+    print("decodingTCPpacketAndQueuing")
     pass
 
-def decodingUDPpacket():
-    print("decodingUDPpacket")
+def decodingUDPpacketAndQueuing():
+    print("decodingUDPpacketAndQueuing")
     pass
 
 import socketserver, threading, time
