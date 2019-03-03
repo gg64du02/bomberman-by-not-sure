@@ -695,7 +695,7 @@ def hitboxes():
         outHitboxes.append([int((player[0][1]+2)/32),int((player[0][0]+2)/32),player[3][0]])
         outHitboxes.append([int((player[0][1]+30)/32),int((player[0][0]+30)/32),player[3][0]])
         # pass
-    print("outHitboxes",outHitboxes)
+    # print("outHitboxes",outHitboxes)
     return outHitboxes
 
 PlayersWhitboxesAindex = hitboxes()
@@ -852,52 +852,52 @@ if __name__ == "__main__":
 
         while(runningMain):
             pass
-            time.sleep(1)
-            print("==========================================================")
-            # Controls = keyboardRead()
-            #
-            # ColisionCheckAndMovement()
-            #
-            # if(keyboard.is_pressed('esc')):
-            #     runningMain = False
-            #     print("issuing the esc key")
-            #
-            # gameDisplay.fill(gray)
-            #
-            # displayCrates()
-            # displayMap()
-            # displayBombs()
+            # time.sleep(1)
+            # print("==========================================================")
+            Controls = keyboardRead()
+
+            ColisionCheckAndMovement()
+
+            if(keyboard.is_pressed('esc')):
+                runningMain = False
+                print("issuing the esc key")
+
+            gameDisplay.fill(gray)
+
+            displayCrates()
+            displayMap()
+            displayBombs()
             # print("brokenCrates",brokenCrates)
-            # displayBrokenCratesAndUpdateCollision()
-            # playersPickupsItems()
-            # displayAirBlasts()
-            # # done:Score display is slow
-            # if(boolDisplayScores == True):
-            #     print("displayScores()")
-            #     displayScores()
-            #     # debugging/testing purposes
-            #     # newRound()
-            # # done: needs to be debugged
-            # displayPlayers()
-            # displayItems()
-            # # if more than 1 players are alive, the round can continue
-            # if(numberOfPlayersAlive()>1):
-            #     end_of_round_time = time.time()
-            # if((time.time() - end_of_round_time)*1000>3000):
-            #     newRound()
-            # # for debugging purpose for now
-            # # diplayAllAirBlast()
-            # # print("airBlastDisplay\n",airBlastDisplay)
-            #
-            # checkForExplodingBomb()
-            #
+            displayBrokenCratesAndUpdateCollision()
+            playersPickupsItems()
+            displayAirBlasts()
+            # done:Score display is slow
+            if(boolDisplayScores == True):
+                print("displayScores()")
+                displayScores()
+                # debugging/testing purposes
+                # newRound()
+            # done: needs to be debugged
+            displayPlayers()
+            displayItems()
+            # if more than 1 players are alive, the round can continue
+            if(numberOfPlayersAlive()>1):
+                end_of_round_time = time.time()
+            if((time.time() - end_of_round_time)*1000>3000):
+                newRound()
+            # for debugging purpose for now
+            # diplayAllAirBlast()
+            # print("airBlastDisplay\n",airBlastDisplay)
+
+            checkForExplodingBomb()
+
             # print("hitboxes():\n",hitboxes())
-            #
-            # pygame.display.update()
-            # print('time:',str(time.time()-st_time))
-            # clock.tick(60)
-            # st_time = time.time()
-            # # print('lol')
+
+            pygame.display.update()
+            print('time:',str(time.time()-st_time))
+            clock.tick(60)
+            st_time = time.time()
+            # print('lol')
 
             if(lolilol6fps%6==0):
                 UDP_IP = "127.0.0.1"
@@ -909,8 +909,8 @@ if __name__ == "__main__":
                     MESSAGE_bytes = str(x).encode()
                     # MESSAGE_bytes = MESSAGE.encode()
 
-                    print("UDP target IP:", UDP_IP)
-                    print("UDP target port:", UDP_PORT)
+                    # print("UDP target IP:", UDP_IP)
+                    # print("UDP target port:", UDP_PORT)
                     # print("message:", MESSAGE)
 
                     sock = socket.socket(socket.AF_INET,  # Internet
