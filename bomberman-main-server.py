@@ -825,6 +825,20 @@ amItheServer = True
 
 def checkTheQueues():
     print("checkTheQueues")
+    if(amItheServer==True):
+        print("if(amItheServer==True):")
+        global TCP_server_queuing
+        global UDP_server_queuing
+        # TCP_server_queuing =[]
+        # UDP_server_queuing =[]
+
+    else:
+        print("!if(amItheServer==True):")
+        global TCP_client_queuing
+        global UDP_client_queuing
+        # TCP_client_queuing =[]
+        # UDP_client_queuing =[]
+        pass
     pass
 
 if __name__ == "__main__":
