@@ -766,6 +766,22 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
+def snedingTCPpacket():
+    print("sendingTCPpacket")
+    pass
+
+def sendingUDPpacket():
+    print("sendingUDPpacket")
+    pass
+
+def decodingTCPpacket():
+    print("decodingTCPpacket")
+    pass
+
+def decodingUDPpacket():
+    print("decodingUDPpacket")
+    pass
+
 import socketserver, threading, time
 # UDP connexion handling, and
 # todo: queuing data that needs processing
