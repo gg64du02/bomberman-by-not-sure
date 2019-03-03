@@ -792,7 +792,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         data = self.request[0].strip()
         socket = self.request[1]
         current_thread = threading.current_thread()
-        print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        print("ThreadedUDPRequestHandler")
+        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         socket.sendto(data.upper(), self.client_address)
 
@@ -807,7 +808,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
-        print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
+        print("ThreadedTCPRequestHandler")
+        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print(self.data)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
