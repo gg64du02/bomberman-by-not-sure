@@ -808,11 +808,23 @@ if __name__ == "__main__":
     server_udp = ThreadedUDPServer((HOST_UDP, PORT_UDP), ThreadedUDPRequestHandler)
     server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     server_thread_udp.daemon = True
+
+    HOST_UDP_client, PORT_UDP_client = "0.0.0.0", 8889
+    client_udp = ThreadedUDPServer((HOST_UDP_client, PORT_UDP_client), ThreadedUDPRequestHandler)
+    client_thread_udp = threading.Thread(target=client_udp.serve_forever)
+    client_thread_udp.daemon = True
+
     try:
+        # servers
         server_thread_tcp.start()
         server_thread_udp.start()
         print("Server TCP started at {} port {}".format(HOST_TCP, PORT_TCP))
         print("Server UDP started at {} port {}".format(HOST_UDP, PORT_UDP))
+
+        # clients
+        client_thread_udp.start()
+        print("Server UDP started at {} port {}".format(HOST_UDP_client, PORT_UDP_client))
+
 
         while(runningMain):
             pass
