@@ -104,8 +104,8 @@ def displayAirBlasts():
     for airBlast in airBlasts:
         # Tiles[3][0-5]
         timePassed = time.time() - airBlast[2]
-        print("airBlast",airBlast)
-        print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
+        # print("airBlast",airBlast)
+        # print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
         gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
