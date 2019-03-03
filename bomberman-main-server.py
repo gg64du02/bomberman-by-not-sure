@@ -767,8 +767,9 @@ def keyboardRead():
 end_of_round_time = time.time()
 
 
+# TCP connexion handling, and
+# todo: queuing data that needs processing
 import socketserver, threading, time
-
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
@@ -785,13 +786,13 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 if __name__ == "__main__":
     HOST, PORT = "0.0.0.0", 8888
 
-    server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+    server_tcp = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
 
-    server_thread = threading.Thread(target=server.serve_forever)
-    server_thread.daemon = True
+    server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
+    server_thread_tcp.daemon = True
 
     try:
-        server_thread.start()
+        server_thread_tcp.start()
         print("Server started at {} port {}".format(HOST, PORT))
 
         while(runningMain):
