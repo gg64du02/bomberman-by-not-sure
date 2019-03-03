@@ -179,9 +179,7 @@ def displayAdditionnalBomb(x,y):
     gameDisplay.blit(Tiles[6][3], (32*x,32*y))
 
 def displayItems():
-    print("displayLighters")
-    # debugging purpose
-    # lighterMapDisplayList.append([4,4])
+    # print("displayLighters")
     for lighter in lighterMapDisplayList:
         displayLighter(lighter[1],lighter[0])
     for additionnalBomb in additionnalBombMapDisplayList:
@@ -289,7 +287,7 @@ def numberOfPlayersAlive():
     for player in Players:
         if (player[2][0]!=0):
             alivePlayersCount +=1
-    print("alivePlayersCount",alivePlayersCount)
+    # print("alivePlayersCount",alivePlayersCount)
     return alivePlayersCount
 
 
@@ -317,7 +315,7 @@ def generatedCrateMap():
             if((100*randomNumber/255)<(pourcentageOfCrate)):
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
-    print("crateMap\n",crateMap)
+    # print("crateMap\n",crateMap)
     # pass
     return crateMap
 crateMap = generatedCrateMap()
@@ -331,7 +329,7 @@ lighterMap = np.zeros_like(TheMap)
 additionnalBombMap = np.zeros_like(TheMap)
 
 def generateItem(y,x):
-    print("generateItem")
+    # print("generateItem")
     global lighterMap
     global lighterMapDisplayList
     global additionnalBombMap
@@ -385,9 +383,9 @@ def ColisionCheckAndMovement():
     # out: Players
     global Players
     # i=0
-    print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
+    # print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        print("ColisionCheckAndMovement:player,control,i",player,control,i)
+        # print("ColisionCheckAndMovement:player,control,i",player,control,i)
         # print("i:",i)
         # sfde ctrl shift
         step = 8
@@ -473,7 +471,7 @@ def ColisionCheckAndMovement():
 
             # ctrl
             if(control[1][0]==1):
-                print("if(control[1][1]==1):")
+                # print("if(control[1][1]==1):")
                 if(player[1][0]>0):
                     tryingToPutBomb(player)
 
@@ -487,14 +485,14 @@ def tryingToPutBomb(player):
     # yPos = player[0][1]
     xPos = int((player[0][0] +16)/32)
     yPos = int((player[0][1] +16)/32)
-    print("tryingToPutBomb:xPos,yPos",xPos,yPos)
+    # print("tryingToPutBomb:xPos,yPos",xPos,yPos)
     # does the player still have remaining bombs to put
     if(player[1][0] != 0):
         if(listOfBombs!=[]):
             # print("listOfBombs[:,0]",listOfBombs[:,0])
             alreadyBusy = False
             for tmpBomb in listOfBombs:
-                print([yPos,xPos],tmpBomb[0])
+                # print([yPos,xPos],tmpBomb[0])
                 if(np.array_equal([yPos,xPos],tmpBomb[0])==1):
                     alreadyBusy = True
             # if the place is empty
@@ -515,22 +513,19 @@ def checkForExplodingBomb():
     responsibleBomb = []
     PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
-        print("bombExpOrNot",bombExpOrNot)
+        # print("bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
-            print("if((time.time()-bombExpOrNot[1])<2000):")
+            # print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
-            print("listOfBombs",listOfBombs)
+            # print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
-            print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
+            # print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             responsibleBomb = bombExpOrNot
             # adding the bomb position to the airBlasts (to fix score count about suicide)
             airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
-    print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+    # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
-
-    if(Players[0][2] == [0]):
-        print()
 
     if (responsibleBomb != []):
         # done: fix the double score count
