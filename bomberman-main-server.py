@@ -823,6 +823,10 @@ import socket
 # Server/client contants
 amItheServer = True
 
+def checkTheQueues():
+    print("checkTheQueues")
+    pass
+
 if __name__ == "__main__":
     HOST_TCP, PORT_TCP = "0.0.0.0", 8888
     server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
@@ -900,6 +904,9 @@ if __name__ == "__main__":
             clock.tick(60)
             st_time = time.time()
             # print('lol')
+
+            # check the queue
+            checkTheQueues()
 
             if(lolilol6fps%6==0):
                 UDP_IP = "127.0.0.1"
