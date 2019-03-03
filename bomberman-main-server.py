@@ -834,7 +834,8 @@ def checkTheQueues():
     global TCP_client_queuing
     global UDP_client_queuing
     print("checkTheQueues")
-    print("UDP_server_queuing",UDP_server_queuing)
+    print("len(UDP_server_queuing)",len(UDP_server_queuing))
+    # print("UDP_server_queuing",UDP_server_queuing)
     if(amItheServer==True):
         print("if(amItheServer==True):")
         # TCP_server_queuing =[]
