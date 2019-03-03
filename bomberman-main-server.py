@@ -766,16 +766,31 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
+import socketserver, threading, time
+# UDP connexion handling, and
+# todo: queuing data that needs processing
+class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
+
+    def handle(self):
+        data = self.request[0].strip()
+        socket = self.request[1]
+        current_thread = threading.current_thread()
+        print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        # print("threading.activeCount()",threading.activeCount())
+        socket.sendto(data.upper(), self.client_address)
+
+class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
+    pass
+
 
 # TCP connexion handling, and
 # todo: queuing data that needs processing
-import socketserver, threading, time
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
-        print("{} wrote:".format(self.client_address[0]))
+        print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print(self.data)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
@@ -784,16 +799,20 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
 if __name__ == "__main__":
-    HOST, PORT = "0.0.0.0", 8888
-
-    server_tcp = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
-
+    HOST_TCP, PORT_TCP = "0.0.0.0", 8888
+    server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
     server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
     server_thread_tcp.daemon = True
 
+    HOST_UDP, PORT_UDP = "0.0.0.0", 8888
+    server_udp = ThreadedUDPServer((HOST_UDP, PORT_UDP), ThreadedUDPRequestHandler)
+    server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+    server_thread_udp.daemon = True
     try:
         server_thread_tcp.start()
-        print("Server started at {} port {}".format(HOST, PORT))
+        server_thread_udp.start()
+        print("Server TCP started at {} port {}".format(HOST_TCP, PORT_TCP))
+        print("Server UDP started at {} port {}".format(HOST_UDP, PORT_UDP))
 
         while(runningMain):
             pass
