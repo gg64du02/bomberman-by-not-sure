@@ -823,6 +823,9 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 # for sending packets
 import socket
 
+# Server/client contants
+amItheServer = True
+
 if __name__ == "__main__":
     HOST_TCP, PORT_TCP = "0.0.0.0", 8888
     server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
