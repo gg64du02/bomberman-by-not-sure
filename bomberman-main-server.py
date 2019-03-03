@@ -766,8 +766,14 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
-def snedingTCPpacketAndQueuing():
-    print("snedingTCPpacketAndQueuing")
+TCP_server_queuing =[]
+TCP_client_queuing =[]
+
+UDP_server_queuing =[]
+UDP_client_queuing =[]
+
+def sendingTCPpacketAndQueuing():
+    print("sendingTCPpacketAndQueuing")
     pass
 
 def sendingUDPpacketAndQueuing():
