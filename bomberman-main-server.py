@@ -798,7 +798,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             UDP_server_queuing.append(data)
         current_thread = threading.current_thread()
         print("ThreadedUDPRequestHandler")
-        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         socket.sendto(data.upper(), self.client_address)
 
@@ -927,14 +927,15 @@ if __name__ == "__main__":
             # check the queue
             checkTheQueues()
 
-            if(lolilol6fps%6==0):
+            if(lolilol6fps%10==0):
+                print("if(lolilol6fps%10==0):")
                 UDP_IP = "127.0.0.1"
-                UDP_PORT = 8888
+                UDP_PORT = int(PORT_UDP_server)
                 # MESSAGE = "Hello, World!"
                 # MESSAGE_bytes = MESSAGE.encode()
-                frame = [TheMap,crateMap,Players]
+                frame = ["TheMap",TheMap,"crateMap",crateMap,"Players",Players]
                 for x in frame:
-                    MESSAGE_bytes = str(x).encode()
+                    MESSAGE_bytes = str(TheMap).encode()
                     # MESSAGE_bytes = MESSAGE.encode()
 
                     # print("UDP target IP:", UDP_IP)
