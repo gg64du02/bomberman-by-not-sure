@@ -847,6 +847,7 @@ if __name__ == "__main__":
         client_thread_udp.start()
         print("Server UDP started at {} port {}".format(HOST_UDP_client, PORT_UDP_client))
 
+        lolilol6fps = 0
 
         while(runningMain):
             pass
@@ -861,7 +862,6 @@ if __name__ == "__main__":
             #     print("issuing the esc key")
             #
             # gameDisplay.fill(gray)
-            # # crate(0,0)
             #
             # displayCrates()
             # displayMap()
@@ -897,6 +897,11 @@ if __name__ == "__main__":
             # clock.tick(60)
             # st_time = time.time()
             # # print('lol')
+
+            if(lolilol6fps%6==0):
+                pass
+
+            lolilol6fps += 1
 
     except (KeyboardInterrupt, SystemExit):
         server_thread_tcp.shutdown()
