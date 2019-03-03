@@ -798,7 +798,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             UDP_server_queuing.append(data)
         current_thread = threading.current_thread()
         print("ThreadedUDPRequestHandler")
-        print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         socket.sendto(data.upper(), self.client_address)
 
@@ -829,18 +829,19 @@ import socket
 amItheServer = True
 
 def checkTheQueues():
+    global TCP_server_queuing
+    global UDP_server_queuing
+    global TCP_client_queuing
+    global UDP_client_queuing
     print("checkTheQueues")
+    print("UDP_server_queuing",UDP_server_queuing)
     if(amItheServer==True):
         print("if(amItheServer==True):")
-        global TCP_server_queuing
-        global UDP_server_queuing
         # TCP_server_queuing =[]
         # UDP_server_queuing =[]
 
     else:
         print("!if(amItheServer==True):")
-        global TCP_client_queuing
-        global UDP_client_queuing
         # TCP_client_queuing =[]
         # UDP_client_queuing =[]
         pass
@@ -931,21 +932,14 @@ if __name__ == "__main__":
                 print("if(lolilol6fps%10==0):")
                 UDP_IP = "127.0.0.1"
                 UDP_PORT = int(PORT_UDP_server)
-                # MESSAGE = "Hello, World!"
-                # MESSAGE_bytes = MESSAGE.encode()
-                frame = ["TheMap",TheMap,"crateMap",crateMap,"Players",Players]
+                # frame = ["TheMap\n",TheMap,"\ncrateMap\n",crateMap,"\nPlayers\n",Players]
+                frame = ["TheMap\n",TheMap,"crateMap\n",crateMap,"Players\n",Players]
+                BBytes = bytes()
                 for x in frame:
-                    MESSAGE_bytes = str(TheMap).encode()
-                    # MESSAGE_bytes = MESSAGE.encode()
-
-                    # print("UDP target IP:", UDP_IP)
-                    # print("UDP target port:", UDP_PORT)
-                    # print("message:", MESSAGE)
-
-                    sock = socket.socket(socket.AF_INET,  # Internet
-                                         socket.SOCK_DGRAM)  # UDP
-                    sock.sendto(MESSAGE_bytes, (UDP_IP, UDP_PORT))
-                pass
+                    BBytes += str(x).encode()
+                sock = socket.socket(socket.AF_INET,  # Internet
+                                     socket.SOCK_DGRAM)  # UDP
+                sock.sendto(BBytes, (UDP_IP, UDP_PORT))
 
             lolilol6fps += 1
 
