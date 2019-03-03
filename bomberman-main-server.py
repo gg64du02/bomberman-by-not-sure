@@ -791,6 +791,13 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data = self.request[0].strip()
         socket = self.request[1]
+        print("socket.getsockname()",socket.getsockname())
+        # (HOST_UDP_server, PORT_UDP_server)
+        if(socket.getsockname()[1]==PORT_UDP_server):
+            print("if(socket.getsockname()[1]==PORT_UDP_server):")
+        # else:
+        #     print("!if(socket.getsockname()[1]==PORT_UDP_server):")
+        #     pass
         current_thread = threading.current_thread()
         print("ThreadedUDPRequestHandler")
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
@@ -847,12 +854,12 @@ if __name__ == "__main__":
     server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
     server_thread_tcp.daemon = True
 
-    HOST_UDP, PORT_UDP = "0.0.0.0", 8888
-    server_udp = ThreadedUDPServer((HOST_UDP, PORT_UDP), ThreadedUDPRequestHandler)
+    HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 8889
+    server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
     server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     server_thread_udp.daemon = True
 
-    HOST_UDP_client, PORT_UDP_client = "0.0.0.0", 8889
+    HOST_UDP_client, PORT_UDP_client = "0.0.0.0", 8890
     client_udp = ThreadedUDPServer((HOST_UDP_client, PORT_UDP_client), ThreadedUDPRequestHandler)
     client_thread_udp = threading.Thread(target=client_udp.serve_forever)
     client_thread_udp.daemon = True
