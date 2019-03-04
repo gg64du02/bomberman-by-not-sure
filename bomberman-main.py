@@ -767,7 +767,7 @@ def keyboardRead():
 end_of_round_time = time.time()
 
 while(runningMain):
-    print("==========================================================")
+    # print("==========================================================")
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
