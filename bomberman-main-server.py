@@ -819,6 +819,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
 
+        print("ThreadedTCPRequestHandler:data",data)
+
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
@@ -879,57 +881,57 @@ if __name__ == "__main__":
 
         while(runningMain):
             pass
-            # time.sleep(1)
+            time.sleep(1)
             # print("==========================================================")
-            Controls = keyboardRead()
+            # Controls = keyboardRead()
+            #
+            # ColisionCheckAndMovement()
+            #
+            # if(keyboard.is_pressed('esc')):
+            #     runningMain = False
+            #     print("issuing the esc key")
+            #
+            # gameDisplay.fill(gray)
+            #
+            # displayCrates()
+            # displayMap()
+            # displayBombs()
+            # # print("brokenCrates",brokenCrates)
+            # displayBrokenCratesAndUpdateCollision()
+            # playersPickupsItems()
+            # displayAirBlasts()
+            # # done:Score display is slow
+            # if(boolDisplayScores == True):
+            #     print("displayScores()")
+            #     displayScores()
+            #     # debugging/testing purposes
+            #     # newRound()
+            # # done: needs to be debugged
+            # displayPlayers()
+            # displayItems()
+            # # if more than 1 players are alive, the round can continue
+            # if(numberOfPlayersAlive()>1):
+            #     end_of_round_time = time.time()
+            # if((time.time() - end_of_round_time)*1000>3000):
+            #     newRound()
+            # # for debugging purpose for now
+            # # diplayAllAirBlast()
+            # # print("airBlastDisplay\n",airBlastDisplay)
+            #
+            # checkForExplodingBomb()
+            #
+            # # print("hitboxes():\n",hitboxes())
+            #
+            # pygame.display.update()
+            # print('time:',str(time.time()-st_time))
+            # clock.tick(60)
+            # st_time = time.time()
+            # # print('lol')
+            #
+            # # check the queue
+            # checkTheQueues()
 
-            ColisionCheckAndMovement()
-
-            if(keyboard.is_pressed('esc')):
-                runningMain = False
-                print("issuing the esc key")
-
-            gameDisplay.fill(gray)
-
-            displayCrates()
-            displayMap()
-            displayBombs()
-            # print("brokenCrates",brokenCrates)
-            displayBrokenCratesAndUpdateCollision()
-            playersPickupsItems()
-            displayAirBlasts()
-            # done:Score display is slow
-            if(boolDisplayScores == True):
-                print("displayScores()")
-                displayScores()
-                # debugging/testing purposes
-                # newRound()
-            # done: needs to be debugged
-            displayPlayers()
-            displayItems()
-            # if more than 1 players are alive, the round can continue
-            if(numberOfPlayersAlive()>1):
-                end_of_round_time = time.time()
-            if((time.time() - end_of_round_time)*1000>3000):
-                newRound()
-            # for debugging purpose for now
-            # diplayAllAirBlast()
-            # print("airBlastDisplay\n",airBlastDisplay)
-
-            checkForExplodingBomb()
-
-            # print("hitboxes():\n",hitboxes())
-
-            pygame.display.update()
-            print('time:',str(time.time()-st_time))
-            clock.tick(60)
-            st_time = time.time()
-            # print('lol')
-
-            # check the queue
-            checkTheQueues()
-
-            if(lolilol6fps%10==0):
+            if(lolilol6fps%1==0):
                 print("if(lolilol6fps%10==0):")
                 UDP_IP = "127.0.0.1"
                 UDP_PORT = int(PORT_UDP_server)
