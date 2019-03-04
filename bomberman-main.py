@@ -809,53 +809,108 @@ joinPointInter = [6,6]
 quitPointInter = [8,6]
 interactingPoints = [createPointInter,joinPointInter,quitPointInter]
 
-while(runningMain):
-    # print("==========================================================")
-    Controls = keyboardRead()
+runningMenuMain = True
+createMenuWhile = False
+joinMenuWhile = False
 
-    ColisionCheckAndMovement()
 
-    if(keyboard.is_pressed('esc')):
-        runningMain = False
-        print("issuing the esc key")
+while(True):
+    if(runningMenuMain==True):
+        # print("==========================================================")
+        Controls = keyboardRead()
 
-    gameDisplay.fill(gray)
+        ColisionCheckAndMovement()
 
-    # displayCrates()
-    displayMap()
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
 
-    displayPlayers()
+        gameDisplay.fill(gray)
 
-    displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
+        # displayCrates()
+        displayMap()
 
-    displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
+        displayPlayers()
 
-    displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
+        displayText("USE ARROWS keys to move around the menu runningMenuMain",(display_width / 2), (display_height / 6)+32*0)
 
-    displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+        displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
 
-    # a bomb mean it is a work in progress
-    gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+        displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
 
-    interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-        print("createPointInter",createPointInter)
-        # todo: add another submenu about creating game
-        pass
-    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-        print("joinPointInter",joinPointInter)
-        # todo: add another submenu about joining game
-        pass
-    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-        print("quitPointInter",quitPointInter)
-        pygame.quit()
-        quit()
-        pass
+        displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
 
-    pygame.display.update()
-    print('time:',str(time.time()-st_time))
-    clock.tick(60)
-    st_time = time.time()
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("createPointInter",createPointInter)
+            # todo: add another submenu about creating game
+            runningMenuMain = False
+            createMenuWhile = True
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("joinPointInter",joinPointInter)
+            # todo: add another submenu about joining game
+            runningMenuMain = False
+            createMenuWhile = False
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("quitPointInter",quitPointInter)
+            pygame.quit()
+            quit()
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+    if(createMenuWhile == True):
+        # print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
+
+        gameDisplay.fill(gray)
+
+        # displayCrates()
+        displayMap()
+
+        displayPlayers()
+
+        displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+
+        displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
+
+        displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
+
+        displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("createPointInter",createPointInter)
+            # todo: add another submenu about creating game
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("joinPointInter",joinPointInter)
+            # todo: add another submenu about joining game
+            pass
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("quitPointInter",quitPointInter)
+            pygame.quit()
+            quit()
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+
 
 while(runningMain):
     # print("==========================================================")
