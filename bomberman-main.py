@@ -766,6 +766,68 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
+# todo: menu here
+# menu: create game/join game/quit
+
+# MAINMENU:
+# INIT all the screen
+TheMap = np.zeros_like(TheMap)
+crateMap = np.zeros_like(TheMap)
+# useless players
+# path for red player
+TheMap[0,0:3] = 1
+crateMap[0,0:3] = 1
+# line going down
+TheMap[0:10,3] = 1
+crateMap[0:10,3] = 1
+# create a game
+TheMap[4,3:7] = 1
+crateMap[4,3:7] = 1
+# join a game
+TheMap[6,3:7] = 1
+crateMap[6,3:7] = 1
+# quit bomberman
+TheMap[8,3:7] = 1
+crateMap[8,3:7] = 1
+
+# green lockdown
+TheMap[14,19]=1
+crateMap[14,19]=1
+# cyan lockdown
+TheMap[14,0]=1
+crateMap[14,0]=1
+# blue lockdown
+TheMap[0,19]=1
+crateMap[0,19]=1
+
+while(runningMain):
+    # print("==========================================================")
+    Controls = keyboardRead()
+
+    ColisionCheckAndMovement()
+
+    if(keyboard.is_pressed('esc')):
+        runningMain = False
+        print("issuing the esc key")
+
+    gameDisplay.fill(gray)
+
+    # displayCrates()
+    displayMap()
+
+    displayPlayers()
+
+    displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
+
+    displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
+
+    displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+
+    pygame.display.update()
+    print('time:',str(time.time()-st_time))
+    clock.tick(60)
+    st_time = time.time()
+
 while(runningMain):
     # print("==========================================================")
     Controls = keyboardRead()
