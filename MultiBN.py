@@ -25,12 +25,9 @@ MBN_SESSION_TCP_SERVER_BEFORE_COUNTDOWN_FIRST_ROUND = 5
 MBN_SESSION_TCP_SERVER_COUNTDOWN_FIRST_ROUND = 6
 # Used by the server to tell the client to prepare processing the incoming UDP packets about the game info.
 
+MBN_SESSION_TCP_SERVER_TRANSMIT_MAP = 7
+# Used by the server to transmit the map to the clients
 
-MBN_SESSION_TCP_QUIT = 1
-MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS = 2
-MBN_SESSION_TCP_NEW_CLIENT = 3
-MBN_SESSION_TCP_NEW_CLIENT_NUMBER = 4
-MBN_SESSION_TCP_NEW_CLIENT_ASSIGNED_CLIENTS_ID = 5
 
 # datagram shape
 # data|data type|data|crc
