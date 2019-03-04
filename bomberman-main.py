@@ -855,21 +855,21 @@ while(True):
 
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("createPointInter",createPointInter)
+            print("runningMenuMain:createPointInter",createPointInter)
             # todo: add another submenu about creating game
             runningMenuMain = False
             createMenuWhile = True
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("joinPointInter",joinPointInter)
+            print("runningMenuMain:joinPointInter",joinPointInter)
             # todo: add another submenu about joining game
             runningMenuMain = False
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("quitPointInter",quitPointInter)
+            print("runningMenuMain:quitPointInter",quitPointInter)
             pygame.quit()
             quit()
             pass
@@ -911,7 +911,7 @@ while(True):
 
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("Local",createPointInter)
+            print("createMenuWhile:Local",createPointInter)
             playInLocalWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
@@ -921,13 +921,13 @@ while(True):
             # stopping the menu loop
             break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("Tcp/Ip",joinPointInter)
+            print("createMenuWhile:Tcp/Ip",joinPointInter)
             # todo: add another submenu about joining game
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("Go back to the main menu",quitPointInter)
+            print("createMenuWhile:Go back to the main menu",quitPointInter)
             runningMenuMain = True
             createMenuWhile = False
             joinMenuWhile = False
