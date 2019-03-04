@@ -804,10 +804,10 @@ Players[2][0] = [32*19,32*0]
 Players[1][0] = [32*19,32*14]
 Players[0][0] = [32*0 ,32*14]
 
-joinPointInter = [4,7]
-createPointInter = [6,7]
-quitPointInter = [8,7]
-interactingPoint = [joinPointInter,createPointInter,quitPointInter]
+createPointInter = [4,6]
+joinPointInter = [6,6]
+quitPointInter = [8,6]
+interactingPoints = [createPointInter,joinPointInter,quitPointInter]
 
 while(runningMain):
     # print("==========================================================")
@@ -833,6 +833,24 @@ while(runningMain):
     displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
 
     displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+
+    # a bomb mean it is a work in progress
+    gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+    interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+        print("createPointInter",createPointInter)
+        # todo: add another submenu about creating game
+        pass
+    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+        print("joinPointInter",joinPointInter)
+        # todo: add another submenu about joining game
+        pass
+    if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+        print("quitPointInter",quitPointInter)
+        pygame.quit()
+        quit()
+        pass
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
