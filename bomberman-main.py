@@ -104,8 +104,8 @@ def displayAirBlasts():
     for airBlast in airBlasts:
         # Tiles[3][0-5]
         timePassed = time.time() - airBlast[2]
-        print("airBlast",airBlast)
-        print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
+        # print("airBlast",airBlast)
+        # print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
         gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
@@ -129,9 +129,9 @@ def displayBombs():
     # in: listOfBombs
     # out: None
     for bombDis in listOfBombs:
-        print("bombDis",bombDis)
+        # print("bombDis",bombDis)
         timePassed =  time.time() - bombDis[1]
-        print("timePassed",timePassed)
+        # print("timePassed",timePassed)
         # max 5+something =11
         gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
@@ -179,7 +179,7 @@ def displayAdditionnalBomb(x,y):
     gameDisplay.blit(Tiles[6][3], (32*x,32*y))
 
 def displayItems():
-    print("displayLighters")
+    # print("displayLighters")
     # debugging purpose
     # lighterMapDisplayList.append([4,4])
     for lighter in lighterMapDisplayList:
@@ -289,7 +289,7 @@ def numberOfPlayersAlive():
     for player in Players:
         if (player[2][0]!=0):
             alivePlayersCount +=1
-    print("alivePlayersCount",alivePlayersCount)
+    # print("alivePlayersCount",alivePlayersCount)
     return alivePlayersCount
 
 
@@ -385,9 +385,9 @@ def ColisionCheckAndMovement():
     # out: Players
     global Players
     # i=0
-    print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
+    # print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        print("ColisionCheckAndMovement:player,control,i",player,control,i)
+        # print("ColisionCheckAndMovement:player,control,i",player,control,i)
         # print("i:",i)
         # sfde ctrl shift
         step = 8
@@ -473,7 +473,7 @@ def ColisionCheckAndMovement():
 
             # ctrl
             if(control[1][0]==1):
-                print("if(control[1][1]==1):")
+                # print("if(control[1][1]==1):")
                 if(player[1][0]>0):
                     tryingToPutBomb(player)
 
@@ -487,14 +487,14 @@ def tryingToPutBomb(player):
     # yPos = player[0][1]
     xPos = int((player[0][0] +16)/32)
     yPos = int((player[0][1] +16)/32)
-    print("tryingToPutBomb:xPos,yPos",xPos,yPos)
+    # print("tryingToPutBomb:xPos,yPos",xPos,yPos)
     # does the player still have remaining bombs to put
     if(player[1][0] != 0):
         if(listOfBombs!=[]):
             # print("listOfBombs[:,0]",listOfBombs[:,0])
             alreadyBusy = False
             for tmpBomb in listOfBombs:
-                print([yPos,xPos],tmpBomb[0])
+                # print([yPos,xPos],tmpBomb[0])
                 if(np.array_equal([yPos,xPos],tmpBomb[0])==1):
                     alreadyBusy = True
             # if the place is empty
@@ -515,22 +515,22 @@ def checkForExplodingBomb():
     responsibleBomb = []
     PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
-        print("bombExpOrNot",bombExpOrNot)
+        # print("checkForExplodingBomb:bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
-            print("if((time.time()-bombExpOrNot[1])<2000):")
+            # print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
-            print("listOfBombs",listOfBombs)
+            # print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
-            print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
+            # print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             responsibleBomb = bombExpOrNot
             # adding the bomb position to the airBlasts (to fix score count about suicide)
             airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
-    print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+    # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
 
-    if(Players[0][2] == [0]):
-        print()
+    # if(Players[0][2] == [0]):
+    #     print()
 
     if (responsibleBomb != []):
         # done: fix the double score count
@@ -580,13 +580,13 @@ def explodingBomb(bombExpOrNot):
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
 
-    print("explodingBomb:bombExpOrNot",bombExpOrNot)
+    # print("explodingBomb:bombExpOrNot",bombExpOrNot)
     Players[bombExpOrNot[3]][1][0] +=1
 
     # displaying the local blast
     # global airBlastDisplay
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
-    print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    # print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
     airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     global listOfBombs
@@ -596,7 +596,7 @@ def explodingBomb(bombExpOrNot):
     global airBlasts
 
     # remaining amount of bombs for the current player
-    print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
+    # print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
     listOfBombs.remove(bombExpOrNot)
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -606,10 +606,10 @@ def explodingBomb(bombExpOrNot):
     # for bombPosition in listOfBombs:
     # yBomb = bombPosition[0]
     # xBomb = bombPosition[1]
-    print("explodingBomb:bombExpOrNot",bombExpOrNot)
+    # print("explodingBomb:bombExpOrNot",bombExpOrNot)
     yBomb = bombExpOrNot[0][0]
     xBomb = bombExpOrNot[0][1]
-    print("explodingBomb:yBomb,xBomb",yBomb,xBomb)
+    # print("explodingBomb:yBomb,xBomb",yBomb,xBomb)
 
     pathInBlasts = np.zeros_like(crateMap)
 
@@ -637,9 +637,9 @@ def explodingBomb(bombExpOrNot):
             pathInBlasts[yTmp, xTmp] = 1
             if(listOfBombs!=[]):
                 for checkingBomb in listOfBombs:
-                    print("explodingBomb:[checkingBomb[0][0],checkingBomb[0][1]]",[checkingBomb[0][0],checkingBomb[0][1]])
+                    # print("explodingBomb:[checkingBomb[0][0],checkingBomb[0][1]]",[checkingBomb[0][0],checkingBomb[0][1]])
                     if (np.array_equal([checkingBomb[0][0], checkingBomb[0][1]], [yTmp, xTmp])):
-                        print("issuing:explodingBomb(checkingBomb)")
+                        # print("issuing:explodingBomb(checkingBomb)")
                         explodingBomb(checkingBomb)
             if (i == 0):
                 xTmp += 1
@@ -673,9 +673,9 @@ def explodingBomb(bombExpOrNot):
                     # airBlast
                     airBlasts.append([yTmp,xTmp,time.time()])
 
-            print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
+            # print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
-    print("pathInBlasts\n",pathInBlasts)
+    # print("pathInBlasts\n",pathInBlasts)
 
 
     # for bombExpOrNotExp in listOfBombs:
@@ -700,7 +700,7 @@ def hitboxes():
         outHitboxes.append([int((player[0][1]+2)/32),int((player[0][0]+2)/32),player[3][0]])
         outHitboxes.append([int((player[0][1]+30)/32),int((player[0][0]+30)/32),player[3][0]])
         # pass
-    print("outHitboxes",outHitboxes)
+    # print("outHitboxes",outHitboxes)
     return outHitboxes
 
 PlayersWhitboxesAindex = hitboxes()
@@ -726,11 +726,11 @@ def keyboardRead():
     global boolDisplayScores
 
     for event in pygame.event.get():
-        print("event.type",event.type)
+        # print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
         if event.type == pygame.KEYDOWN:
-            print("pygame.K_TAB",pygame.K_TAB)
+            # print("pygame.K_TAB",pygame.K_TAB)
             print("event.key",event.key)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
@@ -741,8 +741,8 @@ def keyboardRead():
                     # print("index",index)
                     # 262 is 6 in numpad
                     # print("int(event.key)",int(event.key))
-                    if event.key == pygame.K_6:
-                        print()
+                    # if event.key == pygame.K_6:
+                    #     print()
                     if event.key == control :
                         # sfde ctrl shift
                         if(index<4):
@@ -782,7 +782,7 @@ while(runningMain):
     displayCrates()
     displayMap()
     displayBombs()
-    print("brokenCrates",brokenCrates)
+    # print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     playersPickupsItems()
     displayAirBlasts()
@@ -806,7 +806,7 @@ while(runningMain):
 
     checkForExplodingBomb()
 
-    print("hitboxes():\n",hitboxes())
+    # print("hitboxes():\n",hitboxes())
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
