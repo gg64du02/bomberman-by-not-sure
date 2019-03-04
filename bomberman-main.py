@@ -897,7 +897,7 @@ while(True):
 
         displayText("play on tcp/ip",(display_width / 2), (display_height / 6)+32*4)
 
-        displayText("go back",(display_width / 2), (display_height / 6)+32*6)
+        displayText("go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
 
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
@@ -907,14 +907,25 @@ while(True):
             print("local",createPointInter)
             # todo: add another submenu about creating game
             playInLocalWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # new Round in local
+            newRound()
+            # start the local multiplayer
+            break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
             print("tcp/ip",joinPointInter)
             # todo: add another submenu about joining game
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
             pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("goback",quitPointInter)
-            pygame.quit()
-            quit()
+            print("go back to the main menu",quitPointInter)
+            runningMenuMain = True
+            createMenuWhile = False
+            joinMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
             pass
 
         pygame.display.update()
