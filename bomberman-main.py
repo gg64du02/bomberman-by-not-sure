@@ -830,6 +830,8 @@ while(True):
         if(keyboard.is_pressed('esc')):
             runningMenuMain = False
             print("issuing the esc key")
+            pygame.quit()
+            quit()
 
         gameDisplay.fill(gray)
 
@@ -896,34 +898,34 @@ while(True):
 
         displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
 
-        displayText("play in local",(display_width / 2), (display_height / 6)+32*2)
+        displayText("Play in local",(display_width / 2), (display_height / 6)+32*2)
 
-        displayText("play on tcp/ip",(display_width / 2), (display_height / 6)+32*4)
+        displayText("Play on tcp/ip",(display_width / 2), (display_height / 6)+32*4)
 
-        displayText("go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
+        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
 
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
 
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("local",createPointInter)
-            # todo: add another submenu about creating game
+            print("Local",createPointInter)
             playInLocalWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
-            # new Round in local
-            newRound()
+            # newRound in local
             # start the local multiplayer
+            newRound()
+            # stopping the menu loop
             break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("tcp/ip",joinPointInter)
+            print("Tcp/Ip",joinPointInter)
             # todo: add another submenu about joining game
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("go back to the main menu",quitPointInter)
+            print("Go back to the main menu",quitPointInter)
             runningMenuMain = True
             createMenuWhile = False
             joinMenuWhile = False
