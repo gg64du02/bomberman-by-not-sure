@@ -773,13 +773,10 @@ end_of_round_time = time.time()
 # INIT all the screen
 TheMap = np.zeros_like(TheMap)
 crateMap = np.zeros_like(TheMap)
-# useless players
-# path for red player
-TheMap[0,0:3] = 1
-crateMap[0,0:3] = 1
+# path for cyan player
 # line going down
-TheMap[0:10,3] = 1
-crateMap[0:10,3] = 1
+TheMap[1:10,3] = 1
+crateMap[1:10,3] = 1
 # create a game
 TheMap[4,3:7] = 1
 crateMap[4,3:7] = 1
@@ -800,6 +797,18 @@ crateMap[14,0]=1
 TheMap[0,19]=1
 crateMap[0,19]=1
 
+# starting position in the menu
+Players[3][0] = [32*3 ,32*1]
+# useless players
+Players[2][0] = [32*19,32*0]
+Players[1][0] = [32*19,32*14]
+Players[0][0] = [32*0 ,32*14]
+
+joinPointInter = [4,7]
+createPointInter = [6,7]
+quitPointInter = [8,7]
+interactingPoint = [joinPointInter,createPointInter,quitPointInter]
+
 while(runningMain):
     # print("==========================================================")
     Controls = keyboardRead()
@@ -816,6 +825,8 @@ while(runningMain):
     displayMap()
 
     displayPlayers()
+
+    displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
 
     displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
 
