@@ -819,6 +819,11 @@ playInLocalWhile = False
 
 createServerTcpIpMenuWhile = False
 
+
+# todo:numberOfLocalPlayersMenuWhile = False
+# todo:dedicated menu
+# todo:normal menu
+
 # createMenuWhile
 # >play in local
 # >tcp/ip
