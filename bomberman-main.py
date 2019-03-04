@@ -816,7 +816,8 @@ joinMenuWhile = False
 # when createMenuWhile is True
 playInLocalWhile = False
 
-tcpIpMenuWhile = False
+
+createServerTcpIpMenuWhile = False
 
 # createMenuWhile
 # >play in local
@@ -925,12 +926,74 @@ while(True):
             # todo: add another submenu about joining game
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+            createServerTcpIpMenuWhile = True
+            createMenuWhile = False
             pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
             print("createMenuWhile:Go back to the main menu",quitPointInter)
             runningMenuMain = True
             createMenuWhile = False
             joinMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+    # createServerTcpIpMenuWhile
+    if(createServerTcpIpMenuWhile == True):
+        # print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = True
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            print("issuing the esc key")
+
+        gameDisplay.fill(gray)
+
+        # displayCrates()
+        displayMap()
+
+        displayPlayers()
+
+        displayText("USE ARROWS keys to move around the menu createServerTcpIpMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+
+        displayText("Dedicated",(display_width / 2), (display_height / 6)+32*2)
+
+        displayText("Normal",(display_width / 2), (display_height / 6)+32*4)
+
+        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
+
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("createMenuWhile:dedicated",createPointInter)
+            playInLocalWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # stopping the menu loop
+            break
+        # if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+        #     print("createMenuWhile:Normal",joinPointInter)
+        #     # todo: add another submenu about joining game
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        #     pass
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("createMenuWhile:Go back to the main menu",quitPointInter)
+            runningMenuMain = True
+            createMenuWhile = False
+            joinMenuWhile = False
+            createServerTcpIpMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
