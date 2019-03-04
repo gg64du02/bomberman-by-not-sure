@@ -813,6 +813,12 @@ runningMenuMain = True
 createMenuWhile = False
 joinMenuWhile = False
 
+# when createMenuWhile is True
+playInLocalWhile = False
+
+# createMenuWhile
+# >play in local
+# >tcp/ip
 
 while(True):
     if(runningMenuMain==True):
@@ -849,11 +855,15 @@ while(True):
             # todo: add another submenu about creating game
             runningMenuMain = False
             createMenuWhile = True
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
             print("joinPointInter",joinPointInter)
             # todo: add another submenu about joining game
             runningMenuMain = False
             createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
             print("quitPointInter",quitPointInter)
             pygame.quit()
@@ -883,25 +893,26 @@ while(True):
 
         displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
 
-        displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
+        displayText("play in local",(display_width / 2), (display_height / 6)+32*2)
 
-        displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
+        displayText("play on tcp/ip",(display_width / 2), (display_height / 6)+32*4)
 
-        displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+        displayText("go back",(display_width / 2), (display_height / 6)+32*6)
 
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
 
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("createPointInter",createPointInter)
+            print("local",createPointInter)
             # todo: add another submenu about creating game
+            playInLocalWhile = False
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("joinPointInter",joinPointInter)
+            print("tcp/ip",joinPointInter)
             # todo: add another submenu about joining game
             pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("quitPointInter",quitPointInter)
+            print("goback",quitPointInter)
             pygame.quit()
             quit()
             pass
