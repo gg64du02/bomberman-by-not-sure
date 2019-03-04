@@ -881,7 +881,10 @@ while(True):
         ColisionCheckAndMovement()
 
         if(keyboard.is_pressed('esc')):
-            runningMenuMain = False
+            runningMenuMain = True
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
             print("issuing the esc key")
 
         gameDisplay.fill(gray)
