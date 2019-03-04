@@ -972,24 +972,23 @@ while(True):
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
 
         # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+        gameDisplay.blit(Tiles[1][5+0],(32*createPointInter[1],32*createPointInter[0]))
 
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("createMenuWhile:dedicated",createPointInter)
-            playInLocalWhile = False
+            print("createServerTcpIpMenuWhile:dedicated",createPointInter)
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             # stopping the menu loop
             break
-        # if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-        #     print("createMenuWhile:Normal",joinPointInter)
-        #     # todo: add another submenu about joining game
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
-        #     pass
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("createServerTcpIpMenuWhile:Normal",joinPointInter)
+            # todo: add another submenu about joining game
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("createMenuWhile:Go back to the main menu",quitPointInter)
+            print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
             runningMenuMain = True
             createMenuWhile = False
             joinMenuWhile = False
