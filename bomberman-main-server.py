@@ -818,8 +818,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print(self.data)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
-
         print("ThreadedTCPRequestHandler:data",data)
+
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
@@ -881,7 +881,7 @@ if __name__ == "__main__":
 
         while(runningMain):
             pass
-            time.sleep(1)
+            time.sleep(.01)
             # print("==========================================================")
             # Controls = keyboardRead()
             #
@@ -931,18 +931,29 @@ if __name__ == "__main__":
             # # check the queue
             # checkTheQueues()
 
-            if(lolilol6fps%1==0):
+            if(lolilol6fps%2==0):
                 print("if(lolilol6fps%10==0):")
                 UDP_IP = "127.0.0.1"
                 UDP_PORT = int(PORT_UDP_server)
                 # frame = ["TheMap\n",TheMap,"\ncrateMap\n",crateMap,"\nPlayers\n",Players]
-                frame = ["TheMap\n",TheMap,"crateMap\n",crateMap,"Players\n",Players]
+                frame = ["\nTheMap\n",TheMap,"\ncrateMap\n",crateMap,"\nPlayers\n",Players]
                 BBytes = bytes()
                 for x in frame:
                     BBytes += str(x).encode()
                 sock = socket.socket(socket.AF_INET,  # Internet
                                      socket.SOCK_DGRAM)  # UDP
                 sock.sendto(BBytes, (UDP_IP, UDP_PORT))
+            else:
+                print("TCP Client")
+                dataTCPclient = " Lolilol"
+
+                # Connect to server and send data
+                sock.connect(("192.168.1.99", PORT_TCP))
+                sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+                # Receive data from the server and shut down
+                received = str(sock.recv(4096), "utf-8")
+                print("received",received)
 
             lolilol6fps += 1
 
