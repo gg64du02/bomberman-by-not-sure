@@ -816,6 +816,8 @@ joinMenuWhile = False
 # when createMenuWhile is True
 playInLocalWhile = False
 
+tcpIpMenuWhile = False
+
 # createMenuWhile
 # >play in local
 # >tcp/ip
@@ -898,9 +900,9 @@ while(True):
 
         displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
 
-        displayText("Play in local",(display_width / 2), (display_height / 6)+32*2)
+        displayText("Play/Create in local",(display_width / 2), (display_height / 6)+32*2)
 
-        displayText("Play on tcp/ip",(display_width / 2), (display_height / 6)+32*4)
+        displayText("Play/Create on Tcp/Ip",(display_width / 2), (display_height / 6)+32*4)
 
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
 
