@@ -832,33 +832,21 @@ while(True):
     if(runningMenuMain==True):
         # print("==========================================================")
         Controls = keyboardRead()
-
         ColisionCheckAndMovement()
-
         if(keyboard.is_pressed('esc')):
             runningMenuMain = False
             print("issuing the esc key")
             pygame.quit()
             quit()
-
         gameDisplay.fill(gray)
-
-        # displayCrates()
         displayMap()
-
         displayPlayers()
-
         displayText("USE ARROWS keys to move around the menu runningMenuMain",(display_width / 2), (display_height / 6)+32*0)
-
         displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
-
         displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
-
         displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
-
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
-
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("runningMenuMain:createPointInter",createPointInter)
@@ -879,42 +867,25 @@ while(True):
             pygame.quit()
             quit()
             pass
-
-        pygame.display.update()
-        print('time:',str(time.time()-st_time))
-        clock.tick(60)
-        st_time = time.time()
     if(createMenuWhile == True):
         # print("==========================================================")
         Controls = keyboardRead()
-
         ColisionCheckAndMovement()
-
         if(keyboard.is_pressed('esc')):
             runningMenuMain = True
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             print("issuing the esc key")
-
         gameDisplay.fill(gray)
-
-        # displayCrates()
         displayMap()
-
         displayPlayers()
-
         displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
-
         displayText("Play/Create in local",(display_width / 2), (display_height / 6)+32*2)
-
         displayText("Play/Create on Tcp/Ip",(display_width / 2), (display_height / 6)+32*4)
-
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
-
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
-
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("createMenuWhile:Local",createPointInter)
@@ -942,43 +913,26 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
-
-        pygame.display.update()
-        print('time:',str(time.time()-st_time))
-        clock.tick(60)
-        st_time = time.time()
     # createServerTcpIpMenuWhile
     if(createServerTcpIpMenuWhile == True):
         # print("==========================================================")
         Controls = keyboardRead()
-
         ColisionCheckAndMovement()
-
         if(keyboard.is_pressed('esc')):
             runningMenuMain = True
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             print("issuing the esc key")
-
         gameDisplay.fill(gray)
-
-        # displayCrates()
         displayMap()
-
         displayPlayers()
-
         displayText("USE ARROWS keys to move around the menu createServerTcpIpMenuWhile",(display_width / 2), (display_height / 6)+32*0)
-
         displayText("Dedicated",(display_width / 2), (display_height / 6)+32*2)
-
         displayText("Normal",(display_width / 2), (display_height / 6)+32*4)
-
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
-
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*createPointInter[1],32*createPointInter[0]))
-
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("createServerTcpIpMenuWhile:dedicated",createPointInter)
@@ -1010,10 +964,10 @@ while(True):
             Players[3][0] = [32 * 3, 32 * 1]
             pass
 
-        pygame.display.update()
-        print('time:',str(time.time()-st_time))
-        clock.tick(60)
-        st_time = time.time()
+    pygame.display.update()
+    print('time:',str(time.time()-st_time))
+    clock.tick(60)
+    st_time = time.time()
 
 import socketserver, threading, time
 # UDP connexion handling, and
@@ -1054,6 +1008,7 @@ if __name__ == "__main__":
 
 
 while(runningMain):
+    time.sleep(1)
     # print("==========================================================")
     Controls = keyboardRead()
 
