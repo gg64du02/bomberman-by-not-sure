@@ -854,6 +854,7 @@ enableTcpServerThread = False
 while(True):
     if(runningMenuMain==True):
         # print("==========================================================")
+        pygame.display.set_caption('Bomberman-by-not-sure (Main menu)')
         Controls = keyboardRead()
         ColisionCheckAndMovement()
         if(keyboard.is_pressed('esc')):
@@ -864,7 +865,7 @@ while(True):
         gameDisplay.fill(gray)
         displayMap()
         displayPlayers()
-        displayText("USE ARROWS keys to move around the menu runningMenuMain",(display_width / 2), (display_height / 6)+32*0)
+        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
         displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
         displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
         displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
@@ -897,6 +898,7 @@ while(True):
             pass
     if(createMenuWhile == True):
         # print("==========================================================")
+        pygame.display.set_caption('Bomberman-by-not-sure (Create a game)')
         Controls = keyboardRead()
         ColisionCheckAndMovement()
         if(keyboard.is_pressed('esc')):
@@ -908,7 +910,7 @@ while(True):
         gameDisplay.fill(gray)
         displayMap()
         displayPlayers()
-        displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
         displayText("Play/Create in local",(display_width / 2), (display_height / 6)+32*2)
         displayText("Play/Create on Tcp/Ip",(display_width / 2), (display_height / 6)+32*4)
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
@@ -944,6 +946,7 @@ while(True):
     # createServerTcpIpMenuWhile
     if(createServerTcpIpMenuWhile == True):
         # print("==========================================================")
+        pygame.display.set_caption('Bomberman-by-not-sure (Create a local/internet game)')
         Controls = keyboardRead()
         ColisionCheckAndMovement()
         if(keyboard.is_pressed('esc')):
@@ -955,7 +958,7 @@ while(True):
         gameDisplay.fill(gray)
         displayMap()
         displayPlayers()
-        displayText("USE ARROWS keys to move around the menu createServerTcpIpMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
         displayText("Dedicated",(display_width / 2), (display_height / 6)+32*2)
         displayText("Normal",(display_width / 2), (display_height / 6)+32*4)
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
