@@ -1044,6 +1044,23 @@ if __name__ == "__main__":
             server_thread_tcp.server_close()
             exit()
 
+    import socket
+
+    if(joinAtcpIpGameMenuWhile == True):
+        print('"if __name__ == "__main__":','if(joinAtcpIpGameMenuWhile == True):')
+        print("TCP Client")
+        dataTCPclient = " Lolilol"
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        # Connect to server and send data
+        sock.connect(("192.168.1.99", 8888))
+        sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+        # Receive data from the server and shut down
+        received = str(sock.recv(4096), "utf-8")
+        print("received",received)
+        pass
 
 
 while(runningMain):
