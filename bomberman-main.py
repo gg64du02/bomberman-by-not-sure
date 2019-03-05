@@ -764,6 +764,10 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
+def manageTCPserverPackets():
+    return []
+    pass
+
 end_of_round_time = time.time()
 
 # todo: menu here
@@ -987,6 +991,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedTCPRequestHandler")
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print(self.data)
+        answer = manageTCPserverPackets(self.data)
+        print("ThreadedTCPRequestHandler:answer",answer)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
         print("ThreadedTCPRequestHandler:data",data)
