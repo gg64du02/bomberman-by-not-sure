@@ -999,7 +999,6 @@ while(True):
 
 import socketserver, threading, time
 # UDP connexion handling, and
-# todo: queuing data that needs processing
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
@@ -1092,3 +1091,13 @@ while(runningMain):
 
 pygame.quit()
 quit()
+
+# todo: queuing data that needs processing ?
+# todo: add window titles change to the menus
+# todo: add the client side on join a game
+# todo: add a submenu on the join a game
+# todo: submenu join a game internet
+# todo: submenu join a local game
+# todo: add the server search on local
+# todo: add a server listing onto the internet games
+#
