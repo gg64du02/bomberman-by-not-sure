@@ -851,6 +851,32 @@ enableTcpServerThread = False
 # todo:normal menu
 
 
+import socket
+gameState = [0 for i in range(0, 7)]
+def managedTCPclient():
+
+    global gameState
+    print("gameState", gameState)
+
+    # if (joinAtcpIpGameMenuWhile == True):
+    print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
+    print("TCP Client")
+    # dataTCPclient = " Lolilol"
+    dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Connect to server and send data
+    sock.connect(("192.168.1.99", 8888))
+    sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+    # Receive data from the server and shut down
+    received = str(sock.recv(4096), "utf-8")
+    print("received", received)
+    pass
+
+OnceTCPclient = True
+
 while(True):
     if(runningMenuMain==True):
         # print("==========================================================")
@@ -995,9 +1021,17 @@ while(True):
         print("if(joinAtcpIpGameMenuWhile == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
         pass
-        # for debugging purposes
-        newRound()
-        break
+        if(OnceTCPclient==True):
+            print("if(OnceTCPclient==False):")
+            managedTCPclient()
+            OnceTCPclient = False
+        else:
+            print("!if(OnceTCPclient==False):")
+
+
+        # # for debugging purposes
+        # newRound()
+        # break
     else:
         print("!if(joinAtcpIpGameMenuWhile == True):")
 
@@ -1049,17 +1083,18 @@ if __name__ == "__main__":
     if(joinAtcpIpGameMenuWhile == True):
         print('"if __name__ == "__main__":','if(joinAtcpIpGameMenuWhile == True):')
         print("TCP Client")
-        dataTCPclient = " Lolilol"
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        # Connect to server and send data
-        sock.connect(("192.168.1.99", 8888))
-        sock.sendall(bytes(dataTCPclient, "utf-8"))
-
-        # Receive data from the server and shut down
-        received = str(sock.recv(4096), "utf-8")
-        print("received",received)
+        managedTCPclient()
+        # dataTCPclient = " Lolilol"
+        #
+        # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #
+        # # Connect to server and send data
+        # sock.connect(("192.168.1.99", 8888))
+        # sock.sendall(bytes(dataTCPclient, "utf-8"))
+        #
+        # # Receive data from the server and shut down
+        # received = str(sock.recv(4096), "utf-8")
+        # print("received",received)
         pass
 
 
