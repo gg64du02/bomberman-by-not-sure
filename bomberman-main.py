@@ -816,8 +816,10 @@ joinMenuWhile = False
 # when createMenuWhile is True
 playInLocalWhile = False
 
-
 createServerTcpIpMenuWhile = False
+
+
+enableTcpServerThread = False
 
 # todo:add the TCP Server
 
@@ -982,6 +984,10 @@ while(True):
             print("createServerTcpIpMenuWhile:dedicated",createPointInter)
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+            # start the local multiplayer
+            newRound()
+            # TCP Server thread enabled
+            enableTcpServerThread = True
             # stopping the menu loop
             break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
@@ -989,7 +995,11 @@ while(True):
             # todo: add another submenu about joining game
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
-            pass
+            # start the local multiplayer
+            newRound()
+            # TCP Server thread enabled
+            enableTcpServerThread = True
+            break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
             print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
             runningMenuMain = True
@@ -1025,20 +1035,21 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
 if __name__ == "__main__":
-    HOST_TCP, PORT_TCP = "0.0.0.0", 8888
-    server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
-    server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
-    server_thread_tcp.daemon = True
+    if(enableTcpServerThread==True):
+        HOST_TCP, PORT_TCP = "0.0.0.0", 8888
+        server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
+        server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
+        server_thread_tcp.daemon = True
 
-    try:
-        # servers
-        server_thread_tcp.start()
-        print("server_thread_tcp.start()")
+        try:
+            # servers
+            server_thread_tcp.start()
+            print("server_thread_tcp.start()")
 
-    except (KeyboardInterrupt, SystemExit):
-        server_thread_tcp.shutdown()
-        server_thread_tcp.server_close()
-        exit()
+        except (KeyboardInterrupt, SystemExit):
+            server_thread_tcp.shutdown()
+            server_thread_tcp.server_close()
+            exit()
 
 
 
