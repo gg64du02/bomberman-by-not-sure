@@ -764,7 +764,7 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
-def manageTCPserverPackets():
+def manageTCPserverPackets(incomingData):
     return []
     pass
 
@@ -991,7 +991,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedTCPRequestHandler")
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print(self.data)
-        answer = manageTCPserverPackets(self.data)
+        data4function = self.data
+        answer = manageTCPserverPackets(data4function)
         print("ThreadedTCPRequestHandler:answer",answer)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
