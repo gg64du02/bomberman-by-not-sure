@@ -764,7 +764,14 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
+from MultiBN import *
+
 def manageTCPserverPackets(incomingData):
+    print("manageTCPserverPackets")
+    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+    array = (incomingData.decode()).split('|')
+    print("array",array)
+
     return []
     pass
 
