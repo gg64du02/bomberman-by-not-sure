@@ -1033,6 +1033,7 @@ if __name__ == "__main__":
     try:
         # servers
         server_thread_tcp.start()
+        print("server_thread_tcp.start()")
 
     except (KeyboardInterrupt, SystemExit):
         server_thread_tcp.shutdown()
