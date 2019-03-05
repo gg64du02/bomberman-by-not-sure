@@ -995,6 +995,9 @@ while(True):
         print("if(joinAtcpIpGameMenuWhile == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
         pass
+        # for debugging purposes
+        newRound()
+        break
     else:
         print("!if(joinAtcpIpGameMenuWhile == True):")
 
