@@ -854,6 +854,7 @@ enableTcpServerThread = False
 import socket
 gameState = [0 for i in range(0, 7)]
 def managedTCPclient():
+    print("def managedTCPclient():")
 
     global gameState
     print("gameState", gameState)
@@ -863,6 +864,7 @@ def managedTCPclient():
     print("TCP Client")
     # dataTCPclient = " Lolilol"
     dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
+    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -1028,6 +1030,45 @@ while(True):
         else:
             print("!if(OnceTCPclient==False):")
 
+        Controls = keyboardRead()
+        ColisionCheckAndMovement()
+        if (keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
+            pygame.quit()
+            quit()
+        gameDisplay.fill(gray)
+        displayMap()
+        displayPlayers()
+        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
+        displayText("Local game", (display_width / 2), (display_height / 6) + 32 * 2)
+        displayText("Internet a game", (display_width / 2), (display_height / 6) + 32 * 4)
+        displayText("Go back", (display_width / 2), (display_height / 6) + 32 * 6)
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+        #     print("runningMenuMain:createPointInter", createPointInter)
+        #     # todo: add another submenu about creating game
+        #     runningMenuMain = False
+        #     createMenuWhile = True
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
+        #     print("runningMenuMain:joinPointInter", joinPointInter)
+        #     # todo: add another submenu about joining game
+        #     runningMenuMain = False
+        #     createMenuWhile = False
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        #     # switching to the join menu
+        #     joinAtcpIpGameMenuWhile = True
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
+        #     print("runningMenuMain:quitPointInter", quitPointInter)
+        #     pygame.quit()
+        #     quit()
+        #     pass
+
 
         # # for debugging purposes
         # newRound()
@@ -1154,9 +1195,9 @@ quit()
 # todo: queuing data that needs processing ?
 
 # todo: add a submenu on the join a game
-# todo: add the client side on join a game
-# todo: submenu join a game internet
 # todo: submenu join a local game
+# todo: submenu join a game internet
+# todo: add the client side on join a game
 # todo: add the server search on local
 # todo: add a server listing onto the internet games
 #
