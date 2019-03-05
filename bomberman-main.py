@@ -898,7 +898,6 @@ while(True):
         displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
         displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
         # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("runningMenuMain:createPointInter",createPointInter)
