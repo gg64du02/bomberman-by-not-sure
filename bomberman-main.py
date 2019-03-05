@@ -1023,13 +1023,6 @@ while(True):
         print("if(joinAtcpIpGameMenuWhile == True):")
         time.sleep(0.25)
         pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
-        pass
-        if(OnceTCPclient==True):
-            print("if(OnceTCPclient==False):")
-            managedTCPclient()
-            OnceTCPclient = False
-        else:
-            print("!if(OnceTCPclient==False):")
 
         Controls = keyboardRead()
         ColisionCheckAndMovement()
@@ -1048,13 +1041,19 @@ while(True):
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-        #     print("runningMenuMain:createPointInter", createPointInter)
-        #     # todo: add another submenu about creating game
-        #     runningMenuMain = False
-        #     createMenuWhile = True
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+            print("runningMenuMain:createPointInter", createPointInter)
+            if(OnceTCPclient==True):
+                print("if(OnceTCPclient==False):")
+                managedTCPclient()
+                OnceTCPclient = False
+            else:
+                print("!if(OnceTCPclient==False):")
+            # todo: add another submenu about creating game
+            runningMenuMain = False
+            createMenuWhile = True
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
         #     print("runningMenuMain:joinPointInter", joinPointInter)
         #     # todo: add another submenu about joining game
