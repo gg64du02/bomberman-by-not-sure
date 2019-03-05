@@ -766,6 +766,281 @@ def keyboardRead():
 
 end_of_round_time = time.time()
 
+# todo: menu here
+# menu: create game/join game/quit
+
+# MAINMENU:
+# INIT all the screen
+TheMap = np.zeros_like(TheMap)
+crateMap = np.zeros_like(TheMap)
+# path for cyan player
+# line going down
+TheMap[1:10,3] = 1
+crateMap[1:10,3] = 1
+# create a game
+TheMap[4,3:7] = 1
+crateMap[4,3:7] = 1
+# join a game
+TheMap[6,3:7] = 1
+crateMap[6,3:7] = 1
+# quit bomberman
+TheMap[8,3:7] = 1
+crateMap[8,3:7] = 1
+
+# green lockdown
+TheMap[14,19]=1
+crateMap[14,19]=1
+# cyan lockdown
+TheMap[14,0]=1
+crateMap[14,0]=1
+# blue lockdown
+TheMap[0,19]=1
+crateMap[0,19]=1
+
+# starting position in the menu
+Players[3][0] = [32*3 ,32*1]
+# useless players
+Players[2][0] = [32*19,32*0]
+Players[1][0] = [32*19,32*14]
+Players[0][0] = [32*0 ,32*14]
+
+createPointInter = [4,6]
+joinPointInter = [6,6]
+quitPointInter = [8,6]
+interactingPoints = [createPointInter,joinPointInter,quitPointInter]
+
+runningMenuMain = True
+createMenuWhile = False
+joinMenuWhile = False
+
+# when createMenuWhile is True
+playInLocalWhile = False
+
+
+createServerTcpIpMenuWhile = False
+
+# todo:add the TCP Server
+
+# todo:numberOfLocalPlayersMenuWhile = False
+# todo:dedicated menu
+# todo:normal menu
+
+
+while(True):
+    if(runningMenuMain==True):
+        # print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
+            pygame.quit()
+            quit()
+
+        gameDisplay.fill(gray)
+
+        # displayCrates()
+        displayMap()
+
+        displayPlayers()
+
+        displayText("USE ARROWS keys to move around the menu runningMenuMain",(display_width / 2), (display_height / 6)+32*0)
+
+        displayText("Create a game",(display_width / 2), (display_height / 6)+32*2)
+
+        displayText("Join a game",(display_width / 2), (display_height / 6)+32*4)
+
+        displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
+
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("runningMenuMain:createPointInter",createPointInter)
+            # todo: add another submenu about creating game
+            runningMenuMain = False
+            createMenuWhile = True
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("runningMenuMain:joinPointInter",joinPointInter)
+            # todo: add another submenu about joining game
+            runningMenuMain = False
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("runningMenuMain:quitPointInter",quitPointInter)
+            pygame.quit()
+            quit()
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+    if(createMenuWhile == True):
+        # print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = True
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            print("issuing the esc key")
+
+        gameDisplay.fill(gray)
+
+        # displayCrates()
+        displayMap()
+
+        displayPlayers()
+
+        displayText("USE ARROWS keys to move around the menu createMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+
+        displayText("Play/Create in local",(display_width / 2), (display_height / 6)+32*2)
+
+        displayText("Play/Create on Tcp/Ip",(display_width / 2), (display_height / 6)+32*4)
+
+        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
+
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("createMenuWhile:Local",createPointInter)
+            playInLocalWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # newRound in local
+            # start the local multiplayer
+            newRound()
+            # stopping the menu loop
+            break
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("createMenuWhile:Tcp/Ip",joinPointInter)
+            # todo: add another submenu about joining game
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            createServerTcpIpMenuWhile = True
+            createMenuWhile = False
+            pass
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("createMenuWhile:Go back to the main menu",quitPointInter)
+            runningMenuMain = True
+            createMenuWhile = False
+            joinMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+    # createServerTcpIpMenuWhile
+    if(createServerTcpIpMenuWhile == True):
+        # print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = True
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            print("issuing the esc key")
+
+        gameDisplay.fill(gray)
+
+        # displayCrates()
+        displayMap()
+
+        displayPlayers()
+
+        displayText("USE ARROWS keys to move around the menu createServerTcpIpMenuWhile",(display_width / 2), (display_height / 6)+32*0)
+
+        displayText("Dedicated",(display_width / 2), (display_height / 6)+32*2)
+
+        displayText("Normal",(display_width / 2), (display_height / 6)+32*4)
+
+        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
+
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5+0],(32*createPointInter[1],32*createPointInter[0]))
+
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
+            print("createServerTcpIpMenuWhile:dedicated",createPointInter)
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # stopping the menu loop
+            break
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
+            print("createServerTcpIpMenuWhile:Normal",joinPointInter)
+            # todo: add another submenu about joining game
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
+        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
+            print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
+            runningMenuMain = True
+            createMenuWhile = False
+            joinMenuWhile = False
+            createServerTcpIpMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+
+import socketserver, threading, time
+# UDP connexion handling, and
+# todo: queuing data that needs processing
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
+
+    def handle(self):
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        print("ThreadedTCPRequestHandler")
+        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
+        print(self.data)
+        # just send back the same data, but upper-cased
+        self.request.sendall(self.data.upper())
+        print("ThreadedTCPRequestHandler:data",data)
+
+
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
+
+if __name__ == "__main__":
+    HOST_TCP, PORT_TCP = "0.0.0.0", 8888
+    server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
+    server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
+    server_thread_tcp.daemon = True
+
+    try:
+        # servers
+        server_thread_tcp.start()
+
+    except (KeyboardInterrupt, SystemExit):
+        server_thread_tcp.shutdown()
+        server_thread_tcp.server_close()
+        exit()
+
+
+
 while(runningMain):
     # print("==========================================================")
     Controls = keyboardRead()
