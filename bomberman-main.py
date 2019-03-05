@@ -1081,8 +1081,8 @@ while(True):
         print("!if(joinAtcpIpGameMenuWhile == True):")
 
     pygame.display.update()
-    print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    # print('time:',str(time.time()-st_time))
+    clock.tick(3)
     st_time = time.time()
 
 import socketserver, threading, time
