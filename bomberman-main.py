@@ -872,7 +872,6 @@ while(True):
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        joinAtcpIpGameMenuWhile = False
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("runningMenuMain:createPointInter",createPointInter)
             # todo: add another submenu about creating game
@@ -887,10 +886,8 @@ while(True):
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+            # switching to the join menu
             joinAtcpIpGameMenuWhile = True
-            # for now: newRound() and break debugging purpose
-            newRound()
-            break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
             print("runningMenuMain:quitPointInter",quitPointInter)
             pygame.quit()
@@ -994,9 +991,12 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
-    if (joinAtcpIpGameMenuWhile == True):
-        print("joinAtcpIpGameMenuWhile", joinAtcpIpGameMenuWhile)
+    if(joinAtcpIpGameMenuWhile == True):
+        print("if(joinAtcpIpGameMenuWhile == True):")
+        pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
         pass
+    else:
+        print("!if(joinAtcpIpGameMenuWhile == True):")
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
