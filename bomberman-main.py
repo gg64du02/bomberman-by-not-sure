@@ -775,6 +775,16 @@ def manageTCPserverPackets(incomingData):
     return []
     pass
 
+
+def manageTCPclientPackets(incomingData):
+    print("manageTCPserverPackets")
+    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+    array = (incomingData.decode()).split('|')
+    print("array",array)
+
+    return []
+    pass
+
 end_of_round_time = time.time()
 
 # todo: menu here
