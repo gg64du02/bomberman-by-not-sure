@@ -819,14 +819,12 @@ playInLocalWhile = False
 
 createServerTcpIpMenuWhile = False
 
+# todo:add the TCP Server
 
 # todo:numberOfLocalPlayersMenuWhile = False
 # todo:dedicated menu
 # todo:normal menu
 
-# createMenuWhile
-# >play in local
-# >tcp/ip
 
 while(True):
     if(runningMenuMain==True):
