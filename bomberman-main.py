@@ -839,7 +839,7 @@ playInLocalWhile = False
 
 createServerTcpIpMenuWhile = False
 
-joinAtcpIpGame = False
+joinAtcpIpGameMenuWhile = False
 
 
 enableTcpServerThread = False
@@ -872,7 +872,7 @@ while(True):
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        joinAtcpIpGame = False
+        joinAtcpIpGameMenuWhile = False
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("runningMenuMain:createPointInter",createPointInter)
             # todo: add another submenu about creating game
@@ -887,7 +887,7 @@ while(True):
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
-            joinAtcpIpGame = True
+            joinAtcpIpGameMenuWhile = True
             # for now: newRound() and break debugging purpose
             newRound()
             break
@@ -994,6 +994,9 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
+    if (joinAtcpIpGameMenuWhile == True):
+        print("joinAtcpIpGameMenuWhile", joinAtcpIpGameMenuWhile)
+        pass
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
@@ -1037,9 +1040,6 @@ if __name__ == "__main__":
             server_thread_tcp.shutdown()
             server_thread_tcp.server_close()
             exit()
-    if(joinAtcpIpGame==True):
-        print("joinAtcpIpGame",joinAtcpIpGame)
-        pass
 
 
 
@@ -1095,8 +1095,9 @@ while(runningMain):
 pygame.quit()
 quit()
 
+# todo: done for now: add window titles change to the menus
 # todo: queuing data that needs processing ?
-# todo: add window titles change to the menus
+
 # todo: add the client side on join a game
 # todo: add a submenu on the join a game
 # todo: submenu join a game internet
