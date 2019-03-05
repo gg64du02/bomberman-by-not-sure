@@ -818,6 +818,8 @@ playInLocalWhile = False
 
 createServerTcpIpMenuWhile = False
 
+joinAtcpIpGame = False
+
 
 enableTcpServerThread = False
 
@@ -848,6 +850,7 @@ while(True):
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        joinAtcpIpGame = False
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("runningMenuMain:createPointInter",createPointInter)
             # todo: add another submenu about creating game
@@ -862,6 +865,10 @@ while(True):
             createMenuWhile = False
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+            joinAtcpIpGame = True
+            # for now: newRound() and break debugging purpose
+            newRound()
+            break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
             print("runningMenuMain:quitPointInter",quitPointInter)
             pygame.quit()
@@ -1004,6 +1011,9 @@ if __name__ == "__main__":
             server_thread_tcp.shutdown()
             server_thread_tcp.server_close()
             exit()
+    if(joinAtcpIpGame==True):
+        print("joinAtcpIpGame",joinAtcpIpGame)
+        pass
 
 
 
