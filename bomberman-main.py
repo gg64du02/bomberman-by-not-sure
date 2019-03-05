@@ -1021,6 +1021,7 @@ while(True):
             pass
     if(joinAtcpIpGameMenuWhile == True):
         print("if(joinAtcpIpGameMenuWhile == True):")
+        time.sleep(0.25)
         pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
         pass
         if(OnceTCPclient==True):
@@ -1063,11 +1064,16 @@ while(True):
         #     Players[3][0] = [32 * 3, 32 * 1]
         #     # switching to the join menu
         #     joinAtcpIpGameMenuWhile = True
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-        #     print("runningMenuMain:quitPointInter", quitPointInter)
-        #     pygame.quit()
-        #     quit()
-        #     pass
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
+            print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
+            runningMenuMain = True
+            createMenuWhile = False
+            joinMenuWhile = False
+            createServerTcpIpMenuWhile = False
+            joinAtcpIpGameMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            pass
 
 
         # # for debugging purposes
