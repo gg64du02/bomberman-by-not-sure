@@ -1098,8 +1098,8 @@ quit()
 # todo: done for now: add window titles change to the menus
 # todo: queuing data that needs processing ?
 
-# todo: add the client side on join a game
 # todo: add a submenu on the join a game
+# todo: add the client side on join a game
 # todo: submenu join a game internet
 # todo: submenu join a local game
 # todo: add the server search on local
