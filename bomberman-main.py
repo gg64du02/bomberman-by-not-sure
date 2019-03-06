@@ -1115,6 +1115,8 @@ def manageTCPserverPackets(incomingData,client_addr):
     # Clients informations for TCP connect managed by the server
     # [clientID,IP,port,state of the game]
     global clientIDsWgameState
+    # adding the infos to count down
+    global slotsLeftOnServer
     print("manageTCPserverPackets")
     print("manageTCPserverPackets:MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
     array = (incomingData.decode()).split('|')
