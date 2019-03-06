@@ -1064,8 +1064,7 @@ while(True):
             Players[3][0] = [32 * 3, 32 * 1]
             pass
     if(joinAtcpIpGameMenuWhile == True):
-        print("if(joinAtcpIpGameMenuWhile == True):")
-        time.sleep(0.25)
+        # print("if(joinAtcpIpGameMenuWhile == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
 
         Controls = keyboardRead()
@@ -1123,7 +1122,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(5)
     st_time = time.time()
 
 # testing lines
