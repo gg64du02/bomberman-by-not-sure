@@ -832,7 +832,7 @@ enableTcpServerThread = False
 # todo:normal menu
 
 # Clients information for TCP connect managed by the server
-clientIDsWgameStateWgameState = []
+clientIDsWgameState = []
 
 from MultiBN import *
 
@@ -1092,10 +1092,20 @@ while(True):
 
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData):
+    global clientIDsWgameState
     print("manageTCPserverPackets")
-    print("MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
+    print("manageTCPserverPackets:MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
     array = (incomingData.decode()).split('|')
-    print("array", array)
+    print("manageTCPserverPackets:array", array)
+
+    if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):
+        print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
+        print("clientIDsWgameState",clientIDsWgameState)
+        if(clientIDsWgameState.lengh<4):
+            print("manageTCPserverPackets:if (clientIDsWgameState.lengh < 4):")
+            pass
+    else:
+        print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
 
     return []
     pass
@@ -1114,9 +1124,9 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         answer = manageTCPserverPackets(data4function)
         print("ThreadedTCPRequestHandler:answer",answer)
         # answering the client
-        self.request.sendall(answer)
-        # # just send back the same data, but upper-cased
-        # self.request.sendall(self.data.upper())
+        # self.request.sendall(answer)
+        # just send back the same data, but upper-cased
+        self.request.sendall(self.data.upper())
         print("ThreadedTCPRequestHandler:data",data)
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
