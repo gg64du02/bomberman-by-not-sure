@@ -776,14 +776,6 @@ def manageTCPserverPackets(incomingData):
     pass
 
 
-def manageTCPclientPackets(incomingData):
-    print("manageTCPserverPackets")
-    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-    array = (incomingData.decode()).split('|')
-    print("array",array)
-
-    return []
-    pass
 
 end_of_round_time = time.time()
 
@@ -850,31 +842,51 @@ enableTcpServerThread = False
 # todo:dedicated menu
 # todo:normal menu
 
+# Clients information for TCP connect managed by the server
+clientIDs = []
+
+def manageTCPclientIncomingPackets(incomingData):
+    global clientIDs
+    print("manageTCPserverPackets")
+    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+    array = (incomingData.decode()).split('|')
+    if(array[0]==MBN_TCP_CLIENT_JOIN_REQUIRED):
+        print("if(array[0]==MBN_TCP_CLIENT_JOIN_REQUIRED):")
+        if(clientIDs.lengh<4):
+            print("if (clientIDs.lengh < 4):")
+            pass
+
+    print("array",array)
+
+    pass
 
 import socket
 gameState = [0 for i in range(0, 7)]
-def commAsTCPclient():
-    print("def commAsTCPclient():")
+def mangageOutGoingTCPclientPackets():
+    print("def mangageOutGoingTCPclientPackets():")
 
-    global gameState
-    print("gameState", gameState)
-
-    # if (joinAtcpIpGameMenuWhile == True):
-    print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
-    print("TCP Client")
-    # dataTCPclient = " Lolilol"
-    dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
-    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Connect to server and send data
-    sock.connect(("192.168.1.99", 8888))
-    sock.sendall(bytes(dataTCPclient, "utf-8"))
-
-    # Receive data from the server and shut down
-    received = str(sock.recv(4096), "utf-8")
-    print("received", received)
+    # global gameState
+    # print("gameState", gameState)
+    #
+    # # if (joinAtcpIpGameMenuWhile == True):
+    # print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
+    # print("TCP Client")
+    # # dataTCPclient = " Lolilol"
+    # dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
+    # print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+    #
+    # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #
+    # # Connect to server and send data
+    # sock.connect(("192.168.1.99", 8888))
+    # sock.sendall(bytes(dataTCPclient, "utf-8"))
+    #
+    # # Receive data from the server and shut down
+    # received = str(sock.recv(4096), "utf-8")
+    # print("received", received)
+    # # change gameState
+    # # issue manageTCPclientIncomingPackets
+    # # manageTCPclientIncomingPackets()
     pass
 
 OnceTCPclient = True
@@ -1040,14 +1052,10 @@ while(True):
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        # check if any communication are pending or rejected
+        mangageOutGoingTCPclientPackets()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
             print("runningMenuMain:createPointInter", createPointInter)
-            if(OnceTCPclient==True):
-                print("if(OnceTCPclient==False):")
-                commAsTCPclient()
-                OnceTCPclient = False
-            else:
-                print("!if(OnceTCPclient==False):")
             # todo: add another submenu about creating game
             runningMenuMain = False
             createMenuWhile = True
@@ -1082,7 +1090,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(3)
+    clock.tick(10)
     st_time = time.time()
 
 import socketserver, threading, time
@@ -1125,10 +1133,10 @@ if __name__ == "__main__":
 
     import socket
 
-    if(joinAtcpIpGameMenuWhile == True):
-        print('"if __name__ == "__main__":','if(joinAtcpIpGameMenuWhile == True):')
-        print("TCP Client")
-        commAsTCPclient()
+    # if(joinAtcpIpGameMenuWhile == True):
+    #     print('"if __name__ == "__main__":','if(joinAtcpIpGameMenuWhile == True):')
+    #     print("TCP Client")
+    #     commAsTCPclient()
         # dataTCPclient = " Lolilol"
         #
         # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -1140,7 +1148,7 @@ if __name__ == "__main__":
         # # Receive data from the server and shut down
         # received = str(sock.recv(4096), "utf-8")
         # print("received",received)
-        pass
+        # pass
 
 
 while(runningMain):
@@ -1187,7 +1195,7 @@ while(runningMain):
     # print("hitboxes():\n",hitboxes())
 
     pygame.display.update()
-    print('time:',str(time.time()-st_time))
+    # print('time:',str(time.time()-st_time))
     clock.tick(60)
     st_time = time.time()
     # print('lol')
