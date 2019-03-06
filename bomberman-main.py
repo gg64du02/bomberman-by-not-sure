@@ -1174,6 +1174,12 @@ def manageTCPserverPackets(incomingData,client_addr):
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
 
+    # ping feature
+    if(int(array[0])>=1000):
+        print("ping feature")
+        return str(int(array[0])+1)
+        pass
+
     return str([])
     pass
 
