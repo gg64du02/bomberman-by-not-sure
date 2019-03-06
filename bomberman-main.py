@@ -855,6 +855,8 @@ def manageTCPclientIncomingPackets(incomingData):
 
     pass
 
+pingTimeStart = time.time()
+
 import socket
 # used by the client
 tcpClientGameState = [0 for i in range(0, 7)]
@@ -863,6 +865,8 @@ def mangageOutGoingTCPclientPackets():
 
     global tcpClientGameState
     print("tcpClientGameState", tcpClientGameState)
+
+    global pingTimeStart
 
     TCP_SERVER_IP = "192.168.1.99"
 
@@ -894,6 +898,27 @@ def mangageOutGoingTCPclientPackets():
         # todo: change the server side
         # todo: change the tcpClientGameState[0]
         # todo: change the tcpServerGameState[ClientID][0]
+
+    if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):
+        print("if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):")
+        print("(time.time()-pingTimeStart)*1000",(time.time()-pingTimeStart)*1000)
+        pingTimeStart = time.time()
+
+        dataTCPclient = str(random.randint(0,1000))
+        print("mangageOutGoingTCPclientPackets:MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        # Connect to server and send data
+        sock.connect((TCP_SERVER_IP, 8888))
+        sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+        # Receive data from the server and shut down
+        received = str(sock.recv(4096), "utf-8")
+        print("mangageOutGoingTCPclientPackets:received", received)
+        print("ping time",(time.time()-pingTimeStart)*1000,"ms")
+
+
 
     pass
 
