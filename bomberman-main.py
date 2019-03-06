@@ -904,7 +904,7 @@ def mangageOutGoingTCPclientPackets():
         print("(time.time()-pingTimeStart)*1000",(time.time()-pingTimeStart)*1000)
         pingTimeStart = time.time()
 
-        dataTCPclient = str(random.randint(0,1000))
+        dataTCPclient = str(random.randint(1000,10000))
         print("mangageOutGoingTCPclientPackets:MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
