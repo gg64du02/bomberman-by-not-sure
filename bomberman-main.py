@@ -1114,23 +1114,25 @@ def manageTCPserverPackets(incomingData,client_addr):
             if(len(clientIDsWgameState)>=4):
                 print("manageTCPserverPackets:if(len(clientIDsWgameState)>=4):")
                 print("return MBN_TCP_SERVER_JOIN_REFUSED")
-                return MBN_TCP_SERVER_JOIN_REFUSED
+                return str(MBN_TCP_SERVER_JOIN_REFUSED)
                 pass
             else:
                 print("!if(len(clientIDsWgameState)>=4):")
-                clientIDsWgameState.append([len(clientIDsWgameState),client_addr])
+                clientID = len(clientIDsWgameState)
+                clientIDsWgameState.append([clientID,client_addr])
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-                return MBN_TCP_SERVER_JOIN_ACCEPTED
+                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID)
         else:
             print("!if(clientIDsWgameState!=[]):")
-            clientIDsWgameState.append([len(clientIDsWgameState),client_addr])
+            clientID = len(clientIDsWgameState)
+            clientIDsWgameState.append([clientID,client_addr])
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-            return MBN_TCP_SERVER_JOIN_ACCEPTED
+            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID)
             pass
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
 
-    return []
+    return str([])
     pass
 
 import socketserver, threading, time
@@ -1147,7 +1149,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         answer = manageTCPserverPackets(data4function,self.client_address)
         print("ThreadedTCPRequestHandler:answer",answer)
         # answering the client
-        self.request.sendall(bytes(answer))
+        self.request.sendall(bytes(answer.encode()))
         # # just send back the same data, but upper-cased
         # self.request.sendall(self.data.upper())
         print("ThreadedTCPRequestHandler:data",data)
