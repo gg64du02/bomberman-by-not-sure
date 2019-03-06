@@ -1193,7 +1193,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         self.request.sendall(bytes(answer.encode()))
         # # just send back the same data, but upper-cased
         # self.request.sendall(self.data.upper())
-        print("ThreadedTCPRequestHandler:data",data)
+        print("ThreadedTCPRequestHandler:self.data",self.data)
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
