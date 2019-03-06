@@ -764,17 +764,6 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
-from MultiBN import *
-
-def manageTCPserverPackets(incomingData):
-    print("manageTCPserverPackets")
-    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-    array = (incomingData.decode()).split('|')
-    print("array",array)
-
-    return []
-    pass
-
 
 
 end_of_round_time = time.time()
@@ -844,6 +833,8 @@ enableTcpServerThread = False
 
 # Clients information for TCP connect managed by the server
 clientIDsWgameStateWgameState = []
+
+from MultiBN import *
 
 # function used by nothing right now
 def manageTCPclientIncomingPackets(incomingData):
@@ -1099,6 +1090,16 @@ while(True):
     clock.tick(10)
     st_time = time.time()
 
+# used by ThreadedTCPRequestHandler
+def manageTCPserverPackets(incomingData):
+    print("manageTCPserverPackets")
+    print("MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
+    array = (incomingData.decode()).split('|')
+    print("array", array)
+
+    return []
+    pass
+
 import socketserver, threading, time
 # TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
@@ -1112,10 +1113,11 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         data4function = self.data
         answer = manageTCPserverPackets(data4function)
         print("ThreadedTCPRequestHandler:answer",answer)
-        # just send back the same data, but upper-cased
-        self.request.sendall(self.data.upper())
+        # answering the client
+        self.request.sendall(answer)
+        # # just send back the same data, but upper-cased
+        # self.request.sendall(self.data.upper())
         print("ThreadedTCPRequestHandler:data",data)
-
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
