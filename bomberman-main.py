@@ -1169,7 +1169,7 @@ def manageTCPserverPackets(incomingData,client_addr):
 
     # ping feature
     if(int(array[0])>=1000):
-        print("ping feature")
+        print("manageTCPserverPackets:ping feature")
         return str(int(array[0])+1)
         pass
 
