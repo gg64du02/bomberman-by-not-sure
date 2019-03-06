@@ -843,20 +843,24 @@ enableTcpServerThread = False
 # todo:normal menu
 
 # Clients information for TCP connect managed by the server
-clientIDs = []
+clientIDsWgameStateWgameState = []
 
+# function used by nothing right now
 def manageTCPclientIncomingPackets(incomingData):
-    global clientIDs
-    print("manageTCPserverPackets")
+    global clientIDsWgameState
+    print("manageTCPclientIncomingPackets")
     print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
     array = (incomingData.decode()).split('|')
-    if(array[0]==MBN_TCP_CLIENT_JOIN_REQUIRED):
-        print("if(array[0]==MBN_TCP_CLIENT_JOIN_REQUIRED):")
-        if(clientIDs.lengh<4):
-            print("if (clientIDs.lengh < 4):")
-            pass
 
     print("array",array)
+
+    if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):
+        print("if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
+        if(clientIDsWgameState.lengh<4):
+            print("if (clientIDsWgameState.lengh < 4):")
+            pass
+    else:
+        print()
 
     pass
 
@@ -885,16 +889,10 @@ def mangageOutGoingTCPclientPackets():
         received = str(sock.recv(4096), "utf-8")
         print("mangageOutGoingTCPclientPackets:received", received)
 
-        # # if (joinAtcpIpGameMenuWhile == True):
-        # print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
-        # print("TCP Client")
-    #
-    # # Receive data from the server and shut down
-    # received = str(sock.recv(4096), "utf-8")
-    # print("received", received)
-    # # change tcpClientGameState
-    # # issue manageTCPclientIncomingPackets
-    # # manageTCPclientIncomingPackets()
+        # todo: change the server side
+        # todo: change the tcpClientGameState[0]
+        # todo: change the tcpServerGameState[ClientID][0]
+
     pass
 
 OnceTCPclient = True
@@ -1102,7 +1100,7 @@ while(True):
     st_time = time.time()
 
 import socketserver, threading, time
-# UDP connexion handling, and
+# TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
