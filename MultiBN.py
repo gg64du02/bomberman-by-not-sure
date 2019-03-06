@@ -28,6 +28,9 @@ MBN_SESSION_TCP_SERVER_COUNTDOWN_FIRST_ROUND = 7
 MBN_SESSION_TCP_SERVER_TRANSMIT_MAP = 8
 # Used by the server to transmit the map to the clients
 
+MBN_SESSION_TCP_SERVER_PING = 9
+# Used by the client let know the server he is still online
+
 
 # datagram shape
 # data|data type|data|crc
