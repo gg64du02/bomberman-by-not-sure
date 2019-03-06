@@ -1137,14 +1137,14 @@ def manageTCPserverPackets(incomingData,client_addr):
                 clientIDsWgameState.append([clientID,client_addr])
                 slotsLeftOnServer -=1
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer)
+                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
         else:
             print("!if(clientIDsWgameState!=[]):")
             clientID = len(clientIDsWgameState)
             clientIDsWgameState.append([clientID,client_addr])
             slotsLeftOnServer -= 1
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer)
+            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
             pass
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
