@@ -1101,8 +1101,12 @@ def manageTCPserverPackets(incomingData):
     if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):
         print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
         print("clientIDsWgameState",clientIDsWgameState)
-        if(clientIDsWgameState.lengh<4):
-            print("manageTCPserverPackets:if (clientIDsWgameState.lengh < 4):")
+        if(clientIDsWgameState!=[]):
+            if(clientIDsWgameState.lengh<4):
+                print("manageTCPserverPackets:if (clientIDsWgameState.lengh < 4):")
+                pass
+        else:
+            # clientIDsWgameState.append()
             pass
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
