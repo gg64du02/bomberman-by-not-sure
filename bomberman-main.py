@@ -1138,14 +1138,14 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         print("ThreadedTCPRequestHandler")
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
-        print(self.data)
+        print("self.data",self.data)
         data4function = self.data
         answer = manageTCPserverPackets(data4function)
         print("ThreadedTCPRequestHandler:answer",answer)
         # answering the client
-        # self.request.sendall(answer)
-        # just send back the same data, but upper-cased
-        self.request.sendall(self.data.upper())
+        self.request.sendall(bytes(answer))
+        # # just send back the same data, but upper-cased
+        # self.request.sendall(self.data.upper())
         print("ThreadedTCPRequestHandler:data",data)
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
