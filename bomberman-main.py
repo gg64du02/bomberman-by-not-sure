@@ -799,6 +799,8 @@ crateMap[14,0]=1
 TheMap[0,19]=1
 crateMap[0,19]=1
 
+
+
 # starting position in the menu
 Players[3][0] = [32*3 ,32*1]
 # useless players
@@ -1092,7 +1094,8 @@ while(True):
             print("runningMenuMain:createPointInter", createPointInter)
             # todo: add another submenu about creating game
             runningMenuMain = False
-            createMenuWhile = True
+            createMenuWhile = False
+            joinedAtcpIpGameMenuWhile = True
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
@@ -1115,58 +1118,68 @@ while(True):
             Players[3][0] = [32 * 3, 32 * 1]
             pass
 
-    # joinedAtcpIpGameMenuWhile = True
-    # if(joinedAtcpIpGameMenuWhile == True):
-    #     # print("if(joinAtcpIpGameMenuWhile == True):")
-    #     pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
-    #
-    #     Controls = keyboardRead()
-    #     ColisionCheckAndMovement()
-    #     if (keyboard.is_pressed('esc')):
-    #         runningMenuMain = False
-    #         print("issuing the esc key")
-    #         pygame.quit()
-    #         quit()
-    #     gameDisplay.fill(gray)
-    #     displayMap()
-    #     displayPlayers()
-    #     displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-    #     displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
-    #     displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
-    #     displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
-    #     displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
-    #     displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
-    #     # a bomb mean it is a work in progress
-    #     gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
-    #     interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-    #     # # check if any communication are pending or rejected
-    #     # mangageOutGoingTCPclientPackets()
-    #     # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-    #     #     print("runningMenuMain:createPointInter", createPointInter)
-    #     #     # todo: add another submenu about creating game
-    #     #     runningMenuMain = False
-    #     #     createMenuWhile = True
-    #     #     # putting back the cyan player on a neutral spot
-    #     #     Players[3][0] = [32 * 3, 32 * 1]
-    #     # # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-    #     # #     print("runningMenuMain:joinPointInter", joinPointInter)
-    #     # #     # todo: add another submenu about joining game
-    #     # #     runningMenuMain = False
-    #     # #     createMenuWhile = False
-    #     # #     # putting back the cyan player on a neutral spot
-    #     # #     Players[3][0] = [32 * 3, 32 * 1]
-    #     # #     # switching to the join menu
-    #     # #     joinAtcpIpGameMenuWhile = True
-    #     # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-    #     #     print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
-    #     #     runningMenuMain = True
-    #     #     createMenuWhile = False
-    #     #     joinMenuWhile = False
-    #     #     createServerTcpIpMenuWhile = False
-    #     #     joinAtcpIpGameMenuWhile = False
-    #     #     # putting back the cyan player on a neutral spot
-    #     #     Players[3][0] = [32 * 3, 32 * 1]
-    #     #     pass
+    if(joinedAtcpIpGameMenuWhile == True):
+
+        # line going down
+        TheMap[1:13, 3] = 1
+        crateMap[1:13, 3] = 1
+        # 3 player
+        TheMap[10, 3:7] = 1
+        crateMap[10, 3:7] = 1
+        # 4 player
+        TheMap[12, 3:7] = 1
+        crateMap[12, 3:7] = 1
+
+        # print("if(joinAtcpIpGameMenuWhile == True):")
+        pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
+
+        Controls = keyboardRead()
+        ColisionCheckAndMovement()
+        if (keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
+            pygame.quit()
+            quit()
+        gameDisplay.fill(gray)
+        displayMap()
+        displayPlayers()
+        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
+        displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
+        displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
+        displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
+        displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
+        displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        # # check if any communication are pending or rejected
+        # mangageOutGoingTCPclientPackets()
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+        #     print("runningMenuMain:createPointInter", createPointInter)
+        #     # todo: add another submenu about creating game
+        #     runningMenuMain = False
+        #     createMenuWhile = True
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        # # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
+        # #     print("runningMenuMain:joinPointInter", joinPointInter)
+        # #     # todo: add another submenu about joining game
+        # #     runningMenuMain = False
+        # #     createMenuWhile = False
+        # #     # putting back the cyan player on a neutral spot
+        # #     Players[3][0] = [32 * 3, 32 * 1]
+        # #     # switching to the join menu
+        # #     joinAtcpIpGameMenuWhile = True
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
+        #     print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
+        #     runningMenuMain = True
+        #     createMenuWhile = False
+        #     joinMenuWhile = False
+        #     createServerTcpIpMenuWhile = False
+        #     joinAtcpIpGameMenuWhile = False
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        #     pass
 
 
     pygame.display.update()
