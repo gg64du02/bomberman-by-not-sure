@@ -1098,7 +1098,7 @@ while(True):
 # clientIDsWgameState.append('lol')
 
 # used by ThreadedTCPRequestHandler
-def manageTCPserverPackets(incomingData):
+def manageTCPserverPackets(incomingData,client_addr):
     # Clients informations for TCP connect managed by the server
     # [clientID,IP,port,state of the game]
     global clientIDsWgameState
@@ -1111,19 +1111,19 @@ def manageTCPserverPackets(incomingData):
         print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
         print("clientIDsWgameState",clientIDsWgameState)
         if(clientIDsWgameState!=[]):
-            if(len(clientIDsWgameState)>=4):
+            if(len(clientIDsWgameState)>=3):
                 print("manageTCPserverPackets:if(len(clientIDsWgameState)>=4):")
                 print("return MBN_TCP_SERVER_JOIN_REFUSED")
                 return MBN_TCP_SERVER_JOIN_REFUSED
                 pass
             else:
                 print("!if(len(clientIDsWgameState)>=4):")
-                clientIDsWgameState.append([len(clientIDsWgameState)])
+                clientIDsWgameState.append([len(clientIDsWgameState),client_addr])
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
                 return MBN_TCP_SERVER_JOIN_ACCEPTED
         else:
             print("!if(clientIDsWgameState!=[]):")
-            clientIDsWgameState.append([len(clientIDsWgameState)])
+            clientIDsWgameState.append([len(clientIDsWgameState),client_addr])
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
             return MBN_TCP_SERVER_JOIN_ACCEPTED
             pass
@@ -1144,7 +1144,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print("self.data",self.data)
         data4function = self.data
-        answer = manageTCPserverPackets(data4function)
+        answer = manageTCPserverPackets(data4function,self.client_address)
         print("ThreadedTCPRequestHandler:answer",answer)
         # answering the client
         self.request.sendall(bytes(answer))
