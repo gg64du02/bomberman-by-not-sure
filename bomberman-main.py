@@ -1111,7 +1111,7 @@ def manageTCPserverPackets(incomingData,client_addr):
         print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
         print("clientIDsWgameState",clientIDsWgameState)
         if(clientIDsWgameState!=[]):
-            if(len(clientIDsWgameState)>=3):
+            if(len(clientIDsWgameState)>=4):
                 print("manageTCPserverPackets:if(len(clientIDsWgameState)>=4):")
                 print("return MBN_TCP_SERVER_JOIN_REFUSED")
                 return MBN_TCP_SERVER_JOIN_REFUSED
