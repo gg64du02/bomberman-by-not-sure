@@ -853,8 +853,8 @@ enableTcpServerThread = False
 
 import socket
 gameState = [0 for i in range(0, 7)]
-def managedTCPclient():
-    print("def managedTCPclient():")
+def commAsTCPclient():
+    print("def commAsTCPclient():")
 
     global gameState
     print("gameState", gameState)
@@ -1044,7 +1044,7 @@ while(True):
             print("runningMenuMain:createPointInter", createPointInter)
             if(OnceTCPclient==True):
                 print("if(OnceTCPclient==False):")
-                managedTCPclient()
+                commAsTCPclient()
                 OnceTCPclient = False
             else:
                 print("!if(OnceTCPclient==False):")
@@ -1128,7 +1128,7 @@ if __name__ == "__main__":
     if(joinAtcpIpGameMenuWhile == True):
         print('"if __name__ == "__main__":','if(joinAtcpIpGameMenuWhile == True):')
         print("TCP Client")
-        managedTCPclient()
+        commAsTCPclient()
         # dataTCPclient = " Lolilol"
         #
         # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -1198,7 +1198,7 @@ quit()
 # todo: done for now: add window titles change to the menus
 # todo: queuing data that needs processing ?
 
-# todo: add a submenu on the join a game
+# done: add a submenu on the join a game
 # todo: submenu join a local game
 # todo: submenu join a game internet
 # todo: add the client side on join a game
