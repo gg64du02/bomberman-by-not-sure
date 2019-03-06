@@ -1114,12 +1114,6 @@ while(True):
             pass
 
 
-        # # for debugging purposes
-        # newRound()
-        # break
-    else:
-        print("!if(joinAtcpIpGameMenuWhile == True):")
-
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
     clock.tick(5)
