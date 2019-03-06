@@ -861,30 +861,38 @@ def manageTCPclientIncomingPackets(incomingData):
     pass
 
 import socket
-gameState = [0 for i in range(0, 7)]
+tcpClientGameState = [0 for i in range(0, 7)]
 def mangageOutGoingTCPclientPackets():
     print("def mangageOutGoingTCPclientPackets():")
 
-    # global gameState
-    # print("gameState", gameState)
-    #
-    # # if (joinAtcpIpGameMenuWhile == True):
-    # print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
-    # print("TCP Client")
-    # # dataTCPclient = " Lolilol"
-    # dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
-    # print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-    #
-    # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #
-    # # Connect to server and send data
-    # sock.connect(("192.168.1.99", 8888))
-    # sock.sendall(bytes(dataTCPclient, "utf-8"))
+    global tcpClientGameState
+    print("tcpClientGameState", tcpClientGameState)
+
+    TCP_SERVER_IP = "192.168.1.99"
+
+    if(tcpClientGameState[0]==0):
+        print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0]==0):")
+        dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
+        print("mangageOutGoingTCPclientPackets:MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        # Connect to server and send data
+        sock.connect((TCP_SERVER_IP, 8888))
+        sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+        # Receive data from the server and shut down
+        received = str(sock.recv(4096), "utf-8")
+        print("mangageOutGoingTCPclientPackets:received", received)
+
+        # # if (joinAtcpIpGameMenuWhile == True):
+        # print('"if __name__ == "__main__":', 'if(joinAtcpIpGameMenuWhile == True):')
+        # print("TCP Client")
     #
     # # Receive data from the server and shut down
     # received = str(sock.recv(4096), "utf-8")
     # print("received", received)
-    # # change gameState
+    # # change tcpClientGameState
     # # issue manageTCPclientIncomingPackets
     # # manageTCPclientIncomingPackets()
     pass
