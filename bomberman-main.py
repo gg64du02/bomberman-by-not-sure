@@ -1090,6 +1090,12 @@ while(True):
     clock.tick(10)
     st_time = time.time()
 
+clientIDsWgameState.append('lol')
+clientIDsWgameState.append('lol')
+clientIDsWgameState.append('lol')
+clientIDsWgameState.append('lol')
+clientIDsWgameState.append('lol')
+
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData):
     global clientIDsWgameState
@@ -1102,11 +1108,13 @@ def manageTCPserverPackets(incomingData):
         print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
         print("clientIDsWgameState",clientIDsWgameState)
         if(clientIDsWgameState!=[]):
-            if(clientIDsWgameState.lengh<4):
+            if(clientIDsWgameState.length<4):
                 print("manageTCPserverPackets:if (clientIDsWgameState.lengh < 4):")
+                return MBN_TCP_SERVER_JOIN_REFUSED
                 pass
         else:
             # clientIDsWgameState.append()
+            return MBN_TCP_SERVER_JOIN_ACCEPTED
             pass
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
