@@ -1090,11 +1090,12 @@ while(True):
     clock.tick(10)
     st_time = time.time()
 
-clientIDsWgameState.append('lol')
-clientIDsWgameState.append('lol')
-clientIDsWgameState.append('lol')
-clientIDsWgameState.append('lol')
-clientIDsWgameState.append('lol')
+# testing lines
+# clientIDsWgameState.append('lol')
+# clientIDsWgameState.append('lol')
+# clientIDsWgameState.append('lol')
+# clientIDsWgameState.append('lol')
+# clientIDsWgameState.append('lol')
 
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData):
