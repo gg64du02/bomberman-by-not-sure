@@ -1114,8 +1114,12 @@ def manageTCPserverPackets(incomingData):
                 print("return MBN_TCP_SERVER_JOIN_REFUSED")
                 return MBN_TCP_SERVER_JOIN_REFUSED
                 pass
+            else:
+                print("!if(len(clientIDsWgameState)<4):")
+                print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
+                return MBN_TCP_SERVER_JOIN_ACCEPTED
         else:
-            # clientIDsWgameState.append()
+            print("!if(clientIDsWgameState!=[]):")
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
             return MBN_TCP_SERVER_JOIN_ACCEPTED
             pass
