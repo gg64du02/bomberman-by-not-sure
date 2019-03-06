@@ -1099,6 +1099,8 @@ while(True):
 
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData):
+    # Clients informations for TCP connect managed by the server
+    # [clientID,IP,port,state of the game]
     global clientIDsWgameState
     print("manageTCPserverPackets")
     print("manageTCPserverPackets:MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
