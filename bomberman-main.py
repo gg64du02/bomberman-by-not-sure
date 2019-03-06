@@ -880,6 +880,9 @@ def mangageOutGoingTCPclientPackets():
         received = str(sock.recv(4096), "utf-8")
         print("mangageOutGoingTCPclientPackets:received", received)
 
+        # Join accepted
+        tcpClientGameState[0] = 1
+
         # todo: change the server side
         # todo: change the tcpClientGameState[0]
         # todo: change the tcpServerGameState[ClientID][0]
