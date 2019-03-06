@@ -856,6 +856,7 @@ def manageTCPclientIncomingPackets(incomingData):
     pass
 
 import socket
+# used by the client
 tcpClientGameState = [0 for i in range(0, 7)]
 def mangageOutGoingTCPclientPackets():
     print("def mangageOutGoingTCPclientPackets():")
@@ -880,8 +881,15 @@ def mangageOutGoingTCPclientPackets():
         received = str(sock.recv(4096), "utf-8")
         print("mangageOutGoingTCPclientPackets:received", received)
 
-        # Join accepted
-        tcpClientGameState[0] = 1
+        if(int(received.split('|')[0])==MBN_TCP_SERVER_JOIN_ACCEPTED):
+            # MBN_TCP_SERVER_JOIN_ACCEPTED
+            # Join accepted
+            tcpClientGameState[0] = 1
+
+
+    if(tcpClientGameState[0] == 1):
+        print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0] == 1):")
+        pass
 
         # todo: change the server side
         # todo: change the tcpClientGameState[0]
