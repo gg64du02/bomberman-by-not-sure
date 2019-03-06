@@ -1108,6 +1108,8 @@ while(True):
 # clientIDsWgameState.append('lol')
 # clientIDsWgameState.append('lol')
 
+# number of slots left on server
+slotsLeftOnServer = 4
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData,client_addr):
     # Clients informations for TCP connect managed by the server
@@ -1131,14 +1133,16 @@ def manageTCPserverPackets(incomingData,client_addr):
                 print("!if(len(clientIDsWgameState)>=4):")
                 clientID = len(clientIDsWgameState)
                 clientIDsWgameState.append([clientID,client_addr])
+                slotsLeftOnServer -=1
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID)
+                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer)
         else:
             print("!if(clientIDsWgameState!=[]):")
             clientID = len(clientIDsWgameState)
             clientIDsWgameState.append([clientID,client_addr])
+            slotsLeftOnServer -= 1
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID)
+            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer)
             pass
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
