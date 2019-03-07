@@ -1095,6 +1095,7 @@ while(True):
             # todo: add another submenu about creating game
             runningMenuMain = False
             createMenuWhile = False
+            joinAtcpIpGameMenuWhile = False
             joinedAtcpIpGameMenuWhile = True
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
@@ -1131,7 +1132,7 @@ while(True):
         crateMap[12, 3:7] = 1
 
         # print("if(joinAtcpIpGameMenuWhile == True):")
-        pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
+        pygame.display.set_caption('Bomberman-by-not-sure (Joined a Tcp/Ip Game)')
 
         Controls = keyboardRead()
         ColisionCheckAndMovement()
@@ -1150,7 +1151,10 @@ while(True):
         displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
         displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
         # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         # # check if any communication are pending or rejected
         # mangageOutGoingTCPclientPackets()
