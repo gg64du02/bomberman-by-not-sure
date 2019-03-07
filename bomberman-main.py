@@ -859,6 +859,8 @@ def manageTCPclientIncomingPackets(incomingData):
 
 pingTimeStart = time.time()
 
+numberOfLocalPlayers = -1
+
 import socket
 # used by the client
 tcpClientGameState = [0 for i in range(0, 7)]
@@ -892,14 +894,32 @@ def mangageOutGoingTCPclientPackets():
             # Join accepted
             tcpClientGameState[0] = 1
 
-
+    print("numberOfLocalPlayers",numberOfLocalPlayers)
     if(tcpClientGameState[0] == 1):
         print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0] == 1):")
-        pass
+        # numberOfLocalPlayers set in joined tcp game menu
+        if(numberOfLocalPlayers>=0):
+            print("if(numberOfLocalPlayers>=0):")
 
-        # todo: change the server side
-        # todo: change the tcpClientGameState[0]
-        # todo: change the tcpServerGameState[ClientID][0]
+            # dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + 'lol_ahah'
+            dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + str(numberOfLocalPlayers)
+            print("mangageOutGoingTCPclientPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS",MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)
+
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+            # Connect to server and send data
+            sock.connect((TCP_SERVER_IP, 8888))
+            sock.sendall(bytes(dataTCPclient, "utf-8"))
+
+            # Receive data from the server and shut down
+            received = str(sock.recv(4096), "utf-8")
+            print("mangageOutGoingTCPclientPackets:received", received)
+
+            # todo: change the server side
+            # todo: change the tcpClientGameState[0]
+            # todo: change the tcpServerGameState[ClientID][0]
+        else:
+            print("!if(numberOfLocalPlayers>=0):")
 
     if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):
         print("if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):")
@@ -1163,6 +1183,7 @@ while(True):
             # todo: add another submenu about creating game
             # runningMenuMain = False
             # createMenuWhile = True
+            numberOfLocalPlayers = 0
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         # # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
