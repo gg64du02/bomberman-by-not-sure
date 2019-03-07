@@ -1193,6 +1193,16 @@ while(True):
             numberOfLocalPlayers = 2
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+2,quitPointInter[1])) == 1):
+            print("local3player:(quitPointInter[0]+2,quitPointInter[1])", (quitPointInter[0]+2,quitPointInter[1]))
+            numberOfLocalPlayers = 3
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+4,quitPointInter[1])) == 1):
+            print("local3player:(quitPointInter[0]+4,quitPointInter[1])", (quitPointInter[0]+4,quitPointInter[1]))
+            numberOfLocalPlayers = 4
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
 
 
     pygame.display.update()
