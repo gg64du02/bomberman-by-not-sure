@@ -1184,7 +1184,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(5)
+    clock.tick(30)
     st_time = time.time()
 
 # testing lines
