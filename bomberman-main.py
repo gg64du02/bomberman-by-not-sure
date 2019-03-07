@@ -1320,15 +1320,33 @@ if __name__ == "__main__":
             server_thread_tcp.shutdown()
             server_thread_tcp.server_close()
             exit()
-    # if the user joined a tcp server
-    if(numberOfLocalPlayers>0):
-        # enabling a UDP listening thread
-        pass
 
 
 while(runningMain):
-    time.sleep(1)
     # print("==========================================================")
+    # if the user joined a tcp server
+    if(numberOfLocalPlayers<0):
+        # enabling a UDP listening thread
+        UDP_IP = "127.0.0.1"
+        UDP_PORT = 5005
+
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+        sock.bind((UDP_IP, UDP_PORT))
+        pass
+    else:
+        UDP_IP = "127.0.0.1"
+        UDP_PORT = 5005
+        MESSAGE = "Hello, World!"
+        MESSAGE_bytes = MESSAGE.encode()
+
+        print("UDP target IP:", UDP_IP)
+        print("UDP target port:", UDP_PORT)
+        print("message:", MESSAGE)
+
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+        sock.sendto(MESSAGE_bytes, (UDP_IP, UDP_PORT))
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
