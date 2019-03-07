@@ -1209,7 +1209,6 @@ while(True):
             Players[3][0] = [32 * 3, 32 * 1]
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
             print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
-            # numberOfLocalPlayers = 4
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             # going back to the previous menu
@@ -1321,6 +1320,10 @@ if __name__ == "__main__":
             server_thread_tcp.shutdown()
             server_thread_tcp.server_close()
             exit()
+    # if the user joined a tcp server
+    if(numberOfLocalPlayers>0):
+        # enabling a UDP listening thread
+        pass
 
 
 while(runningMain):
