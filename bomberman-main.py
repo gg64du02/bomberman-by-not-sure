@@ -1212,8 +1212,13 @@ while(True):
             # numberOfLocalPlayers = 4
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+            # going back to the previous menu
             joinedAtcpIpGameMenuWhile=False
             joinAtcpIpGameMenuWhile=True
+
+            # closing the path from the previous menu
+            TheMap[9, 3] = 0
+            crateMap[9, 3] = 0
 
 
     pygame.display.update()
