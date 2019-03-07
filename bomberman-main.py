@@ -949,6 +949,9 @@ OnceTCPclient = True
 joinedAtcpIpGameMenuWhile = False
 
 while(True):
+	# print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile)
+    print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",
+      runningMenuMain, createMenuWhile, createServerTcpIpMenuWhile, joinAtcpIpGameMenuWhile, joinedAtcpIpGameMenuWhile)
     if(runningMenuMain==True):
         # print("==========================================================")
         pygame.display.set_caption('Bomberman-by-not-sure (Main menu)')
