@@ -1337,7 +1337,7 @@ if __name__ == "__main__":
 
 
 while(runningMain):
-    print("==========================================================")
+    # print("==========================================================")
     # if the user joined a tcp server
     if(numberOfLocalPlayers<0):
         print("if(numberOfLocalPlayers<0):")
@@ -1348,7 +1348,11 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.bind((UDP_IP, UDP_PORT))
-        pass
+
+        data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+        print("server received message:", data)
+        # print("server received message:", data.decode())
+        # print("server ",type(data.decode()))
     else:
         print("!if(numberOfLocalPlayers<0):")
         UDP_IP = "127.0.0.1"
@@ -1356,9 +1360,9 @@ while(runningMain):
         MESSAGE = "Hello, World!"
         MESSAGE_bytes = MESSAGE.encode()
 
-        print("UDP target IP:", UDP_IP)
-        print("UDP target port:", UDP_PORT)
-        print("message:", MESSAGE)
+        print("client UDP target IP:", UDP_IP)
+        print("client UDP target port:", UDP_PORT)
+        print("client message:", MESSAGE)
 
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
