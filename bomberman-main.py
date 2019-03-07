@@ -1194,6 +1194,7 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             joinedAtcpIpGameMenuWhile=False
+            print()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
             print("local2player:createPointInter", createPointInter)
             numberOfLocalPlayers = 2
@@ -1331,6 +1332,7 @@ while(runningMain):
     print("==========================================================")
     # if the user joined a tcp server
     if(numberOfLocalPlayers<0):
+        print("if(numberOfLocalPlayers<0):")
         # enabling a UDP listening thread
         UDP_IP = "127.0.0.1"
         UDP_PORT = 5005
@@ -1340,6 +1342,7 @@ while(runningMain):
         sock.bind((UDP_IP, UDP_PORT))
         pass
     else:
+        print("!if(numberOfLocalPlayers<0):")
         UDP_IP = "127.0.0.1"
         UDP_PORT = 5005
         MESSAGE = "Hello, World!"
@@ -1352,7 +1355,7 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.sendto(MESSAGE_bytes, (UDP_IP, UDP_PORT))
-        
+
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
