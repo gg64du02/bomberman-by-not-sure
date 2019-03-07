@@ -1360,9 +1360,10 @@ while(runningMain):
         MESSAGE = "Hello, World!"
         MESSAGE_bytes = MESSAGE.encode()
 
-        print("client UDP target IP:", UDP_IP)
-        print("client UDP target port:", UDP_PORT)
-        print("client message:", MESSAGE)
+        # print("client UDP target IP:", UDP_IP)
+        # print("client UDP target port:", UDP_PORT)
+        # print("client message:", MESSAGE)
+        print("client message:", MESSAGE_bytes)
 
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
