@@ -1179,32 +1179,20 @@ while(True):
         # check if any communication are pending or rejected
         mangageOutGoingTCPclientPackets()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-            print("joinedAtcpIpGameMenuWhile:createPointInter", createPointInter)
-            # todo: add another submenu about creating game
-            # runningMenuMain = False
-            # createMenuWhile = True
+            print("Spectator:createPointInter", createPointInter)
             numberOfLocalPlayers = 0
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
-        # # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-        # #     print("joinedAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
-        # #     # todo: add another submenu about joining game
-        # #     runningMenuMain = False
-        # #     createMenuWhile = False
-        # #     # putting back the cyan player on a neutral spot
-        # #     Players[3][0] = [32 * 3, 32 * 1]
-        # #     # switching to the join menu
-        # #     joinAtcpIpGameMenuWhile = True
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-        #     print("joinedAtcpIpGameMenuWhile:Go back to the main menu",quitPointInter)
-        #     runningMenuMain = True
-        #     createMenuWhile = False
-        #     joinMenuWhile = False
-        #     createServerTcpIpMenuWhile = False
-        #     joinAtcpIpGameMenuWhile = False
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
-        #     pass
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
+            print("local1player:createPointInter", createPointInter)
+            numberOfLocalPlayers = 1
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
+            print("local2player:createPointInter", createPointInter)
+            numberOfLocalPlayers = 2
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
 
 
     pygame.display.update()
