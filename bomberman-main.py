@@ -1091,7 +1091,7 @@ while(True):
         # check if any communication are pending or rejected
         mangageOutGoingTCPclientPackets()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-            print("runningMenuMain:createPointInter", createPointInter)
+            print("joinAtcpIpGameMenuWhile:createPointInter", createPointInter)
             # todo: add another submenu about creating game
             runningMenuMain = False
             createMenuWhile = False
@@ -1100,7 +1100,7 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-        #     print("runningMenuMain:joinPointInter", joinPointInter)
+        #     print("joinAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
         #     # todo: add another submenu about joining game
         #     runningMenuMain = False
         #     createMenuWhile = False
@@ -1109,7 +1109,7 @@ while(True):
         #     # switching to the join menu
         #     joinAtcpIpGameMenuWhile = True
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-            print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
+            print("joinAtcpIpGameMenuWhile:Go back to the main menu",quitPointInter)
             runningMenuMain = True
             createMenuWhile = False
             joinMenuWhile = False
@@ -1156,17 +1156,17 @@ while(True):
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        # # check if any communication are pending or rejected
-        # mangageOutGoingTCPclientPackets()
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-        #     print("runningMenuMain:createPointInter", createPointInter)
-        #     # todo: add another submenu about creating game
-        #     runningMenuMain = False
-        #     createMenuWhile = True
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
+        # check if any communication are pending or rejected
+        mangageOutGoingTCPclientPackets()
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+            print("joinedAtcpIpGameMenuWhile:createPointInter", createPointInter)
+            # todo: add another submenu about creating game
+            # runningMenuMain = False
+            # createMenuWhile = True
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
         # # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-        # #     print("runningMenuMain:joinPointInter", joinPointInter)
+        # #     print("joinedAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
         # #     # todo: add another submenu about joining game
         # #     runningMenuMain = False
         # #     createMenuWhile = False
@@ -1175,7 +1175,7 @@ while(True):
         # #     # switching to the join menu
         # #     joinAtcpIpGameMenuWhile = True
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-        #     print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
+        #     print("joinedAtcpIpGameMenuWhile:Go back to the main menu",quitPointInter)
         #     runningMenuMain = True
         #     createMenuWhile = False
         #     joinMenuWhile = False
