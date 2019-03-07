@@ -1345,4 +1345,4 @@ quit()
 # todo: add the client side on join a game
 # todo: add the server search on local
 # todo: add a server listing onto the internet games
-#
+# todo: add a timeout on tcp and udp thread (receiving/sending)
