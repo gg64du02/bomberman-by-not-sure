@@ -1342,9 +1342,9 @@ newRound()
 import pickle
 
 if (numberOfLocalPlayers < 0):
-    pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
-else:
     pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
+else:
+    pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
 
 while(runningMain):
     # print("==========================================================")
