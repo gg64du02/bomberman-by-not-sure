@@ -1342,6 +1342,8 @@ while(runningMain):
     # print("==========================================================")
     # if the user joined a tcp server
     # todo: check server_gist.py for design pattern
+    # todo: no blocking UDP sending
+    # todo: time out and refusal management
     if(numberOfLocalPlayers<0):
         print("if(numberOfLocalPlayers<0):")
         # enabling a UDP listening thread
