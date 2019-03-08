@@ -1356,12 +1356,12 @@ while(runningMain):
     if(numberOfLocalPlayers<0):
         print("if(numberOfLocalPlayers<0):")
         # enabling a UDP listening thread
-        UDP_IP = "127.0.0.1"
-        UDP_PORT = 5005
+        UDP_IP_HOST = "127.0.0.1"
+        UDP_PORT_HOST = 5005
 
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
-        sock.bind((UDP_IP, UDP_PORT))
+        sock.bind((UDP_IP_HOST, UDP_PORT_HOST))
 
         data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
         decodedData = pickle.loads(data)
@@ -1374,8 +1374,8 @@ while(runningMain):
         print("server received message:", data)
     else:
         print("!if(numberOfLocalPlayers<0):")
-        UDP_IP = "127.0.0.1"
-        UDP_PORT = 5005
+        UDP_IP_CLIENT = "127.0.0.1"
+        UDP_PORT_CLIENT = 5005
         # MESSAGE = "Hello, World!"
         # MESSAGE_bytes = MESSAGE.encode()
         # MESSAGE = pickle.dumps(["crateMap",crateMap])
@@ -1386,7 +1386,7 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.setblocking(False)
-        sock.sendto(MESSAGE_bytes, (UDP_IP, UDP_PORT))
+        sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
     Controls = keyboardRead()
 
