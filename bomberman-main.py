@@ -1341,6 +1341,11 @@ newRound()
 # for serialize
 import pickle
 
+if (numberOfLocalPlayers < 0):
+    pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
+else:
+    pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
+
 while(runningMain):
     # print("==========================================================")
     # if the user joined a tcp server
@@ -1363,6 +1368,8 @@ while(runningMain):
         print("decodedData\n",decodedData)
         if(decodedData[0]=="crateMap"):
             crateMap = decodedData[1]
+        if(decodedData[2]=="Players"):
+            Players = decodedData[3]
 
         print("server received message:", data)
     else:
@@ -1371,7 +1378,8 @@ while(runningMain):
         UDP_PORT = 5005
         # MESSAGE = "Hello, World!"
         # MESSAGE_bytes = MESSAGE.encode()
-        MESSAGE = pickle.dumps(["crateMap",crateMap])
+        # MESSAGE = pickle.dumps(["crateMap",crateMap])
+        MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
         MESSAGE_bytes = MESSAGE
         print("client message:", MESSAGE_bytes)
 
