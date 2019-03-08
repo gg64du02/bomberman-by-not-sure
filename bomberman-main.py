@@ -1335,6 +1335,8 @@ if __name__ == "__main__":
             server_thread_tcp.server_close()
             exit()
 
+# for serialize
+import pickle
 
 while(runningMain):
     # print("==========================================================")
@@ -1350,6 +1352,10 @@ while(runningMain):
         sock.bind((UDP_IP, UDP_PORT))
 
         data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+        decodedData = data.decode()
+        print("decodedData[1]",decodedData[1])
+        # for spot in decodedData:
+
         print("server received message:", data)
         # print("server received message:", data.decode())
         # print("server ",type(data.decode()))
@@ -1357,8 +1363,13 @@ while(runningMain):
         print("!if(numberOfLocalPlayers<0):")
         UDP_IP = "127.0.0.1"
         UDP_PORT = 5005
-        MESSAGE = "Hello, World!"
+        # MESSAGE = "Hello, World!"
+        MESSAGE = zip("crateMap",crateMap)
         MESSAGE_bytes = MESSAGE.encode()
+
+        # i = bytes(2)
+        # pickle.loads(pickle.dumps(i))
+        # pickle.loads(pickle.dumps(['1', '2']))
 
         # print("client UDP target IP:", UDP_IP)
         # print("client UDP target port:", UDP_PORT)
