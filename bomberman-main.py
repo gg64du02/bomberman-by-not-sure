@@ -1386,6 +1386,7 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.setblocking(False)
+        print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
     Controls = keyboardRead()
