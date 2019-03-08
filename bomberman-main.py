@@ -1351,9 +1351,13 @@ while(runningMain):
                              socket.SOCK_DGRAM)  # UDP
         sock.bind((UDP_IP, UDP_PORT))
 
-        data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-        decodedData = data.decode()
-        print("decodedData[1]",decodedData[1])
+        data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
+        # decodedData = data.decode()
+        decodedData = pickle.loads(data)
+        print("decodedData\n",decodedData)
+        # print("decodedData[1]",decodedData[1])
+        # unpackedDecodedData = decodedData.loads(decodedData)
+        # print("unpackedDecodedData",unpackedDecodedData)
         # for spot in decodedData:
 
         print("server received message:", data)
@@ -1364,12 +1368,15 @@ while(runningMain):
         UDP_IP = "127.0.0.1"
         UDP_PORT = 5005
         # MESSAGE = "Hello, World!"
-        MESSAGE = zip("crateMap",crateMap)
-        MESSAGE_bytes = MESSAGE.encode()
+        # MESSAGE = zip("crateMap",crateMap)
+        # MESSAGE_bytes = MESSAGE.encode()
 
         # i = bytes(2)
         # pickle.loads(pickle.dumps(i))
         # pickle.loads(pickle.dumps(['1', '2']))
+        MESSAGE = pickle.dumps(["crateMap",crateMap])
+        MESSAGE_bytes = MESSAGE
+        print()
 
         # print("client UDP target IP:", UDP_IP)
         # print("client UDP target port:", UDP_PORT)
