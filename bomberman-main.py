@@ -1344,6 +1344,7 @@ while(runningMain):
     # todo: check server_gist.py for design pattern
     # todo: no blocking UDP sending
     # todo: time out and refusal management
+    # setblocking(False)
     if(numberOfLocalPlayers<0):
         print("if(numberOfLocalPlayers<0):")
         # enabling a UDP listening thread
@@ -1355,35 +1356,18 @@ while(runningMain):
         sock.bind((UDP_IP, UDP_PORT))
 
         data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
-        # decodedData = data.decode()
         decodedData = pickle.loads(data)
         print("decodedData\n",decodedData)
-        # print("decodedData[1]",decodedData[1])
-        # unpackedDecodedData = decodedData.loads(decodedData)
-        # print("unpackedDecodedData",unpackedDecodedData)
-        # for spot in decodedData:
 
         print("server received message:", data)
-        # print("server received message:", data.decode())
-        # print("server ",type(data.decode()))
     else:
         print("!if(numberOfLocalPlayers<0):")
         UDP_IP = "127.0.0.1"
         UDP_PORT = 5005
         # MESSAGE = "Hello, World!"
-        # MESSAGE = zip("crateMap",crateMap)
         # MESSAGE_bytes = MESSAGE.encode()
-
-        # i = bytes(2)
-        # pickle.loads(pickle.dumps(i))
-        # pickle.loads(pickle.dumps(['1', '2']))
         MESSAGE = pickle.dumps(["crateMap",crateMap])
         MESSAGE_bytes = MESSAGE
-        print()
-
-        # print("client UDP target IP:", UDP_IP)
-        # print("client UDP target port:", UDP_PORT)
-        # print("client message:", MESSAGE)
         print("client message:", MESSAGE_bytes)
 
         sock = socket.socket(socket.AF_INET,  # Internet
