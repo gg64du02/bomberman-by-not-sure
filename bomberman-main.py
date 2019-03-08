@@ -1335,6 +1335,9 @@ if __name__ == "__main__":
             server_thread_tcp.server_close()
             exit()
 
+# clean the menu on the server side
+newRound()
+
 # for serialize
 import pickle
 
@@ -1358,6 +1361,8 @@ while(runningMain):
         data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
         decodedData = pickle.loads(data)
         print("decodedData\n",decodedData)
+        if(decodedData[0]=="crateMap"):
+            crateMap = decodedData[1]
 
         print("server received message:", data)
     else:
