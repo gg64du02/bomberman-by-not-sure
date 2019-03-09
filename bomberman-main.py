@@ -1364,6 +1364,8 @@ newRound()
 import pickle
 
 if (numberOfLocalPlayers < 0):
+    # numberOfLocalPlayers = -1
+    # is hosting a game
     pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
 
     HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
@@ -1378,6 +1380,7 @@ if (numberOfLocalPlayers < 0):
         server_thread_udp.server_close()
         exit()
 else:
+    # spectator/players
     pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
 
     HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
@@ -1400,6 +1403,10 @@ while(runningMain):
     # # todo: time out and refusal management
     # decodedData = pickle.loads(data)
     # MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
+
+    # if (numberOfLocalPlayers < 0):
+    #     MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
+    # else:
 
     Controls = keyboardRead()
 
