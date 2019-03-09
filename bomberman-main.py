@@ -1404,9 +1404,13 @@ while(runningMain):
     # decodedData = pickle.loads(data)
     # MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
 
-    # if (numberOfLocalPlayers < 0):
-    #     MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
-    # else:
+    if (numberOfLocalPlayers < 0):
+        clients = []
+        MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
+        for client in clients:
+            pass
+    else:
+        pass
 
     Controls = keyboardRead()
 
