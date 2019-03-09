@@ -1297,9 +1297,31 @@ def manageTCPserverPackets(incomingData,client_addr):
     pass
 
 import socketserver, threading, time
+
+
+# UDP connexion handling
+# todo: queuing data that needs processing
+class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
+    def handle(self):
+        data = self.request[0].strip()
+        socket = self.request[1]
+        print("socket.getsockname()",socket.getsockname())
+        # (HOST_UDP_server, PORT_UDP_server)
+        if(socket.getsockname()[1]==5005):
+            print("if(socket.getsockname()[1]==5005):")
+        if(socket.getsockname()[1]==5006):
+            print("if(socket.getsockname()[1]==5006):")
+        print("ThreadedUDPRequestHandler")
+        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        # print("threading.activeCount()",threading.activeCount())
+        socket.sendto(data.upper(), self.client_address)
+
+class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
+    pass
+
+
 # TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
