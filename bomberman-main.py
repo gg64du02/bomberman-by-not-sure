@@ -1393,47 +1393,13 @@ else:
         exit()
 
 while(runningMain):
-    # print("==========================================================")
-    # if the user joined a tcp server
-    # todo: check server_gist.py for design pattern
-    # todo: no blocking UDP sending
-    # todo: time out and refusal management
-    # setblocking(False)
-    if(numberOfLocalPlayers<0):
-        print("if(numberOfLocalPlayers<0):")
-        # enabling a UDP listening thread
-        UDP_IP_HOST = "127.0.0.1"
-        UDP_PORT_HOST = 5005
-
-        sock = socket.socket(socket.AF_INET,  # Internet
-                             socket.SOCK_DGRAM)  # UDP
-        sock.bind((UDP_IP_HOST, UDP_PORT_HOST))
-
-        data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
-        decodedData = pickle.loads(data)
-        print("decodedData\n",decodedData)
-        if(decodedData[0]=="crateMap"):
-            crateMap = decodedData[1]
-        if(decodedData[2]=="Players"):
-            Players = decodedData[3]
-
-        print("server received message:", data)
-    else:
-        print("!if(numberOfLocalPlayers<0):")
-        UDP_IP_CLIENT = "127.0.0.1"
-        UDP_PORT_CLIENT = 5005
-        # MESSAGE = "Hello, World!"
-        # MESSAGE_bytes = MESSAGE.encode()
-        # MESSAGE = pickle.dumps(["crateMap",crateMap])
-        MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
-        MESSAGE_bytes = MESSAGE
-        print("client message:", MESSAGE_bytes)
-
-        sock = socket.socket(socket.AF_INET,  # Internet
-                             socket.SOCK_DGRAM)  # UDP
-        sock.setblocking(False)
-        print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
-        sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
+    # # print("==========================================================")
+    # # if the user joined a tcp server
+    # # todo: check server_gist.py for design pattern
+    # # todo: no blocking UDP sending
+    # # todo: time out and refusal management
+    # decodedData = pickle.loads(data)
+    # MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
 
     Controls = keyboardRead()
 
