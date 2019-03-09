@@ -1420,7 +1420,7 @@ while(runningMain):
         # MESSAGE = pickle.dumps(["crateMap",crateMap])
         MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
         MESSAGE_bytes = MESSAGE
-        print("client message:", MESSAGE_bytes)
+        # print("client message:", MESSAGE_bytes)
 
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
@@ -1437,7 +1437,7 @@ while(runningMain):
         # MESSAGE = pickle.dumps(["crateMap",crateMap])
         MESSAGE = pickle.dumps(["Players",Players])
         MESSAGE_bytes = MESSAGE
-        print("client message:", MESSAGE_bytes)
+        # print("client message:", MESSAGE_bytes)
 
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
