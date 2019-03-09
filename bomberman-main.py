@@ -1303,6 +1303,7 @@ import socketserver, threading, time
 # todo: queuing data that needs processing
 class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
+        print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
         print("socket.getsockname()",socket.getsockname())
@@ -1311,10 +1312,9 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             print("if(socket.getsockname()[1]==5005):")
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
-        print("ThreadedUDPRequestHandler")
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
-        socket.sendto(data.upper(), self.client_address)
+        # socket.sendto(data.upper(), self.client_address)
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
     pass
@@ -1323,9 +1323,9 @@ class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
 # TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
+        print("ThreadedTCPRequestHandler:handle")
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
-        print("ThreadedTCPRequestHandler")
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print("self.data",self.data)
         data4function = self.data
