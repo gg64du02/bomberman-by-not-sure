@@ -1405,12 +1405,28 @@ while(runningMain):
     # MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
 
     if (numberOfLocalPlayers < 0):
-        # numberOfLocalPlayers = -1
-        # is hosting a game
-        clients = []
-        MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
-        for client in clients:
-            pass
+        # # numberOfLocalPlayers = -1
+        # # is hosting a game
+        # clients = []
+        # MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
+        # for client in clients:
+        #     pass
+        # host for one client
+        print("!if(numberOfLocalPlayers<0):")
+        UDP_IP_CLIENT = "127.0.0.1"
+        UDP_PORT_CLIENT = 5006
+        # MESSAGE = "Hello, World!"
+        # MESSAGE_bytes = MESSAGE.encode()
+        # MESSAGE = pickle.dumps(["crateMap",crateMap])
+        MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
+        MESSAGE_bytes = MESSAGE
+        print("client message:", MESSAGE_bytes)
+
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+        sock.setblocking(False)
+        print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
+        sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
     else:
         # spectator/players
         print("!if(numberOfLocalPlayers<0):")
