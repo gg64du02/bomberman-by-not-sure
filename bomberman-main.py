@@ -1365,8 +1365,32 @@ import pickle
 
 if (numberOfLocalPlayers < 0):
     pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
+
+    HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
+    server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+    server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+    server_thread_udp.daemon = True
+    try:
+        # servers
+        server_thread_udp.start()
+    except (KeyboardInterrupt, SystemExit):
+        server_thread_udp.shutdown()
+        server_thread_udp.server_close()
+        exit()
 else:
     pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
+
+    HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
+    server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+    server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+    server_thread_udp.daemon = True
+    try:
+        # servers
+        server_thread_udp.start()
+    except (KeyboardInterrupt, SystemExit):
+        server_thread_udp.shutdown()
+        server_thread_udp.server_close()
+        exit()
 
 while(runningMain):
     # print("==========================================================")
