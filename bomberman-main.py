@@ -901,19 +901,22 @@ def mangageOutGoingTCPclientPackets():
         if(numberOfLocalPlayers>=0):
             print("if(numberOfLocalPlayers>=0):")
 
-            # dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + 'lol_ahah'
-            dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + str(numberOfLocalPlayers)
-            print("mangageOutGoingTCPclientPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS",MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)
+            if(tcpClientGameState[1] == 0):
+                # dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + 'lol_ahah'
+                dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + str(numberOfLocalPlayers)
+                print("mangageOutGoingTCPclientPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS",MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)
 
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-            # Connect to server and send data
-            sock.connect((TCP_SERVER_IP, 8888))
-            sock.sendall(bytes(dataTCPclient, "utf-8"))
+                # Connect to server and send data
+                sock.connect((TCP_SERVER_IP, 8888))
+                sock.sendall(bytes(dataTCPclient, "utf-8"))
 
-            # Receive data from the server and shut down
-            received = str(sock.recv(4096), "utf-8")
-            print("mangageOutGoingTCPclientPackets:received", received)
+                # Receive data from the server and shut down
+                received = str(sock.recv(4096), "utf-8")
+                print("mangageOutGoingTCPclientPackets:received", received)
+
+                tcpClientGameState[1] = 1
 
             # todo: change the server side
             # todo: change the tcpClientGameState[0]
