@@ -861,6 +861,8 @@ pingTimeStart = time.time()
 
 numberOfLocalPlayers = -1
 
+clientSlotKeyboardMapping = []
+
 import socket
 # used by the client
 tcpClientGameState = [0 for i in range(0, 7)]
@@ -871,6 +873,8 @@ def mangageOutGoingTCPclientPackets():
     print("tcpClientGameState", tcpClientGameState)
 
     global pingTimeStart
+
+    global clientSlotKeyboardMapping
 
     TCP_SERVER_IP = "192.168.1.99"
 
@@ -917,6 +921,10 @@ def mangageOutGoingTCPclientPackets():
                 print("mangageOutGoingTCPclientPackets:received", received)
 
                 tcpClientGameState[1] = 1
+
+                tmpSplit = received.spit("|")
+                if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
+                    clientSlotKeyboardMapping = tmpSplit[1]
 
             # todo: change the server side
             # todo: change the tcpClientGameState[0]
