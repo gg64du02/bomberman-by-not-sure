@@ -1249,6 +1249,8 @@ while(True):
 
 # number of slots left on server
 slotsLeftOnServer = 4
+# slotsMappingForPlayersControl
+slotsMappingForPlayersControl = [0 for i in range(4)]
 # used by ThreadedTCPRequestHandler
 def manageTCPserverPackets(incomingData,client_addr):
     # Clients informations for TCP connect managed by the server
@@ -1294,8 +1296,9 @@ def manageTCPserverPackets(incomingData,client_addr):
             print("str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + | + str(slotsLeftOnServer)")
             return str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + "|" + str(slotsLeftOnServer)
         else:
-
+            slotsLeftOnServer -= int(array[1])
             pass
+    print("manageTCPserverPackets:slotsLeftOnServer",slotsLeftOnServer)
 
     # ping feature
     if(int(array[0])>=1000):
