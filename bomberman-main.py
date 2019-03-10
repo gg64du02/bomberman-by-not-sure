@@ -1328,15 +1328,16 @@ def manageTCPserverPackets(incomingData,client_addr):
 
                 i = 0
                 for j in tmpSlotMapping:
-                    if (tmpSlotMapping[j]==1):
+                    if(i>=int(array[1])):
+                        tmpSlotMapping[i] = 0
+                    if (j==1):
                         i+=1
-                    if(i>int(array[1])):
-                        tmpSlotMapping[j] = 0
-
-
                 print("tmpSlotMapping2",tmpSlotMapping)
 
                 slotsLeftOnServer -= int(array[1])
+
+                print("return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + | + str(tmpSlotMapping)")
+                return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(tmpSlotMapping)
             print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
             # return str(slotsLeftOnServer)
             pass
