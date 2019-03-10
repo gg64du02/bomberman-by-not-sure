@@ -1274,14 +1274,12 @@ def manageTCPserverPackets(incomingData,client_addr):
                 print("!if(len(clientIDsWgameState)>=4):")
                 clientID = len(clientIDsWgameState)
                 clientIDsWgameState.append([clientID,client_addr])
-                slotsLeftOnServer -=1
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
                 return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
         else:
             print("!if(clientIDsWgameState!=[]):")
             clientID = len(clientIDsWgameState)
             clientIDsWgameState.append([clientID,client_addr])
-            slotsLeftOnServer -= 1
             print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
             return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
             pass
@@ -1291,6 +1289,13 @@ def manageTCPserverPackets(incomingData,client_addr):
     if(array[0]==str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)):
         print("manageTCPserverPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS")
         print("manageTCPserverPackets:array[1]",array[1])
+        if(int(array[1])>slotsLeftOnServer):
+            # client ask for too many slots, answer the number available, it need to adapt its menu
+            print("str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + | + str(slotsLeftOnServer)")
+            return str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + "|" + str(slotsLeftOnServer)
+        else:
+
+            pass
 
     # ping feature
     if(int(array[0])>=1000):
