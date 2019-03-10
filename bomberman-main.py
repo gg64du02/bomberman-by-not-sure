@@ -1338,6 +1338,9 @@ def manageTCPserverPackets(incomingData,client_addr):
 
                 slotsLeftOnServer -= int(array[1])
 
+                # todo: send the client a random number which would be used identify who is speaking to the server
+                # to make that client are not poking around the slots mapping control
+
                 print("return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + | + str(tmpSlotMapping)")
                 return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(tmpSlotMapping)
             print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
