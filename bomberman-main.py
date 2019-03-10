@@ -1285,6 +1285,10 @@ def manageTCPserverPackets(incomingData,client_addr):
     else:
         print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
 
+    if(array[0]==str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)):
+        print("manageTCPserverPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS")
+        print("manageTCPserverPackets:array[1]",array[1])
+
     # ping feature
     if(int(array[0])>=1000):
         print("manageTCPserverPackets:ping feature")
