@@ -1297,6 +1297,11 @@ def manageTCPserverPackets(incomingData,client_addr):
             return str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + "|" + str(slotsLeftOnServer)
         else:
             slotsLeftOnServer -= int(array[1])
+            if(int(array[1])==0):
+                # do nothing
+                return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(slotsMappingForPlayersControl)
+            print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
+            # return str(slotsLeftOnServer)
             pass
     print("manageTCPserverPackets:slotsLeftOnServer",slotsLeftOnServer)
 

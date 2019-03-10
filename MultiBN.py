@@ -31,6 +31,9 @@ MBN_SESSION_TCP_SERVER_TRANSMIT_MAP = 8
 MBN_SESSION_TCP_SERVER_PING = 9
 # Used by the client let know the server he is still online
 
+MBN_SESSION_TCP_SERVER_SLOTS_MAPPING = 10
+# used by the server to answer a slot request by the clients
+
 
 # datagram shape
 # data|data type|data|crc
