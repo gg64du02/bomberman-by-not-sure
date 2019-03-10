@@ -1519,9 +1519,10 @@ quit()
 # todo: queuing data that needs processing ?
 
 # done: add a submenu on the join a game
-# todo: submenu join a local game
-# todo: submenu join a game internet
+# done: submenu join local game
+# done: submenu join game internet
 # todo: add the client side on join a game
+# todo: add the server side clients' players management
 # todo: add the server search on local
 # todo: add a server listing onto the internet games
-# todo: add a timeout on tcp and udp thread (receiving/sending)
+# Not done: add a timeout on tcp and udp thread (receiving/sending)
