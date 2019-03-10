@@ -1310,8 +1310,20 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
+            decodedData = pickle.loads(data)
+            print("decodedData",decodedData)
+            if(decodedData[0]=="Players"):
+                global Players
+                Players[1] = decodedData[1][1]
+                pass
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
+            decodedData = pickle.loads(data)
+            print("decodedData",decodedData)
+            if(decodedData[0]=="crateMap"):
+                global crateMap
+                crateMap = decodedData[1]
+                pass
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         # socket.sendto(data.upper(), self.client_address)
