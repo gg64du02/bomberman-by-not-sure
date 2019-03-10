@@ -1312,10 +1312,25 @@ def manageTCPserverPackets(incomingData,client_addr):
                 if(slotsLeftOnServer==1):
                     pass
                     # array would be 0,0,0,1
-                    # for iSlot in range(int(array[1])):
+                # array[1] is != 0
                 tmpSlotMapping = [0 for i in range(4)]
-                
 
+                # generating a pre-mask for the final results as shown above
+                for iSlot in range(int(slotsLeftOnServer)):
+                    # enabling the mask starting from the end
+                    tmpSlotMapping[-iSlot] = 1
+                    pass
+                print("tmpSlotMapping1",tmpSlotMapping)
+
+                for iSlot2 in range(int(array[1])):
+                    if(tmpSlotMapping[iSlot2]==1):
+                        for iSlot3 in range(int(array[1])):
+                            tmpSlotMapping[iSlot2+iSlot3] = 1
+                        break
+                    pass
+
+
+                print("tmpSlotMapping2",tmpSlotMapping)
 
                 slotsLeftOnServer -= int(array[1])
             print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
