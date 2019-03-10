@@ -1424,7 +1424,8 @@ while(runningMain):
         # for client in clients:
         #     pass
         # host for one client
-        print("!if(numberOfLocalPlayers<0):")
+        # print("!if(numberOfLocalPlayers<0):")
+        print("hosting")
         UDP_IP_CLIENT = "127.0.0.1"
         UDP_PORT_CLIENT = 5006
         # MESSAGE = "Hello, World!"
@@ -1437,13 +1438,14 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.setblocking(False)
-        print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
+        # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
     else:
         # check if any communication are pending or rejected
         mangageOutGoingTCPclientPackets()
         # spectator/players
-        print("!if(numberOfLocalPlayers<0):")
+        # print("!if(numberOfLocalPlayers<0):")
+        print("spectator/players")
         UDP_IP_CLIENT = "127.0.0.1"
         UDP_PORT_CLIENT = 5005
         # MESSAGE = "Hello, World!"
@@ -1456,7 +1458,7 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.setblocking(False)
-        print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
+        # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
     Controls = keyboardRead()
