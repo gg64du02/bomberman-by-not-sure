@@ -1440,6 +1440,8 @@ while(runningMain):
         print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
     else:
+        # check if any communication are pending or rejected
+        mangageOutGoingTCPclientPackets()
         # spectator/players
         print("!if(numberOfLocalPlayers<0):")
         UDP_IP_CLIENT = "127.0.0.1"
