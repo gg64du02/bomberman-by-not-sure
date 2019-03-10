@@ -1106,13 +1106,11 @@ while(True):
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
         displayText("Local game", (display_width / 2), (display_height / 6) + 32 * 2)
-        displayText("Internet a game", (display_width / 2), (display_height / 6) + 32 * 4)
+        displayText("Internet game", (display_width / 2), (display_height / 6) + 32 * 4)
         displayText("Go back", (display_width / 2), (display_height / 6) + 32 * 6)
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        # check if any communication are pending or rejected
-        mangageOutGoingTCPclientPackets()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
             print("joinAtcpIpGameMenuWhile:createPointInter", createPointInter)
             # todo: add another submenu about creating game
