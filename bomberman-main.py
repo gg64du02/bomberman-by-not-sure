@@ -922,7 +922,7 @@ def mangageOutGoingTCPclientPackets():
 
                 tcpClientGameState[1] = 1
 
-                tmpSplit = received.spit("|")
+                tmpSplit = received.split("|")
                 if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
                     clientSlotKeyboardMapping = tmpSplit[1]
 
