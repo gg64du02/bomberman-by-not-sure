@@ -395,6 +395,9 @@ def ColisionCheckAndMovement():
         # ==============================================================
         yTmp = player[0][1]
         xTmp = player[0][0]
+        if(clientSlotKeyboardMapping != []):
+            if(clientSlotKeyboardMapping[i]==1):
+                continue
         if(player[2][0]==1):
         # if(player[2]==1):
             # s
