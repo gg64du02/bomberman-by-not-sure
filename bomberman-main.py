@@ -1595,6 +1595,13 @@ quit()
 # done: add a submenu on the join a game
 # done: submenu join local game
 # done: submenu join game internet
+# done: players's position send to the host
+# todo: removing the bomb from the tcp/ip hosting in the menu
+# todo: add multicast advertissement on the local network (when hosting a game)
+# todo: host the TCP/IP game as the local LAN IP not localhost
+# todo: implement a dedicated mode for TCP/IP game
+# todo: allow the host to play as client in non-dedicated mode TCP/IP
+
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
 # todo: add the server search on local
