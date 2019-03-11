@@ -1382,7 +1382,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
-            # print("decodedData",decodedData)
+            print("decodedData",decodedData)
             global Players
             if(decodedData[0]=="Players"):
                 Players[1] = decodedData[1][1]
