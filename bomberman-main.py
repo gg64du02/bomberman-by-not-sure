@@ -1397,7 +1397,10 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         print("if(slot==1):")
                         pass
                         print("Players[i]",Players[i])
-                        Players[i] = decodedData[1][i]
+                        print("decodedData[1][i]",decodedData[1][i])
+                        # Players[i] = decodedData[1][i]
+                        Players[i][0][0] = decodedData[1][i][0][0]
+                        Players[i][0][1] = decodedData[1][i][0][1]
                         print("Players[i]",Players[i])
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
