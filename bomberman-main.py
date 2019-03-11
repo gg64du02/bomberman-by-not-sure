@@ -1547,7 +1547,6 @@ while(runningMain):
         # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
-    print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
