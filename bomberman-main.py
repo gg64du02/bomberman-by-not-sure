@@ -922,9 +922,17 @@ def mangageOutGoingTCPclientPackets():
 
                 tcpClientGameState[1] = 1
 
+                # print("type(received)",type(received))
+                # tmpSplit = pickle.loads(received)
+                # print("tmpSplit",tmpSplit)
+                # if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
+                #     clientSlotKeyboardMapping = tmpSplit[1]
                 tmpSplit = received.split("|")
                 if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
                     clientSlotKeyboardMapping = tmpSplit[1]
+                    print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
+                    pass
+
 
             # todo: change the server side
             # todo: change the tcpClientGameState[0]
@@ -1338,9 +1346,9 @@ def manageTCPserverPackets(incomingData,client_addr):
                 # to make that client are not poking around the slots mapping control
 
                 print("return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + | + str(tmpSlotMapping)")
-                # return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(tmpSlotMapping)
-                tmpPickle =  pickle.dumps([MBN_SESSION_TCP_SERVER_SLOTS_MAPPING,tmpSlotMapping])
-                return tmpPickle
+                return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(tmpSlotMapping)
+                # tmpPickle =  pickle.dumps([MBN_SESSION_TCP_SERVER_SLOTS_MAPPING,tmpSlotMapping])
+                # return tmpPickle
             print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
             # return str(slotsLeftOnServer)
             pass
