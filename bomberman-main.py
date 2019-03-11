@@ -1382,7 +1382,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
-            print("decodedData",decodedData)
+            # print("decodedData",decodedData)
             # if(decodedData[0]=="Players"):
             #     global Players
             #     Players[1] = decodedData[1][1]
@@ -1390,9 +1390,15 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             if(decodedData[2]=="clientSlotKeyboardMapping"):
                 # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
                 global Players
+                print("global Players")
                 for slot,i in zip(decodedData[3],range(4)):
+                    print("for slot,i in zip(decodedData[3],range(4)):")
                     if(slot==1):
+                        print("if(slot==1):")
+                        pass
+                        print("Players[i]",Players[i])
                         Players[i] = decodedData[1][i]
+                        print("Players[i]",Players[i])
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
             decodedData = pickle.loads(data)
