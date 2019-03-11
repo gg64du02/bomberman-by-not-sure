@@ -929,7 +929,8 @@ def mangageOutGoingTCPclientPackets():
                 #     clientSlotKeyboardMapping = tmpSplit[1]
                 tmpSplit = received.split("|")
                 if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
-                    clientSlotKeyboardMapping = tmpSplit[1]
+                    tmpClient = [int(tmpSplit[1][1]),int(tmpSplit[1][1+3]),int(tmpSplit[1][1+6]),int(tmpSplit[1][1+9])]
+                    clientSlotKeyboardMapping = tmpClient
                     print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
                     pass
 
