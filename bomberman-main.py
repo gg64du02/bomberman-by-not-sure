@@ -396,7 +396,8 @@ def ColisionCheckAndMovement():
         yTmp = player[0][1]
         xTmp = player[0][0]
         if(clientSlotKeyboardMapping != []):
-            if(clientSlotKeyboardMapping[i]==1):
+            if(clientSlotKeyboardMapping[i]==0):
+                # print("ColisionCheckAndMovement:continue")
                 continue
         if(player[2][0]==1):
         # if(player[2]==1):
@@ -1546,6 +1547,8 @@ while(runningMain):
         sock.setblocking(False)
         # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
+
+    print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
     Controls = keyboardRead()
 
