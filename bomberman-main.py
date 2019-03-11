@@ -1484,6 +1484,18 @@ else:
         server_thread_udp.server_close()
         exit()
 
+# trying to figure out the IP on the LAN network
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+try:
+    # doesn't even have to be reachable
+    s.connect(('10.255.255.255', 1))
+    IP_on_LAN = s.getsockname()[0]
+except:
+    IP_on_LAN = '127.0.0.1'
+finally:
+    s.close()
+print("IP_on_LAN",IP_on_LAN)
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
