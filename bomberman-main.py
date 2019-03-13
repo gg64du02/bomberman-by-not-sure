@@ -821,7 +821,7 @@ import struct
 def sendOneMulticastAdToLAN():
     print("sendOneMulticastAdToLAN")
     message = b'bomberman-by-not-sure'
-    multicast_group = ('192.168.1.255', 10000)
+    multicast_group = ('192.168.1.255', 5005)
     # Create the datagram socket
     sock_multicast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Set a timeout so the socket does not block
@@ -1412,10 +1412,17 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
+        # print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
+            if(data == b'bomberman-by-not-sure'):
+                print("b'bomberman-by-not-sure'")
+                return
+            else:
+                print("!b'bomberman-by-not-sure'")
+                return
             decodedData = pickle.loads(data)
             print("decodedData",decodedData)
             global Players
