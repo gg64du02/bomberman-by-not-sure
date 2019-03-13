@@ -1421,8 +1421,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 print("b'bomberman-by-not-sure'")
                 return
             else:
-                print("!b'bomberman-by-not-sure'")
-                return
+                # print("!b'bomberman-by-not-sure'")
+                pass
             decodedData = pickle.loads(data)
             print("decodedData",decodedData)
             global Players
