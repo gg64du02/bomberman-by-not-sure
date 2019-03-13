@@ -1502,7 +1502,8 @@ if (numberOfLocalPlayers < 0):
     # is hosting a game
     pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
 
-    HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
+    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
+    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5005
     server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
     server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     server_thread_udp.daemon = True
@@ -1517,7 +1518,8 @@ else:
     # spectator/players
     pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
 
-    HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
+    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
+    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
     server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
     server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     server_thread_udp.daemon = True
