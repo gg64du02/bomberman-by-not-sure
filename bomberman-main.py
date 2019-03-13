@@ -1502,24 +1502,14 @@ while(runningMain):
     # # todo: check server_gist.py for design pattern
     # # todo: no blocking UDP sending
     # # todo: time out and refusal management
-    # decodedData = pickle.loads(data)
-    # MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
 
     if (numberOfLocalPlayers < 0):
         # # numberOfLocalPlayers = -1
         # # is hosting a game
-        # clients = []
-        # MESSAGE = pickle.dumps(["crateMap", crateMap, "Players", Players])
-        # for client in clients:
-        #     pass
-        # host for one client
         # print("!if(numberOfLocalPlayers<0):")
         print("hosting")
         UDP_IP_CLIENT = "127.0.0.1"
         UDP_PORT_CLIENT = 5006
-        # MESSAGE = "Hello, World!"
-        # MESSAGE_bytes = MESSAGE.encode()
-        # MESSAGE = pickle.dumps(["crateMap",crateMap])
         MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
         MESSAGE_bytes = MESSAGE
         # print("client message:", MESSAGE_bytes)
@@ -1537,9 +1527,6 @@ while(runningMain):
         print("spectator/players")
         UDP_IP_CLIENT = "127.0.0.1"
         UDP_PORT_CLIENT = 5005
-        # MESSAGE = "Hello, World!"
-        # MESSAGE_bytes = MESSAGE.encode()
-        # MESSAGE = pickle.dumps(["crateMap",crateMap])
         MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
         MESSAGE_bytes = MESSAGE
         # print("client message:", MESSAGE_bytes)
@@ -1547,7 +1534,6 @@ while(runningMain):
         sock = socket.socket(socket.AF_INET,  # Internet
                              socket.SOCK_DGRAM)  # UDP
         sock.setblocking(False)
-        # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
     print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
@@ -1561,7 +1547,6 @@ while(runningMain):
         print("issuing the esc key")
 
     gameDisplay.fill(gray)
-    # crate(0,0)
 
     displayCrates()
     displayMap()
@@ -1596,7 +1581,6 @@ while(runningMain):
     # print('time:',str(time.time()-st_time))
     clock.tick(60)
     st_time = time.time()
-    # print('lol')
 
 pygame.quit()
 quit()
