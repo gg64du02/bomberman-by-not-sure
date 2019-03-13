@@ -1404,6 +1404,7 @@ def manageTCPserverPackets(incomingData,client_addr):
 
 import socketserver, threading, time
 
+currentHostsOnLan = []
 
 # UDP connexion handling
 # todo: queuing data that needs processing
@@ -1417,8 +1418,11 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
+            print("currentHostsOnLan",currentHostsOnLan)
             if(data == b'bomberman-by-not-sure'):
                 print("b'bomberman-by-not-sure'")
+                if(socket.getsockname()[0] not in currentHostsOnLan):
+                    currentHostsOnLan.append(socket.getsockname()[0])
                 return
             else:
                 # print("!b'bomberman-by-not-sure'")
