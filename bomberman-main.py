@@ -817,6 +817,32 @@ joinPointInter = [6,6]
 quitPointInter = [8,6]
 interactingPoints = [createPointInter,joinPointInter,quitPointInter]
 
+import struct
+def sendOneMulticastAdToLAN():
+    print("sendOneMulticastAdToLAN")
+    message = b'bomberman-by-not-sure'
+    multicast_group = ('192.168.1.255', 10000)
+    # Create the datagram socket
+    sock_multicast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # Set a timeout so the socket does not block
+    # indefinitely when trying to receive data.
+    sock_multicast.settimeout(0)
+    # Set the time-to-live for messages to 1 so they do not
+    # go past the local network segment.
+    ttl = struct.pack('b', 1)
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+    # MY_IP = "192.168.1.99"
+    MY_IP = IP_on_LAN
+    sock_multicast.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(MY_IP))
+    try:
+        # while(range(100,0,-1)):
+        # Send data to the multicast group
+        print('sending {!r}'.format(message))
+        sent = sock_multicast.sendto(message, multicast_group)
+    finally:
+        print('closing socket')
+        sock_multicast.close()
+
 runningMenuMain = True
 createMenuWhile = False
 joinMenuWhile = False
@@ -1492,6 +1518,8 @@ else:
         server_thread_udp.server_close()
         exit()
 
+last_ad_multicast = time.time()
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
@@ -1534,6 +1562,10 @@ while(runningMain):
 
     print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
+    if((time.time()-last_ad_multicast)*1000>1000):
+        sendOneMulticastAdToLAN()
+        last_ad_multicast = time.time()
+
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
@@ -1574,7 +1606,7 @@ while(runningMain):
     # print("hitboxes():\n",hitboxes())
 
     pygame.display.update()
-    # print('time:',str(time.time()-st_time))
+    print('time:',str(time.time()-st_time))
     clock.tick(60)
     st_time = time.time()
 
