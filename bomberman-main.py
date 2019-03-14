@@ -1642,6 +1642,7 @@ quit()
 # todo: implement a dedicated mode for TCP/IP game
 # todo: allow the host to play as client in non-dedicated mode TCP/IP
 # todo: add a design doc
+# todo: do a server list for the lan games
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
