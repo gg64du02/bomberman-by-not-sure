@@ -1311,8 +1311,9 @@ while(True):
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
         print("listingOfLanHostMenu:currentHostsOnLan",currentHostsOnLan)
-        for server in currentHostsOnLan:
+        for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
             print("server",server)
+            displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
         numberOfLocalPlayers = 0
 
         if(lan_listener==0):
@@ -1636,21 +1637,22 @@ if (numberOfLocalPlayers < 0):
         server_thread_udp.server_close()
         exit()
 else:
-    # spectator/players
-    pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
-
-    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
-    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
-    server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
-    server_thread_udp = threading.Thread(target=server_udp.serve_forever)
-    server_thread_udp.daemon = True
-    try:
-        # servers
-        server_thread_udp.start()
-    except (KeyboardInterrupt, SystemExit):
-        server_thread_udp.shutdown()
-        server_thread_udp.server_close()
-        exit()
+    pass
+    # # spectator/players
+    # pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
+    #
+    # # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
+    # HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
+    # server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+    # server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+    # server_thread_udp.daemon = True
+    # try:
+    #     # servers
+    #     server_thread_udp.start()
+    # except (KeyboardInterrupt, SystemExit):
+    #     server_thread_udp.shutdown()
+    #     server_thread_udp.server_close()
+    #     exit()
 
 last_ad_multicast = time.time()
 
