@@ -1310,7 +1310,7 @@ while(True):
         displayMap()
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-        print("currentHostsOnLan",currentHostsOnLan)
+        print("listingOfLanHostMenu:currentHostsOnLan",currentHostsOnLan)
         for server in currentHostsOnLan:
             print("server",server)
         numberOfLocalPlayers = 0
