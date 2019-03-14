@@ -1286,20 +1286,12 @@ while(True):
         # line going down
         TheMap[1:15, 3] = 1
         crateMap[1:15, 3] = 1
-        # # 3 player
-        # TheMap[10, 3:7] = 1
-        # crateMap[10, 3:7] = 1
-        # # 4 player
-        # TheMap[12, 3:7] = 1
-        # crateMap[12, 3:7] = 1
         # back
         TheMap[14, 3:7] = 1
         crateMap[14, 3:7] = 1
         # masking useless parts
         TheMap[1:13, 4:8] = 0
         crateMap[1:13, 4:8] = 0
-
-
 
         print("if(listingOfLanHostMenu == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
@@ -1319,6 +1311,8 @@ while(True):
         for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
             print("server",server)
             displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
+            TheMap[(6+2*i), 3:7] = 1
+            crateMap[(6+2*i), 3:7] = 1
         numberOfLocalPlayers = 0
 
         if(lan_listener==0):
@@ -1342,17 +1336,7 @@ while(True):
         lan_listener += 1
 
         print("listingOfLanHostMenu:currentHostsOnLan", currentHostsOnLan)
-        # displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
-        # displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
-        # displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
-        # displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
-        # displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
         displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
-        # a bomb mean it is a work in progress
-        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
-        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
-        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
-        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         # check if any communication are pending or rejected
         # mangageOutGoingTCPclientPackets()
