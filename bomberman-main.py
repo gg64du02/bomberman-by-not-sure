@@ -821,7 +821,7 @@ import struct
 def sendOneMulticastAdToLAN():
     print("sendOneMulticastAdToLAN")
     message = b'bomberman-by-not-sure'
-    multicast_group = ('192.168.1.255', 5005)
+    multicast_group = ('192.168.1.255', 5006)
     # Create the datagram socket
     sock_multicast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Set a timeout so the socket does not block
@@ -1008,7 +1008,80 @@ OnceTCPclient = True
 
 joinedAtcpIpGameMenuWhile = False
 
+
+
 currentHostsOnLan = []
+
+import socketserver, threading, time
+
+# UDP connexion handling
+# todo: queuing data that needs processing
+class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
+    def handle(self):
+        global currentHostsOnLan
+        print("ThreadedUDPRequestHandler:handle")
+        data = self.request[0].strip()
+        socket = self.request[1]
+        print("data",data)
+        print("socket.getsockname()",socket.getsockname())
+        # (HOST_UDP_server, PORT_UDP_server)
+        if(socket.getsockname()[1]==5005):
+            print("if(socket.getsockname()[1]==5005):")
+            decodedData = pickle.loads(data)
+            print("decodedData",decodedData)
+            global Players
+            if(decodedData[2]=="clientSlotKeyboardMapping"):
+                # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
+                # print("global Players")
+                for slot,i in zip(decodedData[3],range(4)):
+                    # print("for slot,i in zip(decodedData[3],range(4)):")
+                    if(slot==1):
+                        print("Players[i]",Players[i])
+                        print("decodedData[1][i]",decodedData[1][i])
+                        Players[i] = decodedData[1][i]
+        if(socket.getsockname()[1]==5006):
+            print("if(socket.getsockname()[1]==5006):")
+            print("currentHostsOnLan",currentHostsOnLan)
+            if(data == b'bomberman-by-not-sure'):
+                print("b'bomberman-by-not-sure'")
+                if(socket.getsockname()[0] not in currentHostsOnLan):
+                    currentHostsOnLan.append(socket.getsockname()[0])
+                return
+            else:
+                # print("!b'bomberman-by-not-sure'")
+                pass
+            decodedData = pickle.loads(data)
+            print("decodedData",decodedData)
+            if(decodedData[0]=="crateMap"):
+                global crateMap
+                crateMap = decodedData[1]
+        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
+        # print("threading.activeCount()",threading.activeCount())
+        # socket.sendto(data.upper(), self.client_address)
+
+class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
+    pass
+
+
+# TCP connexion handling
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
+    def handle(self):
+        print("ThreadedTCPRequestHandler:handle")
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
+        print("self.data",self.data)
+        data4function = self.data
+        answer = manageTCPserverPackets(data4function,self.client_address)
+        print("ThreadedTCPRequestHandler:answer",answer)
+        # answering the client
+        self.request.sendall(bytes(answer.encode()))
+        # # just send back the same data, but upper-cased
+        # self.request.sendall(self.data.upper())
+        print("ThreadedTCPRequestHandler:self.data",self.data)
+
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
 
 while(True):
 	# print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile)
@@ -1235,6 +1308,26 @@ while(True):
         print("currentHostsOnLan",currentHostsOnLan)
         for server in currentHostsOnLan:
             print("server",server)
+
+        if (numberOfLocalPlayers == 0):
+            # numberOfLocalPlayers = -1
+            # is hosting a game
+            pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
+
+            # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
+            HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5005
+            server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+            server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+            server_thread_udp.daemon = True
+            try:
+                # servers
+                server_thread_udp.start()
+            except (KeyboardInterrupt, SystemExit):
+                server_thread_udp.shutdown()
+                server_thread_udp.server_close()
+                exit()
+
+        print("listingOfLanHostMenu:currentHostsOnLan", currentHostsOnLan)
         # displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
         # displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
         # displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
@@ -1392,7 +1485,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(30)
+    clock.tick(10)
     st_time = time.time()
 
 # number of slots left on server
@@ -1495,75 +1588,6 @@ def manageTCPserverPackets(incomingData,client_addr):
     return str([])
     pass
 
-import socketserver, threading, time
-
-# UDP connexion handling
-# todo: queuing data that needs processing
-class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
-    def handle(self):
-        print("ThreadedUDPRequestHandler:handle")
-        data = self.request[0].strip()
-        socket = self.request[1]
-        print("data",data)
-        print("socket.getsockname()",socket.getsockname())
-        # (HOST_UDP_server, PORT_UDP_server)
-        if(socket.getsockname()[1]==5005):
-            print("if(socket.getsockname()[1]==5005):")
-            print("currentHostsOnLan",currentHostsOnLan)
-            if(data == b'bomberman-by-not-sure'):
-                print("b'bomberman-by-not-sure'")
-                if(socket.getsockname()[0] not in currentHostsOnLan):
-                    currentHostsOnLan.append(socket.getsockname()[0])
-                return
-            else:
-                # print("!b'bomberman-by-not-sure'")
-                pass
-            decodedData = pickle.loads(data)
-            print("decodedData",decodedData)
-            global Players
-            if(decodedData[2]=="clientSlotKeyboardMapping"):
-                # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
-                # print("global Players")
-                for slot,i in zip(decodedData[3],range(4)):
-                    # print("for slot,i in zip(decodedData[3],range(4)):")
-                    if(slot==1):
-                        print("Players[i]",Players[i])
-                        print("decodedData[1][i]",decodedData[1][i])
-                        Players[i] = decodedData[1][i]
-        if(socket.getsockname()[1]==5006):
-            print("if(socket.getsockname()[1]==5006):")
-            decodedData = pickle.loads(data)
-            print("decodedData",decodedData)
-            if(decodedData[0]=="crateMap"):
-                global crateMap
-                crateMap = decodedData[1]
-        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
-        # print("threading.activeCount()",threading.activeCount())
-        # socket.sendto(data.upper(), self.client_address)
-
-class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
-    pass
-
-
-# TCP connexion handling
-class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-    def handle(self):
-        print("ThreadedTCPRequestHandler:handle")
-        # self.request is the TCP socket connected to the client
-        self.data = self.request.recv(1024).strip()
-        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
-        print("self.data",self.data)
-        data4function = self.data
-        answer = manageTCPserverPackets(data4function,self.client_address)
-        print("ThreadedTCPRequestHandler:answer",answer)
-        # answering the client
-        self.request.sendall(bytes(answer.encode()))
-        # # just send back the same data, but upper-cased
-        # self.request.sendall(self.data.upper())
-        print("ThreadedTCPRequestHandler:self.data",self.data)
-
-class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    pass
 
 if __name__ == "__main__":
     if(enableTcpServerThread==True):
@@ -1674,6 +1698,8 @@ while(runningMain):
 
     print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
+    print("runningMain:currentHostsOnLan",currentHostsOnLan)
+
     Controls = keyboardRead()
 
     ColisionCheckAndMovement()
@@ -1715,7 +1741,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(10)
     st_time = time.time()
 
 pygame.quit()
