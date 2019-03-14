@@ -1413,7 +1413,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
-        # print("data",data)
+        print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
@@ -1476,7 +1476,8 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 if __name__ == "__main__":
     if(enableTcpServerThread==True):
-        HOST_TCP, PORT_TCP = "0.0.0.0", 8888
+        # HOST_TCP, PORT_TCP = "0.0.0.0", 8888
+        HOST_TCP, PORT_TCP = IP_on_LAN, 8888
         server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
         server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
         server_thread_tcp.daemon = True
@@ -1545,7 +1546,8 @@ while(runningMain):
         # # is hosting a game
         # print("!if(numberOfLocalPlayers<0):")
         print("hosting")
-        UDP_IP_CLIENT = "127.0.0.1"
+        # UDP_IP_CLIENT = "127.0.0.1"
+        UDP_IP_CLIENT = IP_on_LAN
         UDP_PORT_CLIENT = 5006
         MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
         MESSAGE_bytes = MESSAGE
@@ -1562,7 +1564,8 @@ while(runningMain):
         # spectator/players
         # print("!if(numberOfLocalPlayers<0):")
         print("spectator/players")
-        UDP_IP_CLIENT = "127.0.0.1"
+        # UDP_IP_CLIENT = "127.0.0.1"
+        UDP_IP_CLIENT = IP_on_LAN
         UDP_PORT_CLIENT = 5005
         MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
         MESSAGE_bytes = MESSAGE
