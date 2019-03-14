@@ -862,6 +862,8 @@ enableTcpServerThread = False
 
 listingOfLanHostMenu = False
 
+server_IP_joined = []
+
 lan_listener = 0
 
 # todo:add the TCP Server
@@ -1321,6 +1323,10 @@ while(True):
             # testing if the player is on it
             if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):
                 print("if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):")
+                server_IP_joined = server
+                print("server_IP_joined",server_IP_joined)
+                listingOfLanHostMenu=False
+                joinedAtcpIpGameMenuWhile=True
                 pass
         numberOfLocalPlayers = 0
 
@@ -1661,7 +1667,8 @@ while(runningMain):
         # print("!if(numberOfLocalPlayers<0):")
         print("spectator/players")
         # UDP_IP_CLIENT = "127.0.0.1"
-        UDP_IP_CLIENT = IP_on_LAN
+        # UDP_IP_CLIENT = IP_on_LAN
+        UDP_IP_CLIENT = server_IP_joined
         UDP_PORT_CLIENT = 5005
         MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
         MESSAGE_bytes = MESSAGE
