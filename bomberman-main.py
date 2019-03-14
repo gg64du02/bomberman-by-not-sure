@@ -857,6 +857,8 @@ joinAtcpIpGameMenuWhile = False
 
 enableTcpServerThread = False
 
+listingOfLanHostMenu = False
+
 # todo:add the TCP Server
 
 # todo:numberOfLocalPlayersMenuWhile = False
@@ -1005,6 +1007,8 @@ print("IP_on_LAN", IP_on_LAN)
 OnceTCPclient = True
 
 joinedAtcpIpGameMenuWhile = False
+
+currentHostsOnLan = []
 
 while(True):
 	# print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile)
@@ -1175,7 +1179,8 @@ while(True):
             runningMenuMain = False
             createMenuWhile = False
             joinAtcpIpGameMenuWhile = False
-            joinedAtcpIpGameMenuWhile = True
+            joinedAtcpIpGameMenuWhile = False
+            listingOfLanHostMenu = True
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
@@ -1197,6 +1202,101 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
+
+    if(listingOfLanHostMenu == True):
+
+        # line going down
+        TheMap[1:15, 3] = 1
+        crateMap[1:15, 3] = 1
+        # # 3 player
+        # TheMap[10, 3:7] = 1
+        # crateMap[10, 3:7] = 1
+        # # 4 player
+        # TheMap[12, 3:7] = 1
+        # crateMap[12, 3:7] = 1
+        # back
+        TheMap[14, 3:7] = 1
+        crateMap[14, 3:7] = 1
+
+        print("if(listingOfLanHostMenu == True):")
+        pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
+
+        Controls = keyboardRead()
+        ColisionCheckAndMovement()
+        if (keyboard.is_pressed('esc')):
+            runningMenuMain = False
+            print("issuing the esc key")
+            pygame.quit()
+            quit()
+        gameDisplay.fill(gray)
+        displayMap()
+        displayPlayers()
+        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
+        print("currentHostsOnLan",currentHostsOnLan)
+        for server in currentHostsOnLan:
+            print("server",server)
+        # displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
+        # displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
+        # displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
+        # displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
+        # displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
+        displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
+        # a bomb mean it is a work in progress
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
+        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        # check if any communication are pending or rejected
+        # mangageOutGoingTCPclientPackets()
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+            print("Spectator:createPointInter", createPointInter)
+            numberOfLocalPlayers = 0
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            joinedAtcpIpGameMenuWhile=False
+            break
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
+            print("local1player:createPointInter", createPointInter)
+            numberOfLocalPlayers = 1
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            joinedAtcpIpGameMenuWhile=False
+            print()
+            break
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
+            print("local2player:createPointInter", createPointInter)
+            numberOfLocalPlayers = 2
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            joinedAtcpIpGameMenuWhile=False
+            break
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+2,quitPointInter[1])) == 1):
+            print("local3player:(quitPointInter[0]+2,quitPointInter[1])", (quitPointInter[0]+2,quitPointInter[1]))
+            numberOfLocalPlayers = 3
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            joinedAtcpIpGameMenuWhile=False
+            break
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+4,quitPointInter[1])) == 1):
+            print("local4player:(quitPointInter[0]+4,quitPointInter[1])", (quitPointInter[0]+4,quitPointInter[1]))
+            numberOfLocalPlayers = 4
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            joinedAtcpIpGameMenuWhile=False
+            break
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
+            print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # going back to the previous menu
+            joinedAtcpIpGameMenuWhile=False
+            joinAtcpIpGameMenuWhile=True
+
+            # closing the path from the previous menu
+            TheMap[9, 3] = 0
+            crateMap[9, 3] = 0
+
 
     if(joinedAtcpIpGameMenuWhile == True):
 
@@ -1403,8 +1503,6 @@ def manageTCPserverPackets(incomingData,client_addr):
     pass
 
 import socketserver, threading, time
-
-currentHostsOnLan = []
 
 # UDP connexion handling
 # todo: queuing data that needs processing
