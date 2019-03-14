@@ -1327,6 +1327,8 @@ while(True):
                 print("server_IP_joined",server_IP_joined)
                 listingOfLanHostMenu=False
                 joinedAtcpIpGameMenuWhile=True
+                # putting back the cyan player on a neutral spot
+                Players[3][0] = [32 * 3, 32 * 1]
                 pass
         numberOfLocalPlayers = 0
 
