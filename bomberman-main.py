@@ -1295,6 +1295,11 @@ while(True):
         # back
         TheMap[14, 3:7] = 1
         crateMap[14, 3:7] = 1
+        # masking useless parts
+        TheMap[1:13, 4:8] = 0
+        crateMap[1:13, 4:8] = 0
+
+
 
         print("if(listingOfLanHostMenu == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
@@ -1344,10 +1349,10 @@ while(True):
         # displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
         displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
         # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
+        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
+        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
+        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
+        # gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         # check if any communication are pending or rejected
         # mangageOutGoingTCPclientPackets()
