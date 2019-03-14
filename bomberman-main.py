@@ -1029,7 +1029,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
-        print("data",data)
+        # print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
@@ -1382,6 +1382,12 @@ while(True):
         # line going down
         TheMap[1:15, 3] = 1
         crateMap[1:15, 3] = 1
+        # 1 player
+        TheMap[6, 3:7] = 1
+        crateMap[6, 3:7] = 1
+        # 2 player
+        TheMap[8, 3:7] = 1
+        crateMap[8, 3:7] = 1
         # 3 player
         TheMap[10, 3:7] = 1
         crateMap[10, 3:7] = 1
