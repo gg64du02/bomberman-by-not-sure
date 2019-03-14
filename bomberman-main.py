@@ -1261,6 +1261,16 @@ while(True):
             listingOfLanHostMenu = True
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
+
+            # line going down
+            TheMap[1:15, 3] = 1
+            crateMap[1:15, 3] = 1
+            # back
+            TheMap[14, 3:7] = 1
+            crateMap[14, 3:7] = 1
+            # masking useless parts
+            TheMap[1:13, 4:8] = 0
+            crateMap[1:13, 4:8] = 0
         # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
         #     print("joinAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
         #     # todo: add another submenu about joining game
@@ -1283,16 +1293,6 @@ while(True):
 
     if(listingOfLanHostMenu == True):
 
-        # line going down
-        TheMap[1:15, 3] = 1
-        crateMap[1:15, 3] = 1
-        # back
-        TheMap[14, 3:7] = 1
-        crateMap[14, 3:7] = 1
-        # masking useless parts
-        TheMap[1:13, 4:8] = 0
-        crateMap[1:13, 4:8] = 0
-
         print("if(listingOfLanHostMenu == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
 
@@ -1311,8 +1311,8 @@ while(True):
         for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
             print("server",server)
             displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
-            TheMap[(6+2*i), 3:7] = 1
-            crateMap[(6+2*i), 3:7] = 1
+            TheMap[(4+2*i), 3:7] = 1
+            crateMap[(4+2*i), 3:7] = 1
         numberOfLocalPlayers = 0
 
         if(lan_listener==0):
