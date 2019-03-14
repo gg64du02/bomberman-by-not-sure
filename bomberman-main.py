@@ -1395,13 +1395,6 @@ while(True):
     clock.tick(30)
     st_time = time.time()
 
-# testing lines
-# clientIDsWgameState.append('lol')
-# clientIDsWgameState.append('lol')
-# clientIDsWgameState.append('lol')
-# clientIDsWgameState.append('lol')
-# clientIDsWgameState.append('lol')
-
 # number of slots left on server
 slotsLeftOnServer = 4
 # slotsMappingForPlayersControl
