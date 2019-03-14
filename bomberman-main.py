@@ -11,6 +11,9 @@ import random
 # image processing and skin loading
 from PIL import Image
 
+# for serialize
+import pickle
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -859,6 +862,8 @@ enableTcpServerThread = False
 
 listingOfLanHostMenu = False
 
+lan_listener = 0
+
 # todo:add the TCP Server
 
 # todo:numberOfLocalPlayersMenuWhile = False
@@ -1308,24 +1313,27 @@ while(True):
         print("currentHostsOnLan",currentHostsOnLan)
         for server in currentHostsOnLan:
             print("server",server)
+        numberOfLocalPlayers = 0
 
-        if (numberOfLocalPlayers == 0):
-            # numberOfLocalPlayers = -1
-            # is hosting a game
-            pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
+        if(lan_listener==0):
+            if (numberOfLocalPlayers == 0):
+                # spectator/players
+                pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
 
-            # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
-            HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5005
-            server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
-            server_thread_udp = threading.Thread(target=server_udp.serve_forever)
-            server_thread_udp.daemon = True
-            try:
-                # servers
-                server_thread_udp.start()
-            except (KeyboardInterrupt, SystemExit):
-                server_thread_udp.shutdown()
-                server_thread_udp.server_close()
-                exit()
+                # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
+                HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
+                server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+                server_thread_udp = threading.Thread(target=server_udp.serve_forever)
+                server_thread_udp.daemon = True
+                try:
+                    # servers
+                    server_thread_udp.start()
+                except (KeyboardInterrupt, SystemExit):
+                    server_thread_udp.shutdown()
+                    server_thread_udp.server_close()
+                    exit()
+
+        lan_listener += 1
 
         print("listingOfLanHostMenu:currentHostsOnLan", currentHostsOnLan)
         # displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
@@ -1609,9 +1617,6 @@ if __name__ == "__main__":
 
 # clean the menu on the server side
 newRound()
-
-# for serialize
-import pickle
 
 if (numberOfLocalPlayers < 0):
     # numberOfLocalPlayers = -1
