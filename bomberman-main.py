@@ -1311,9 +1311,17 @@ while(True):
         print("listingOfLanHostMenu:currentHostsOnLan",currentHostsOnLan)
         for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
             print("server",server)
+            # displaying the IP
             displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
+            # making the path for the server
             TheMap[(4+2*i), 3:7] = 1
             crateMap[(4+2*i), 3:7] = 1
+            print("[(4+2*i),6]",[(4+2*i),6])
+            print("[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)]",[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)])
+            # testing if the player is on it
+            if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):
+                print("if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):")
+                pass
         numberOfLocalPlayers = 0
 
         if(lan_listener==0):
@@ -1341,53 +1349,24 @@ while(True):
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         # check if any communication are pending or rejected
         # mangageOutGoingTCPclientPackets()
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-            print("Spectator:createPointInter", createPointInter)
-            numberOfLocalPlayers = 0
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-            print("local1player:createPointInter", createPointInter)
-            numberOfLocalPlayers = 1
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            print()
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-            print("local2player:createPointInter", createPointInter)
-            numberOfLocalPlayers = 2
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+2,quitPointInter[1])) == 1):
-            print("local3player:(quitPointInter[0]+2,quitPointInter[1])", (quitPointInter[0]+2,quitPointInter[1]))
-            numberOfLocalPlayers = 3
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+4,quitPointInter[1])) == 1):
-            print("local4player:(quitPointInter[0]+4,quitPointInter[1])", (quitPointInter[0]+4,quitPointInter[1]))
-            numberOfLocalPlayers = 4
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
-            print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # going back to the previous menu
-            joinedAtcpIpGameMenuWhile=False
-            joinAtcpIpGameMenuWhile=True
-
-            # closing the path from the previous menu
-            TheMap[9, 3] = 0
-            crateMap[9, 3] = 0
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
+        #     print("Spectator:createPointInter", createPointInter)
+        #     numberOfLocalPlayers = 0
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        #     joinedAtcpIpGameMenuWhile=False
+        #     break
+        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
+        #     print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
+        #     # putting back the cyan player on a neutral spot
+        #     Players[3][0] = [32 * 3, 32 * 1]
+        #     # going back to the previous menu
+        #     joinedAtcpIpGameMenuWhile=False
+        #     joinAtcpIpGameMenuWhile=True
+        #
+        #     # closing the path from the previous menu
+        #     TheMap[9, 3] = 0
+        #     crateMap[9, 3] = 0
 
 
     if(joinedAtcpIpGameMenuWhile == True):
