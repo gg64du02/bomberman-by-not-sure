@@ -1318,7 +1318,7 @@ while(True):
         if(lan_listener==0):
             if (numberOfLocalPlayers == 0):
                 # spectator/players
-                pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
+                print("starting UDP listening on 5006")
 
                 # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
                 HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
