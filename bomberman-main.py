@@ -1055,11 +1055,12 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             else:
                 # print("!b'bomberman-by-not-sure'")
                 pass
-            decodedData = pickle.loads(data)
-            print("decodedData",decodedData)
-            if(decodedData[0]=="crateMap"):
-                global crateMap
-                crateMap = decodedData[1]
+            if(listingOfLanHostMenu!=True and joinedAtcpIpGameMenuWhile!=True):
+                decodedData = pickle.loads(data)
+                print("decodedData",decodedData)
+                if(decodedData[0]=="crateMap"):
+                    global crateMap
+                    crateMap = decodedData[1]
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         # socket.sendto(data.upper(), self.client_address)
