@@ -1330,10 +1330,9 @@ while(True):
                 # putting back the cyan player on a neutral spot
                 Players[3][0] = [32 * 3, 32 * 1]
                 pass
-        numberOfLocalPlayers = 0
 
         if(lan_listener==0):
-            if (numberOfLocalPlayers == 0):
+            if (numberOfLocalPlayers < 0):
                 # spectator/players
                 print("starting UDP listening on 5006")
 
