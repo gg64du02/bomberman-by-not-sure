@@ -1055,8 +1055,6 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 tmpData, tmpAddress = socket.recvfrom(4096)
                 if(tmpAddress[0] not in currentHostsOnLan):
                     currentHostsOnLan.append(tmpAddress[0])
-                # if(socket.getsockname()[0] not in currentHostsOnLan):
-                #     currentHostsOnLan.append(socket.getsockname()[0])
                 return
             else:
                 # print("!b'bomberman-by-not-sure'")
