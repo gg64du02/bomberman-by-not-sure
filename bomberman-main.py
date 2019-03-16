@@ -109,7 +109,8 @@ def displayAirBlasts():
         timePassed = time.time() - airBlast[2]
         # print("airBlast",airBlast)
         # print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
-        gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+        if(isIndexesRangeTileRange([3,0+int((2.5*timePassed*1000)/100)])==True):
+            gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
 
@@ -145,7 +146,10 @@ def displayBrokenCratesAndUpdateCollision():
     for brokenCrate in brokenCrates:
         # Tiles[3][0-7]
         timePassed = time.time() - brokenCrate[2]
-        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        if(isIndexesRangeTileRange([4,0+int((4*timePassed*1000)/100)])==True):
+            print("brokenCrates",brokenCrates)
+            print("[4,0+int((4*timePassed*1000)/100)]",[4,0+int((4*timePassed*1000)/100)])
+            gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
         if(timePassed*1000>200):
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
@@ -699,6 +703,17 @@ def isIndexesRange(point):
                     isInsideIndexRange = True
     return isInsideIndexRange
 
+
+def isIndexesRangeTileRange(point):
+    isInsideIndexRange = False
+    if (point[1] >= 0):
+        if (point[1] < 16):
+            if (point[0] >= 0):
+                if (point[0] < 16):
+                    # print("ii in (0,0) and (19,15)")
+                    isInsideIndexRange = True
+    return isInsideIndexRange
+
 def hitboxes():
     # in: Players
     # out: PlayersWhitboxesAindex
@@ -1030,12 +1045,13 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
-        # print("data",data)
+        print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
+            print("decodedData[5]",decodedData[5])
             print("decodedData",decodedData)
             global Players
             if(decodedData[2]=="clientSlotKeyboardMapping"):
@@ -1047,6 +1063,9 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         print("Players[i]",Players[i])
                         print("decodedData[1][i]",decodedData[1][i])
                         Players[i] = decodedData[1][i]
+            if(decodedData[4]=="listOfBombs"):
+                for bomb in decodedData[5]:
+                    listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
             print("currentHostsOnLan",currentHostsOnLan)
@@ -1679,7 +1698,7 @@ while(runningMain):
         # UDP_IP_CLIENT = IP_on_LAN
         UDP_IP_CLIENT = server_IP_joined
         UDP_PORT_CLIENT = 5005
-        MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
+        MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombs",listOfBombs])
         MESSAGE_bytes = MESSAGE
         # print("client message:", MESSAGE_bytes)
 
