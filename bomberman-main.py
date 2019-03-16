@@ -348,13 +348,15 @@ def generateItem(y,x):
         # print("if(TheMap[y,x]!=0):")
         if(crateMap[y,x]==1):
             if(random.randint(0,1)%2==0):
-                lighterMap[y,x] = 1
-                lighterMapDisplayList.append([y,x])
+                if(not [y,x] in lighterMapDisplayList):
+                    lighterMap[y,x] = 1
+                    lighterMapDisplayList.append([y,x])
             else:
                 # print("[y,x]",[y,x])
                 # print("additionnalBombMap\n",additionnalBombMap)
-                additionnalBombMap[y][x] = 1
-                additionnalBombMapDisplayList.append([y,x])
+                if(not [y,x] in additionnalBombMapDisplayList):
+                    additionnalBombMap[y][x] = 1
+                    additionnalBombMapDisplayList.append([y,x])
 
 def playersPickupsItems():
     # for hitboxes()
@@ -370,6 +372,7 @@ def playersPickupsItems():
                 Players[hitbox[2]][1][1] += 1
                 # updating the lightMap generated
                 lighterMap[lighter[0],lighter[1]] = 0
+                print("lighterMapDisplayList",lighterMapDisplayList)
                 # removing the lighter
                 lighterMapDisplayList.remove(lighter)
 
@@ -383,6 +386,7 @@ def playersPickupsItems():
                 Players[hitbox[2]][1][0] += 1
                 # updating the lightMap generated
                 additionnalBombMap[additionnalBomb[0],additionnalBomb[1]] = 0
+                print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
                 # removing the lighter
                 additionnalBombMapDisplayList.remove(additionnalBomb)
 
