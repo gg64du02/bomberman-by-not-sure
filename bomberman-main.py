@@ -1049,7 +1049,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
-        print("data",data)
+        # print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
@@ -1776,6 +1776,7 @@ quit()
 # todo: allow the host to play as client in non-dedicated mode TCP/IP
 # todo: add a design doc
 # todo: do a server list for the lan games
+# todo: do a proper keyboard binding with slots by the server side
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
