@@ -1783,7 +1783,8 @@ quit()
 # todo: allow the host to play as client in non-dedicated mode TCP/IP
 # todo: add a design doc
 # todo: do a server list for the lan games
-# todo: do a proper keyboard binding with slots by the server side
+# todo: dispatch the packets to every clients
+# done: do a proper keyboard binding with slots by the server side
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
