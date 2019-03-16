@@ -1566,10 +1566,17 @@ def manageTCPserverPackets(incomingData,client_addr):
                 # slotsLeftOnServer = 3
 
                 # # generating a pre-mask for the final results as shown above
-                for iSlot in range(int(slotsLeftOnServer)-1,-1,-1):
+                for iSlot in range(int(slotsLeftOnServer), 0, -1):
+                    # single client is ok
+                    # work 4 with slotsLeftOnServer 4:ok
+                    # work 3 with slotsLeftOnServer 4:ok
+                    # work 2 with slotsLeftOnServer 4:ok
+                    # several clients
+                    # work 3 with slotsLeftOnServer 4 and work 1 with slotsLeftOnServer 4 ?
+                    # for iSlot in range(4 - int(slotsLeftOnServer), int(slotsLeftOnServer), 1):
                     # enabling the mask starting from the end
-                    print("str(iSlot)",str(iSlot))
-                    tmpSlotMapping[iSlot] = 1
+                    print("str(iSlot)", str(iSlot))
+                    tmpSlotMapping[-iSlot] = 1
                     pass
                 print("tmpSlotMapping1",tmpSlotMapping)
 
