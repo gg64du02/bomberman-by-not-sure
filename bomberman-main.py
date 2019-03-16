@@ -1501,7 +1501,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
 
 # number of slots left on server
@@ -1756,7 +1756,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
 
 pygame.quit()
