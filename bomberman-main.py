@@ -1102,11 +1102,10 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print("ThreadedTCPRequestHandler:handle")
         # self.request is the TCP socket connected to the client
-        # self.data = self.request.recv(1024).strip()
-        self.data, self.address = self.request.recvfrom(1024)
+        self.data = self.request.recv(1024).strip()
+        print("self.client_address",self.client_address)
         global clientsIPSports
         print("clientsIPSports",clientsIPSports)
-        print("self.address",self.address)
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print("self.data",self.data)
         data4function = self.data
