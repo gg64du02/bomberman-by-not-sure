@@ -852,7 +852,7 @@ def sendOneMulticastAdToLAN():
     # Set the time-to-live for messages to 1 so they do not
     # go past the local network segment.
     ttl = struct.pack('b', 1)
-    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+    sock_multicast.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
     # MY_IP = "192.168.1.99"
     MY_IP = IP_on_LAN
     sock_multicast.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(MY_IP))
@@ -1688,19 +1688,21 @@ while(runningMain):
         # # numberOfLocalPlayers = -1
         # # is hosting a game
         # print("!if(numberOfLocalPlayers<0):")
-        print("hosting")
-        # UDP_IP_CLIENT = "127.0.0.1"
-        UDP_IP_CLIENT = IP_on_LAN
-        UDP_PORT_CLIENT = 5006
-        MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
-        MESSAGE_bytes = MESSAGE
-        # print("client message:", MESSAGE_bytes)
+        for client in clientsIPSports:
+            print("hosting")
+            # UDP_IP_CLIENT = "127.0.0.1"
+            # UDP_IP_CLIENT = IP_on_LAN
+            UDP_IP_CLIENT = client[0]
+            UDP_PORT_CLIENT = 5006
+            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
+            MESSAGE_bytes = MESSAGE
+            # print("client message:", MESSAGE_bytes)
 
-        sock = socket.socket(socket.AF_INET,  # Internet
-                             socket.SOCK_DGRAM)  # UDP
-        sock.setblocking(False)
-        # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
-        sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
+            sock = socket.socket(socket.AF_INET,  # Internet
+                                 socket.SOCK_DGRAM)  # UDP
+            sock.setblocking(False)
+            # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
+            sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
         if ((time.time() - last_ad_multicast) * 1000 > 1000):
             sendOneMulticastAdToLAN()
