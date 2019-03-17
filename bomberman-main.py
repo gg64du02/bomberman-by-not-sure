@@ -1094,6 +1094,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         Players[i] = decodedData[3][i]
                 if(decodedData[6]=="listOfBombsFromServer"):
                     for b in decodedData[7]:
+                        print("decodedData[7]",decodedData[7])
                         isAlreadyUse = False
                         for b2 in listOfBombs:
                             print("b,b2",b,b2)
@@ -1101,7 +1102,6 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                                 isAlreadyUse = True
                         if(isAlreadyUse==False):
                             print("if(isAlreadyUse==False):")
-                            print("decodedData[7]",decodedData[7])
                             # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
                         else:
                             print("if(isAlreadyUse==True):")
@@ -1524,7 +1524,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
 
 # number of slots left on server
