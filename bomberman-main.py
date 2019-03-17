@@ -1101,7 +1101,10 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print("ThreadedTCPRequestHandler:handle")
         # self.request is the TCP socket connected to the client
-        self.data = self.request.recv(1024).strip()
+        # self.data = self.request.recv(1024).strip()
+        self.data, self.address = self.request.recvfrom(1024)
+        print("clientsIPSports",clientsIPSports)
+        print("self.address",self.address)
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print("self.data",self.data)
         data4function = self.data
@@ -1515,6 +1518,7 @@ def manageTCPserverPackets(incomingData,client_addr):
     global clientIDsWgameState
     # adding the infos to count down
     global slotsLeftOnServer
+    global clientsIPSports
     print("manageTCPserverPackets")
     print("manageTCPserverPackets:MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
     array = (incomingData.decode()).split('|')
@@ -1533,6 +1537,7 @@ def manageTCPserverPackets(incomingData,client_addr):
                 print("!if(len(clientIDsWgameState)>=4):")
                 clientID = len(clientIDsWgameState)
                 clientIDsWgameState.append([clientID,client_addr])
+                # clientsIPSports.append()
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
                 return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
         else:
