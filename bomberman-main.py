@@ -137,7 +137,8 @@ def displayBombs():
         timePassed =  time.time() - bombDis[1]
         # print("timePassed",timePassed)
         # max 5+something =11
-        gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
+        if(isIndexesRangeTileRange([1,5+int((3*timePassed*100)/100)])==True):
+            gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
 def displayBrokenCratesAndUpdateCollision():
     global brokenCrates
