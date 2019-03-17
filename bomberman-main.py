@@ -1070,6 +1070,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         Players[i] = decodedData[1][i]
             if(decodedData[4]=="listOfBombs"):
                 for bomb in decodedData[5]:
+                    # todo: do a duplicate checking here as well
                     listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
@@ -1099,10 +1100,13 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         for b2 in listOfBombs:
                             print("b,b2",b,b2)
                             if(np.array_equal(b[0],b2[0])==True):
+                                print("if(np.array_equal(b[0],b2[0])==True):")
                                 isAlreadyUse = True
+                            else:
+                                print("!if(np.array_equal(b[0],b2[0])==True):")
                         if(isAlreadyUse==False):
                             print("if(isAlreadyUse==False):")
-                            # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
+                            listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
                         else:
                             print("if(isAlreadyUse==True):")
                         pass
