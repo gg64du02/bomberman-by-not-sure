@@ -1794,10 +1794,10 @@ quit()
 # todo: implement a dedicated mode for TCP/IP game
 # todo: allow the host to play as client in non-dedicated mode TCP/IP
 # todo: add a design doc
-# todo: do a server list for the lan games
-# todo: dispatch the packets to every clients
+# done: do a server list for the lan games
+# done: dispatch the packets to every clients
 # done: do a proper keyboard binding with slots by the server side
-# todo: add an auto-updater (for main) to get the new script on each tests' computers
+# done: add an auto-updater (for main) to get the new script on each tests' computers
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
