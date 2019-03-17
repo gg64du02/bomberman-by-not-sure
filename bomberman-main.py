@@ -1055,8 +1055,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
-            print("decodedData[5]",decodedData[5])
-            print("decodedData",decodedData)
+            # print("decodedData[5]",decodedData[5])
+            # print("decodedData",decodedData)
             global Players
             if(decodedData[2]=="clientSlotKeyboardMapping"):
                 # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
@@ -1084,7 +1084,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 pass
             if(listingOfLanHostMenu!=True and joinedAtcpIpGameMenuWhile!=True):
                 decodedData = pickle.loads(data)
-                print("decodedData",decodedData)
+                # print("decodedData",decodedData)
                 if(decodedData[0]=="crateMap"):
                     global crateMap
                     crateMap = decodedData[1]
