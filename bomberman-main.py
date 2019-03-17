@@ -1095,6 +1095,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
     pass
 
+clientsIPSports = []
 
 # TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
@@ -1103,6 +1104,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         # self.request is the TCP socket connected to the client
         # self.data = self.request.recv(1024).strip()
         self.data, self.address = self.request.recvfrom(1024)
+        global clientsIPSports
         print("clientsIPSports",clientsIPSports)
         print("self.address",self.address)
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
@@ -1504,7 +1506,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(10)
     st_time = time.time()
 
 # number of slots left on server
@@ -1768,7 +1770,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(10)
     st_time = time.time()
 
 pygame.quit()
