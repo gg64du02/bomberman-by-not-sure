@@ -1698,9 +1698,14 @@ while(runningMain):
             UDP_IP_CLIENT = client[0]
             UDP_PORT_CLIENT = 5006
             listOfBombs2server = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
-            if(listOfBombs2server!=[]):
-                print("listOfBombs2server",listOfBombs2server)
-            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
+            if(listOfBombs!=[]):
+                print("listOfBombs",listOfBombs)
+            listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
+            if(listOfBombsFromServer!=[]):
+                print("listOfBombsFromServer",listOfBombsFromServer)
+            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,
+                                    "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
+                                    "listOfBombsFromServer",listOfBombsFromServer])
             MESSAGE_bytes = MESSAGE
             # print("client message:", MESSAGE_bytes)
 
