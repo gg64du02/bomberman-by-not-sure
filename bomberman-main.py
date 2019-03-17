@@ -1084,10 +1084,13 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 pass
             if(listingOfLanHostMenu!=True and joinedAtcpIpGameMenuWhile!=True):
                 decodedData = pickle.loads(data)
-                # print("decodedData",decodedData)
+                print("decodedData",decodedData)
                 if(decodedData[0]=="crateMap"):
                     global crateMap
                     crateMap = decodedData[1]
+                for slot,i in zip(clientSlotKeyboardMapping,range(4)):
+                    if(slot==0):
+                        Players[i] = decodedData[5][i]
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         # socket.sendto(data.upper(), self.client_address)
@@ -1694,7 +1697,7 @@ while(runningMain):
             # UDP_IP_CLIENT = IP_on_LAN
             UDP_IP_CLIENT = client[0]
             UDP_PORT_CLIENT = 5006
-            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players])
+            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping])
             MESSAGE_bytes = MESSAGE
             # print("client message:", MESSAGE_bytes)
 
