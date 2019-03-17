@@ -1091,6 +1091,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 for slot,i in zip(clientSlotKeyboardMapping,range(4)):
                     if(slot==0):
                         Players[i] = decodedData[3][i]
+                if(decodedData[6]=="listOfBombsFromServer"):
                     for b in decodedData[7]:
                         # isAlreadyUse = False
                         # for b2 in listOfBombs:
