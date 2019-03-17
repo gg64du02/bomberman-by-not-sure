@@ -1538,6 +1538,7 @@ def manageTCPserverPackets(incomingData,client_addr):
                 print("!if(len(clientIDsWgameState)>=4):")
                 clientID = len(clientIDsWgameState)
                 clientIDsWgameState.append([clientID,client_addr])
+                clientsIPSports.append([client_addr[0], client_addr[1]])
                 print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
                 return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
         else:
