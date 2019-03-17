@@ -1069,7 +1069,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         print("Players[i]",Players[i])
                         print("decodedData[1][i]",decodedData[1][i])
                         Players[i] = decodedData[1][i]
-            if(decodedData[4]=="listOfBombs"):
+            if(decodedData[4]=="listOfBombsFromClient"):
                 for bomb in decodedData[5]:
                     # done: do a duplicate checking here as well
                     isAlreadyUse = False
@@ -1081,8 +1081,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         else:
                             print("!if (np.array_equal(bomb[0], b2[0]) == True):")
                     if (isAlreadyUse == False):
-                        # listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
-                        listOfBombs.append(bomb)
+                        listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
+                        # listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
             print("currentHostsOnLan",currentHostsOnLan)
@@ -1759,7 +1759,12 @@ while(runningMain):
         # UDP_IP_CLIENT = IP_on_LAN
         UDP_IP_CLIENT = server_IP_joined
         UDP_PORT_CLIENT = 5005
-        MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombs",listOfBombs])
+        if(listOfBombs!=[]):
+            print("listOfBombs",listOfBombs)
+        listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
+        if(listOfBombsFromClient!=[]):
+            print("listOfBombsFromClient",listOfBombsFromClient)
+        MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient])
         MESSAGE_bytes = MESSAGE
         # print("client message:", MESSAGE_bytes)
 
