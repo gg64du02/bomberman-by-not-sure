@@ -1094,13 +1094,17 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         Players[i] = decodedData[3][i]
                 if(decodedData[6]=="listOfBombsFromServer"):
                     for b in decodedData[7]:
-                        # isAlreadyUse = False
-                        # for b2 in listOfBombs:
-                        #     if(np.array_equal(b[0],b2[0])==True):
-                        #         isAlreadyUse = True
-                        #         break
-                        # if(isAlreadyUse==False):
-                        #     listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
+                        isAlreadyUse = False
+                        for b2 in listOfBombs:
+                            print("b,b2",b,b2)
+                            if(np.array_equal(b[0],b2[0])==True):
+                                isAlreadyUse = True
+                        if(isAlreadyUse==False):
+                            print("if(isAlreadyUse==False):")
+                            print("decodedData[7]",decodedData[7])
+                            # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
+                        else:
+                            print("if(isAlreadyUse==True):")
                         pass
                         # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
