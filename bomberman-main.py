@@ -1081,7 +1081,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         else:
                             print("!if (np.array_equal(bomb[0], b2[0]) == True):")
                     if (isAlreadyUse == False):
-                        listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
+                        # listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
+                        listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
             print("currentHostsOnLan",currentHostsOnLan)
