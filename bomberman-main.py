@@ -1090,7 +1090,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                     crateMap = decodedData[1]
                 for slot,i in zip(clientSlotKeyboardMapping,range(4)):
                     if(slot==0):
-                        Players[i] = decodedData[5][i]
+                        Players[i] = decodedData[3][i]
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         # socket.sendto(data.upper(), self.client_address)
