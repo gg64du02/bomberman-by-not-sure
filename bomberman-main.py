@@ -1091,6 +1091,9 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 for slot,i in zip(clientSlotKeyboardMapping,range(4)):
                     if(slot==0):
                         Players[i] = decodedData[3][i]
+                    for b in decodedData[7]:
+                        pass
+                        # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
         # socket.sendto(data.upper(), self.client_address)
@@ -1697,7 +1700,6 @@ while(runningMain):
             # UDP_IP_CLIENT = IP_on_LAN
             UDP_IP_CLIENT = client[0]
             UDP_PORT_CLIENT = 5006
-            listOfBombs2server = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
             if(listOfBombs!=[]):
                 print("listOfBombs",listOfBombs)
             listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
