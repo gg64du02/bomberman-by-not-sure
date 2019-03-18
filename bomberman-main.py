@@ -1843,9 +1843,10 @@ quit()
 # done: dispatch the packets to every clients
 # done: do a proper keyboard binding with slots by the server side
 # done: add an auto-updater (for main) to get the new script on each tests' computers
-# todo: check if the bomb echo could be fixed (blast animation going 'flashing')
+# done: check if the bomb echo could be fixed (blast animation going 'flashing')
 # - consider the ping time for fixing
 # - expecially onto the other laptop
+# bomb older than 1.5sec would not be considered
 # todo: bug: crashing on the remove lighter function (items pickup)
 
 # todo: add the client side on join a game
