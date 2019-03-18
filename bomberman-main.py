@@ -1049,14 +1049,14 @@ import socket
 class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         global currentHostsOnLan
-        print("ThreadedUDPRequestHandler:handle")
+        # print("ThreadedUDPRequestHandler:handle")
         data = self.request[0].strip()
         socket = self.request[1]
         # print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5005):
-            print("if(socket.getsockname()[1]==5005):")
+            # print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
             # print("decodedData",decodedData)
             global Players
@@ -1776,7 +1776,7 @@ while(runningMain):
         sock.setblocking(False)
         sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
-    print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
+        print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
     print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
