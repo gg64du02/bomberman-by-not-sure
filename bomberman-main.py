@@ -365,6 +365,7 @@ def playersPickupsItems():
     global Players
     global lighterMap
     global lighterMapDisplayList
+    print("lighterMapDisplayList",lighterMapDisplayList)
     for lighter in lighterMapDisplayList:
         for hitbox in PlayersWhitboxesAindex:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
