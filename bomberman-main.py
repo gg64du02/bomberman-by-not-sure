@@ -1081,7 +1081,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         else:
                             print("!if (np.array_equal(bomb[0], b2[0]) == True):")
                     if (isAlreadyUse == False):
-                        listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
+                        if (bomb[1] < 1.5):
+                            listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
                         # listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
             print("if(socket.getsockname()[1]==5006):")
@@ -1117,7 +1118,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                                 print("!if(np.array_equal(b[0],b2[0])==True):")
                         if(isAlreadyUse==False):
                             print("if(isAlreadyUse==False):")
-                            listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
+                            if(b[1]<1.5):
+                                listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
                         else:
                             print("if(isAlreadyUse==True):")
                         pass
