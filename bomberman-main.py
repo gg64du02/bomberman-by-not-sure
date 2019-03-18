@@ -1848,6 +1848,8 @@ quit()
 # - expecially onto the other laptop
 # bomb older than 1.5sec would not be considered
 # todo: bug: crashing on the remove lighter function (items pickup)
+# todo: bug: get a more accurate initialization for each bomb on the client side using the ping time
+# todo: restore the life of some players when newRound() is issued (doesn't work on other laptop)
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
