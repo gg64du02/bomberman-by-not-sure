@@ -1086,8 +1086,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                             listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
                         # listOfBombs.append(bomb)
         if(socket.getsockname()[1]==5006):
-            print("if(socket.getsockname()[1]==5006):")
-            print("currentHostsOnLan",currentHostsOnLan)
+            # print("if(socket.getsockname()[1]==5006):")
+            # print("currentHostsOnLan",currentHostsOnLan)
             if(data == b'bomberman-by-not-sure'):
                 print("b'bomberman-by-not-sure'")
                 tmpData, tmpAddress = socket.recvfrom(4096)
@@ -1099,7 +1099,7 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 pass
             if(listingOfLanHostMenu!=True and joinedAtcpIpGameMenuWhile!=True):
                 decodedData = pickle.loads(data)
-                print("decodedData",decodedData)
+                # print("decodedData",decodedData)
                 if(decodedData[0]=="crateMap"):
                     global crateMap
                     crateMap = decodedData[1]
@@ -1108,22 +1108,23 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         Players[i] = decodedData[3][i]
                 if(decodedData[6]=="listOfBombsFromServer"):
                     for b in decodedData[7]:
-                        print("decodedData[7]",decodedData[7])
+                        # print("decodedData[7]",decodedData[7])
                         isAlreadyUse = False
                         for b2 in listOfBombs:
-                            print("b,b2",b,b2)
+                            # print("b,b2",b,b2)
                             if(np.array_equal(b[0],b2[0])==True):
-                                print("if(np.array_equal(b[0],b2[0])==True):")
+                                # print("if(np.array_equal(b[0],b2[0])==True):")
                                 isAlreadyUse = True
                             else:
-                                print("!if(np.array_equal(b[0],b2[0])==True):")
+                                pass
+                                # print("!if(np.array_equal(b[0],b2[0])==True):")
                         if(isAlreadyUse==False):
-                            print("if(isAlreadyUse==False):")
+                            # print("if(isAlreadyUse==False):")
                             if(b[1]<1.5):
                                 listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
                         else:
-                            print("if(isAlreadyUse==True):")
-                        pass
+                            pass
+                            # print("if(isAlreadyUse==True):")
                         # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
         # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         # print("threading.activeCount()",threading.activeCount())
@@ -1777,7 +1778,7 @@ while(runningMain):
 
         print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
-    print("runningMain:currentHostsOnLan",currentHostsOnLan)
+        print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
     Controls = keyboardRead()
 
