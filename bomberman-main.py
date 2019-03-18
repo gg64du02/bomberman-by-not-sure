@@ -380,6 +380,7 @@ def playersPickupsItems():
 
     global additionnalBombMap
     global additionnalBombMapDisplayList
+    print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
     for additionnalBomb in additionnalBombMapDisplayList:
         for hitbox in PlayersWhitboxesAindex:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
