@@ -155,7 +155,6 @@ def displayBrokenCratesAndUpdateCollision():
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
-            # lighterMapDisplayList.append([brokenCrate[0],brokenCrate[1]])
             generateItem(brokenCrate[0],brokenCrate[1])
 
 
@@ -365,7 +364,7 @@ def playersPickupsItems():
     global Players
     global lighterMap
     global lighterMapDisplayList
-    print("lighterMapDisplayList",lighterMapDisplayList)
+    # print("lighterMapDisplayList",lighterMapDisplayList)
     for hitbox in PlayersWhitboxesAindex:
         for lighter in lighterMapDisplayList:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
@@ -374,14 +373,13 @@ def playersPickupsItems():
                 Players[hitbox[2]][1][1] += 1
                 # updating the lightMap generated
                 lighterMap[lighter[0],lighter[1]] = 0
-                print("lighterMapDisplayList",lighterMapDisplayList)
                 # removing the lighter
                 lighterMapDisplayList.remove(lighter)
                 break
 
     global additionnalBombMap
     global additionnalBombMapDisplayList
-    print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
+    # print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
     for hitbox in PlayersWhitboxesAindex:
         for additionnalBomb in additionnalBombMapDisplayList:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
@@ -390,7 +388,6 @@ def playersPickupsItems():
                 Players[hitbox[2]][1][0] += 1
                 # updating the lightMap generated
                 additionnalBombMap[additionnalBomb[0],additionnalBomb[1]] = 0
-                print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
                 # removing the lighter
                 additionnalBombMapDisplayList.remove(additionnalBomb)
                 break
@@ -1061,7 +1058,6 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         if(socket.getsockname()[1]==5005):
             print("if(socket.getsockname()[1]==5005):")
             decodedData = pickle.loads(data)
-            # print("decodedData[5]",decodedData[5])
             # print("decodedData",decodedData)
             global Players
             if(decodedData[2]=="clientSlotKeyboardMapping"):
@@ -1070,20 +1066,21 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                 for slot,i in zip(decodedData[3],range(4)):
                     # print("for slot,i in zip(decodedData[3],range(4)):")
                     if(slot==1):
-                        print("Players[i]",Players[i])
-                        print("decodedData[1][i]",decodedData[1][i])
+                        # print("Players[i]",Players[i])
+                        # print("decodedData[1][i]",decodedData[1][i])
                         Players[i] = decodedData[1][i]
             if(decodedData[4]=="listOfBombsFromClient"):
                 for bomb in decodedData[5]:
                     # done: do a duplicate checking here as well
                     isAlreadyUse = False
                     for b2 in listOfBombs:
-                        print("bomb,b2", bomb, b2)
+                        # print("bomb,b2", bomb, b2)
                         if (np.array_equal(bomb[0], b2[0]) == True):
-                            print("if (np.array_equal(bomb[0], b2[0]) == True):")
+                            # print("if (np.array_equal(bomb[0], b2[0]) == True):")
                             isAlreadyUse = True
                         else:
-                            print("!if (np.array_equal(bomb[0], b2[0]) == True):")
+                            pass
+                            # print("!if (np.array_equal(bomb[0], b2[0]) == True):")
                     if (isAlreadyUse == False):
                         if (bomb[1] < 1.5):
                             listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
