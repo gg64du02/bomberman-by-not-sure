@@ -366,8 +366,8 @@ def playersPickupsItems():
     global lighterMap
     global lighterMapDisplayList
     print("lighterMapDisplayList",lighterMapDisplayList)
-    for lighter in lighterMapDisplayList:
-        for hitbox in PlayersWhitboxesAindex:
+    for hitbox in PlayersWhitboxesAindex:
+        for lighter in lighterMapDisplayList:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
             if(np.array_equal([hitbox[1],hitbox[0]],[lighter[1],lighter[0]])):
                 # modifying bla st length counts
@@ -377,12 +377,13 @@ def playersPickupsItems():
                 print("lighterMapDisplayList",lighterMapDisplayList)
                 # removing the lighter
                 lighterMapDisplayList.remove(lighter)
+                break
 
     global additionnalBombMap
     global additionnalBombMapDisplayList
     print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
-    for additionnalBomb in additionnalBombMapDisplayList:
-        for hitbox in PlayersWhitboxesAindex:
+    for hitbox in PlayersWhitboxesAindex:
+        for additionnalBomb in additionnalBombMapDisplayList:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
             if(np.array_equal([hitbox[1],hitbox[0]],[additionnalBomb[1],additionnalBomb[0]])):
                 # modifying bombs count
@@ -392,6 +393,7 @@ def playersPickupsItems():
                 print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
                 # removing the lighter
                 additionnalBombMapDisplayList.remove(additionnalBomb)
+                break
 
 
 def ColisionCheckAndMovement():
