@@ -1362,7 +1362,7 @@ while(True):
 
     if(listingOfLanHostMenu == True):
 
-        print("if(listingOfLanHostMenu == True):")
+        # print("if(listingOfLanHostMenu == True):")
         pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
 
         Controls = keyboardRead()
@@ -1378,14 +1378,14 @@ while(True):
         displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
         print("listingOfLanHostMenu:currentHostsOnLan",currentHostsOnLan)
         for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
-            print("server",server)
+            # print("server",server)
             # displaying the IP
             displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
             # making the path for the server
             TheMap[(4+2*i), 3:7] = 1
             crateMap[(4+2*i), 3:7] = 1
-            print("[(4+2*i),6]",[(4+2*i),6])
-            print("[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)]",[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)])
+            # print("[(4+2*i),6]",[(4+2*i),6])
+            # print("[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)]",[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)])
             # testing if the player is on it
             if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):
                 print("if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):")
@@ -1417,7 +1417,6 @@ while(True):
 
         lan_listener += 1
 
-        print("listingOfLanHostMenu:currentHostsOnLan", currentHostsOnLan)
         displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         # check if any communication are pending or rejected
