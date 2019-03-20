@@ -846,7 +846,7 @@ import struct
 def sendOneMulticastAdToLAN():
     print("sendOneMulticastAdToLAN")
     message = b'bomberman-by-not-sure'
-    multicast_group = ('192.168.1.255', 5006)
+    multicast_group = ('192.168.1.255', 5008)
     # Create the datagram socket
     sock_multicast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Set a timeout so the socket does not block
@@ -1055,8 +1055,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         # print("data",data)
         print("socket.getsockname()",socket.getsockname())
         # (HOST_UDP_server, PORT_UDP_server)
-        if(socket.getsockname()[1]==5005):
-            # print("if(socket.getsockname()[1]==5005):")
+        if(socket.getsockname()[1]==5007):
+            # print("if(socket.getsockname()[1]==5007):")
             decodedData = pickle.loads(data)
             # print("decodedData",decodedData)
             global Players
@@ -1085,8 +1085,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         if (bomb[1] < 1.5):
                             listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
                         # listOfBombs.append(bomb)
-        if(socket.getsockname()[1]==5006):
-            # print("if(socket.getsockname()[1]==5006):")
+        if(socket.getsockname()[1]==5008):
+            # print("if(socket.getsockname()[1]==5008):")
             # print("currentHostsOnLan",currentHostsOnLan)
             if(data == b'bomberman-by-not-sure'):
                 print("b'bomberman-by-not-sure'")
@@ -1401,10 +1401,10 @@ while(True):
         if(lan_listener==0):
             if (numberOfLocalPlayers < 0):
                 # spectator/players
-                print("starting UDP listening on 5006")
+                print("starting UDP listening on 5008")
 
-                # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
-                HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
+                # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5008
+                HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5008
                 server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
                 server_thread_udp = threading.Thread(target=server_udp.serve_forever)
                 server_thread_udp.daemon = True
@@ -1682,8 +1682,8 @@ if (numberOfLocalPlayers < 0):
     # is hosting a game
     pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
 
-    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5005
-    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5005
+    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5007
+    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5007
     server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
     server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     server_thread_udp.daemon = True
@@ -1699,8 +1699,8 @@ else:
     # # spectator/players
     # pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
     #
-    # # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5006
-    # HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5006
+    # # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5008
+    # HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5008
     # server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
     # server_thread_udp = threading.Thread(target=server_udp.serve_forever)
     # server_thread_udp.daemon = True
@@ -1730,7 +1730,7 @@ while(runningMain):
             # UDP_IP_CLIENT = "127.0.0.1"
             # UDP_IP_CLIENT = IP_on_LAN
             UDP_IP_CLIENT = client[0]
-            UDP_PORT_CLIENT = 5006
+            UDP_PORT_CLIENT = 5008
             if(listOfBombs!=[]):
                 print("listOfBombs",listOfBombs)
             listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
@@ -1761,7 +1761,7 @@ while(runningMain):
         # UDP_IP_CLIENT = "127.0.0.1"
         # UDP_IP_CLIENT = IP_on_LAN
         UDP_IP_CLIENT = server_IP_joined
-        UDP_PORT_CLIENT = 5005
+        UDP_PORT_CLIENT = 5007
         if(listOfBombs!=[]):
             print("listOfBombs",listOfBombs)
         listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
