@@ -937,7 +937,8 @@ def mangageOutGoingTCPclientPackets():
 
     global clientSlotKeyboardMapping
 
-    TCP_SERVER_IP = "192.168.1.99"
+    # TCP_SERVER_IP = "192.168.1.99"
+    TCP_SERVER_IP = server_IP_joined
 
     if(tcpClientGameState[0]==0):
         print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0]==0):")
