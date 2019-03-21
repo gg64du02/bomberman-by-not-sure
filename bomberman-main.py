@@ -1122,7 +1122,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         if(isAlreadyUse==False):
                             # print("if(isAlreadyUse==False):")
                             if(b[1]<1.5):
-                                listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
+                                if(clientSlotKeyboardMapping[bomb[3]]==0):
+                                    listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
                         else:
                             pass
                             # print("if(isAlreadyUse==True):")
