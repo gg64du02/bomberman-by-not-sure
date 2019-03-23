@@ -1414,8 +1414,9 @@ while(True):
                     # servers
                     server_thread_udp.start()
                 except (KeyboardInterrupt, SystemExit):
-                    server_thread_udp.shutdown()
-                    server_thread_udp.server_close()
+                    # closing the client UDP listener
+                    server_udp.shutdown()
+                    server_udp.server_close()
                     exit()
 
         lan_listener += 1
@@ -1557,10 +1558,17 @@ while(True):
             TheMap[9, 3] = 0
             crateMap[9, 3] = 0
 
+            if (tcpClientGameState[0] == 1):
+                print("if (tcpClientGameState[0] == 1):")
+                tcpClientGameState = np.zeros_like(tcpClientGameState)
+                # closing the client UDP listener
+                server_udp.shutdown()
+                server_udp.server_close()
+
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(10)
     st_time = time.time()
 
 # number of slots left on server
@@ -1839,7 +1847,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(60)
+    clock.tick(10)
     st_time = time.time()
 
 pygame.quit()
