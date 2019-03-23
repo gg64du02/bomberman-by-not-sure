@@ -1431,13 +1431,29 @@ while(True):
         #     Players[3][0] = [32 * 3, 32 * 1]
         #     joinedAtcpIpGameMenuWhile=False
         #     break
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
-        #     print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
-        #     # going back to the previous menu
-        #     joinedAtcpIpGameMenuWhile=False
-        #     joinAtcpIpGameMenuWhile=True
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
+            print("listingOfLanHostMenu:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # going back to the previous menu
+            listingOfLanHostMenu = False
+            joinAtcpIpGameMenuWhile = True
+
+            crateMap = np.zeros_like(crateMap)
+            TheMap = np.zeros_like(TheMap)
+
+            # line going down
+            TheMap[1:8, 3] = 1
+            crateMap[1:8, 3] = 1
+            # 1 line
+            TheMap[4, 3:7] = 1
+            crateMap[4, 3:7] = 1
+            # 2 line
+            TheMap[6, 3:7] = 1
+            crateMap[6, 3:7] = 1
+            # 3 line
+            TheMap[8, 3:7] = 1
+            crateMap[8, 3:7] = 1
         #
         #     # closing the path from the previous menu
         #     TheMap[9, 3] = 0
