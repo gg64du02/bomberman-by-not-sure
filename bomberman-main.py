@@ -806,8 +806,8 @@ TheMap = np.zeros_like(TheMap)
 crateMap = np.zeros_like(TheMap)
 # path for cyan player
 # line going down
-TheMap[1:10,3] = 1
-crateMap[1:10,3] = 1
+TheMap[1:9,3] = 1
+crateMap[1:9,3] = 1
 # create a game
 TheMap[4,3:7] = 1
 crateMap[4,3:7] = 1
