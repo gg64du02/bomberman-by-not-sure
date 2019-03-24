@@ -157,6 +157,10 @@ def displayBrokenCratesAndUpdateCollision():
             brokenCrates.remove(brokenCrate)
             generateItem(brokenCrate[0],brokenCrate[1])
 
+def namestr(obj, namespace):
+    print("namespace",str(namespace))
+    return [name for name in namespace if namespace[name] is obj]
+
 
 def displayScores():
     for player in Players:
@@ -165,13 +169,28 @@ def displayScores():
         displayText(tmpString,(display_width / 2), (display_height / 6)+32*player[3][0])
     # displayText("lol",(display_width/2),(display_height/2))
     # displaying the player(s) controlled by the client
-    playersOrder = ["red","green","blue","cyan"]
+    playersOrder = ['red','green','cyan','blue']
+    playersKeyboardStr = ['red: sedf w',
+                          'green: 4586 0',
+                          'cyan : up right down left lcontrol',
+                          'blue: jikl space']
     tmpString = "Controlled players:"
+    tmpString2 = ''
+    # debugging purpose
+    # global controlsGreenPlayer
+    # namestr(controlsGreenPlayer,globals())
     if(clientSlotKeyboardMapping != []):
         for i in range(4):
             if(clientSlotKeyboardMapping[i]==1):
                 tmpString += " "+ playersOrder[i]
+                # tmpString2 += " "+ str(namestr(controlsForPlayers[i],globals()))
+                # tmpString2 += " "+ str(namestr([controlsForPlayers[i]],globals()))
+                # tmpString2 += " "+ str(namestr([controlsForPlayers[i][j] for j in range(4)],globals()))
+                tmpString2 = playersKeyboardStr[i]
+                displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * (6+i))
         displayText(tmpString, (display_width / 2), (display_height / 6) + 32 * 5)
+        # displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * 6)
+        # print("tmpString2",tmpString2)
 
     pass
 
@@ -1891,7 +1910,7 @@ quit()
 # todo: flush the bombs on newRound() on the clients/server's side
 # todo: Need further adjustments in:
 # done:corrected name in the menu
-# Display (score/players controlled)
+# done:Display (score/players controlled)
 # networking management
 # networking optimization
 # UPnP
