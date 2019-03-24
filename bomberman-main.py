@@ -1222,8 +1222,8 @@ while(True):
         displayText("Play/Create in local|Play on the same computer",(display_width / 2), (display_height / 6)+32*2)
         displayText("Play/Create on Tcp/Ip|Host a game for LAN or internet",(display_width / 2), (display_height / 6)+32*4)
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
-        # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+        # # a bomb mean it is a work in progress
+        # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
             print("createMenuWhile:Local",createPointInter)
