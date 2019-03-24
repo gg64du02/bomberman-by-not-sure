@@ -1552,11 +1552,12 @@ while(True):
             Players[3][0] = [32 * 3, 32 * 1]
             # going back to the previous menu
             joinedAtcpIpGameMenuWhile=False
-            joinAtcpIpGameMenuWhile=True
+            # joinAtcpIpGameMenuWhile=True
+            listingOfLanHostMenu=True
 
-            # closing the path from the previous menu
-            TheMap[9, 3] = 0
-            crateMap[9, 3] = 0
+            # # closing the path from the previous menu
+            # TheMap[9, 3] = 0
+            # crateMap[9, 3] = 0
 
             if (tcpClientGameState[0] == 1):
                 print("if (tcpClientGameState[0] == 1):")
@@ -1568,7 +1569,7 @@ while(True):
 
     pygame.display.update()
     # print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
 
 # number of slots left on server
@@ -1847,7 +1848,7 @@ while(runningMain):
 
     pygame.display.update()
     print('time:',str(time.time()-st_time))
-    clock.tick(10)
+    clock.tick(60)
     st_time = time.time()
 
 pygame.quit()
