@@ -34,6 +34,9 @@ MBN_SESSION_TCP_SERVER_PING = 9
 MBN_SESSION_TCP_SERVER_SLOTS_MAPPING = 10
 # used by the server to answer a slot request by the clients
 
+MBN_SESSION_TCP_QUIT = 11
+#used by the client to let know the server it is disonnecting
+
 
 # datagram shape
 # data|data type|data|crc
