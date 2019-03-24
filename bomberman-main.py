@@ -1880,6 +1880,13 @@ quit()
 # todo: bug: get a more accurate initialization for each bomb on the client side using the ping time
 # todo: restore the life of some players when newRound() is issued (doesn't work on other laptop sometimes)
 # todo: flush the bombs on newRound() on the clients/server's side
+# todo: Need further adjustments in:
+# menu
+# networking management
+# networking optimization
+# UPnP
+# Display (score/players controlled)
+# Anti-cheat
 
 # todo: add the client side on join a game
 # todo: add the server side clients' players management
