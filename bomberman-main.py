@@ -164,6 +164,15 @@ def displayScores():
         # displayText(tmpString,(display_width / 2), (display_height / 2))
         displayText(tmpString,(display_width / 2), (display_height / 6)+32*player[3][0])
     # displayText("lol",(display_width/2),(display_height/2))
+    # displaying the player(s) controlled by the client
+    playersOrder = ["red","green","blue","cyan"]
+    tmpString = "Controlled players:"
+    if(clientSlotKeyboardMapping != []):
+        for i in range(4):
+            if(clientSlotKeyboardMapping[i]==1):
+                tmpString += " "+ playersOrder[i]
+        displayText(tmpString, (display_width / 2), (display_height / 6) + 32 * 5)
+
     pass
 
 def displayText(text,x,y):
@@ -1881,11 +1890,11 @@ quit()
 # todo: restore the life of some players when newRound() is issued (doesn't work on other laptop sometimes)
 # todo: flush the bombs on newRound() on the clients/server's side
 # todo: Need further adjustments in:
-# menu
+# done:corrected name in the menu
+# Display (score/players controlled)
 # networking management
 # networking optimization
 # UPnP
-# Display (score/players controlled)
 # Anti-cheat
 
 # todo: add the client side on join a game
