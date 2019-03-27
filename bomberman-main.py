@@ -14,6 +14,8 @@ from PIL import Image
 # for serialize
 import pickle
 
+import upnpclient
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
