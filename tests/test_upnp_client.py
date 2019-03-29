@@ -12,19 +12,19 @@ d = devices[0]
 #
 # print(d.WANIPConn1.GetExternalIPAddress())
 #
-print(d.WANIPConn1.AddPortMapping.argsdef_in)
-
-print(d.WANIPConn1)
+# print(d.WANIPConn1.AddPortMapping.argsdef_in)
+#
+# print(d.WANIPConn1)
 
 print(d.WANIPConn1.AddPortMapping(
-    NewRemoteHost='0.0.0.0',
-    NewExternalPort=0xc350,
+    NewRemoteHost='192.168.1.99',
+    NewExternalPort=int(5010),
     NewProtocol='TCP',
-    NewInternalPort=0xc350,
+    NewInternalPort=int(5010),
     NewInternalClient='192.168.1.99',
-    NewEnabled='1',
+    NewEnabled='true',
     NewPortMappingDescription='Testing',
-    NewLeaseDuration=0x2710)
+    NewLeaseDuration=10000)
 )
 
 
