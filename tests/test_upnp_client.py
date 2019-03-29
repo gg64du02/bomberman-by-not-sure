@@ -18,13 +18,13 @@ print(d.WANIPConn1)
 
 print(d.WANIPConn1.AddPortMapping(
     NewRemoteHost='0.0.0.0',
-    NewExternalPort=0xff00,
+    NewExternalPort=0xc350,
     NewProtocol='TCP',
-    NewInternalPort=0xff00,
-    NewInternalClient='192.168.1.10',
+    NewInternalPort=0xc350,
+    NewInternalClient='192.168.1.99',
     NewEnabled='1',
     NewPortMappingDescription='Testing',
-    NewLeaseDuration=0xff00ff00)
+    NewLeaseDuration=0x2710)
 )
 
 
