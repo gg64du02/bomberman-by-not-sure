@@ -262,6 +262,49 @@ Players[0][0] = [32*0 ,32*0]
 Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
 
+# https://github.com/flyte/upnpclient
+import upnpclient
+devices = upnpclient.discover()
+# debugging  purpose
+# print(devices)
+d = devices[0]
+def addUPnPrule():
+    print('def addUPnPrule():')
+    tmplol = d.WANIPConn1.AddPortMapping(
+    # NewRemoteHost='192.168.1.99',
+    # pro tip: never thrust the error output coming from the upnp device,
+    # it could name a problem that is not the actual problem
+    NewRemoteHost='',
+    NewExternalPort=int(5010),
+    NewProtocol='TCP',
+    NewInternalPort=int(5010),
+    NewInternalClient='192.168.1.99',
+    NewEnabled='true',
+    NewPortMappingDescription='Testing',
+    NewLeaseDuration=10000)
+    if(bool(tmplol)==False):
+        print('addUPnPrule')
+    else:
+        print('!addUPnPrule')
+# testing purposes
+# addUPnPrule()
+
+def removeUPnPrule():
+    print('def removeUPnPrule():')
+    tmplol = d.WANIPConn1.DeletePortMapping(
+    # NewRemoteHost='192.168.1.99',
+    # pro tip: never thrust the error output coming from the upnp device,
+    # it could name a problem that is not the actual problem
+    NewRemoteHost='',
+    NewExternalPort=int(5010),
+    NewProtocol='TCP')
+    if(bool(tmplol)==False):
+        print('removeUPnPrule')
+    else:
+        print('!removeUPnPrule')
+# testing purposes
+# removeUPnPrule()
+
 def newRound():
     global runningMain
     global redPlayerPos
