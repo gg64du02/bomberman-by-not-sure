@@ -50,7 +50,11 @@ import socketserver, threading, time
 Packages name w/ versions:
 
 pygame==1.9.4
+
 keyboard==0.13.1
+
 numpy==1.16.1
+
 more-itertools==4.2.0
+
 Pillow==5.1.0
