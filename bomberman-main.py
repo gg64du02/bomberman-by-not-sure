@@ -55,10 +55,10 @@ TheMap = currentMap()
 print("TheMap\n",TheMap)
 
 def displayMap():
-    for tile in tileGen():
-        # print(type(TheMap))
-        if(TheMap[tile[1],tile[0]]==0):
-            if(display_is_active==True):
+    if(display_is_active==True):
+        for tile in tileGen():
+            # print(type(TheMap))
+            if(TheMap[tile[1],tile[0]]==0):
                 block(32*tile[0],32*tile[1])
 
 # =============================TILES====================
@@ -97,12 +97,12 @@ def crate(x,y):
 def displayCrates():
     # in: crateMap
     # out: None
-    tileGened = tileGen()
-    for tile in tileGened:
-        xTile = tile[0]
-        yTile = tile[1]
-        if(crateMap[yTile,xTile]==0):
-            if(display_is_active==True):
+    if(display_is_active==True):
+        tileGened = tileGen()
+        for tile in tileGened:
+            xTile = tile[0]
+            yTile = tile[1]
+            if(crateMap[yTile,xTile]==0):
                 crate(32*xTile,32*yTile)
 
 def airBlast(x,y):
@@ -127,13 +127,14 @@ def diplayAllAirBlast():
             airBlast(32*tile[1],32*tile[0])
 
 def displayPlayers():
-    for player in Players:
-        if (player[2][0] != 0):
-            # alive
-            gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[0][1]))
-        else:
-            # dead
-            gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
+    if(display_is_active==True):
+        for player in Players:
+            if (player[2][0] != 0):
+                # alive
+                gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[0][1]))
+            else:
+                # dead
+                gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
 
 def displayBombs():
     # in: listOfBombs
@@ -1926,8 +1927,9 @@ while(runningMain):
 
     # print("hitboxes():\n",hitboxes())
 
-    pygame.display.update()
-    print('time:',str(time.time()-st_time))
+    if(display_is_active==True):
+        pygame.display.update()
+    print('time:',str((time.time()-st_time)))
     clock.tick(60)
     st_time = time.time()
 
