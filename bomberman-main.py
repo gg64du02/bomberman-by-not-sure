@@ -16,6 +16,8 @@ import pickle
 
 import upnpclient
 
+display_is_active = True
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -56,7 +58,8 @@ def displayMap():
     for tile in tileGen():
         # print(type(TheMap))
         if(TheMap[tile[1],tile[0]]==0):
-            block(32*tile[0],32*tile[1])
+            if(display_is_active==True):
+                block(32*tile[0],32*tile[1])
 
 # =============================TILES====================
 Tiles = [[[] for lol in range(16)] for lil in range(16)]
@@ -99,7 +102,8 @@ def displayCrates():
         xTile = tile[0]
         yTile = tile[1]
         if(crateMap[yTile,xTile]==0):
-            crate(32*xTile,32*yTile)
+            if(display_is_active==True):
+                crate(32*xTile,32*yTile)
 
 def airBlast(x,y):
     gameDisplay.blit(Tiles[3][0], (x, y))
@@ -826,44 +830,45 @@ def keyboardRead():
 
     global boolDisplayScores
 
-    for event in pygame.event.get():
-        # print("event.type",event.type)
-        if event.type == pygame.QUIT:
-            pass
-        if event.type == pygame.KEYDOWN:
-            # print("pygame.K_TAB",pygame.K_TAB)
-            print("event.key",event.key)
-            if event.key == pygame.K_TAB:
-                boolDisplayScores = True
-            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
-                # print("controls",controls)
-                for control,index in zip(controls,range(0,5)):
-                    # print("control",control)
-                    # print("index",index)
-                    # 262 is 6 in numpad
-                    # print("int(event.key)",int(event.key))
-                    # if event.key == pygame.K_6:
-                    #     print()
-                    if event.key == control :
-                        # sfde ctrl shift
-                        if(index<4):
-                            Controls_from_kbd[playerNumber][0][index]=1
-                        else:
-                            Controls_from_kbd[playerNumber][1][0]=1
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_TAB:
-                boolDisplayScores = False
-            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
-                # print("controls",controls)
-                for control,index in zip(controls,range(0,5)):
-                    # print("control",control)
-                    # print("index",index)
-                    if event.key == control :
-                        # sfde ctrl shift
-                        if(index<4):
-                            Controls_from_kbd[playerNumber][0][index]=0
-                        else:
-                            Controls_from_kbd[playerNumber][1][0]=0
+    if(display_is_active ==  True):
+        for event in pygame.event.get():
+            # print("event.type",event.type)
+            if event.type == pygame.QUIT:
+                pass
+            if event.type == pygame.KEYDOWN:
+                # print("pygame.K_TAB",pygame.K_TAB)
+                print("event.key",event.key)
+                if event.key == pygame.K_TAB:
+                    boolDisplayScores = True
+                for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
+                    # print("controls",controls)
+                    for control,index in zip(controls,range(0,5)):
+                        # print("control",control)
+                        # print("index",index)
+                        # 262 is 6 in numpad
+                        # print("int(event.key)",int(event.key))
+                        # if event.key == pygame.K_6:
+                        #     print()
+                        if event.key == control :
+                            # sfde ctrl shift
+                            if(index<4):
+                                Controls_from_kbd[playerNumber][0][index]=1
+                            else:
+                                Controls_from_kbd[playerNumber][1][0]=1
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_TAB:
+                    boolDisplayScores = False
+                for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
+                    # print("controls",controls)
+                    for control,index in zip(controls,range(0,5)):
+                        # print("control",control)
+                        # print("index",index)
+                        if event.key == control :
+                            # sfde ctrl shift
+                            if(index<4):
+                                Controls_from_kbd[playerNumber][0][index]=0
+                            else:
+                                Controls_from_kbd[playerNumber][1][0]=0
 
 
 
@@ -1352,6 +1357,7 @@ while(True):
             # start the local multiplayer
             newRound()
             # TCP Server thread enabled
+            display_is_active = False
             enableTcpServerThread = True
             # stopping the menu loop
             break
@@ -1879,7 +1885,8 @@ while(runningMain):
 
         print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
-    Controls = keyboardRead()
+    if(display_is_active==False):
+        Controls = keyboardRead()
 
     ColisionCheckAndMovement()
 
@@ -1887,7 +1894,8 @@ while(runningMain):
         runningMain = False
         print("issuing the esc key")
 
-    gameDisplay.fill(gray)
+    if(display_is_active==True):
+        gameDisplay.fill(gray)
 
     displayCrates()
     displayMap()
@@ -1922,6 +1930,9 @@ while(runningMain):
     print('time:',str(time.time()-st_time))
     clock.tick(60)
     st_time = time.time()
+
+    if(display_is_active == False):
+        pygame.quit()
 
 pygame.quit()
 quit()
