@@ -1427,14 +1427,18 @@ while(True):
             # masking useless parts
             TheMap[1:13, 4:8] = 0
             crateMap[1:13, 4:8] = 0
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-        #     print("joinAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
-        #     # todo: add another submenu about joining game
+        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
+            print("joinAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
+            # todo: add another submenu about joining game
         #     runningMenuMain = False
         #     createMenuWhile = False
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
-        #     # switching to the join menu
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            # client udp opening using upnp
+            devices = upnpclient.discover()
+            d = devices[0]
+            addUPnPrule(5008,IP_on_LAN)
+            # switching to the join menu
         #     joinAtcpIpGameMenuWhile = True
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
             print("joinAtcpIpGameMenuWhile:Go back to the main menu",quitPointInter)
@@ -1892,6 +1896,8 @@ while(runningMain):
 
             print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
+    # addUPnPrule(5007,IP_on_LAN)
+    # addUPnPrule(5008,IP_on_LAN)
     # print("display_is_active",display_is_active)
     if(display_is_active==True):
         Controls = keyboardRead()
@@ -1948,6 +1954,8 @@ while(runningMain):
     if(display_is_active == False):
         pygame.quit()
 
+# removeUPnPrule(5007)
+removeUPnPrule(5008)
 pygame.quit()
 quit()
 
