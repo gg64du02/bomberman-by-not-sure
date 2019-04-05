@@ -18,6 +18,8 @@ import upnpclient
 
 display_is_active = True
 
+playing_on_same_computer = False
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -1312,6 +1314,8 @@ while(True):
             # newRound in local
             # start the local multiplayer
             newRound()
+            # disable mulmticast adv
+            playing_on_same_computer = True
             # stopping the menu loop
             break
         if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
@@ -1828,64 +1832,65 @@ while(runningMain):
     # # todo: no blocking UDP sending
     # # todo: time out and refusal management
 
-    if (numberOfLocalPlayers < 0):
-        # # numberOfLocalPlayers = -1
-        # # is hosting a game
-        # print("!if(numberOfLocalPlayers<0):")
-        for client in clientsIPSports:
-            print("hosting")
+    if(playing_on_same_computer==False):
+        if (numberOfLocalPlayers < 0):
+            # # numberOfLocalPlayers = -1
+            # # is hosting a game
+            # print("!if(numberOfLocalPlayers<0):")
+            for client in clientsIPSports:
+                print("hosting")
+                # UDP_IP_CLIENT = "127.0.0.1"
+                # UDP_IP_CLIENT = IP_on_LAN
+                UDP_IP_CLIENT = client[0]
+                UDP_PORT_CLIENT = 5008
+                if(listOfBombs!=[]):
+                    print("listOfBombs",listOfBombs)
+                listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
+                if(listOfBombsFromServer!=[]):
+                    print("listOfBombsFromServer",listOfBombsFromServer)
+                MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,
+                                        "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
+                                        "listOfBombsFromServer",listOfBombsFromServer])
+                MESSAGE_bytes = MESSAGE
+                # print("client message:", MESSAGE_bytes)
+
+                sock = socket.socket(socket.AF_INET,  # Internet
+                                     socket.SOCK_DGRAM)  # UDP
+                sock.setblocking(False)
+                # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
+                sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
+
+            if ((time.time() - last_ad_multicast) * 1000 > 1000):
+                sendOneMulticastAdToLAN()
+                last_ad_multicast = time.time()
+
+        else:
+            # check if any communication are pending or rejected
+            mangageOutGoingTCPclientPackets()
+            # spectator/players
+            # print("!if(numberOfLocalPlayers<0):")
+            print("spectator/players")
             # UDP_IP_CLIENT = "127.0.0.1"
             # UDP_IP_CLIENT = IP_on_LAN
-            UDP_IP_CLIENT = client[0]
-            UDP_PORT_CLIENT = 5008
+            UDP_IP_CLIENT = server_IP_joined
+            UDP_PORT_CLIENT = 5007
             if(listOfBombs!=[]):
                 print("listOfBombs",listOfBombs)
-            listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
-            if(listOfBombsFromServer!=[]):
-                print("listOfBombsFromServer",listOfBombsFromServer)
-            MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,
-                                    "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
-                                    "listOfBombsFromServer",listOfBombsFromServer])
+            listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
+            if(listOfBombsFromClient!=[]):
+                print("listOfBombsFromClient",listOfBombsFromClient)
+            MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient])
             MESSAGE_bytes = MESSAGE
             # print("client message:", MESSAGE_bytes)
 
             sock = socket.socket(socket.AF_INET,  # Internet
                                  socket.SOCK_DGRAM)  # UDP
             sock.setblocking(False)
-            # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
             sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
 
-        if ((time.time() - last_ad_multicast) * 1000 > 1000):
-            sendOneMulticastAdToLAN()
-            last_ad_multicast = time.time()
+            print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
 
-    else:
-        # check if any communication are pending or rejected
-        mangageOutGoingTCPclientPackets()
-        # spectator/players
-        # print("!if(numberOfLocalPlayers<0):")
-        print("spectator/players")
-        # UDP_IP_CLIENT = "127.0.0.1"
-        # UDP_IP_CLIENT = IP_on_LAN
-        UDP_IP_CLIENT = server_IP_joined
-        UDP_PORT_CLIENT = 5007
-        if(listOfBombs!=[]):
-            print("listOfBombs",listOfBombs)
-        listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
-        if(listOfBombsFromClient!=[]):
-            print("listOfBombsFromClient",listOfBombsFromClient)
-        MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient])
-        MESSAGE_bytes = MESSAGE
-        # print("client message:", MESSAGE_bytes)
-
-        sock = socket.socket(socket.AF_INET,  # Internet
-                             socket.SOCK_DGRAM)  # UDP
-        sock.setblocking(False)
-        sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
-
-        print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
-
-        print("runningMain:currentHostsOnLan",currentHostsOnLan)
+            print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
     # print("display_is_active",display_is_active)
     if(display_is_active==True):
