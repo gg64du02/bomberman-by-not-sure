@@ -1257,8 +1257,8 @@ while(True):
         displayMap()
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        displayText("Create a game|Solo/Host",(display_width / 2), (display_height / 6)+32*2)
-        displayText("Join a game|Multiplayer",(display_width / 2), (display_height / 6)+32*4)
+        displayText("Solo or Host",(display_width / 2), (display_height / 6)+32*2)
+        displayText("Multiplayer",(display_width / 2), (display_height / 6)+32*4)
         displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
         # a bomb mean it is a work in progress
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
@@ -1298,8 +1298,8 @@ while(True):
         displayMap()
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        displayText("Play/Create in local|Play on the same computer",(display_width / 2), (display_height / 6)+32*2)
-        displayText("Play/Create on Tcp/Ip|Host a game for LAN or internet",(display_width / 2), (display_height / 6)+32*4)
+        displayText("Play on the same computer",(display_width / 2), (display_height / 6)+32*2)
+        displayText("Host a game for LAN or internet",(display_width / 2), (display_height / 6)+32*4)
         displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
         # # a bomb mean it is a work in progress
         # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
@@ -1397,8 +1397,8 @@ while(True):
         displayMap()
         displayPlayers()
         displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-        displayText("Local game|LAN", (display_width / 2), (display_height / 6) + 32 * 2)
-        displayText("Internet game|Internet", (display_width / 2), (display_height / 6) + 32 * 4)
+        displayText("Local Area Network", (display_width / 2), (display_height / 6) + 32 * 2)
+        displayText("Internet", (display_width / 2), (display_height / 6) + 32 * 4)
         displayText("Go back to the main menu", (display_width / 2), (display_height / 6) + 32 * 6)
         # a bomb mean it is a work in progress
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
@@ -1887,8 +1887,7 @@ while(runningMain):
 
         print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
-
-    print("display_is_active",display_is_active)
+    # print("display_is_active",display_is_active)
     if(display_is_active==True):
         Controls = keyboardRead()
 
