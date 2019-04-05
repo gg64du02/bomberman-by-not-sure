@@ -115,8 +115,9 @@ def displayAirBlasts():
         timePassed = time.time() - airBlast[2]
         # print("airBlast",airBlast)
         # print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
-        if(isIndexesRangeTileRange([3,0+int((2.5*timePassed*1000)/100)])==True):
-            gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+        if(display_is_active==True):
+            if(isIndexesRangeTileRange([3,0+int((2.5*timePassed*1000)/100)])==True):
+                gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
 
@@ -127,14 +128,13 @@ def diplayAllAirBlast():
             airBlast(32*tile[1],32*tile[0])
 
 def displayPlayers():
-    if(display_is_active==True):
-        for player in Players:
-            if (player[2][0] != 0):
-                # alive
-                gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[0][1]))
-            else:
-                # dead
-                gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
+    for player in Players:
+        if (player[2][0] != 0):
+            # alive
+            gameDisplay.blit(Tiles[ 7+2*player[3][0] ][0], (player[0][0], player[0][1]))
+        else:
+            # dead
+            gameDisplay.blit(Tiles[ 7+2*player[3][0]+1 ][5], (player[0][0], player[0][1]))
 
 def displayBombs():
     # in: listOfBombs
@@ -157,7 +157,8 @@ def displayBrokenCratesAndUpdateCollision():
         if(isIndexesRangeTileRange([4,0+int((4*timePassed*1000)/100)])==True):
             print("brokenCrates",brokenCrates)
             print("[4,0+int((4*timePassed*1000)/100)]",[4,0+int((4*timePassed*1000)/100)])
-            gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+            if(display_is_active==True):
+                gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
         if(timePassed*1000>200):
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
@@ -682,7 +683,8 @@ def explodingBomb(bombExpOrNot):
     # global airBlastDisplay
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
     # print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
-    airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    if(display_is_active==True):
+        airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     global listOfBombs
 
@@ -831,45 +833,44 @@ def keyboardRead():
 
     global boolDisplayScores
 
-    if(display_is_active ==  True):
-        for event in pygame.event.get():
-            # print("event.type",event.type)
-            if event.type == pygame.QUIT:
-                pass
-            if event.type == pygame.KEYDOWN:
-                # print("pygame.K_TAB",pygame.K_TAB)
-                print("event.key",event.key)
-                if event.key == pygame.K_TAB:
-                    boolDisplayScores = True
-                for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
-                    # print("controls",controls)
-                    for control,index in zip(controls,range(0,5)):
-                        # print("control",control)
-                        # print("index",index)
-                        # 262 is 6 in numpad
-                        # print("int(event.key)",int(event.key))
-                        # if event.key == pygame.K_6:
-                        #     print()
-                        if event.key == control :
-                            # sfde ctrl shift
-                            if(index<4):
-                                Controls_from_kbd[playerNumber][0][index]=1
-                            else:
-                                Controls_from_kbd[playerNumber][1][0]=1
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_TAB:
-                    boolDisplayScores = False
-                for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
-                    # print("controls",controls)
-                    for control,index in zip(controls,range(0,5)):
-                        # print("control",control)
-                        # print("index",index)
-                        if event.key == control :
-                            # sfde ctrl shift
-                            if(index<4):
-                                Controls_from_kbd[playerNumber][0][index]=0
-                            else:
-                                Controls_from_kbd[playerNumber][1][0]=0
+    for event in pygame.event.get():
+        # print("event.type",event.type)
+        if event.type == pygame.QUIT:
+            pass
+        if event.type == pygame.KEYDOWN:
+            # print("pygame.K_TAB",pygame.K_TAB)
+            print("event.key",event.key)
+            if event.key == pygame.K_TAB:
+                boolDisplayScores = True
+            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
+                # print("controls",controls)
+                for control,index in zip(controls,range(0,5)):
+                    # print("control",control)
+                    # print("index",index)
+                    # 262 is 6 in numpad
+                    # print("int(event.key)",int(event.key))
+                    # if event.key == pygame.K_6:
+                    #     print()
+                    if event.key == control :
+                        # sfde ctrl shift
+                        if(index<4):
+                            Controls_from_kbd[playerNumber][0][index]=1
+                        else:
+                            Controls_from_kbd[playerNumber][1][0]=1
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_TAB:
+                boolDisplayScores = False
+            for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
+                # print("controls",controls)
+                for control,index in zip(controls,range(0,5)):
+                    # print("control",control)
+                    # print("index",index)
+                    if event.key == control :
+                        # sfde ctrl shift
+                        if(index<4):
+                            Controls_from_kbd[playerNumber][0][index]=0
+                        else:
+                            Controls_from_kbd[playerNumber][1][0]=0
 
 
 
@@ -1886,7 +1887,9 @@ while(runningMain):
 
         print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
-    if(display_is_active==False):
+
+    print("display_is_active",display_is_active)
+    if(display_is_active==True):
         Controls = keyboardRead()
 
     ColisionCheckAndMovement()
@@ -1900,7 +1903,8 @@ while(runningMain):
 
     displayCrates()
     displayMap()
-    displayBombs()
+    if(display_is_active==True):
+        displayBombs()
     # print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     playersPickupsItems()
@@ -1912,8 +1916,9 @@ while(runningMain):
         # debugging/testing purposes
         # newRound()
     # done: needs to be debugged
-    displayPlayers()
-    displayItems()
+    if(display_is_active==True):
+        displayPlayers()
+        displayItems()
     # if more than 1 players are alive, the round can continue
     if(numberOfPlayersAlive()>1):
         end_of_round_time = time.time()
@@ -1929,8 +1934,11 @@ while(runningMain):
 
     if(display_is_active==True):
         pygame.display.update()
-    print('time:',str((time.time()-st_time)))
-    clock.tick(60)
+    print('time:',str((time.time()-st_time)*1000*1000))
+    if(display_is_active==True):
+        clock.tick(60)
+    else:
+        time.sleep(0.032)
     st_time = time.time()
 
     if(display_is_active == False):
