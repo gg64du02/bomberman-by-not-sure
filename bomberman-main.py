@@ -1862,6 +1862,8 @@ last_ad_multicast = time.time()
 
 last_update_to_client_or_server = time.time()
 
+TICK_FRAME_MULTI = 10
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
@@ -1869,7 +1871,7 @@ while(runningMain):
     # # todo: no blocking UDP sending
     # # todo: time out and refusal management
 
-    if((time.time()-last_update_to_client_or_server)*1000>100):
+    if((time.time()-last_update_to_client_or_server)*1000>(1/TICK_FRAME_MULTI)*1000):
         print("if((time.time()-last_update_to_client_or_server)*1000<100):")
         last_update_to_client_or_server = time.time()
         if(playing_on_same_computer==False):
