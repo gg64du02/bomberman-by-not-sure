@@ -488,6 +488,37 @@ def ColisionCheckAndMovement():
         # ==============================================================
         yTmp = player[0][1]
         xTmp = player[0][0]
+        # print("Players",Players)
+        # if(listOfBombs!=[]):
+        #     print("listOfBombs",listOfBombs)
+        ignoreTheKey = 0
+        # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+        for l in listOfBombs:
+            # print("l",l)
+            # print("[int(yTmp/32),int(xTmp/32)]",[int(yTmp/32),int(xTmp/32)])
+            for hit in PlayersWhitboxesAindex:
+                # print("hit",hit)
+                if(hit[2]==i):
+                    # print("if(hit[2]==i):")
+                    if(np.array_equal([hit[0],hit[1]],l[0])==False):
+                        print("if(np.array_equal([hit[0],hit[1]],l[0])==False):")
+                        # sfde
+                        if (control[0][0] == 1):
+                            if(np.array_equal([hit[0],hit[1]-1],l[0])==True):
+                                ignoreTheKey +=1
+                        if (control[0][1] == 1):
+                            if(np.array_equal([hit[0],hit[1]+1],l[0])==True):
+                                ignoreTheKey +=1
+                        if (control[0][2] == 1):
+                            if(np.array_equal([hit[0]+1,hit[1]],l[0])==True):
+                                ignoreTheKey +=1
+                        if (control[0][3] == 1):
+                            if(np.array_equal([hit[0]-1,hit[1]],l[0])==True):
+                                ignoreTheKey +=1
+        # print("ignoreTheKey",ignoreTheKey)
+        if(ignoreTheKey>=2):
+            continue
+
         if(clientSlotKeyboardMapping != []):
             if(clientSlotKeyboardMapping[i]==0):
                 # print("ColisionCheckAndMovement:continue")
