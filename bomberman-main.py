@@ -1864,6 +1864,8 @@ last_update_to_client_or_server = time.time()
 
 TICK_FRAME_MULTI = 10
 
+# import zlib
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
@@ -1922,6 +1924,10 @@ while(runningMain):
                 if(listOfBombsFromClient!=[]):
                     print("listOfBombsFromClient",listOfBombsFromClient)
                 MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient])
+                # lolMESSAGE = zlib.compress(MESSAGE,-1)
+                # lolMESSAGE = zlib.compress(MESSAGE,9)
+                # print("MESSAGE",MESSAGE)
+                # print("lolMESSAGE",lolMESSAGE)
                 MESSAGE_bytes = MESSAGE
                 # print("client message:", MESSAGE_bytes)
 
