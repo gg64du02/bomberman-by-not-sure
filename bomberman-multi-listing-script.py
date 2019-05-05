@@ -49,22 +49,22 @@ except (KeyboardInterrupt, SystemExit):
     server_thread_udp.server_close()
     exit()
 
-
 # https://github.com/flyte/upnpclient
 import upnpclient
 devices = upnpclient.discover()
 # debugging  purpose
 # print(devices)
 d = devices[0]
-def addUPnPrule(port,internal_ip):
+def addUPnPrule(port,internal_ip,udp_tcp=('UDP'or'TCP')):
     print('def addUPnPrule(port,internal_ip):')
+    print('udp_tcp',udp_tcp)
     tmplol = d.WANIPConn1.AddPortMapping(
     # NewRemoteHost='192.168.1.99',
     # pro tip: never thrust the error output coming from the upnp device,
     # it could name a problem that is not the actual problem
     NewRemoteHost='',
     NewExternalPort=int(port),
-    NewProtocol='UDP',
+    NewProtocol=udp_tcp,
     NewInternalPort=int(port),
     NewInternalClient=internal_ip,
     NewEnabled='true',
@@ -75,24 +75,29 @@ def addUPnPrule(port,internal_ip):
     else:
         print('!addUPnPrule')
 
-def removeUPnPrule(port):
+def removeUPnPrule(port,udp_tcp=('UDP'or'TCP')):
     print('def removeUPnPrule(port):')
+    print('udp_tcp',udp_tcp)
     tmplol = d.WANIPConn1.DeletePortMapping(
     # pro tip: never thrust the error output coming from the upnp device,
     # it could name a problem that is not the actual problem
     NewRemoteHost='',
     NewExternalPort=int(port),
-    NewProtocol='UDP')
+    NewProtocol=udp_tcp)
     if(bool(tmplol)==False):
         print('removeUPnPrule')
     else:
         print('!removeUPnPrule')
+# testing purposes
+# removeUPnPrule()
+# testing purposes
+# addUPnPrule()
 
-addUPnPrule(5010,IP_on_LAN)
+addUPnPrule(5010,IP_on_LAN,'TCP')
 
 while True:
     print("main server listing for online games")
     print(time.time())
     time.sleep(1)
 
-removeUPnPrule(5010)
+removeUPnPrule(5010,'TCP')

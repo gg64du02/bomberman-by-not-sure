@@ -276,7 +276,7 @@ Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # # debugging  purpose
 # # print(devices)
 # d = devices[0]
-def addUPnPrule(port,internal_ip):
+def addUPnPrule(port,internal_ip,udp_tcp=('UDP'or'TCP')):
     print('def addUPnPrule(port,internal_ip):')
     tmplol = d.WANIPConn1.AddPortMapping(
     # NewRemoteHost='192.168.1.99',
@@ -284,7 +284,7 @@ def addUPnPrule(port,internal_ip):
     # it could name a problem that is not the actual problem
     NewRemoteHost='',
     NewExternalPort=int(port),
-    NewProtocol='TCP',
+    NewProtocol=udp_tcp,
     NewInternalPort=int(port),
     NewInternalClient=internal_ip,
     NewEnabled='true',
@@ -295,14 +295,14 @@ def addUPnPrule(port,internal_ip):
     else:
         print('!addUPnPrule')
 
-def removeUPnPrule(port):
+def removeUPnPrule(port,udp_tcp=('UDP'or'TCP')):
     print('def removeUPnPrule(port):')
     tmplol = d.WANIPConn1.DeletePortMapping(
     # pro tip: never thrust the error output coming from the upnp device,
     # it could name a problem that is not the actual problem
     NewRemoteHost='',
     NewExternalPort=int(port),
-    NewProtocol='TCP')
+    NewProtocol=udp_tcp)
     if(bool(tmplol)==False):
         print('removeUPnPrule')
     else:
