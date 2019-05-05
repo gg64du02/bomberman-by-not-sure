@@ -860,13 +860,15 @@ controlsForPlayers = [controlsGreenPlayer,controlsRedPlayer,controlsBluePlayer,c
 
 boolDisplayScores = False
 
-def keyboardRead():
+def keyboardRead(active=True):
     # sfde ctrl shift
     global Controls_from_kbd
 
     global boolDisplayScores
 
     for event in pygame.event.get():
+        if(active==False):
+            continue
         # print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
@@ -1173,6 +1175,8 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             decodedData = pickle.loads(data)
             # print("decodedData",decodedData)
             global Players
+            global Controls
+            global Controls_from_kbd
             if(decodedData[2]=="clientSlotKeyboardMapping"):
                 # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
                 # print("global Players")
@@ -1182,6 +1186,10 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
                         # print("Players[i]",Players[i])
                         # print("decodedData[1][i]",decodedData[1][i])
                         Players[i] = decodedData[1][i]
+                        if (decodedData[6] == "Controls_from_kbd"):
+                            Controls_from_kbd[i] = decodedData[7][i]
+                            print("Controls_from_kbd[i]",Controls_from_kbd[i])
+                            pass
             if(decodedData[4]=="listOfBombsFromClient"):
                 for bomb in decodedData[5]:
                     # done: do a duplicate checking here as well
@@ -1923,7 +1931,8 @@ while(runningMain):
                 listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
                 if(listOfBombsFromClient!=[]):
                     print("listOfBombsFromClient",listOfBombsFromClient)
-                MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient])
+                MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient,"Controls_from_kbd",Controls_from_kbd])
+                print("Controls_from_kbd",Controls_from_kbd)
                 # lolMESSAGE = zlib.compress(MESSAGE,-1)
                 # lolMESSAGE = zlib.compress(MESSAGE,9)
                 # print("MESSAGE",MESSAGE)
@@ -1944,7 +1953,10 @@ while(runningMain):
     # addUPnPrule(5008,IP_on_LAN)
     # print("display_is_active",display_is_active)
     if(display_is_active==True):
-        Controls = keyboardRead()
+        if (numberOfLocalPlayers < 0):
+            Controls = keyboardRead(False)
+        else:
+            Controls = keyboardRead(True)
 
     ColisionCheckAndMovement()
 
