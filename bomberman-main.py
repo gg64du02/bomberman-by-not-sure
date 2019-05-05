@@ -1882,7 +1882,7 @@ while(runningMain):
     # # todo: time out and refusal management
 
     if((time.time()-last_update_to_client_or_server)*1000>(1/TICK_FRAME_MULTI)*1000):
-        print("if((time.time()-last_update_to_client_or_server)*1000<100):")
+        print("if((time.time()-last_update_to_client_or_server)*1000<(1/TICK_FRAME_MULTI)*1000):")
         last_update_to_client_or_server = time.time()
         if(playing_on_same_computer==False):
             if (numberOfLocalPlayers < 0):
