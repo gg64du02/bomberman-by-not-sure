@@ -50,8 +50,49 @@ except (KeyboardInterrupt, SystemExit):
     exit()
 
 
+# https://github.com/flyte/upnpclient
+import upnpclient
+devices = upnpclient.discover()
+# debugging  purpose
+# print(devices)
+d = devices[0]
+def addUPnPrule(port,internal_ip):
+    print('def addUPnPrule(port,internal_ip):')
+    tmplol = d.WANIPConn1.AddPortMapping(
+    # NewRemoteHost='192.168.1.99',
+    # pro tip: never thrust the error output coming from the upnp device,
+    # it could name a problem that is not the actual problem
+    NewRemoteHost='',
+    NewExternalPort=int(port),
+    NewProtocol='UDP',
+    NewInternalPort=int(port),
+    NewInternalClient=internal_ip,
+    NewEnabled='true',
+    NewPortMappingDescription='BombermanByNotSure',
+    NewLeaseDuration=10000)
+    if(bool(tmplol)==False):
+        print('addUPnPrule')
+    else:
+        print('!addUPnPrule')
+
+def removeUPnPrule(port):
+    print('def removeUPnPrule(port):')
+    tmplol = d.WANIPConn1.DeletePortMapping(
+    # pro tip: never thrust the error output coming from the upnp device,
+    # it could name a problem that is not the actual problem
+    NewRemoteHost='',
+    NewExternalPort=int(port),
+    NewProtocol='UDP')
+    if(bool(tmplol)==False):
+        print('removeUPnPrule')
+    else:
+        print('!removeUPnPrule')
+
+addUPnPrule(5010,IP_on_LAN)
+
 while True:
     print("main server listing for online games")
     print(time.time())
     time.sleep(1)
 
+removeUPnPrule(5010)
