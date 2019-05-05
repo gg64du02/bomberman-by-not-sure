@@ -93,7 +93,17 @@ def removeUPnPrule(port,udp_tcp=('UDP'or'TCP')):
 # testing purposes
 # addUPnPrule()
 
+
+# 5010 is used by the servers to declare themself and ask the listing (the clients would)
 addUPnPrule(5010,IP_on_LAN,'TCP')
+
+# main server
+# <- "declare" IP,port |Server|
+# -> 'OK' |Server|
+
+# main server
+# <- 'list' |Client|
+# ->'list of' |Client|
 
 while True:
     print("main server listing for online games")
