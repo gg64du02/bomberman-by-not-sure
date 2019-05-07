@@ -4,7 +4,7 @@ import socket
 
 import socketserver, threading, time
 import socket
-
+import pickle
 
 # UDP connexion handling
 # todo: queuing data that needs processing
@@ -19,6 +19,10 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
         # (HOST_UDP_server, PORT_UDP_server)
         if(socket.getsockname()[1]==5010):
             print("if(socket.getsockname()[1]==5010):")
+            decodedData = pickle.loads(data)
+            if(decodedData[0]=="declare"):
+                print('if(decodedData[0]=="declare"):')
+                pass
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
     pass
