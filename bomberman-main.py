@@ -869,8 +869,6 @@ def keyboardRead(active=True):
     global boolDisplayScores
 
     for event in pygame.event.get():
-        if(active==False):
-            continue
         # print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
@@ -881,6 +879,8 @@ def keyboardRead(active=True):
             if event.key == pygame.K_F8:
                 openTheGameOnInternet = not openTheGameOnInternet
                 print("openTheGameOnInternet",openTheGameOnInternet)
+            if(active==False):
+                continue
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
             for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
@@ -1887,7 +1887,7 @@ while(runningMain):
     # # todo: time out and refusal management
 
     if((time.time()-last_update_to_client_or_server)*1000>(1/TICK_FRAME_MULTI)*1000):
-        print("if((time.time()-last_update_to_client_or_server)*1000<(1/TICK_FRAME_MULTI)*1000):")
+        # print("if((time.time()-last_update_to_client_or_server)*1000<(1/TICK_FRAME_MULTI)*1000):")
         last_update_to_client_or_server = time.time()
         if(playing_on_same_computer==False):
             if (numberOfLocalPlayers < 0):
@@ -1953,11 +1953,13 @@ while(runningMain):
 
     declaredToTheListingServer = False
     if(openTheGameOnInternet == True):
-        dataframe = pickle.dump('declare','qdhbqjhfqdqi')
+        print("if(openTheGameOnInternet == True):")
+        dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
         sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sockGameOnInternet.settimeout(5.0)
         # Connect to server and send data
-        sockGameOnInternet.connect((HOST, PORT))
+        # sockGameOnInternet.connect((HOST, PORT))
+        sockGameOnInternet.connect(('192.168.1.99', 5010))
         sockGameOnInternet.sendall(bytes(dataframe + "\n", "utf-8"))
         # sockGameOnInternet.sendall(bytes(data + "\n", "utf-8"))
 
@@ -2020,7 +2022,7 @@ while(runningMain):
 
     if(display_is_active==True):
         pygame.display.update()
-    print('time:',str((time.time()-st_time)*1000*1000))
+    # print('time:',str((time.time()-st_time)*1000*1000))
     if(display_is_active==True):
         clock.tick(60)
     else:
