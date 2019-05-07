@@ -20,6 +20,8 @@ display_is_active = True
 
 playing_on_same_computer = False
 
+openTheGameOnInternet = False
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -875,6 +877,9 @@ def keyboardRead(active=True):
         if event.type == pygame.KEYDOWN:
             # print("pygame.K_TAB",pygame.K_TAB)
             print("event.key",event.key)
+            if event.key == pygame.K_F8:
+                openTheGameOnInternet != openTheGameOnInternet
+                print("openTheGameOnInternet",openTheGameOnInternet)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
             for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
@@ -1809,7 +1814,6 @@ def manageTCPserverPackets(incomingData,client_addr):
     return str([])
     pass
 
-
 if __name__ == "__main__":
     if(enableTcpServerThread==True):
         # HOST_TCP, PORT_TCP = "0.0.0.0", 8888
@@ -1933,10 +1937,7 @@ while(runningMain):
                     print("listOfBombsFromClient",listOfBombsFromClient)
                 MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient,"Controls_from_kbd",Controls_from_kbd])
                 print("Controls_from_kbd",Controls_from_kbd)
-                # lolMESSAGE = zlib.compress(MESSAGE,-1)
-                # lolMESSAGE = zlib.compress(MESSAGE,9)
                 # print("MESSAGE",MESSAGE)
-                # print("lolMESSAGE",lolMESSAGE)
                 MESSAGE_bytes = MESSAGE
                 # print("client message:", MESSAGE_bytes)
 
@@ -1949,6 +1950,8 @@ while(runningMain):
 
                 print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
+    if(openTheGameOnInternet == True):
+        pass
     # addUPnPrule(5007,IP_on_LAN)
     # addUPnPrule(5008,IP_on_LAN)
     # print("display_is_active",display_is_active)
