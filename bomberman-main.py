@@ -1951,7 +1951,23 @@ while(runningMain):
 
                 print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
+    declaredToTheListingServer = False
     if(openTheGameOnInternet == True):
+        dataframe = pickle.dump('declare','qdhbqjhfqdqi')
+        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sockGameOnInternet.settimeout(5.0)
+        # Connect to server and send data
+        sockGameOnInternet.connect((HOST, PORT))
+        sockGameOnInternet.sendall(bytes(dataframe + "\n", "utf-8"))
+        # sockGameOnInternet.sendall(bytes(data + "\n", "utf-8"))
+
+        # Receive data from the server and shut down
+        received = str(sockGameOnInternet.recv(1024), "utf-8")
+
+        print("Sent:     {}".format(data))
+        print("Received: {}".format(received))
+        # # once the server answered 'ok'
+        # declaredToTheListingServer = True
         pass
     # addUPnPrule(5007,IP_on_LAN)
     # addUPnPrule(5008,IP_on_LAN)
