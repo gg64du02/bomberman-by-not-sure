@@ -877,8 +877,9 @@ def keyboardRead(active=True):
         if event.type == pygame.KEYDOWN:
             # print("pygame.K_TAB",pygame.K_TAB)
             print("event.key",event.key)
+            global openTheGameOnInternet
             if event.key == pygame.K_F8:
-                openTheGameOnInternet != openTheGameOnInternet
+                openTheGameOnInternet = not openTheGameOnInternet
                 print("openTheGameOnInternet",openTheGameOnInternet)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
