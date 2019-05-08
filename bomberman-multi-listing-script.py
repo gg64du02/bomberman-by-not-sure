@@ -15,6 +15,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("self.client_address",self.client_address)
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
         print("self.data",self.data)
+        dataFromPickle = self.data
+        print("dataFromPickle",dataFromPickle)
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
@@ -103,6 +105,6 @@ addUPnPrule(5010,IP_on_LAN,'TCP')
 while True:
     print("main server listing for online games")
     print(time.time())
-    time.sleep(1)
+    time.sleep(10)
 
 removeUPnPrule(5010,'TCP')
