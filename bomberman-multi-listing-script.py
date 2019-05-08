@@ -6,27 +6,18 @@ import socketserver, threading, time
 import socket
 import pickle
 
-# UDP connexion handling
-# todo: queuing data that needs processing
-class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
+# TCP connexion handling
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
-        global currentHostsOnLan
-        # print("ThreadedUDPRequestHandler:handle")
-        data = self.request[0].strip()
-        socket = self.request[1]
-        print("data",data)
-        print("socket.getsockname()",socket.getsockname())
-        # (HOST_UDP_server, PORT_UDP_server)
-        if(socket.getsockname()[1]==5010):
-            print("if(socket.getsockname()[1]==5010):")
-            decodedData = pickle.loads(data)
-            if(decodedData[0]=="declare"):
-                print('if(decodedData[0]=="declare"):')
-                pass
+        print("ThreadedTCPRequestHandler:handle")
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        print("self.client_address",self.client_address)
+        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
+        print("self.data",self.data)
 
-class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
-
 
 # trying to figure out the IP on the LAN network
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -42,7 +33,7 @@ print("IP_on_LAN", IP_on_LAN)
 
 # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5007
 HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5010
-server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
+server_udp = ThreadedTCPServer((HOST_UDP_server, PORT_UDP_server), ThreadedTCPRequestHandler)
 server_thread_udp = threading.Thread(target=server_udp.serve_forever)
 server_thread_udp.daemon = True
 try:
