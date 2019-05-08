@@ -1968,7 +1968,8 @@ while(runningMain):
         sockGameOnInternet.sendall(dataframe)
 
         # Receive data from the server and shut down
-        received = str(sockGameOnInternet.recv(1024), "utf-8")
+        # received = str(sockGameOnInternet.recv(1024), "utf-8")
+        received = pickle.loads(sockGameOnInternet.recv(1024))
 
         print("Sent:     {}".format(data))
         print("Received: {}".format(received))

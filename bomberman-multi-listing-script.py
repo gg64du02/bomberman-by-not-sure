@@ -30,12 +30,11 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         if(serverIP[1] not in currentList):
             print("if(serverIP[1] not in currentList):")
             serverListWtheServerNumber.append([serverIP[1],currentServerNumber,time.time()])
+            self.request.sendall(pickle.dumps(['ok declared',currentServerNumber]))
         else:
             print("!if(serverIP[1] not in currentList):")
+            self.request.sendall(pickle.dumps(['ok updated',currentServerNumber]))
         print("serverListWtheServerNumber",serverListWtheServerNumber)
-        # else:
-        #     print("!if(serverIP not in serverListWtheServerNumber[:,0]):")
-
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
