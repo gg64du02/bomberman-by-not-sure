@@ -6,6 +6,8 @@ import socketserver, threading, time
 import socket
 import pickle
 
+serverListWtheServerNumber = []
+
 # TCP connexion handling
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
@@ -17,8 +19,19 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("self.data",self.data)
         dataFromPickle = self.data
         print("dataFromPickle",dataFromPickle)
-        # decodedData = pickle.loads(dataFromPickle)
-        # print(decodedData[1].replace('{\'', '').replace('\'}', '').split('\': \''))
+        decodedData = pickle.loads(dataFromPickle)
+        print("decodedData",decodedData)
+        print(str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \''))
+        serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
+        currentServerNumber = len(serverListWtheServerNumber) + 1
+        # todo: add a counter duplicate feature
+        # if(serverIP not in serverListWtheServerNumber[:,0]):
+        #     print("if(serverIP not in serverListWtheServerNumber[:,0]):")
+        serverListWtheServerNumber.append([serverIP,currentServerNumber])
+        print("serverListWtheServerNumber",serverListWtheServerNumber)
+        # else:
+        #     print("!if(serverIP not in serverListWtheServerNumber[:,0]):")
+
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
