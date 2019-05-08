@@ -17,6 +17,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("self.data",self.data)
         dataFromPickle = self.data
         print("dataFromPickle",dataFromPickle)
+        # decodedData = pickle.loads(dataFromPickle)
+        # print(decodedData[1].replace('{\'', '').replace('\'}', '').split('\': \''))
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass

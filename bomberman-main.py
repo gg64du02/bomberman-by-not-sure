@@ -1954,11 +1954,18 @@ while(runningMain):
     declaredToTheListingServer = False
     if(openTheGameOnInternet == True):
         print("if(openTheGameOnInternet == True):")
-        dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
-        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sockGameOnInternet.settimeout(5.0)
+        # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
+        devices = upnpclient.discover()
+        print(devices)
+        router = devices[0]
+        dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
+        print(dataframe)
+        # {'NewExternalIPAddress': '109.219.170.32'}
+        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # sockGameOnInternet.settimeout(5.0)
         # send data in udp
-        sockGameOnInternet.sendto(dataframe, ('192.168.1.99', 5010))
+        sockGameOnInternet.connect(('192.168.1.99', 5010))
+        sockGameOnInternet.sendall(dataframe)
 
         # Receive data from the server and shut down
         received = str(sockGameOnInternet.recv(1024), "utf-8")
