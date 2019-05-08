@@ -23,11 +23,15 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         print("decodedData",decodedData)
         print(str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \''))
         serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
+        print("serverIP",serverIP)
         currentServerNumber = len(serverListWtheServerNumber) + 1
-        # todo: add a counter duplicate feature
-        # if(serverIP not in serverListWtheServerNumber[:,0]):
-        #     print("if(serverIP not in serverListWtheServerNumber[:,0]):")
-        serverListWtheServerNumber.append([serverIP,currentServerNumber])
+        # done: add a counter duplicate feature
+        currentList = [serverListWtheServerNumber[i][0] for i in range(len(serverListWtheServerNumber))]
+        if(serverIP[1] not in currentList):
+            print("if(serverIP[1] not in currentList):")
+            serverListWtheServerNumber.append([serverIP[1],currentServerNumber,time.time()])
+        else:
+            print("!if(serverIP[1] not in currentList):")
         print("serverListWtheServerNumber",serverListWtheServerNumber)
         # else:
         #     print("!if(serverIP not in serverListWtheServerNumber[:,0]):")
