@@ -188,6 +188,11 @@ def displayScores():
                           'blue: jikl space']
     tmpString = "Controlled players:"
     tmpString2 = ''
+    if(openTheGameOnInternet==True):
+        tmpString3 = 'toggle internet availibity: press f8 (not active)'
+    else:
+        tmpString3 = 'toggle internet availibity: press f8 (active)'
+    print("tmpString3",tmpString3)
     # debugging purpose
     # global controlsGreenPlayer
     # namestr(controlsGreenPlayer,globals())
@@ -201,6 +206,7 @@ def displayScores():
                 tmpString2 = playersKeyboardStr[i]
                 displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * (6+i))
         displayText(tmpString, (display_width / 2), (display_height / 6) + 32 * 5)
+        displayText(tmpString3, (display_width / 2), (display_height / 6) + 32 * 8)
         # displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * 6)
         # print("tmpString2",tmpString2)
 
