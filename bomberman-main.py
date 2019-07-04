@@ -1292,6 +1292,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
+listInternetGameMenu = False
+
 while(True):
 	# print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile)
     # print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",
@@ -1489,6 +1491,12 @@ while(True):
             devices = upnpclient.discover()
             d = devices[0]
             addUPnPrule(5008,IP_on_LAN)
+
+            listInternetGameMenu = True
+            runningMenuMain = False
+            createMenuWhile = False
+            joinAtcpIpGameMenuWhile = False
+            joinedAtcpIpGameMenuWhile = False
             # switching to the join menu
         #     joinAtcpIpGameMenuWhile = True
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
@@ -1501,6 +1509,27 @@ while(True):
             # putting back the cyan player on a neutral spot
             Players[3][0] = [32 * 3, 32 * 1]
             pass
+
+    if(listInternetGameMenu ==True):
+        print("if(listInternetGameMenu ==True):")
+        # print("==========================================================")
+        pygame.display.set_caption('Bomberman-by-not-sure (List internet games)')
+        Controls = keyboardRead()
+        ColisionCheckAndMovement()
+        if(keyboard.is_pressed('esc')):
+            runningMenuMain = True
+            createMenuWhile = False
+            # putting back the cyan player on a neutral spot
+            Players[3][0] = [32 * 3, 32 * 1]
+            print("issuing the esc key")
+        gameDisplay.fill(gray)
+        displayMap()
+        displayPlayers()
+        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
+        # # a bomb mean it is a work in progress
+        # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
+        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+
 
     if(listingOfLanHostMenu == True):
 
