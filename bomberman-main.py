@@ -22,6 +22,8 @@ playing_on_same_computer = False
 
 openTheGameOnInternet = False
 
+listOfInternetGames = []
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -1529,6 +1531,9 @@ while(True):
         # # a bomb mean it is a work in progress
         # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        for games in listOfInternetGames:
+            print("games",games)
+        # listOfInternetGames
 
 
     if(listingOfLanHostMenu == True):
@@ -1912,6 +1917,7 @@ last_update_to_client_or_server = time.time()
 
 TICK_FRAME_MULTI = 10
 
+
 # import zlib
 
 
@@ -2011,6 +2017,8 @@ while(runningMain):
         # Receive data from the server and shut down
         # received = str(sockGameOnInternet.recv(1024), "utf-8")
         received = pickle.loads(sockGameOnInternet.recv(1024))
+
+        listOfInternetGames = received
 
         print("Sent:     {}".format(data))
         print("Received: {}".format(received))
