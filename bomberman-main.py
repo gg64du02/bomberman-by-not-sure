@@ -885,10 +885,10 @@ def keyboardRead(active=True):
             if event.key == pygame.K_F8:
                 openTheGameOnInternet = not openTheGameOnInternet
                 print("openTheGameOnInternet",openTheGameOnInternet)
-            if(active==False):
-                continue
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
+            if(active==False):
+                continue
             for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
