@@ -1879,6 +1879,12 @@ TICK_FRAME_MULTI = 10
 
 # import zlib
 
+
+if (playing_on_same_computer == True):
+    print("if (playing_on_same_computer == True):")
+    numberOfLocalPlayers = 4
+
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
