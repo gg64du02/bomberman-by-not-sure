@@ -16,14 +16,10 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         print("self.client_address",self.client_address)
         # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
-        print("self.data",self.data)
         dataFromPickle = self.data
-        print("dataFromPickle",dataFromPickle)
         decodedData = pickle.loads(dataFromPickle)
         print("decodedData",decodedData)
-        print(str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \''))
         serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
-        print("serverIP",serverIP)
         currentServerNumber = len(serverListWtheServerNumber) + 1
         # done: add a counter duplicate feature
         currentList = [serverListWtheServerNumber[i][0] for i in range(len(serverListWtheServerNumber))]
