@@ -1551,13 +1551,17 @@ while(True):
 
         listOfInternetGames = [['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712]]
 
-        for games in listOfInternetGames:
+        # line going down
+        TheMap[1:15, 3] = 1
+        crateMap[1:15, 3] = 1
+
+        for games,gamesLN in zip(listOfInternetGames,range(0, len(listOfInternetGames))):
             print("games",games)
+            print("gamesLN",gamesLN)
 
-            # # line going down
-            # TheMap[1:15, 3] = 1
-            # crateMap[1:15, 3] = 1
-
+            # line going down
+            TheMap[4+2*gamesLN, 4:7] = 1
+            crateMap[4+2*gamesLN, 4:7] = 1
 
 
 
