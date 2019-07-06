@@ -972,7 +972,7 @@ interactingPoints = [createPointInter,joinPointInter,quitPointInter]
 
 import struct
 def sendOneMulticastAdToLAN():
-    print("sendOneMulticastAdToLAN")
+    # print("sendOneMulticastAdToLAN")
     message = b'bomberman-by-not-sure'
     multicast_group = ('192.168.1.255', 5008)
     # Create the datagram socket
@@ -990,10 +990,10 @@ def sendOneMulticastAdToLAN():
     try:
         # while(range(100,0,-1)):
         # Send data to the multicast group
-        print('sending {!r}'.format(message))
+        # print('sending {!r}'.format(message))
         sent = sock_multicast.sendto(message, multicast_group)
     finally:
-        print('closing socket')
+        # print('closing socket')
         sock_multicast.close()
 
 runningMenuMain = True
@@ -1574,9 +1574,7 @@ while(True):
 
                 enableTcpServerThread = True
 
-                print("IP_on_LAN",IP_on_LAN)
-
-                addUPnPrule(8888, IP_on_LAN)
+                print("listInternetGameMenu:IP_on_LAN",IP_on_LAN)
                 break
 
                 pass
@@ -1904,6 +1902,7 @@ def manageTCPserverPackets(incomingData,client_addr):
 
 if __name__ == "__main__":
     if(enableTcpServerThread==True):
+        print("its alive on 8888")
         # HOST_TCP, PORT_TCP = "0.0.0.0", 8888
         HOST_TCP, PORT_TCP = IP_on_LAN, 8888
         server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
@@ -1914,6 +1913,13 @@ if __name__ == "__main__":
             # servers
             server_thread_tcp.start()
             print("server_thread_tcp.start()")
+
+            # client udp opening using upnp
+            devices = upnpclient.discover()
+            d = devices[0]
+            addUPnPrule(8888, IP_on_LAN,'TCP')
+            addUPnPrule(8888, IP_on_LAN,'UDP')
+            print("server_thread_tcp.start():added pnp rule for 8888,in TCP")
 
         except (KeyboardInterrupt, SystemExit):
             server_thread_tcp.shutdown()
@@ -2054,10 +2060,10 @@ while(runningMain):
 
         tryToDeclareItOnce+=1
     if(openTheGameOnInternet == True):
-        print("if(openTheGameOnInternet == True):")
+        # print("if(openTheGameOnInternet == True):")
         # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
         dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
-        print(dataframe)
+        # print(dataframe)
         # {'NewExternalIPAddress': '109.219.170.32'}
         sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # sockGameOnInternet.settimeout(5.0)
@@ -2071,8 +2077,8 @@ while(runningMain):
 
         listOfInternetGames = received
 
-        print("Sent:     {}".format(data))
-        print("Received: {}".format(received))
+        # print("Sent:     {}".format(data))
+        # print("Received: {}".format(received))
         # # once the server answered 'ok'
         # declaredToTheListingServer = True
         pass
