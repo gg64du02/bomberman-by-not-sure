@@ -1563,6 +1563,8 @@ while(True):
             TheMap[4+2*gamesLN, 4:7] = 1
             crateMap[4+2*gamesLN, 4:7] = 1
 
+            displayText(games[0], (display_width / 2), (display_height / 6) + 32 * (2+2*gamesLN))
+
 
 
 
