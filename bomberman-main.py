@@ -1972,7 +1972,7 @@ if (playing_on_same_computer == True):
     print("if (playing_on_same_computer == True):")
     numberOfLocalPlayers = 4
 
-tryToDeclareItOnce = 0
+tryToDeclareItOnce = -1
 
 while(runningMain):
     # # print("==========================================================")
@@ -2047,13 +2047,15 @@ while(runningMain):
                 print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
     declaredToTheListingServer = False
-    # if(tryToDeclareItOnce <0):
-    if(openTheGameOnInternet == True):
-        print("if(openTheGameOnInternet == True):")
-        # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
+    if(tryToDeclareItOnce <0):
         devices = upnpclient.discover()
         print(devices)
         router = devices[0]
+
+        tryToDeclareItOnce+=1
+    if(openTheGameOnInternet == True):
+        print("if(openTheGameOnInternet == True):")
+        # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
         dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
         print(dataframe)
         # {'NewExternalIPAddress': '109.219.170.32'}
@@ -2068,8 +2070,6 @@ while(runningMain):
         received = pickle.loads(sockGameOnInternet.recv(1024))
 
         listOfInternetGames = received
-
-        tryToDeclareItOnce+=1
 
         print("Sent:     {}".format(data))
         print("Received: {}".format(received))
