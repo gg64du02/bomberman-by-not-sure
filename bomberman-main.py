@@ -1532,9 +1532,32 @@ while(True):
         # # a bomb mean it is a work in progress
         # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+
+        # listOfInternetGames
+
+        dataframe = pickle.dumps(['send me the server list'])
+        print(dataframe)
+        # {'NewExternalIPAddress': '109.219.170.32'}
+        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # sockGameOnInternet.settimeout(5.0)
+        # send data in udp
+        sockGameOnInternet.settimeout(1)
+        sockGameOnInternet.connect(('192.168.1.99', 5010))
+        sockGameOnInternet.sendall(dataframe)
+
+        listOfInternetGames = pickle.loads(sockGameOnInternet.recv(1024))
+
+        print("listOfInternetGames",listOfInternetGames)
+
         for games in listOfInternetGames:
             print("games",games)
-        # listOfInternetGames
+
+            # # line going down
+            # TheMap[1:15, 3] = 1
+            # crateMap[1:15, 3] = 1
+
+
+
 
 
     if(listingOfLanHostMenu == True):

@@ -19,7 +19,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         dataFromPickle = self.data
         decodedData = pickle.loads(dataFromPickle)
         print("decodedData",decodedData)
-        if(decodedData[1] != 'send me the server list'):
+        if(decodedData[0] != 'send me the server list'):
             serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
             currentServerNumber = len(serverListWtheServerNumber) + 1
             # done: add a counter duplicate feature
@@ -33,8 +33,9 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                 self.request.sendall(pickle.dumps(['ok updated',currentServerNumber]))
             print("serverListWtheServerNumber",serverListWtheServerNumber)
         else:
-           # sending the server list
-
+            # sending the server list
+            print("!if(decodedData[1] != 'send me the server list'):")
+            self.request.sendall(pickle.dumps(serverListWtheServerNumber))
             pass
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
