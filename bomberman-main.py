@@ -1076,7 +1076,7 @@ def mangageOutGoingTCPclientPackets():
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # Connect to server and send data
-        print("mangageOutGoingTCPclientPackets:str(TCP_SERVER_IP) str(8888)",str(TCP_SERVER_IP)," ", str(8888))
+        print("mangageOutGoingTCPclientPackets:str(TCP_SERVER_IP) str(8888)",str(TCP_SERVER_IP), str(8888))
         sock.connect((TCP_SERVER_IP, 8888))
         sock.sendall(bytes(dataTCPclient, "utf-8"))
 
@@ -1680,6 +1680,7 @@ while(True):
 
 
     if(joinedAtcpIpGameMenuWhile == True):
+        print("if(joinedAtcpIpGameMenuWhile == True):")
 
         # line going down
         TheMap[1:15, 3] = 1
@@ -1726,6 +1727,7 @@ while(True):
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
         gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
         interactingPoints = [createPointInter, joinPointInter, quitPointInter]
+        print("joinedAtcpIpGameMenuWhile:mangageOutGoingTCPclientPackets()")
         # check if any communication are pending or rejected
         mangageOutGoingTCPclientPackets()
         if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
@@ -1980,6 +1982,8 @@ if (playing_on_same_computer == True):
 
 tryToDeclareItOnce = -1
 
+lastDeclaredInternetGameTime = time.time()
+
 while(runningMain):
     # # print("==========================================================")
     # # if the user joined a tcp server
@@ -2059,29 +2063,32 @@ while(runningMain):
         router = devices[0]
 
         tryToDeclareItOnce+=1
-    if(openTheGameOnInternet == True):
-        # print("if(openTheGameOnInternet == True):")
-        # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
-        dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
-        # print(dataframe)
-        # {'NewExternalIPAddress': '109.219.170.32'}
-        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # sockGameOnInternet.settimeout(5.0)
-        # send data in udp
-        sockGameOnInternet.connect(('192.168.1.99', 5010))
-        sockGameOnInternet.sendall(dataframe)
+    if(time.time()-lastDeclaredInternetGameTime>2):
+        if(openTheGameOnInternet == True):
+            # print("if(openTheGameOnInternet == True):")
+            # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
+            dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
+            # print(dataframe)
+            # {'NewExternalIPAddress': '109.219.170.32'}
+            sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # sockGameOnInternet.settimeout(5.0)
+            # send data in udp
+            sockGameOnInternet.connect(('192.168.1.99', 5010))
+            sockGameOnInternet.sendall(dataframe)
 
-        # Receive data from the server and shut down
-        # received = str(sockGameOnInternet.recv(1024), "utf-8")
-        received = pickle.loads(sockGameOnInternet.recv(1024))
+            # Receive data from the server and shut down
+            # received = str(sockGameOnInternet.recv(1024), "utf-8")
+            received = pickle.loads(sockGameOnInternet.recv(1024))
 
-        listOfInternetGames = received
+            listOfInternetGames = received
 
-        # print("Sent:     {}".format(data))
-        # print("Received: {}".format(received))
-        # # once the server answered 'ok'
-        # declaredToTheListingServer = True
-        pass
+            lastDeclaredInternetGameTime = time.time()
+
+            # print("Sent:     {}".format(data))
+            # print("Received: {}".format(received))
+            # # once the server answered 'ok'
+            # declaredToTheListingServer = True
+            pass
     # addUPnPrule(5007,IP_on_LAN)
     # addUPnPrule(5008,IP_on_LAN)
     # print("display_is_active",display_is_active)
