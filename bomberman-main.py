@@ -1513,6 +1513,7 @@ while(True):
             pass
 
     if(listInternetGameMenu ==True):
+        # send me the server list
         print("if(listInternetGameMenu ==True):")
         # print("==========================================================")
         pygame.display.set_caption('Bomberman-by-not-sure (List internet games)')

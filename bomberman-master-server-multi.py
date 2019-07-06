@@ -19,18 +19,23 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         dataFromPickle = self.data
         decodedData = pickle.loads(dataFromPickle)
         print("decodedData",decodedData)
-        serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
-        currentServerNumber = len(serverListWtheServerNumber) + 1
-        # done: add a counter duplicate feature
-        currentList = [serverListWtheServerNumber[i][0] for i in range(len(serverListWtheServerNumber))]
-        if(serverIP[1] not in currentList):
-            print("if(serverIP[1] not in currentList):")
-            serverListWtheServerNumber.append([serverIP[1],currentServerNumber,time.time()])
-            self.request.sendall(pickle.dumps(['ok declared',currentServerNumber]))
+        if(decodedData[1] != 'send me the server list'):
+            serverIP = str(decodedData[1]).replace('{\'', '').replace('\'}', '').split('\': \'')
+            currentServerNumber = len(serverListWtheServerNumber) + 1
+            # done: add a counter duplicate feature
+            currentList = [serverListWtheServerNumber[i][0] for i in range(len(serverListWtheServerNumber))]
+            if(serverIP[1] not in currentList):
+                # print("if(serverIP[1] not in currentList):")
+                serverListWtheServerNumber.append([serverIP[1],currentServerNumber,time.time()])
+                self.request.sendall(pickle.dumps(['ok declared',currentServerNumber]))
+            else:
+                # print("!if(serverIP[1] not in currentList):")
+                self.request.sendall(pickle.dumps(['ok updated',currentServerNumber]))
+            print("serverListWtheServerNumber",serverListWtheServerNumber)
         else:
-            print("!if(serverIP[1] not in currentList):")
-            self.request.sendall(pickle.dumps(['ok updated',currentServerNumber]))
-        print("serverListWtheServerNumber",serverListWtheServerNumber)
+           # sending the server list
+
+            pass
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
