@@ -1535,19 +1535,21 @@ while(True):
 
         # listOfInternetGames
 
-        dataframe = pickle.dumps(['send me the server list'])
-        print(dataframe)
-        # {'NewExternalIPAddress': '109.219.170.32'}
-        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # sockGameOnInternet.settimeout(5.0)
-        # send data in udp
-        sockGameOnInternet.settimeout(1)
-        sockGameOnInternet.connect(('192.168.1.99', 5010))
-        sockGameOnInternet.sendall(dataframe)
-
-        listOfInternetGames = pickle.loads(sockGameOnInternet.recv(1024))
+        # dataframe = pickle.dumps(['send me the server list'])
+        # print(dataframe)
+        # # {'NewExternalIPAddress': '109.219.170.32'}
+        # sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # # sockGameOnInternet.settimeout(5.0)
+        # # send data in udp
+        # # sockGameOnInternet.settimeout(1)
+        # sockGameOnInternet.connect(('192.168.1.99', 5010))
+        # sockGameOnInternet.sendall(dataframe)
+        #
+        # listOfInternetGames = pickle.loads(sockGameOnInternet.recv(1024))
 
         print("listOfInternetGames",listOfInternetGames)
+
+        listOfInternetGames = [['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712]]
 
         for games in listOfInternetGames:
             print("games",games)
