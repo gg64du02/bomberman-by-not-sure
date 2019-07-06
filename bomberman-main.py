@@ -1076,6 +1076,7 @@ def mangageOutGoingTCPclientPackets():
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # Connect to server and send data
+        print("mangageOutGoingTCPclientPackets:str(TCP_SERVER_IP) str(8888)",str(TCP_SERVER_IP)," ", str(8888))
         sock.connect((TCP_SERVER_IP, 8888))
         sock.sendall(bytes(dataTCPclient, "utf-8"))
 
@@ -1570,6 +1571,12 @@ while(True):
                 server_IP_joined = games[gamesLN]
                 listInternetGameMenu = False
                 joinedAtcpIpGameMenuWhile=True
+
+                enableTcpServerThread = True
+
+                print("IP_on_LAN",IP_on_LAN)
+
+                addUPnPrule(8888, IP_on_LAN)
                 break
 
                 pass
@@ -1965,6 +1972,7 @@ if (playing_on_same_computer == True):
     print("if (playing_on_same_computer == True):")
     numberOfLocalPlayers = 4
 
+tryToDeclareItOnce = 0
 
 while(runningMain):
     # # print("==========================================================")
@@ -2039,6 +2047,7 @@ while(runningMain):
                 print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
     declaredToTheListingServer = False
+    # if(tryToDeclareItOnce <0):
     if(openTheGameOnInternet == True):
         print("if(openTheGameOnInternet == True):")
         # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
@@ -2059,6 +2068,8 @@ while(runningMain):
         received = pickle.loads(sockGameOnInternet.recv(1024))
 
         listOfInternetGames = received
+
+        tryToDeclareItOnce+=1
 
         print("Sent:     {}".format(data))
         print("Received: {}".format(received))
