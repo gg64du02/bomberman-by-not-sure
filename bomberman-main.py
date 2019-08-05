@@ -2058,9 +2058,10 @@ while(runningMain):
 
     declaredToTheListingServer = False
     if(tryToDeclareItOnce <0):
-        devices = upnpclient.discover()
-        print(devices)
-        router = devices[0]
+        if(playing_on_same_computer == False):
+            devices = upnpclient.discover()
+            print(devices)
+            router = devices[0]
 
         tryToDeclareItOnce+=1
     if(time.time()-lastDeclaredInternetGameTime>2):
