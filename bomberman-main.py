@@ -2057,15 +2057,17 @@ while(runningMain):
                 print("runningMain:currentHostsOnLan",currentHostsOnLan)
 
     declaredToTheListingServer = False
-    if(tryToDeclareItOnce <0):
-        if(playing_on_same_computer == False):
-            devices = upnpclient.discover()
-            print(devices)
-            router = devices[0]
-
-        tryToDeclareItOnce+=1
+    
     if(time.time()-lastDeclaredInternetGameTime>2):
         if(openTheGameOnInternet == True):
+
+            if (tryToDeclareItOnce < 0):
+                devices = upnpclient.discover()
+                print(devices)
+                router = devices[0]
+
+                tryToDeclareItOnce+=1
+
             # print("if(openTheGameOnInternet == True):")
             # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
             dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
