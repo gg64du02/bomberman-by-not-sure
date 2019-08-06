@@ -11,19 +11,6 @@ import random
 # image processing and skin loading
 from PIL import Image
 
-# for serialize
-import pickle
-
-import upnpclient
-
-display_is_active = True
-
-playing_on_same_computer = False
-
-openTheGameOnInternet = False
-
-listOfInternetGames = []
-
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -61,11 +48,10 @@ TheMap = currentMap()
 print("TheMap\n",TheMap)
 
 def displayMap():
-    if(display_is_active==True):
-        for tile in tileGen():
-            # print(type(TheMap))
-            if(TheMap[tile[1],tile[0]]==0):
-                block(32*tile[0],32*tile[1])
+    for tile in tileGen():
+        # print(type(TheMap))
+        if(TheMap[tile[1],tile[0]]==0):
+            block(32*tile[0],32*tile[1])
 
 # =============================TILES====================
 Tiles = [[[] for lol in range(16)] for lil in range(16)]
@@ -103,13 +89,12 @@ def crate(x,y):
 def displayCrates():
     # in: crateMap
     # out: None
-    if(display_is_active==True):
-        tileGened = tileGen()
-        for tile in tileGened:
-            xTile = tile[0]
-            yTile = tile[1]
-            if(crateMap[yTile,xTile]==0):
-                crate(32*xTile,32*yTile)
+    tileGened = tileGen()
+    for tile in tileGened:
+        xTile = tile[0]
+        yTile = tile[1]
+        if(crateMap[yTile,xTile]==0):
+            crate(32*xTile,32*yTile)
 
 def airBlast(x,y):
     gameDisplay.blit(Tiles[3][0], (x, y))
@@ -119,11 +104,9 @@ def displayAirBlasts():
     for airBlast in airBlasts:
         # Tiles[3][0-5]
         timePassed = time.time() - airBlast[2]
-        # print("airBlast",airBlast)
-        # print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
-        if(display_is_active==True):
-            if(isIndexesRangeTileRange([3,0+int((2.5*timePassed*1000)/100)])==True):
-                gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+        print("airBlast",airBlast)
+        print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
+        gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
 
@@ -146,12 +129,11 @@ def displayBombs():
     # in: listOfBombs
     # out: None
     for bombDis in listOfBombs:
-        # print("bombDis",bombDis)
+        print("bombDis",bombDis)
         timePassed =  time.time() - bombDis[1]
-        # print("timePassed",timePassed)
+        print("timePassed",timePassed)
         # max 5+something =11
-        if(isIndexesRangeTileRange([1,5+int((3*timePassed*100)/100)])==True):
-            gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
+        gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
 def displayBrokenCratesAndUpdateCollision():
     global brokenCrates
@@ -160,20 +142,13 @@ def displayBrokenCratesAndUpdateCollision():
     for brokenCrate in brokenCrates:
         # Tiles[3][0-7]
         timePassed = time.time() - brokenCrate[2]
-        if(isIndexesRangeTileRange([4,0+int((4*timePassed*1000)/100)])==True):
-            print("brokenCrates",brokenCrates)
-            print("[4,0+int((4*timePassed*1000)/100)]",[4,0+int((4*timePassed*1000)/100)])
-            if(display_is_active==True):
-                gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
         if(timePassed*1000>200):
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
             brokenCrates.remove(brokenCrate)
+            # lighterMapDisplayList.append([brokenCrate[0],brokenCrate[1]])
             generateItem(brokenCrate[0],brokenCrate[1])
-
-def namestr(obj, namespace):
-    print("namespace",str(namespace))
-    return [name for name in namespace if namespace[name] is obj]
 
 
 def displayScores():
@@ -182,36 +157,6 @@ def displayScores():
         # displayText(tmpString,(display_width / 2), (display_height / 2))
         displayText(tmpString,(display_width / 2), (display_height / 6)+32*player[3][0])
     # displayText("lol",(display_width/2),(display_height/2))
-    # displaying the player(s) controlled by the client
-    playersOrder = ['red','green','cyan','blue']
-    playersKeyboardStr = ['red: sedf w',
-                          'green: 4586 0',
-                          'cyan : up right down left lcontrol',
-                          'blue: jikl space']
-    tmpString = "Controlled players:"
-    tmpString2 = ''
-    if(openTheGameOnInternet==True):
-        tmpString3 = 'toggle internet availibity: press f8 (not active)'
-    else:
-        tmpString3 = 'toggle internet availibity: press f8 (active)'
-    print("tmpString3",tmpString3)
-    # debugging purpose
-    # global controlsGreenPlayer
-    # namestr(controlsGreenPlayer,globals())
-    if(clientSlotKeyboardMapping != []):
-        for i in range(4):
-            if(clientSlotKeyboardMapping[i]==1):
-                tmpString += " "+ playersOrder[i]
-                # tmpString2 += " "+ str(namestr(controlsForPlayers[i],globals()))
-                # tmpString2 += " "+ str(namestr([controlsForPlayers[i]],globals()))
-                # tmpString2 += " "+ str(namestr([controlsForPlayers[i][j] for j in range(4)],globals()))
-                tmpString2 = playersKeyboardStr[i]
-                displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * (6+i))
-        displayText(tmpString, (display_width / 2), (display_height / 6) + 32 * 5)
-        displayText(tmpString3, (display_width / 2), (display_height / 6) + 32 * 8)
-        # displayText(tmpString2, (display_width / 2), (display_height / 6) + 32 * 6)
-        # print("tmpString2",tmpString2)
-
     pass
 
 def displayText(text,x,y):
@@ -234,7 +179,7 @@ def displayAdditionnalBomb(x,y):
     gameDisplay.blit(Tiles[6][3], (32*x,32*y))
 
 def displayItems():
-    # print("displayLighters")
+    print("displayLighters")
     # debugging purpose
     # lighterMapDisplayList.append([4,4])
     for lighter in lighterMapDisplayList:
@@ -279,48 +224,6 @@ Players[0][0] = [32*0 ,32*0]
 # sfde ctrl shift
 Controls_from_kbd = [ [[0,0,0,0],[0,0]] for j in range(4)]
 # Controls_from_kbd = [ [0,0,0,0,0,0] for j in range(4)]
-
-# # https://github.com/flyte/upnpclient
-# import upnpclient
-# devices = upnpclient.discover()
-# # debugging  purpose
-# # print(devices)
-# d = devices[0]
-def addUPnPrule(port,internal_ip,udp_tcp=('UDP'or'TCP')):
-    print('def addUPnPrule(port,internal_ip):')
-    tmplol = d.WANIPConn1.AddPortMapping(
-    # NewRemoteHost='192.168.1.99',
-    # pro tip: never thrust the error output coming from the upnp device,
-    # it could name a problem that is not the actual problem
-    NewRemoteHost='',
-    NewExternalPort=int(port),
-    NewProtocol=udp_tcp,
-    NewInternalPort=int(port),
-    NewInternalClient=internal_ip,
-    NewEnabled='true',
-    NewPortMappingDescription='BombermanByNotSure',
-    NewLeaseDuration=10000)
-    if(bool(tmplol)==False):
-        print('addUPnPrule')
-    else:
-        print('!addUPnPrule')
-
-def removeUPnPrule(port,udp_tcp=('UDP'or'TCP')):
-    print('def removeUPnPrule(port):')
-    tmplol = d.WANIPConn1.DeletePortMapping(
-    # pro tip: never thrust the error output coming from the upnp device,
-    # it could name a problem that is not the actual problem
-    NewRemoteHost='',
-    NewExternalPort=int(port),
-    NewProtocol=udp_tcp)
-    if(bool(tmplol)==False):
-        print('removeUPnPrule')
-    else:
-        print('!removeUPnPrule')
-# testing purposes
-# removeUPnPrule()
-# testing purposes
-# addUPnPrule()
 
 def newRound():
     global runningMain
@@ -386,7 +289,7 @@ def numberOfPlayersAlive():
     for player in Players:
         if (player[2][0]!=0):
             alivePlayersCount +=1
-    # print("alivePlayersCount",alivePlayersCount)
+    print("alivePlayersCount",alivePlayersCount)
     return alivePlayersCount
 
 
@@ -438,15 +341,13 @@ def generateItem(y,x):
         # print("if(TheMap[y,x]!=0):")
         if(crateMap[y,x]==1):
             if(random.randint(0,1)%2==0):
-                if(not [y,x] in lighterMapDisplayList):
-                    lighterMap[y,x] = 1
-                    lighterMapDisplayList.append([y,x])
+                lighterMap[y,x] = 1
+                lighterMapDisplayList.append([y,x])
             else:
                 # print("[y,x]",[y,x])
                 # print("additionnalBombMap\n",additionnalBombMap)
-                if(not [y,x] in additionnalBombMapDisplayList):
-                    additionnalBombMap[y][x] = 1
-                    additionnalBombMapDisplayList.append([y,x])
+                additionnalBombMap[y][x] = 1
+                additionnalBombMapDisplayList.append([y,x])
 
 def playersPickupsItems():
     # for hitboxes()
@@ -454,9 +355,8 @@ def playersPickupsItems():
     global Players
     global lighterMap
     global lighterMapDisplayList
-    # print("lighterMapDisplayList",lighterMapDisplayList)
-    for hitbox in PlayersWhitboxesAindex:
-        for lighter in lighterMapDisplayList:
+    for lighter in lighterMapDisplayList:
+        for hitbox in PlayersWhitboxesAindex:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
             if(np.array_equal([hitbox[1],hitbox[0]],[lighter[1],lighter[0]])):
                 # modifying bla st length counts
@@ -465,13 +365,11 @@ def playersPickupsItems():
                 lighterMap[lighter[0],lighter[1]] = 0
                 # removing the lighter
                 lighterMapDisplayList.remove(lighter)
-                break
 
     global additionnalBombMap
     global additionnalBombMapDisplayList
-    # print("additionnalBombMapDisplayList",additionnalBombMapDisplayList)
-    for hitbox in PlayersWhitboxesAindex:
-        for additionnalBomb in additionnalBombMapDisplayList:
+    for additionnalBomb in additionnalBombMapDisplayList:
+        for hitbox in PlayersWhitboxesAindex:
             # print("playersPickupsItems:hitbox,lighter:",hitbox,lighter)
             if(np.array_equal([hitbox[1],hitbox[0]],[additionnalBomb[1],additionnalBomb[0]])):
                 # modifying bombs count
@@ -480,7 +378,6 @@ def playersPickupsItems():
                 additionnalBombMap[additionnalBomb[0],additionnalBomb[1]] = 0
                 # removing the lighter
                 additionnalBombMapDisplayList.remove(additionnalBomb)
-                break
 
 
 def ColisionCheckAndMovement():
@@ -488,9 +385,9 @@ def ColisionCheckAndMovement():
     # out: Players
     global Players
     # i=0
-    # print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
+    print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        # print("ColisionCheckAndMovement:player,control,i",player,control,i)
+        print("ColisionCheckAndMovement:player,control,i",player,control,i)
         # print("i:",i)
         # sfde ctrl shift
         step = 8
@@ -498,41 +395,6 @@ def ColisionCheckAndMovement():
         # ==============================================================
         yTmp = player[0][1]
         xTmp = player[0][0]
-        # print("Players",Players)
-        # if(listOfBombs!=[]):
-        #     print("listOfBombs",listOfBombs)
-        ignoreTheKey = 0
-        # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
-        for l in listOfBombs:
-            # print("l",l)
-            # print("[int(yTmp/32),int(xTmp/32)]",[int(yTmp/32),int(xTmp/32)])
-            for hit in PlayersWhitboxesAindex:
-                # print("hit",hit)
-                if(hit[2]==i):
-                    # print("if(hit[2]==i):")
-                    if(np.array_equal([hit[0],hit[1]],l[0])==False):
-                        # print("if(np.array_equal([hit[0],hit[1]],l[0])==False):")
-                        # sfde
-                        if (control[0][0] == 1):
-                            if(np.array_equal([hit[0],hit[1]-1],l[0])==True):
-                                ignoreTheKey +=1
-                        if (control[0][1] == 1):
-                            if(np.array_equal([hit[0],hit[1]+1],l[0])==True):
-                                ignoreTheKey +=1
-                        if (control[0][2] == 1):
-                            if(np.array_equal([hit[0]+1,hit[1]],l[0])==True):
-                                ignoreTheKey +=1
-                        if (control[0][3] == 1):
-                            if(np.array_equal([hit[0]-1,hit[1]],l[0])==True):
-                                ignoreTheKey +=1
-        # print("ignoreTheKey",ignoreTheKey)
-        if(ignoreTheKey>=2):
-            continue
-
-        if(clientSlotKeyboardMapping != []):
-            if(clientSlotKeyboardMapping[i]==0):
-                # print("ColisionCheckAndMovement:continue")
-                continue
         if(player[2][0]==1):
         # if(player[2]==1):
             # s
@@ -611,7 +473,7 @@ def ColisionCheckAndMovement():
 
             # ctrl
             if(control[1][0]==1):
-                # print("if(control[1][1]==1):")
+                print("if(control[1][1]==1):")
                 if(player[1][0]>0):
                     tryingToPutBomb(player)
 
@@ -625,15 +487,14 @@ def tryingToPutBomb(player):
     # yPos = player[0][1]
     xPos = int((player[0][0] +16)/32)
     yPos = int((player[0][1] +16)/32)
-    # print("tryingToPutBomb:xPos,yPos",xPos,yPos)
+    print("tryingToPutBomb:xPos,yPos",xPos,yPos)
     # does the player still have remaining bombs to put
     if(player[1][0] != 0):
-        # if(listOfBombs!=[]):
-        if(Players[player[3][0]][1][0]>0):
+        if(listOfBombs!=[]):
             # print("listOfBombs[:,0]",listOfBombs[:,0])
             alreadyBusy = False
             for tmpBomb in listOfBombs:
-                # print([yPos,xPos],tmpBomb[0])
+                print([yPos,xPos],tmpBomb[0])
                 if(np.array_equal([yPos,xPos],tmpBomb[0])==1):
                     alreadyBusy = True
             # if the place is empty
@@ -641,9 +502,9 @@ def tryingToPutBomb(player):
                 # pos, timestamp, blast length, owner
                 listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
                 Players[player[3][0]][1][0] -=1
-        # else:
-        #     listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
-        #     Players[player[3][0]][1][0] -=1
+        else:
+            listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
+            Players[player[3][0]][1][0] -=1
 
 def checkForExplodingBomb():
     # in: (global) listOfBombs
@@ -654,22 +515,22 @@ def checkForExplodingBomb():
     responsibleBomb = []
     PlayersWhitboxesAindex = hitboxes()
     for bombExpOrNot in listOfBombs:
-        # print("checkForExplodingBomb:bombExpOrNot",bombExpOrNot)
+        print("bombExpOrNot",bombExpOrNot)
         if((time.time()-bombExpOrNot[1])*1000>2000):
             # print("(time.time()-bombExpOrNot[1])",(time.time()-bombExpOrNot[1]))
-            # print("if((time.time()-bombExpOrNot[1])<2000):")
+            print("if((time.time()-bombExpOrNot[1])<2000):")
             # bomb exploding
-            # print("listOfBombs",listOfBombs)
+            print("listOfBombs",listOfBombs)
             explodingBomb(bombExpOrNot)
-            # print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
+            print("checkForExplodingBomb:bombExpOrNot[2]",bombExpOrNot[2])
             responsibleBomb = bombExpOrNot
             # adding the bomb position to the airBlasts (to fix score count about suicide)
             airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
-    # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+    print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
 
-    # if(Players[0][2] == [0]):
-    #     print()
+    if(Players[0][2] == [0]):
+        print()
 
     if (responsibleBomb != []):
         # done: fix the double score count
@@ -719,15 +580,14 @@ def explodingBomb(bombExpOrNot):
     # in: (global) listOfBombs
     # in: (global) Players (killing them) (and checking hitboxes)
 
-    # print("explodingBomb:bombExpOrNot",bombExpOrNot)
+    print("explodingBomb:bombExpOrNot",bombExpOrNot)
     Players[bombExpOrNot[3]][1][0] +=1
 
     # displaying the local blast
     # global airBlastDisplay
     # airBlastDisplay[bombExpOrNot[0][1], bombExpOrNot[0][0]] = 1
-    # print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
-    if(display_is_active==True):
-        airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    print("explodingBomb:32*bombExpOrNot[0][1],32*bombExpOrNot[0][0]",32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
+    airBlast(32*bombExpOrNot[0][1],32*bombExpOrNot[0][0])
 
     global listOfBombs
 
@@ -736,7 +596,7 @@ def explodingBomb(bombExpOrNot):
     global airBlasts
 
     # remaining amount of bombs for the current player
-    # print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
+    print("explodingBomb:Players[bombExpOrNot[3]][1][0]", Players[bombExpOrNot[3]][1][0])
     listOfBombs.remove(bombExpOrNot)
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -746,10 +606,10 @@ def explodingBomb(bombExpOrNot):
     # for bombPosition in listOfBombs:
     # yBomb = bombPosition[0]
     # xBomb = bombPosition[1]
-    # print("explodingBomb:bombExpOrNot",bombExpOrNot)
+    print("explodingBomb:bombExpOrNot",bombExpOrNot)
     yBomb = bombExpOrNot[0][0]
     xBomb = bombExpOrNot[0][1]
-    # print("explodingBomb:yBomb,xBomb",yBomb,xBomb)
+    print("explodingBomb:yBomb,xBomb",yBomb,xBomb)
 
     pathInBlasts = np.zeros_like(crateMap)
 
@@ -777,9 +637,9 @@ def explodingBomb(bombExpOrNot):
             pathInBlasts[yTmp, xTmp] = 1
             if(listOfBombs!=[]):
                 for checkingBomb in listOfBombs:
-                    # print("explodingBomb:[checkingBomb[0][0],checkingBomb[0][1]]",[checkingBomb[0][0],checkingBomb[0][1]])
+                    print("explodingBomb:[checkingBomb[0][0],checkingBomb[0][1]]",[checkingBomb[0][0],checkingBomb[0][1]])
                     if (np.array_equal([checkingBomb[0][0], checkingBomb[0][1]], [yTmp, xTmp])):
-                        # print("issuing:explodingBomb(checkingBomb)")
+                        print("issuing:explodingBomb(checkingBomb)")
                         explodingBomb(checkingBomb)
             if (i == 0):
                 xTmp += 1
@@ -813,9 +673,9 @@ def explodingBomb(bombExpOrNot):
                     # airBlast
                     airBlasts.append([yTmp,xTmp,time.time()])
 
-            # print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
+            print("explodingBomb:[yTmp, xTmp]:",[yTmp, xTmp])
 
-    # print("pathInBlasts\n",pathInBlasts)
+    print("pathInBlasts\n",pathInBlasts)
 
 
     # for bombExpOrNotExp in listOfBombs:
@@ -832,17 +692,6 @@ def isIndexesRange(point):
                     isInsideIndexRange = True
     return isInsideIndexRange
 
-
-def isIndexesRangeTileRange(point):
-    isInsideIndexRange = False
-    if (point[1] >= 0):
-        if (point[1] < 16):
-            if (point[0] >= 0):
-                if (point[0] < 16):
-                    # print("ii in (0,0) and (19,15)")
-                    isInsideIndexRange = True
-    return isInsideIndexRange
-
 def hitboxes():
     # in: Players
     # out: PlayersWhitboxesAindex
@@ -851,7 +700,7 @@ def hitboxes():
         outHitboxes.append([int((player[0][1]+2)/32),int((player[0][0]+2)/32),player[3][0]])
         outHitboxes.append([int((player[0][1]+30)/32),int((player[0][0]+30)/32),player[3][0]])
         # pass
-    # print("outHitboxes",outHitboxes)
+    print("outHitboxes",outHitboxes)
     return outHitboxes
 
 PlayersWhitboxesAindex = hitboxes()
@@ -870,27 +719,21 @@ controlsForPlayers = [controlsGreenPlayer,controlsRedPlayer,controlsBluePlayer,c
 
 boolDisplayScores = False
 
-def keyboardRead(active=True):
+def keyboardRead():
     # sfde ctrl shift
     global Controls_from_kbd
 
     global boolDisplayScores
 
     for event in pygame.event.get():
-        # print("event.type",event.type)
+        print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
         if event.type == pygame.KEYDOWN:
-            # print("pygame.K_TAB",pygame.K_TAB)
+            print("pygame.K_TAB",pygame.K_TAB)
             print("event.key",event.key)
-            global openTheGameOnInternet
-            if event.key == pygame.K_F8:
-                openTheGameOnInternet = not openTheGameOnInternet
-                print("openTheGameOnInternet",openTheGameOnInternet)
             if event.key == pygame.K_TAB:
                 boolDisplayScores = True
-            if(active==False):
-                continue
             for controls,playerNumber in zip(controlsForPlayers,range(0,4)):
                 # print("controls",controls)
                 for control,index in zip(controls,range(0,5)):
@@ -898,8 +741,8 @@ def keyboardRead(active=True):
                     # print("index",index)
                     # 262 is 6 in numpad
                     # print("int(event.key)",int(event.key))
-                    # if event.key == pygame.K_6:
-                    #     print()
+                    if event.key == pygame.K_6:
+                        print()
                     if event.key == control :
                         # sfde ctrl shift
                         if(index<4):
@@ -921,1182 +764,11 @@ def keyboardRead(active=True):
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
-
-
 end_of_round_time = time.time()
 
-# todo: menu here
-# menu: create game/join game/quit
-
-# MAINMENU:
-# INIT all the screen
-TheMap = np.zeros_like(TheMap)
-crateMap = np.zeros_like(TheMap)
-# path for cyan player
-# line going down
-TheMap[1:9,3] = 1
-crateMap[1:9,3] = 1
-# create a game
-TheMap[4,3:7] = 1
-crateMap[4,3:7] = 1
-# join a game
-TheMap[6,3:7] = 1
-crateMap[6,3:7] = 1
-# quit bomberman
-TheMap[8,3:7] = 1
-crateMap[8,3:7] = 1
-
-# green lockdown
-TheMap[14,19]=1
-crateMap[14,19]=1
-# cyan lockdown
-TheMap[14,0]=1
-crateMap[14,0]=1
-# blue lockdown
-TheMap[0,19]=1
-crateMap[0,19]=1
-
-
-
-# starting position in the menu
-Players[3][0] = [32*3 ,32*1]
-# useless players
-Players[2][0] = [32*19,32*0]
-Players[1][0] = [32*19,32*14]
-Players[0][0] = [32*0 ,32*14]
-
-createPointInter = [4,6]
-joinPointInter = [6,6]
-quitPointInter = [8,6]
-interactingPoints = [createPointInter,joinPointInter,quitPointInter]
-
-import struct
-def sendOneMulticastAdToLAN():
-    # print("sendOneMulticastAdToLAN")
-    message = b'bomberman-by-not-sure'
-    multicast_group = ('192.168.1.255', 5008)
-    # Create the datagram socket
-    sock_multicast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # Set a timeout so the socket does not block
-    # indefinitely when trying to receive data.
-    sock_multicast.settimeout(0)
-    # Set the time-to-live for messages to 1 so they do not
-    # go past the local network segment.
-    ttl = struct.pack('b', 1)
-    sock_multicast.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
-    # MY_IP = "192.168.1.99"
-    MY_IP = IP_on_LAN
-    sock_multicast.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(MY_IP))
-    try:
-        # while(range(100,0,-1)):
-        # Send data to the multicast group
-        # print('sending {!r}'.format(message))
-        sent = sock_multicast.sendto(message, multicast_group)
-    finally:
-        # print('closing socket')
-        sock_multicast.close()
-
-runningMenuMain = True
-createMenuWhile = False
-joinMenuWhile = False
-
-# when createMenuWhile is True
-playInLocalWhile = False
-
-createServerTcpIpMenuWhile = False
-
-joinAtcpIpGameMenuWhile = False
-
-
-enableTcpServerThread = False
-
-listingOfLanHostMenu = False
-
-server_IP_joined = []
-
-lan_listener = 0
-
-# todo:add the TCP Server
-
-# todo:numberOfLocalPlayersMenuWhile = False
-# todo:dedicated menu
-# todo:normal menu
-
-# Clients information for TCP connect managed by the server
-clientIDsWgameState = []
-
-from MultiBN import *
-
-# function used by nothing right now
-def manageTCPclientIncomingPackets(incomingData):
-    global clientIDsWgameState
-    print("manageTCPclientIncomingPackets")
-    print("MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-    array = (incomingData.decode()).split('|')
-
-    print("array",array)
-
-    if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):
-        print("if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
-        if(clientIDsWgameState.lengh<4):
-            print("if (clientIDsWgameState.lengh < 4):")
-            pass
-    else:
-        print()
-
-    pass
-
-pingTimeStart = time.time()
-
-numberOfLocalPlayers = -1
-
-clientSlotKeyboardMapping = []
-
-import socket
-# used by the client
-tcpClientGameState = [0 for i in range(0, 7)]
-def mangageOutGoingTCPclientPackets():
-    print("def mangageOutGoingTCPclientPackets():")
-
-    global tcpClientGameState
-    print("tcpClientGameState", tcpClientGameState)
-
-    global pingTimeStart
-
-    global clientSlotKeyboardMapping
-
-    # TCP_SERVER_IP = "192.168.1.99"
-    TCP_SERVER_IP = server_IP_joined
-
-    if(tcpClientGameState[0]==0):
-        print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0]==0):")
-        dataTCPclient = str(MBN_TCP_CLIENT_JOIN_REQUIRED)
-        print("mangageOutGoingTCPclientPackets:MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        # Connect to server and send data
-        print("mangageOutGoingTCPclientPackets:str(TCP_SERVER_IP) str(8888)",str(TCP_SERVER_IP), str(8888))
-        sock.connect((TCP_SERVER_IP, 8888))
-        sock.sendall(bytes(dataTCPclient, "utf-8"))
-
-        # Receive data from the server and shut down
-        received = str(sock.recv(4096), "utf-8")
-        print("mangageOutGoingTCPclientPackets:received", received)
-
-        if(int(received.split('|')[0])==MBN_TCP_SERVER_JOIN_ACCEPTED):
-            # MBN_TCP_SERVER_JOIN_ACCEPTED
-            # Join accepted
-            tcpClientGameState[0] = 1
-
-    print("numberOfLocalPlayers",numberOfLocalPlayers)
-    if(tcpClientGameState[0] == 1):
-        print("mangageOutGoingTCPclientPackets:if(tcpClientGameState[0] == 1):")
-        # numberOfLocalPlayers set in joined tcp game menu
-        if(numberOfLocalPlayers>=0):
-            print("if(numberOfLocalPlayers>=0):")
-
-            if(tcpClientGameState[1] == 0):
-                # dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + 'lol_ahah'
-                dataTCPclient = str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS) + "|" + str(numberOfLocalPlayers)
-                print("mangageOutGoingTCPclientPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS",MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)
-
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-                # Connect to server and send data
-                sock.connect((TCP_SERVER_IP, 8888))
-                sock.sendall(bytes(dataTCPclient, "utf-8"))
-
-                # Receive data from the server and shut down
-                received = str(sock.recv(4096), "utf-8")
-                print("mangageOutGoingTCPclientPackets:received", received)
-
-                tcpClientGameState[1] = 1
-
-                # print("type(received)",type(received))
-                # tmpSplit = pickle.loads(received)
-                # print("tmpSplit",tmpSplit)
-                # if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
-                #     clientSlotKeyboardMapping = tmpSplit[1]
-                tmpSplit = received.split("|")
-                if(int(tmpSplit[0])==MBN_SESSION_TCP_SERVER_SLOTS_MAPPING):
-                    tmpClient = [int(tmpSplit[1][1]),int(tmpSplit[1][1+3]),int(tmpSplit[1][1+6]),int(tmpSplit[1][1+9])]
-                    clientSlotKeyboardMapping = tmpClient
-                    print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
-                    pass
-
-
-            # todo: change the server side
-            # todo: change the tcpClientGameState[0]
-            # todo: change the tcpServerGameState[ClientID][0]
-        else:
-            print("!if(numberOfLocalPlayers>=0):")
-
-    if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):
-        print("if((time.time()-pingTimeStart)*1000>MBN_CON_UDP_CLIENT_DATA_PING_MS):")
-        print("(time.time()-pingTimeStart)*1000",(time.time()-pingTimeStart)*1000)
-        pingTimeStart = time.time()
-
-        dataTCPclient = str(random.randint(1000,10000))
-        print("mangageOutGoingTCPclientPackets:MBN_TCP_CLIENT_JOIN_REQUIRED",MBN_TCP_CLIENT_JOIN_REQUIRED)
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        # Connect to server and send data
-        sock.connect((TCP_SERVER_IP, 8888))
-        sock.sendall(bytes(dataTCPclient, "utf-8"))
-
-        # Receive data from the server and shut down
-        received = str(sock.recv(4096), "utf-8")
-        print("mangageOutGoingTCPclientPackets:received", received)
-        print("ping time",(time.time()-pingTimeStart)*1000,"ms")
-
-# trying to figure out the IP on the LAN network
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-try:
-    # doesn't even have to be reachable
-    s.connect(('10.255.255.255', 1))
-    IP_on_LAN = s.getsockname()[0]
-except:
-    IP_on_LAN = '127.0.0.1'
-finally:
-    s.close()
-print("IP_on_LAN", IP_on_LAN)
-
-OnceTCPclient = True
-
-joinedAtcpIpGameMenuWhile = False
-
-
-
-currentHostsOnLan = []
-
-import socketserver, threading, time
-import socket
-
-# UDP connexion handling
-# todo: queuing data that needs processing
-class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
-    def handle(self):
-        global currentHostsOnLan
-        # print("ThreadedUDPRequestHandler:handle")
-        data = self.request[0].strip()
-        socket = self.request[1]
-        # print("data",data)
-        print("socket.getsockname()",socket.getsockname())
-        # (HOST_UDP_server, PORT_UDP_server)
-        if(socket.getsockname()[1]==5007):
-            # print("if(socket.getsockname()[1]==5007):")
-            decodedData = pickle.loads(data)
-            # print("decodedData",decodedData)
-            global Players
-            global Controls
-            global Controls_from_kbd
-            if(decodedData[2]=="clientSlotKeyboardMapping"):
-                # "clientSlotKeyboardMapping", clientSlotKeyboardMapping
-                # print("global Players")
-                for slot,i in zip(decodedData[3],range(4)):
-                    # print("for slot,i in zip(decodedData[3],range(4)):")
-                    if(slot==1):
-                        # print("Players[i]",Players[i])
-                        # print("decodedData[1][i]",decodedData[1][i])
-                        Players[i] = decodedData[1][i]
-                        if (decodedData[6] == "Controls_from_kbd"):
-                            Controls_from_kbd[i] = decodedData[7][i]
-                            print("Controls_from_kbd[i]",Controls_from_kbd[i])
-                            pass
-            if(decodedData[4]=="listOfBombsFromClient"):
-                for bomb in decodedData[5]:
-                    # done: do a duplicate checking here as well
-                    isAlreadyUse = False
-                    for b2 in listOfBombs:
-                        # print("bomb,b2", bomb, b2)
-                        if (np.array_equal(bomb[0], b2[0]) == True):
-                            # print("if (np.array_equal(bomb[0], b2[0]) == True):")
-                            isAlreadyUse = True
-                        else:
-                            pass
-                            # print("!if (np.array_equal(bomb[0], b2[0]) == True):")
-                    if (isAlreadyUse == False):
-                        if (bomb[1] < 1.5):
-                            listOfBombs.append([bomb[0], time.time() - bomb[1], bomb[2], bomb[3]])
-                        # listOfBombs.append(bomb)
-        if(socket.getsockname()[1]==5008):
-            # print("if(socket.getsockname()[1]==5008):")
-            # print("currentHostsOnLan",currentHostsOnLan)
-            if(data == b'bomberman-by-not-sure'):
-                print("b'bomberman-by-not-sure'")
-                tmpData, tmpAddress = socket.recvfrom(4096)
-                if(tmpAddress[0] not in currentHostsOnLan):
-                    currentHostsOnLan.append(tmpAddress[0])
-                return
-            else:
-                # print("!b'bomberman-by-not-sure'")
-                pass
-            if(listingOfLanHostMenu!=True and joinedAtcpIpGameMenuWhile!=True):
-                decodedData = pickle.loads(data)
-                # print("decodedData",decodedData)
-                if(decodedData[0]=="crateMap"):
-                    global crateMap
-                    crateMap = decodedData[1]
-                for slot,i in zip(clientSlotKeyboardMapping,range(4)):
-                    if(slot==0):
-                        Players[i] = decodedData[3][i]
-                if(decodedData[6]=="listOfBombsFromServer"):
-                    for b in decodedData[7]:
-                        # print("decodedData[7]",decodedData[7])
-                        isAlreadyUse = False
-                        for b2 in listOfBombs:
-                            # print("b,b2",b,b2)
-                            if(np.array_equal(b[0],b2[0])==True):
-                                # print("if(np.array_equal(b[0],b2[0])==True):")
-                                isAlreadyUse = True
-                            else:
-                                pass
-                                # print("!if(np.array_equal(b[0],b2[0])==True):")
-                        if(isAlreadyUse==False):
-                            # print("if(isAlreadyUse==False):")
-                            if(b[1]<1.5):
-                                if(clientSlotKeyboardMapping[b[3]]==0):
-                                    listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
-                        else:
-                            pass
-                            # print("if(isAlreadyUse==True):")
-                        # listOfBombs.append([b[0],time.time()-b[1],b[2],b[3]])
-        # print("ThreadedUDPRequestHandler: {}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
-        # print("threading.activeCount()",threading.activeCount())
-        # socket.sendto(data.upper(), self.client_address)
-
-class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
-    pass
-
-clientsIPSports = []
-
-# TCP connexion handling
-class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-    def handle(self):
-        print("ThreadedTCPRequestHandler:handle")
-        # self.request is the TCP socket connected to the client
-        self.data = self.request.recv(1024).strip()
-        print("self.client_address",self.client_address)
-        global clientsIPSports
-        print("clientsIPSports",clientsIPSports)
-        # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
-        print("self.data",self.data)
-        data4function = self.data
-        answer = manageTCPserverPackets(data4function,self.client_address)
-        print("ThreadedTCPRequestHandler:answer",answer)
-        # answering the client
-        self.request.sendall(bytes(answer.encode()))
-        # # just send back the same data, but upper-cased
-        # self.request.sendall(self.data.upper())
-        print("ThreadedTCPRequestHandler:self.data",self.data)
-
-class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    pass
-
-listInternetGameMenu = False
-
-while(True):
-	# print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile)
-    # print("runningMenuMain,createMenuWhile,createServerTcpIpMenuWhile,joinAtcpIpGameMenuWhile,joinedAtcpIpGameMenuWhile",
-     #  runningMenuMain, createMenuWhile, createServerTcpIpMenuWhile, joinAtcpIpGameMenuWhile, joinedAtcpIpGameMenuWhile)
-    if(runningMenuMain==True):
-        # print("==========================================================")
-        pygame.display.set_caption('Bomberman-by-not-sure (Main menu)')
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if(keyboard.is_pressed('esc')):
-            runningMenuMain = False
-            print("issuing the esc key")
-            pygame.quit()
-            quit()
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        displayText("Solo or Host",(display_width / 2), (display_height / 6)+32*2)
-        displayText("Multiplayer",(display_width / 2), (display_height / 6)+32*4)
-        displayText("Quit bomberman",(display_width / 2), (display_height / 6)+32*6)
-        # a bomb mean it is a work in progress
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("runningMenuMain:createPointInter",createPointInter)
-            # todo: add another submenu about creating game
-            runningMenuMain = False
-            createMenuWhile = True
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("runningMenuMain:joinPointInter",joinPointInter)
-            # todo: add another submenu about joining game
-            runningMenuMain = False
-            createMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # switching to the join menu
-            joinAtcpIpGameMenuWhile = True
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("runningMenuMain:quitPointInter",quitPointInter)
-            pygame.quit()
-            quit()
-            pass
-    if(createMenuWhile == True):
-        # print("==========================================================")
-        pygame.display.set_caption('Bomberman-by-not-sure (Create a game)')
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if(keyboard.is_pressed('esc')):
-            runningMenuMain = True
-            createMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            print("issuing the esc key")
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        displayText("Play on the same computer",(display_width / 2), (display_height / 6)+32*2)
-        displayText("Host a game for LAN or internet",(display_width / 2), (display_height / 6)+32*4)
-        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
-        # # a bomb mean it is a work in progress
-        # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("createMenuWhile:Local",createPointInter)
-            playInLocalWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # newRound in local
-            # start the local multiplayer
-            newRound()
-            # disable mulmticast adv
-            playing_on_same_computer = True
-            # stopping the menu loop
-            break
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("createMenuWhile:Tcp/Ip",joinPointInter)
-            # todo: add another submenu about joining game
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            createServerTcpIpMenuWhile = True
-            createMenuWhile = False
-            pass
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("createMenuWhile:Go back to the main menu",quitPointInter)
-            runningMenuMain = True
-            createMenuWhile = False
-            joinMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            pass
-    # createServerTcpIpMenuWhile
-    if(createServerTcpIpMenuWhile == True):
-        # print("==========================================================")
-        pygame.display.set_caption('Bomberman-by-not-sure (Create a local/internet game)')
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if(keyboard.is_pressed('esc')):
-            runningMenuMain = True
-            createMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            print("issuing the esc key")
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        displayText("Dedicated",(display_width / 2), (display_height / 6)+32*2)
-        displayText("Normal",(display_width / 2), (display_height / 6)+32*4)
-        displayText("Go back to the main menu",(display_width / 2), (display_height / 6)+32*6)
-        # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5+0],(32*createPointInter[1],32*createPointInter[0]))
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],createPointInter)==1):
-            print("createServerTcpIpMenuWhile:dedicated",createPointInter)
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # start the local multiplayer
-            newRound()
-            # TCP Server thread enabled
-            display_is_active = False
-            enableTcpServerThread = True
-            # stopping the menu loop
-            break
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],joinPointInter)==1):
-            print("createServerTcpIpMenuWhile:Normal",joinPointInter)
-            # todo: add another submenu about joining game
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # start the local multiplayer
-            newRound()
-            # TCP Server thread enabled
-            enableTcpServerThread = True
-            break
-        if(np.array_equal([int(Players[3][0][1]/32),int(Players[3][0][0]/32)],quitPointInter)==1):
-            print("createServerTcpIpMenuWhile:Go back to the main menu",quitPointInter)
-            runningMenuMain = True
-            createMenuWhile = False
-            joinMenuWhile = False
-            createServerTcpIpMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            pass
-    if(joinAtcpIpGameMenuWhile == True):
-        # print("if(joinAtcpIpGameMenuWhile == True):")
-        pygame.display.set_caption('Bomberman-by-not-sure (Join a Tcp/Ip Game)')
-
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if (keyboard.is_pressed('esc')):
-            runningMenuMain = False
-            print("issuing the esc key")
-            pygame.quit()
-            quit()
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-        displayText("Local Area Network", (display_width / 2), (display_height / 6) + 32 * 2)
-        displayText("Internet", (display_width / 2), (display_height / 6) + 32 * 4)
-        displayText("Go back to the main menu", (display_width / 2), (display_height / 6) + 32 * 6)
-        # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * joinPointInter[0]))
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-            print("joinAtcpIpGameMenuWhile:createPointInter", createPointInter)
-            # todo: add another submenu about creating game
-            runningMenuMain = False
-            createMenuWhile = False
-            joinAtcpIpGameMenuWhile = False
-            joinedAtcpIpGameMenuWhile = False
-            listingOfLanHostMenu = True
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-
-            # line going down
-            TheMap[1:15, 3] = 1
-            crateMap[1:15, 3] = 1
-            # back
-            TheMap[14, 3:7] = 1
-            crateMap[14, 3:7] = 1
-            # masking useless parts
-            TheMap[1:13, 4:8] = 0
-            crateMap[1:13, 4:8] = 0
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-            print("joinAtcpIpGameMenuWhile:joinPointInter", joinPointInter)
-            # todo: add another submenu about joining game
-        #     runningMenuMain = False
-        #     createMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # client udp opening using upnp
-            devices = upnpclient.discover()
-            d = devices[0]
-            addUPnPrule(5008,IP_on_LAN)
-
-            listInternetGameMenu = True
-            runningMenuMain = False
-            createMenuWhile = False
-            joinAtcpIpGameMenuWhile = False
-            joinedAtcpIpGameMenuWhile = False
-            # switching to the join menu
-        #     joinAtcpIpGameMenuWhile = True
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-            print("joinAtcpIpGameMenuWhile:Go back to the main menu",quitPointInter)
-            runningMenuMain = True
-            createMenuWhile = False
-            joinMenuWhile = False
-            createServerTcpIpMenuWhile = False
-            joinAtcpIpGameMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            pass
-
-    if(listInternetGameMenu ==True):
-        # send me the server list
-        print("if(listInternetGameMenu ==True):")
-        # print("==========================================================")
-        pygame.display.set_caption('Bomberman-by-not-sure (List internet games)')
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if(keyboard.is_pressed('esc')):
-            runningMenuMain = True
-            createMenuWhile = False
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            print("issuing the esc key")
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu",(display_width / 2), (display_height / 6)+32*0)
-        # # a bomb mean it is a work in progress
-        # gameDisplay.blit(Tiles[1][5+0],(32*joinPointInter[1],32*joinPointInter[0]))
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-
-        # listOfInternetGames
-
-        dataframe = pickle.dumps(['send me the server list'])
-        print(dataframe)
-        # {'NewExternalIPAddress': '109.219.170.32'}
-        sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # sockGameOnInternet.settimeout(5.0)
-        # send data in udp
-        # sockGameOnInternet.settimeout(1)
-        sockGameOnInternet.connect(('192.168.1.99', 5010))
-        sockGameOnInternet.sendall(dataframe)
-
-        listOfInternetGames = pickle.loads(sockGameOnInternet.recv(1024))
-
-        print("listOfInternetGames",listOfInternetGames)
-
-        # listOfInternetGames = [['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712],['86.208.175.103', 1, 1562418434.714712]]
-
-        # line going down
-        TheMap[1:15, 3] = 1
-        crateMap[1:15, 3] = 1
-
-        for games,gamesLN in zip(listOfInternetGames,range(0, len(listOfInternetGames))):
-            print("games",games)
-            print("gamesLN",gamesLN)
-
-            # line going down
-            TheMap[4+2*gamesLN, 4:7] = 1
-            crateMap[4+2*gamesLN, 4:7] = 1
-
-            displayText(games[0], (display_width / 2), (display_height / 6) + 32 * (2+2*gamesLN))
-
-            if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4 + 2 * gamesLN), 6])):
-                # connect to the games[gamesLN)
-                server_IP_joined = games[gamesLN]
-                listInternetGameMenu = False
-                joinedAtcpIpGameMenuWhile=True
-
-                enableTcpServerThread = True
-
-                print("listInternetGameMenu:IP_on_LAN",IP_on_LAN)
-                break
-
-                pass
-
-
-
-    if(listingOfLanHostMenu == True):
-
-        # print("if(listingOfLanHostMenu == True):")
-        pygame.display.set_caption('Bomberman-by-not-sure (listing LANs Game)')
-
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if (keyboard.is_pressed('esc')):
-            runningMenuMain = False
-            print("issuing the esc key")
-            pygame.quit()
-            quit()
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-        print("listingOfLanHostMenu:currentHostsOnLan",currentHostsOnLan)
-        for server,i in zip(currentHostsOnLan,range(len(currentHostsOnLan))):
-            # print("server",server)
-            # displaying the IP
-            displayText(server, (display_width / 2), (display_height / 6) + 32 * (2+i))
-            # making the path for the server
-            TheMap[(4+2*i), 3:7] = 1
-            crateMap[(4+2*i), 3:7] = 1
-            # print("[(4+2*i),6]",[(4+2*i),6])
-            # print("[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)]",[int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)])
-            # testing if the player is on it
-            if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):
-                print("if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], [(4+2*i),6])):")
-                server_IP_joined = server
-                print("server_IP_joined",server_IP_joined)
-                listingOfLanHostMenu=False
-                joinedAtcpIpGameMenuWhile=True
-                # putting back the cyan player on a neutral spot
-                Players[3][0] = [32 * 3, 32 * 1]
-                pass
-
-        if(lan_listener==0):
-            if (numberOfLocalPlayers < 0):
-                # spectator/players
-                print("starting UDP listening on 5008")
-
-                # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5008
-                HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5008
-                server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
-                server_thread_udp = threading.Thread(target=server_udp.serve_forever)
-                server_thread_udp.daemon = True
-                try:
-                    # servers
-                    server_thread_udp.start()
-                except (KeyboardInterrupt, SystemExit):
-                    # closing the client UDP listener
-                    server_udp.shutdown()
-                    server_udp.server_close()
-                    exit()
-
-        lan_listener += 1
-
-        displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        # check if any communication are pending or rejected
-        # mangageOutGoingTCPclientPackets()
-        # if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-        #     print("Spectator:createPointInter", createPointInter)
-        #     numberOfLocalPlayers = 0
-        #     # putting back the cyan player on a neutral spot
-        #     Players[3][0] = [32 * 3, 32 * 1]
-        #     joinedAtcpIpGameMenuWhile=False
-        #     break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
-            print("listingOfLanHostMenu:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # going back to the previous menu
-            listingOfLanHostMenu = False
-            joinAtcpIpGameMenuWhile = True
-
-            crateMap = np.zeros_like(crateMap)
-            TheMap = np.zeros_like(TheMap)
-
-            # line going down
-            TheMap[1:8, 3] = 1
-            crateMap[1:8, 3] = 1
-            # 1 line
-            TheMap[4, 3:7] = 1
-            crateMap[4, 3:7] = 1
-            # 2 line
-            TheMap[6, 3:7] = 1
-            crateMap[6, 3:7] = 1
-            # 3 line
-            TheMap[8, 3:7] = 1
-            crateMap[8, 3:7] = 1
-        #
-        #     # closing the path from the previous menu
-        #     TheMap[9, 3] = 0
-        #     crateMap[9, 3] = 0
-
-
-    if(joinedAtcpIpGameMenuWhile == True):
-        print("if(joinedAtcpIpGameMenuWhile == True):")
-
-        # line going down
-        TheMap[1:15, 3] = 1
-        crateMap[1:15, 3] = 1
-        # 1 player
-        TheMap[6, 3:7] = 1
-        crateMap[6, 3:7] = 1
-        # 2 player
-        TheMap[8, 3:7] = 1
-        crateMap[8, 3:7] = 1
-        # 3 player
-        TheMap[10, 3:7] = 1
-        crateMap[10, 3:7] = 1
-        # 4 player
-        TheMap[12, 3:7] = 1
-        crateMap[12, 3:7] = 1
-        # back
-        TheMap[14, 3:7] = 1
-        crateMap[14, 3:7] = 1
-
-        # print("if(joinAtcpIpGameMenuWhile == True):")
-        pygame.display.set_caption('Bomberman-by-not-sure (Joined a Tcp/Ip Game)')
-
-        Controls = keyboardRead()
-        ColisionCheckAndMovement()
-        if (keyboard.is_pressed('esc')):
-            runningMenuMain = False
-            print("issuing the esc key")
-            pygame.quit()
-            quit()
-        gameDisplay.fill(gray)
-        displayMap()
-        displayPlayers()
-        displayText("USE ARROWS keys to move around the menu", (display_width / 2), (display_height / 6) + 32 * 0)
-        displayText("Spectator", (display_width / 2), (display_height / 6) + 32 * 2)
-        displayText("1 player", (display_width / 2), (display_height / 6) + 32 * 4)
-        displayText("2 player", (display_width / 2), (display_height / 6) + 32 * 6)
-        displayText("3 player", (display_width / 2), (display_height / 6) + 32 * 8)
-        displayText("4 player", (display_width / 2), (display_height / 6) + 32 * 10)
-        displayText("back", (display_width / 2), (display_height / 6) + 32 * 12)
-        # a bomb mean it is a work in progress
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+0)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+2)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+4)))
-        gameDisplay.blit(Tiles[1][5 + 0], (32 * joinPointInter[1], 32 * (joinPointInter[0]+6)))
-        interactingPoints = [createPointInter, joinPointInter, quitPointInter]
-        print("joinedAtcpIpGameMenuWhile:mangageOutGoingTCPclientPackets()")
-        # check if any communication are pending or rejected
-        mangageOutGoingTCPclientPackets()
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], createPointInter) == 1):
-            print("Spectator:createPointInter", createPointInter)
-            numberOfLocalPlayers = 0
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], joinPointInter) == 1):
-            print("local1player:createPointInter", createPointInter)
-            numberOfLocalPlayers = 1
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            print()
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], quitPointInter) == 1):
-            print("local2player:createPointInter", createPointInter)
-            numberOfLocalPlayers = 2
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+2,quitPointInter[1])) == 1):
-            print("local3player:(quitPointInter[0]+2,quitPointInter[1])", (quitPointInter[0]+2,quitPointInter[1]))
-            numberOfLocalPlayers = 3
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+4,quitPointInter[1])) == 1):
-            print("local4player:(quitPointInter[0]+4,quitPointInter[1])", (quitPointInter[0]+4,quitPointInter[1]))
-            numberOfLocalPlayers = 4
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            joinedAtcpIpGameMenuWhile=False
-            break
-        if (np.array_equal([int(Players[3][0][1] / 32), int(Players[3][0][0] / 32)], (quitPointInter[0]+6,quitPointInter[1])) == 1):
-            print("back_joinedAtcpIpGameMenuWhile:(quitPointInter[0]+6,quitPointInter[1])", (quitPointInter[0]+6,quitPointInter[1]))
-            # putting back the cyan player on a neutral spot
-            Players[3][0] = [32 * 3, 32 * 1]
-            # going back to the previous menu
-            joinedAtcpIpGameMenuWhile=False
-            # joinAtcpIpGameMenuWhile=True
-            listingOfLanHostMenu=True
-
-            # # closing the path from the previous menu
-            # TheMap[9, 3] = 0
-            # crateMap[9, 3] = 0
-
-            if (tcpClientGameState[0] == 1):
-                print("if (tcpClientGameState[0] == 1):")
-                tcpClientGameState = np.zeros_like(tcpClientGameState)
-                # closing the client UDP listener
-                server_udp.shutdown()
-                server_udp.server_close()
-
-
-    pygame.display.update()
-    # print('time:',str(time.time()-st_time))
-    clock.tick(60)
-    st_time = time.time()
-
-# number of slots left on server
-slotsLeftOnServer = 4
-# slotsMappingForPlayersControl
-slotsMappingForPlayersControl = [0 for i in range(4)]
-# used by ThreadedTCPRequestHandler
-def manageTCPserverPackets(incomingData,client_addr):
-    # Clients informations for TCP connect managed by the server
-    # [clientID,IP,port,state of the game]
-    global clientIDsWgameState
-    # adding the infos to count down
-    global slotsLeftOnServer
-    global clientsIPSports
-    print("manageTCPserverPackets")
-    print("manageTCPserverPackets:MBN_TCP_CLIENT_JOIN_REQUIRED", MBN_TCP_CLIENT_JOIN_REQUIRED)
-    array = (incomingData.decode()).split('|')
-    print("manageTCPserverPackets:array", array)
-
-    if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):
-        print("manageTCPserverPackets:if(array[0]==str(MBN_TCP_CLIENT_JOIN_REQUIRED)):")
-        print("clientIDsWgameState",clientIDsWgameState)
-        if(clientIDsWgameState!=[]):
-            if(len(clientIDsWgameState)>=4):
-                print("manageTCPserverPackets:if(len(clientIDsWgameState)>=4):")
-                print("return MBN_TCP_SERVER_JOIN_REFUSED")
-                return str(MBN_TCP_SERVER_JOIN_REFUSED)
-                pass
-            else:
-                print("!if(len(clientIDsWgameState)>=4):")
-                clientID = len(clientIDsWgameState)
-                clientIDsWgameState.append([clientID,client_addr])
-                clientsIPSports.append([client_addr[0], client_addr[1]])
-                print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-                return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
-        else:
-            print("!if(clientIDsWgameState!=[]):")
-            clientID = len(clientIDsWgameState)
-            clientIDsWgameState.append([clientID,client_addr])
-            clientsIPSports.append([client_addr[0], client_addr[1]])
-            print("return MBN_TCP_SERVER_JOIN_ACCEPTED")
-            return str(MBN_TCP_SERVER_JOIN_ACCEPTED) + "|" + str(clientID) + "|" + str(slotsLeftOnServer+1)
-            pass
-    else:
-        print("manageTCPserverPackets",array[0],str(MBN_TCP_CLIENT_JOIN_REQUIRED))
-
-    if(array[0]==str(MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS)):
-        print("manageTCPserverPackets:MBN_SESSION_TCP_CLIENT_NUMBER_OF_LOCAL_PLAYERS")
-        print("manageTCPserverPackets:array[1]",array[1])
-        if(int(array[1])>slotsLeftOnServer):
-            # client ask for too many slots, answer the number available, it need to adapt its menu
-            print("str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + | + str(slotsLeftOnServer)")
-            return str(MBN_SESSION_TCP_SERVER_NUMBER_OF_AVAILABLE_PLAYERS_SLOTS)  + "|" + str(slotsLeftOnServer)
-        else:
-            if(int(array[1])==0):
-                # do nothing
-                return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(slotsMappingForPlayersControl)
-            else:
-                # array[1] is != 0
-                tmpSlotMapping = [0 for i in range(4)]
-
-                print("tmpSlotMapping",tmpSlotMapping)
-
-                # # for test purpose
-                # slotsLeftOnServer = 3
-
-                # # generating a pre-mask for the final results as shown above
-                for iSlot in range(int(slotsLeftOnServer), 0, -1):
-                    # single client is ok
-                    # work 4 with slotsLeftOnServer 4:ok
-                    # work 3 with slotsLeftOnServer 4:ok
-                    # work 2 with slotsLeftOnServer 4:ok
-                    # several clients
-                    # work 3 with slotsLeftOnServer 4 and work 1 with slotsLeftOnServer 4 ?
-                    # for iSlot in range(4 - int(slotsLeftOnServer), int(slotsLeftOnServer), 1):
-                    # enabling the mask starting from the end
-                    print("str(iSlot)", str(iSlot))
-                    tmpSlotMapping[-iSlot] = 1
-                    pass
-                print("tmpSlotMapping1",tmpSlotMapping)
-
-                i = 0
-                for j in tmpSlotMapping:
-                    if(i>=int(array[1])):
-                        tmpSlotMapping[i] = 0
-                    if (j==1):
-                        i+=1
-                print("tmpSlotMapping2",tmpSlotMapping)
-
-                slotsLeftOnServer -= int(array[1])
-
-                # todo: send the client a random number which would be used identify who is speaking to the server
-                # to make that client are not poking around the slots mapping control
-
-                print("return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + | + str(tmpSlotMapping)")
-                return str(MBN_SESSION_TCP_SERVER_SLOTS_MAPPING) + "|" + str(tmpSlotMapping)
-                # tmpPickle =  pickle.dumps([MBN_SESSION_TCP_SERVER_SLOTS_MAPPING,tmpSlotMapping])
-                # return tmpPickle
-            print("manageTCPserverPackets:slotsMappingForPlayersControl",slotsMappingForPlayersControl)
-            # return str(slotsLeftOnServer)
-            pass
-    print("manageTCPserverPackets:slotsLeftOnServer",slotsLeftOnServer)
-
-    # ping feature
-    if(int(array[0])>=1000):
-        print("manageTCPserverPackets:ping feature")
-        return str(int(array[0])+1)
-        pass
-
-    return str([])
-    pass
-
-if __name__ == "__main__":
-    if(enableTcpServerThread==True):
-        print("its alive on 8888")
-        # HOST_TCP, PORT_TCP = "0.0.0.0", 8888
-        HOST_TCP, PORT_TCP = IP_on_LAN, 8888
-        server_tcp = ThreadedTCPServer((HOST_TCP, PORT_TCP), ThreadedTCPRequestHandler)
-        server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
-        server_thread_tcp.daemon = True
-
-        try:
-            # servers
-            server_thread_tcp.start()
-            print("server_thread_tcp.start()")
-
-            # client udp opening using upnp
-            devices = upnpclient.discover()
-            d = devices[0]
-            addUPnPrule(8888, IP_on_LAN,'TCP')
-            addUPnPrule(8888, IP_on_LAN,'UDP')
-            print("server_thread_tcp.start():added pnp rule for 8888,in TCP")
-
-        except (KeyboardInterrupt, SystemExit):
-            server_thread_tcp.shutdown()
-            server_thread_tcp.server_close()
-            exit()
-
-# clean the menu on the server side
-newRound()
-
-if (numberOfLocalPlayers < 0):
-    # numberOfLocalPlayers = -1
-    # is hosting a game
-    pygame.display.set_caption('Bomberman-by-not-sure (Host of Tcp/Ip Game)')
-
-    # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5007
-    HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5007
-    server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
-    server_thread_udp = threading.Thread(target=server_udp.serve_forever)
-    server_thread_udp.daemon = True
-    try:
-        # servers
-        server_thread_udp.start()
-    except (KeyboardInterrupt, SystemExit):
-        server_thread_udp.shutdown()
-        server_thread_udp.server_close()
-        exit()
-else:
-    pass
-    # # spectator/players
-    # pygame.display.set_caption('Bomberman-by-not-sure (Client of Tcp/Ip Game)')
-    #
-    # # HOST_UDP_server, PORT_UDP_server = "0.0.0.0", 5008
-    # HOST_UDP_server, PORT_UDP_server = IP_on_LAN, 5008
-    # server_udp = ThreadedUDPServer((HOST_UDP_server, PORT_UDP_server), ThreadedUDPRequestHandler)
-    # server_thread_udp = threading.Thread(target=server_udp.serve_forever)
-    # server_thread_udp.daemon = True
-    # try:
-    #     # servers
-    #     server_thread_udp.start()
-    # except (KeyboardInterrupt, SystemExit):
-    #     server_thread_udp.shutdown()
-    #     server_thread_udp.server_close()
-    #     exit()
-
-last_ad_multicast = time.time()
-
-last_update_to_client_or_server = time.time()
-
-TICK_FRAME_MULTI = 10
-
-
-# import zlib
-
-
-if (playing_on_same_computer == True):
-    print("if (playing_on_same_computer == True):")
-    numberOfLocalPlayers = 4
-
-tryToDeclareItOnce = -1
-
-lastDeclaredInternetGameTime = time.time()
-
 while(runningMain):
-    # # print("==========================================================")
-    # # if the user joined a tcp server
-    # # todo: check server_gist.py for design pattern
-    # # todo: no blocking UDP sending
-    # # todo: time out and refusal management
-
-    if((time.time()-last_update_to_client_or_server)*1000>(1/TICK_FRAME_MULTI)*1000):
-        # print("if((time.time()-last_update_to_client_or_server)*1000<(1/TICK_FRAME_MULTI)*1000):")
-        last_update_to_client_or_server = time.time()
-        if(playing_on_same_computer==False):
-            if (numberOfLocalPlayers < 0):
-                # # numberOfLocalPlayers = -1
-                # # is hosting a game
-                # print("!if(numberOfLocalPlayers<0):")
-                for client in clientsIPSports:
-                    print("hosting")
-                    # UDP_IP_CLIENT = "127.0.0.1"
-                    # UDP_IP_CLIENT = IP_on_LAN
-                    UDP_IP_CLIENT = client[0]
-                    UDP_PORT_CLIENT = 5008
-                    if(listOfBombs!=[]):
-                        print("listOfBombs",listOfBombs)
-                    listOfBombsFromServer = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
-                    if(listOfBombsFromServer!=[]):
-                        print("listOfBombsFromServer",listOfBombsFromServer)
-                    MESSAGE = pickle.dumps(["crateMap",crateMap,"Players",Players,
-                                            "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
-                                            "listOfBombsFromServer",listOfBombsFromServer])
-                    MESSAGE_bytes = MESSAGE
-                    # print("client message:", MESSAGE_bytes)
-
-                    sock = socket.socket(socket.AF_INET,  # Internet
-                                         socket.SOCK_DGRAM)  # UDP
-                    sock.setblocking(False)
-                    # print("len(MESSAGE_bytes)",len(MESSAGE_bytes))
-                    sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
-
-                if ((time.time() - last_ad_multicast) * 1000 > 1000):
-                    sendOneMulticastAdToLAN()
-                    last_ad_multicast = time.time()
-
-            else:
-                # check if any communication are pending or rejected
-                mangageOutGoingTCPclientPackets()
-                # spectator/players
-                # print("!if(numberOfLocalPlayers<0):")
-                print("spectator/players")
-                # UDP_IP_CLIENT = "127.0.0.1"
-                # UDP_IP_CLIENT = IP_on_LAN
-                UDP_IP_CLIENT = server_IP_joined
-                UDP_PORT_CLIENT = 5007
-                if(listOfBombs!=[]):
-                    print("listOfBombs",listOfBombs)
-                listOfBombsFromClient = [ [ b[0],time.time()-b[1],b[2],b[3] ] for b in listOfBombs]
-                if(listOfBombsFromClient!=[]):
-                    print("listOfBombsFromClient",listOfBombsFromClient)
-                MESSAGE = pickle.dumps(["Players",Players,"clientSlotKeyboardMapping",clientSlotKeyboardMapping,"listOfBombsFromClient",listOfBombsFromClient,"Controls_from_kbd",Controls_from_kbd])
-                print("Controls_from_kbd",Controls_from_kbd)
-                # print("MESSAGE",MESSAGE)
-                MESSAGE_bytes = MESSAGE
-                # print("client message:", MESSAGE_bytes)
-
-                sock = socket.socket(socket.AF_INET,  # Internet
-                                     socket.SOCK_DGRAM)  # UDP
-                sock.setblocking(False)
-                sock.sendto(MESSAGE_bytes, (UDP_IP_CLIENT, UDP_PORT_CLIENT))
-
-                print("clientSlotKeyboardMapping",clientSlotKeyboardMapping)
-
-                print("runningMain:currentHostsOnLan",currentHostsOnLan)
-
-    declaredToTheListingServer = False
-    if(tryToDeclareItOnce <0):
-        devices = upnpclient.discover()
-        print(devices)
-        router = devices[0]
-
-        tryToDeclareItOnce+=1
-    if(time.time()-lastDeclaredInternetGameTime>2):
-        if(openTheGameOnInternet == True):
-            # print("if(openTheGameOnInternet == True):")
-            # dataframe = pickle.dumps(['declare','qdhbqjhfqdqi'])
-            dataframe = pickle.dumps(['declare',router.WANIPConn1.GetExternalIPAddress(),'this is a test'])
-            # print(dataframe)
-            # {'NewExternalIPAddress': '109.219.170.32'}
-            sockGameOnInternet = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # sockGameOnInternet.settimeout(5.0)
-            # send data in udp
-            sockGameOnInternet.connect(('192.168.1.99', 5010))
-            sockGameOnInternet.sendall(dataframe)
-
-            # Receive data from the server and shut down
-            # received = str(sockGameOnInternet.recv(1024), "utf-8")
-            received = pickle.loads(sockGameOnInternet.recv(1024))
-
-            listOfInternetGames = received
-
-            lastDeclaredInternetGameTime = time.time()
-
-            # print("Sent:     {}".format(data))
-            # print("Received: {}".format(received))
-            # # once the server answered 'ok'
-            # declaredToTheListingServer = True
-            pass
-    # addUPnPrule(5007,IP_on_LAN)
-    # addUPnPrule(5008,IP_on_LAN)
-    # print("display_is_active",display_is_active)
-    if(display_is_active==True):
-        if (numberOfLocalPlayers < 0):
-            Controls = keyboardRead(False)
-        else:
-            Controls = keyboardRead(True)
+    print("==========================================================")
+    Controls = keyboardRead()
 
     ColisionCheckAndMovement()
 
@@ -2104,14 +776,13 @@ while(runningMain):
         runningMain = False
         print("issuing the esc key")
 
-    if(display_is_active==True):
-        gameDisplay.fill(gray)
+    gameDisplay.fill(gray)
+    # crate(0,0)
 
     displayCrates()
     displayMap()
-    if(display_is_active==True):
-        displayBombs()
-    # print("brokenCrates",brokenCrates)
+    displayBombs()
+    print("brokenCrates",brokenCrates)
     displayBrokenCratesAndUpdateCollision()
     playersPickupsItems()
     displayAirBlasts()
@@ -2122,9 +793,8 @@ while(runningMain):
         # debugging/testing purposes
         # newRound()
     # done: needs to be debugged
-    if(display_is_active==True):
-        displayPlayers()
-        displayItems()
+    displayPlayers()
+    displayItems()
     # if more than 1 players are alive, the round can continue
     if(numberOfPlayersAlive()>1):
         end_of_round_time = time.time()
@@ -2136,61 +806,13 @@ while(runningMain):
 
     checkForExplodingBomb()
 
-    # print("hitboxes():\n",hitboxes())
+    print("hitboxes():\n",hitboxes())
 
-    if(display_is_active==True):
-        pygame.display.update()
-    # print('time:',str((time.time()-st_time)*1000*1000))
-    if(display_is_active==True):
-        clock.tick(60)
-    else:
-        time.sleep(0.032)
+    pygame.display.update()
+    print('time:',str(time.time()-st_time))
+    clock.tick(60)
     st_time = time.time()
+    # print('lol')
 
-    if(display_is_active == False):
-        pygame.quit()
-
-# removeUPnPrule(5007)
-removeUPnPrule(5008)
 pygame.quit()
 quit()
-
-# todo: done for now: add window titles change to the menus
-# todo: queuing data that needs processing ?
-
-# done: add a submenu on the join a game
-# done: submenu join local game
-# done: submenu join game internet
-# done: players's position send to the host
-# todo: removing the bomb from the tcp/ip hosting in the menu
-# todo: add multicast advertissement on the local network (when hosting a game)
-# todo: host the TCP/IP game as the local LAN IP not localhost
-# todo: implement a dedicated mode for TCP/IP game
-# todo: allow the host to play as client in non-dedicated mode TCP/IP
-# todo: add a design doc
-# done: do a server list for the lan games
-# done: dispatch the packets to every clients
-# done: do a proper keyboard binding with slots by the server side
-# done: add an auto-updater (for main) to get the new script on each tests' computers
-# done: check if the bomb echo could be fixed (blast animation going 'flashing')
-# - consider the ping time for fixing
-# - expecially onto the other laptop
-# bomb older than 1.5sec would not be considered
-# done: bug: crashing on the remove lighter function (items pickup)
-# todo: cleaning the codes
-# todo: bug: get a more accurate initialization for each bomb on the client side using the ping time
-# todo: restore the life of some players when newRound() is issued (doesn't work on other laptop sometimes)
-# todo: flush the bombs on newRound() on the clients/server's side
-# todo: Need further adjustments in:
-# done:corrected name in the menu
-# done:Display (score/players controlled)
-# networking management
-# networking optimization
-# UPnP
-# Anti-cheat
-
-# todo: add the client side on join a game
-# todo: add the server side clients' players management
-# todo: add the server search on local
-# todo: add a server listing onto the internet games
-# Not done: add a timeout on tcp and udp thread (receiving/sending)
