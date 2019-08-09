@@ -819,6 +819,9 @@ def server_proc(port):
         server_thread_tcp.server_close()
         exit()
 
+    while True:
+        print("server_proc:loop")
+        time.sleep(1)
     # if (listOfBombs != []):
     #     print("listOfBombs", listOfBombs)
     # listOfBombsFromClient = [[b[0], time.time() - b[1], b[2], b[3]] for b in listOfBombs]
