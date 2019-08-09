@@ -33,9 +33,6 @@ pygame.init()
 display_width = 640
 display_height = 480
 
-gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('Bomberman-by-not-sure')
-
 black = (0, 0, 0)
 gray = (127, 127, 127)
 white = (255, 255, 255)
@@ -385,9 +382,9 @@ def ColisionCheckAndMovement():
     # out: Players
     global Players
     # i=0
-    print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
+    # print("ColisionCheckAndMovement:Controls_from_kbd",Controls_from_kbd)
     for player,control,i in zip(Players,Controls_from_kbd,range(4)):
-        print("ColisionCheckAndMovement:player,control,i",player,control,i)
+        # print("ColisionCheckAndMovement:player,control,i",player,control,i)
         # print("i:",i)
         # sfde ctrl shift
         step = 8
@@ -526,7 +523,7 @@ def checkForExplodingBomb():
             responsibleBomb = bombExpOrNot
             # adding the bomb position to the airBlasts (to fix score count about suicide)
             airBlasts.append([bombExpOrNot[0][0],bombExpOrNot[0][1],time.time()])
-    print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
+    # print("PlayersWhitboxesAindex",PlayersWhitboxesAindex)
     # airblasts kills
 
     if(Players[0][2] == [0]):
@@ -700,7 +697,7 @@ def hitboxes():
         outHitboxes.append([int((player[0][1]+2)/32),int((player[0][0]+2)/32),player[3][0]])
         outHitboxes.append([int((player[0][1]+30)/32),int((player[0][0]+30)/32),player[3][0]])
         # pass
-    print("outHitboxes",outHitboxes)
+    # print("outHitboxes",outHitboxes)
     return outHitboxes
 
 PlayersWhitboxesAindex = hitboxes()
@@ -764,55 +761,81 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
-end_of_round_time = time.time()
+# if
 
-while(runningMain):
-    print("==========================================================")
-    Controls = keyboardRead()
+def AI_proc():
+    print("AI_proc:start")
+    print("AI_proc:end")
+    pass
 
-    ColisionCheckAndMovement()
+def server_proc():
+    print("server_proc:start")
+    print("server_proc:end")
+    pass
 
-    if(keyboard.is_pressed('esc')):
-        runningMain = False
-        print("issuing the esc key")
+from multiprocessing import Process, freeze_support
 
-    gameDisplay.fill(gray)
-    # crate(0,0)
+MASTER_SERVER_DECLARING_PORT = 5007
+DEFAULT_HOSTING_A_SERVER_PORT = 5008
 
-    displayCrates()
-    displayMap()
-    displayBombs()
-    print("brokenCrates",brokenCrates)
-    displayBrokenCratesAndUpdateCollision()
-    playersPickupsItems()
-    displayAirBlasts()
-    # done:Score display is slow
-    if(boolDisplayScores == True):
-        print("displayScores()")
-        displayScores()
-        # debugging/testing purposes
-        # newRound()
-    # done: needs to be debugged
-    displayPlayers()
-    displayItems()
-    # if more than 1 players are alive, the round can continue
-    if(numberOfPlayersAlive()>1):
-        end_of_round_time = time.time()
-    if((time.time() - end_of_round_time)*1000>3000):
-        newRound()
-    # for debugging purpose for now
-    # diplayAllAirBlast()
-    # print("airBlastDisplay\n",airBlastDisplay)
 
-    checkForExplodingBomb()
+if __name__ == '__main__':
+    # freeze_support()
+    Process(target=AI_proc,args=(5,)).start()
+    Process(target=server_proc,args=(5,)).start()
 
-    print("hitboxes():\n",hitboxes())
+    gameDisplay = pygame.display.set_mode((display_width, display_height))
+    pygame.display.set_caption('Bomberman-by-not-sure')
 
-    pygame.display.update()
-    print('time:',str(time.time()-st_time))
-    clock.tick(60)
-    st_time = time.time()
-    # print('lol')
+    end_of_round_time = time.time()
 
-pygame.quit()
-quit()
+    while(runningMain):
+        print("==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMain = False
+            print("issuing the esc key")
+
+        gameDisplay.fill(gray)
+        # crate(0,0)
+
+        displayCrates()
+        displayMap()
+        displayBombs()
+        print("brokenCrates",brokenCrates)
+        displayBrokenCratesAndUpdateCollision()
+        playersPickupsItems()
+        displayAirBlasts()
+        # done:Score display is slow
+        if(boolDisplayScores == True):
+            print("displayScores()")
+            displayScores()
+            # debugging/testing purposes
+            # newRound()
+        # done: needs to be debugged
+        displayPlayers()
+        displayItems()
+        # if more than 1 players are alive, the round can continue
+        if(numberOfPlayersAlive()>1):
+            end_of_round_time = time.time()
+        if((time.time() - end_of_round_time)*1000>3000):
+            newRound()
+        # for debugging purpose for now
+        # diplayAllAirBlast()
+        # print("airBlastDisplay\n",airBlastDisplay)
+
+        checkForExplodingBomb()
+
+        # print("hitboxes():\n",hitboxes())
+
+        pygame.display.update()
+        print('time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+        # print('lol')
+
+    pygame.quit()
+    quit()
