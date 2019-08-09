@@ -771,13 +771,24 @@ def AI_proc():
 def server_proc(port):
     print("server_proc:start")
     import socketserver, threading, time
+    import pickle
     import socket
     class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         def handle(self):
-            print("ThreadedTCPRequestHandler:handle")
+            print("server_proc:ThreadedTCPRequestHandler:handle")
             # self.request is the TCP socket connected to the client
             self.data = self.request.recv(1024).strip()
-            print("self.data",self.data)
+            print("server_proc:self.data",self.data)
+            # TODO: here pickle loads
+            compacted = pickle.loads(self.data)
+            print("server_proc:compacted",compacted)
+
+
+            # TODO: here pickle dumps as answer
+            answer = []
+            answer = pickle.dumps(["Players", Players])
+            self.request.sendall(answer)
+
             # print("self.client_address",self.client_address)
             # global clientsIPSports
             # print("clientsIPSports",clientsIPSports)
@@ -808,6 +819,15 @@ def server_proc(port):
         server_thread_tcp.server_close()
         exit()
 
+    # if (listOfBombs != []):
+    #     print("listOfBombs", listOfBombs)
+    # listOfBombsFromClient = [[b[0], time.time() - b[1], b[2], b[3]] for b in listOfBombs]
+    # if (listOfBombsFromClient != []):
+    #     print("listOfBombsFromClient", listOfBombsFromClient)
+    # MESSAGE = pickle.dumps(
+    #     ["Players", Players, "clientSlotKeyboardMapping", clientSlotKeyboardMapping, "listOfBombsFromClient",
+    #      listOfBombsFromClient, "Controls_from_kbd", Controls_from_kbd])
+
     print("server_proc:end")
     pass
 
@@ -820,8 +840,8 @@ DEFAULT_HOSTING_A_SERVER_PORT = 5008
 if __name__ == '__main__':
     # this is only issued in the main script
     freeze_support()
-    Process(target=AI_proc,args=(5,)).start()
     Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+    Process(target=AI_proc,args=(5,)).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
