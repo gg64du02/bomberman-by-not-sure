@@ -764,12 +764,50 @@ def keyboardRead():
 # if
 
 def AI_proc():
-    print("AI_proc:start")
+    print("AI_proc:start")# TCP connexion handling
     print("AI_proc:end")
     pass
 
-def server_proc():
+def server_proc(port):
     print("server_proc:start")
+    import socketserver, threading, time
+    import socket
+    class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
+        def handle(self):
+            print("ThreadedTCPRequestHandler:handle")
+            # self.request is the TCP socket connected to the client
+            self.data = self.request.recv(1024).strip()
+            print("self.data",self.data)
+            # print("self.client_address",self.client_address)
+            # global clientsIPSports
+            # print("clientsIPSports",clientsIPSports)
+            # # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
+            # print("self.data",self.data)
+            # data4function = self.data
+            # answer = manageTCPserverPackets(data4function,self.client_address)
+            # print("ThreadedTCPRequestHandler:answer",answer)
+            # # answering the client
+            # self.request.sendall(bytes(answer.encode()))
+            # # # just send back the same data, but upper-cased
+            # # self.request.sendall(self.data.upper())
+            # print("ThreadedTCPRequestHandler:self.data",self.data)
+
+    class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+        pass
+
+    server_tcp = ThreadedTCPServer(('localhost', port), ThreadedTCPRequestHandler)
+    server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
+    server_thread_tcp.daemon = True
+
+    try:
+        # servers
+        server_thread_tcp.start()
+        print("server_thread_tcp.start()")
+    except (KeyboardInterrupt, SystemExit):
+        server_thread_tcp.shutdown()
+        server_thread_tcp.server_close()
+        exit()
+
     print("server_proc:end")
     pass
 
@@ -780,9 +818,10 @@ DEFAULT_HOSTING_A_SERVER_PORT = 5008
 
 
 if __name__ == '__main__':
-    # freeze_support()
+    # this is only issued in the main script
+    freeze_support()
     Process(target=AI_proc,args=(5,)).start()
-    Process(target=server_proc,args=(5,)).start()
+    Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
