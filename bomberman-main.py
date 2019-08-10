@@ -104,6 +104,7 @@ def displayAirBlasts():
         print("airBlast",airBlast)
         print("[0+int((2.5*timePassed*1000)/100)]",[0+int((2.5*timePassed*1000)/100)])
         gameDisplay.blit(Tiles[3][0+int((2.5*timePassed*1000)/100)], (32*airBlast[1],32*airBlast[0]))
+
         if(timePassed*1000>200):
             airBlasts.remove(airBlast)
 
@@ -762,6 +763,8 @@ def keyboardRead():
                             Controls_from_kbd[playerNumber][1][0]=0
 
 # if
+MASTER_SERVER_DECLARING_PORT = 5007
+DEFAULT_HOSTING_A_SERVER_PORT = 5008
 
 def AI_proc():
     print("AI_proc:start")# TCP connexion handling
@@ -806,18 +809,70 @@ def server_proc(port):
     class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
         pass
 
-    server_tcp = ThreadedTCPServer(('localhost', port), ThreadedTCPRequestHandler)
+    server_tcp = ThreadedTCPServer(('localhost', DEFAULT_HOSTING_A_SERVER_PORT), ThreadedTCPRequestHandler)
     server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
     server_thread_tcp.daemon = True
 
     try:
         # servers
         server_thread_tcp.start()
-        print("server_thread_tcp.start()")
+        print("server_proc:server_thread_tcp.start()")
     except (KeyboardInterrupt, SystemExit):
         server_thread_tcp.shutdown()
         server_thread_tcp.server_close()
         exit()
+
+    st_time  = time.time()
+
+    end_of_round_time = time.time()
+
+    while(True):
+        print("server_proc:==========================================================")
+        Controls = keyboardRead()
+
+        ColisionCheckAndMovement()
+
+        if(keyboard.is_pressed('esc')):
+            runningMain = False
+            print("server_proc:issuing the esc key")
+
+        # gameDisplay.fill(gray)
+        # crate(0,0)
+
+        # displayCrates()
+        # displayMap()
+        # displayBombs()
+        print("server_proc:brokenCrates",brokenCrates)
+        displayBrokenCratesAndUpdateCollision()
+        playersPickupsItems()
+        # displayAirBlasts()
+        # done:Score display is slow
+        if(boolDisplayScores == True):
+            print("server_proc:displayScores()")
+            displayScores()
+            # debugging/testing purposes
+            # newRound()
+        # done: needs to be debugged
+        # displayPlayers()
+        # displayItems()
+        # if more than 1 players are alive, the round can continue
+        if(numberOfPlayersAlive()>1):
+            end_of_round_time = time.time()
+        if((time.time() - end_of_round_time)*1000>3000):
+            newRound()
+        # for debugging purpose for now
+        # diplayAllAirBlast()
+        # print("airBlastDisplay\n",airBlastDisplay)
+
+        checkForExplodingBomb()
+
+        # print("hitboxes():\n",hitboxes())
+
+        # pygame.display.update()
+        print('server_proc:time:',str(time.time()-st_time))
+        clock.tick(60)
+        st_time = time.time()
+        # print('lol')
 
     while True:
         print("server_proc:loop")
@@ -836,15 +891,13 @@ def server_proc(port):
 
 from multiprocessing import Process, freeze_support
 
-MASTER_SERVER_DECLARING_PORT = 5007
-DEFAULT_HOSTING_A_SERVER_PORT = 5008
-
 
 if __name__ == '__main__':
     # this is only issued in the main script
     freeze_support()
+    # Process(target=server_proc).start()
     Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-    Process(target=AI_proc,args=(5,)).start()
+    Process(target=AI_proc,args=()).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
