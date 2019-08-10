@@ -909,7 +909,7 @@ if __name__ == '__main__':
     end_of_round_time = time.time()
 
     while(runningMain):
-        print("==========================================================")
+        print("main:==========================================================")
         Controls = keyboardRead()
 
         ColisionCheckAndMovement()
