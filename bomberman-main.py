@@ -133,14 +133,18 @@ def displayBombs():
         # max 5+something =11
         gameDisplay.blit(Tiles[1][5+int((3*timePassed*100)/100)], (32*bombDis[0][1],32*bombDis[0][0]))
 
-def displayBrokenCratesAndUpdateCollision():
+def displayBrokenCratesAndUpdateCollision(display_on):
     global brokenCrates
     global crateMap
     global lighterMapDisplayList
     for brokenCrate in brokenCrates:
         # Tiles[3][0-7]
         timePassed = time.time() - brokenCrate[2]
-        gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        if(display_on==True):
+            print("displayBrokenCratesAndUpdateCollision:if(display_on==True):")
+            gameDisplay.blit(Tiles[4][0+int((4*timePassed*1000)/100)], (32*brokenCrate[1],32*brokenCrate[0]))
+        else:
+            print("!displayBrokenCratesAndUpdateCollision:if(display_on==True):")
         if(timePassed*1000>200):
             if(TheMap[brokenCrate[0],brokenCrate[1]]==1):
                 crateMap[brokenCrate[0],brokenCrate[1]]=1
@@ -843,7 +847,7 @@ def server_proc(port):
         # displayMap()
         # displayBombs()
         print("server_proc:brokenCrates",brokenCrates)
-        displayBrokenCratesAndUpdateCollision()
+        displayBrokenCratesAndUpdateCollision(False)
         playersPickupsItems()
         # displayAirBlasts()
         # done:Score display is slow
@@ -921,7 +925,7 @@ if __name__ == '__main__':
         displayMap()
         displayBombs()
         print("brokenCrates",brokenCrates)
-        displayBrokenCratesAndUpdateCollision()
+        displayBrokenCratesAndUpdateCollision(True)
         playersPickupsItems()
         displayAirBlasts()
         # done:Score display is slow
