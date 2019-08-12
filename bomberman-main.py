@@ -898,6 +898,9 @@ def server_proc(port):
     # Outgoing message queues (socket:Queue)
     message_queues = {}
 
+    # number of slots left on server
+    slotsLeftOnServer = 4
+
     st_time  = time.time()
 
     end_of_round_time = time.time()
@@ -937,8 +940,13 @@ def server_proc(port):
                     print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                     if(arrayIncomingDataTCPServer[0]=='CONSTANT'):
                         print("if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
-                        # MBN_TCP_SERVER_JOIN_REFUSED
-                        # MBN_TCP_SERVER_JOIN_ACCEPTED
+                        if(slotsLeftOnServer==0):
+                            # MBN_TCP_SERVER_JOIN_REFUSED
+                            print("if(slotsLeftOnServer==0):")
+                        else:
+                            # MBN_TCP_SERVER_JOIN_ACCEPTED
+                            print("!if(slotsLeftOnServer==0):")
+                        # slotsLeftOnServer
                     else:
                         print("!if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
 
