@@ -943,9 +943,15 @@ def server_proc(port):
                         if(slotsLeftOnServer==0):
                             # MBN_TCP_SERVER_JOIN_REFUSED
                             print("if(slotsLeftOnServer==0):")
+                            message_queues[s].put(pickle.dumps(['CONSTANT',MBN_TCP_SERVER_JOIN_REFUSED]))
                         else:
                             # MBN_TCP_SERVER_JOIN_ACCEPTED
                             print("!if(slotsLeftOnServer==0):")
+                            print("slotsLeftOnServer",slotsLeftOnServer)
+                            message_queues[s].put(pickle.dumps(['CONSTANT',MBN_TCP_SERVER_JOIN_ACCEPTED]))
+                            slotsLeftOnServer -=1
+                            print("slotsLeftOnServer",slotsLeftOnServer)
+                            # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
                         print("!if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
@@ -954,7 +960,7 @@ def server_proc(port):
                     print('server_proc:  received {!r} from {}'.format(
                         data, s.getpeername()), file=sys.stderr,
                     )
-                    message_queues[s].put(data)
+                    # message_queues[s].put(data)
                     # Add output channel for response
                     if s not in outputs:
                         outputs.append(s)
@@ -984,6 +990,7 @@ def server_proc(port):
                 print('server_proc:  sending {!r} to {}'.format(next_msg,
                                                     s.getpeername()),
                       file=sys.stderr)
+                print("pickle.loads(next_msg)",pickle.loads(next_msg))
                 s.send(next_msg)
         # Handle "exceptional conditions"
         for s in exceptional:
