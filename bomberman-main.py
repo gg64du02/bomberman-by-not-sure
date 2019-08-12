@@ -773,10 +773,13 @@ DEFAULT_HOSTING_A_SERVER_PORT = 5008
 def AI_proc():
     print("AI_proc:start")# TCP connexion handling
 
-    # server_address = ('localhost', 10000)
-    # s.connect(server_address)
-    # s.send('lol1'.encode())
-    # print(s.recv(1024))
+    # unsure that the server is started
+    time.sleep(1)
+    import socket
+
+    server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(server_address)
 
     st_time  = time.time()
 
@@ -786,10 +789,14 @@ def AI_proc():
 
     while(True):
         print("AI_proc:==========================================================")
-        # select : start
+        # socket : start
+
+        # s.send('lol1'.encode())
+        # print(s.recv(1024))
 
 
-        # select : end
+        # socket : end
+
         Controls = keyboardRead()
 
         ColisionCheckAndMovement()
