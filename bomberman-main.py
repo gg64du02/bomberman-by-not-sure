@@ -774,6 +774,7 @@ from MultiBN import *
 
 # for serialize
 import pickle
+import sys
 
 def AI_proc():
     print("AI_proc:start")# TCP connexion handling
@@ -786,8 +787,7 @@ def AI_proc():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(server_address)
     print('AI_proc:socket',s)
-    # s.setblocking(0)
-    print('AI_proc:socket',s)
+    # s.setblocking(0.016)
 
     st_time  = time.time()
 
@@ -805,9 +805,17 @@ def AI_proc():
 
         # pickle.loads()
 
-        s.send(pickle.dumps(['CONSTANT',MBN_TCP_CLIENT_JOIN_REQUIRED]))
+        outgoingDataTCPclient = pickle.dumps(['CONSTANT',MBN_TCP_CLIENT_JOIN_REQUIRED])
 
-        print('AI_proc:s.recv(1024)',s.recv(1024))
+        s.send(outgoingDataTCPclient)
+
+        incomingDataTCPclient = s.recv(1024)
+
+
+        # print('server_proc:waiting for the next event', file=sys.stderr)
+        print(str('AI_proc:incomingDataTCPclient'+str(incomingDataTCPclient)), file=sys.stderr)
+
+        # print('AI_proc:outgoingDataTCPclient',outgoingDataTCPclient)
 
         # s.send('lol1'.encode())
         # print(s.recv(1024))
