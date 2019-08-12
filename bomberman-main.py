@@ -829,7 +829,7 @@ def AI_proc(number):
 
         if(keyboard.is_pressed('esc')):
             runningMain = False
-            print("AI_proc:issuing the esc key")
+            print("AI_proc:"+str(number)+":issuing the esc key")
 
         # gameDisplay.fill(gray)
         # crate(0,0)
@@ -837,13 +837,13 @@ def AI_proc(number):
         # displayCrates()
         # displayMap()
         # displayBombs()
-        print("AI_proc:brokenCrates",brokenCrates)
+        print("AI_proc:"+str(number)+":brokenCrates",brokenCrates)
         displayBrokenCratesAndUpdateCollision(False)
         playersPickupsItems()
         # displayAirBlasts()
         # done:Score display is slow
         if(boolDisplayScores == True):
-            print("AI_proc:displayScores()")
+            print("AI_proc:"+str(number)+":displayScores()")
             displayScores()
             # debugging/testing purposes
             # newRound()
@@ -864,7 +864,7 @@ def AI_proc(number):
         # print("hitboxes():\n",hitboxes())
 
         # pygame.display.update()
-        print('AI_proc:time:',str((time.time()-st_time)*1000),'ms')
+        print("AI_proc:"+str(number)+":time:",str((time.time()-st_time)*1000),'ms')
         clock.tick(60)
         st_time = time.time()
         # print('lol')
