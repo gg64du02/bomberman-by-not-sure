@@ -931,6 +931,17 @@ def server_proc(port):
             else:
                 data = s.recv(1024)
                 if data:
+                    incomingDataTCPServer = data
+                    print("server_proc:data",data)
+                    arrayIncomingDataTCPServer = pickle.loads(data)
+                    print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
+                    if(arrayIncomingDataTCPServer[0]=='CONSTANT'):
+                        print("if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
+                        # MBN_TCP_SERVER_JOIN_REFUSED
+                        # MBN_TCP_SERVER_JOIN_ACCEPTED
+                    else:
+                        print("!if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
+
                     # A readable client socket has data
                     print('server_proc:  received {!r} from {}'.format(
                         data, s.getpeername()), file=sys.stderr,
@@ -1023,7 +1034,7 @@ def server_proc(port):
         # print("hitboxes():\n",hitboxes())
 
         # pygame.display.update()
-        print('server_proc:time:',str((time.time()-st_time)*1000),'ms')
+        print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
         clock.tick(60)
         st_time = time.time()
         # print('lol')
