@@ -776,7 +776,7 @@ from MultiBN import *
 import pickle
 import sys
 
-def AI_proc():
+def AI_proc(number):
     print("AI_proc:start")# TCP connexion handling
 
     # unsure that the server is started
@@ -813,7 +813,7 @@ def AI_proc():
 
 
         # print('server_proc:waiting for the next event', file=sys.stderr)
-        print(str('AI_proc:incomingDataTCPclient'+str(incomingDataTCPclient)), file=sys.stderr)
+        print(str('AI_proc:'+str(number)+':incomingDataTCPclient'+str(incomingDataTCPclient)), file=sys.stderr)
 
         # print('AI_proc:outgoingDataTCPclient',outgoingDataTCPclient)
 
@@ -1039,7 +1039,9 @@ if __name__ == '__main__':
     freeze_support()
     # Process(target=server_proc).start()
     Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-    Process(target=AI_proc,args=()).start()
+    Process(target=AI_proc,args=(2,)).start()
+    Process(target=AI_proc,args=(3,)).start()
+    Process(target=AI_proc,args=(4,)).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
