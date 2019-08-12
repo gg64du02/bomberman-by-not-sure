@@ -777,58 +777,12 @@ def AI_proc():
 
 def server_proc(port):
     print("server_proc:start")
-    import socketserver, threading, time
-    import pickle
-    import socket
-    class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-        def handle(self):
-            print("server_proc:ThreadedTCPRequestHandler:handle")
-            # self.request is the TCP socket connected to the client
-            self.data = self.request.recv(1024).strip()
-            print("server_proc:self.data",self.data)
-            # TODO: here pickle loads
-            compacted = pickle.loads(self.data)
-            print("server_proc:compacted",compacted)
-
-
-            # TODO: here pickle dumps as answer
-            answer = []
-            answer = pickle.dumps(["Players", Players])
-            self.request.sendall(answer)
-
-            # print("self.client_address",self.client_address)
-            # global clientsIPSports
-            # print("clientsIPSports",clientsIPSports)
-            # # print("ThreadedTCPRequestHandler: {} wrote:".format(self.client_address[0]))
-            # print("self.data",self.data)
-            # data4function = self.data
-            # answer = manageTCPserverPackets(data4function,self.client_address)
-            # print("ThreadedTCPRequestHandler:answer",answer)
-            # # answering the client
-            # self.request.sendall(bytes(answer.encode()))
-            # # # just send back the same data, but upper-cased
-            # # self.request.sendall(self.data.upper())
-            # print("ThreadedTCPRequestHandler:self.data",self.data)
-
-    class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-        pass
-
-    server_tcp = ThreadedTCPServer(('localhost', DEFAULT_HOSTING_A_SERVER_PORT), ThreadedTCPRequestHandler)
-    server_thread_tcp = threading.Thread(target=server_tcp.serve_forever)
-    server_thread_tcp.daemon = True
-
-    try:
-        # servers
-        server_thread_tcp.start()
-        print("server_proc:server_thread_tcp.start()")
-    except (KeyboardInterrupt, SystemExit):
-        server_thread_tcp.shutdown()
-        server_thread_tcp.server_close()
-        exit()
 
     st_time  = time.time()
 
     end_of_round_time = time.time()
+
+    # TODO: multithread on port with port listenning
 
     while(True):
         print("server_proc:==========================================================")
@@ -877,18 +831,6 @@ def server_proc(port):
         clock.tick(60)
         st_time = time.time()
         # print('lol')
-
-    while True:
-        print("server_proc:loop")
-        time.sleep(1)
-    # if (listOfBombs != []):
-    #     print("listOfBombs", listOfBombs)
-    # listOfBombsFromClient = [[b[0], time.time() - b[1], b[2], b[3]] for b in listOfBombs]
-    # if (listOfBombsFromClient != []):
-    #     print("listOfBombsFromClient", listOfBombsFromClient)
-    # MESSAGE = pickle.dumps(
-    #     ["Players", Players, "clientSlotKeyboardMapping", clientSlotKeyboardMapping, "listOfBombsFromClient",
-    #      listOfBombsFromClient, "Controls_from_kbd", Controls_from_kbd])
 
     print("server_proc:end")
     pass
