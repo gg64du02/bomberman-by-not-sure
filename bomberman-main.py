@@ -770,6 +770,11 @@ def keyboardRead():
 MASTER_SERVER_DECLARING_PORT = 5007
 DEFAULT_HOSTING_A_SERVER_PORT = 5008
 
+from MultiBN import *
+
+# for serialize
+import pickle
+
 def AI_proc():
     print("AI_proc:start")# TCP connexion handling
 
@@ -780,6 +785,9 @@ def AI_proc():
     server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(server_address)
+    print('AI_proc:socket',s)
+    # s.setblocking(0)
+    print('AI_proc:socket',s)
 
     st_time  = time.time()
 
@@ -787,9 +795,19 @@ def AI_proc():
 
     # TODO: multithread on port with port listenning
 
+    # used by the client
+    tcpClientGameState = [0 for i in range(0, 7)]
+
+
     while(True):
         print("AI_proc:==========================================================")
         # socket : start
+
+        # pickle.loads()
+
+        s.send(pickle.dumps(['CONSTANT',MBN_TCP_CLIENT_JOIN_REQUIRED]))
+
+        print('AI_proc:s.recv(1024)',s.recv(1024))
 
         # s.send('lol1'.encode())
         # print(s.recv(1024))
@@ -859,7 +877,7 @@ def server_proc(port):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setblocking(0)
     # Bind the socket to the port
-    server_address = ('localhost', 10000)
+    server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
     print('starting up on {} port {}'.format(*server_address),
           file=sys.stderr)
     server.bind(server_address)
