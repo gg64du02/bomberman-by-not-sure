@@ -1026,7 +1026,6 @@ def server_proc(port):
             del message_queues[s]
         # time.sleep(1)
 
-
         # select : end
         Controls = keyboardRead()
 
@@ -1036,12 +1035,6 @@ def server_proc(port):
             runningMain = False
             print("server_proc:issuing the esc key")
 
-        # gameDisplay.fill(gray)
-        # crate(0,0)
-
-        # displayCrates()
-        # displayMap()
-        # displayBombs()
         print("server_proc:brokenCrates",brokenCrates)
         displayBrokenCratesAndUpdateCollision(False)
         playersPickupsItems()
@@ -1050,18 +1043,11 @@ def server_proc(port):
         if(boolDisplayScores == True):
             print("server_proc:displayScores()")
             displayScores()
-            # debugging/testing purposes
-            # newRound()
-        # done: needs to be debugged
-        # displayPlayers()
-        # displayItems()
         # if more than 1 players are alive, the round can continue
         if(numberOfPlayersAlive()>1):
             end_of_round_time = time.time()
         if((time.time() - end_of_round_time)*1000>3000):
             newRound()
-        # for debugging purpose for now
-        # diplayAllAirBlast()
         # print("airBlastDisplay\n",airBlastDisplay)
 
         checkForExplodingBomb()
