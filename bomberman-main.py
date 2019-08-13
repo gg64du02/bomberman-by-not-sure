@@ -786,7 +786,7 @@ def AI_proc(number):
     server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(server_address)
-    print('AI_proc:socket',s)
+    print("AI_proc:"+str(number)+":socket",s)
     # s.setblocking(0.016)
 
     st_time  = time.time()
@@ -819,10 +819,11 @@ def AI_proc(number):
             if(arrayIncomingDataTCPclient[0]=='MBN_SESSION'):
                 print("AI_proc:"+str(number)+":if(arrayIncomingDataTCPclient[0]=='MBN_SESSION'):")
                 if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_ACCEPTED'):
+                    print("AI_proc:" + str(number) + ":if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_ACCEPTED'):")
                     # 0:conn accepted (by server)
                     tcpClientGameState[0]=1
                 if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_REFUSED'):
-                    print("AI_proc:" + str(number) + ":if(tcpClientGameState[0]==1):")
+                    print("AI_proc:" + str(number) + ":if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_REFUSED'):")
                     exit()
                 if(tcpClientGameState[0]==1):
                     print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
