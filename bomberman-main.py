@@ -831,6 +831,8 @@ def AI_proc(number):
                     exit()
                 if(tcpClientGameState[0]==1):
                     print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
+                    outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS",1])
+
 
         if (tcpClientGameState[0] == 0):
             outgoingDataTCPclient = pickle.dumps(['MBN_SESSION', 'MBN_JOIN_REQUIRED'])
@@ -839,10 +841,10 @@ def AI_proc(number):
             if(outgoingDataTCPclient!=b''):
                 s.send(outgoingDataTCPclient)
 
-        outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players", Players,
-                                              # "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
-                                              # "listOfBombsFromClient",listOfBombsFromClient,
-                                              "Controls_from_kbd", Controls_from_kbd])
+        # outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players", Players,
+        #                                       # "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
+        #                                       # "listOfBombsFromClient",listOfBombsFromClient,
+        #                                       "Controls_from_kbd", Controls_from_kbd])
 
 
 
@@ -984,6 +986,13 @@ def server_proc(port):
                         # slotsLeftOnServer
                     else:
                         print("!if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
+                    if(arrayIncomingDataTCPServer[0]=='MBN_DATA'):
+                        if(arrayIncomingDataTCPServer[1]=='NUMBER_OF_LOCAL_PLAYERS'):
+                            # message_queues[s].put(pickle.dumps(['MBN_DATA','clientSlotKeyboardMapping',clientSlotKeyboardMapping]))
+
+                            pass
+
+                        # outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS", 1])
 
                     # A readable client socket has data
                     print('server_proc:  received {!r} from {}'.format(
