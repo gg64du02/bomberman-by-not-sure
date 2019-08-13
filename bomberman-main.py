@@ -797,28 +797,44 @@ def AI_proc(number):
 
     # used by the client
     tcpClientGameState = [0 for i in range(0, 7)]
-
+    # 0:conn accepted (by server)
+    # 1:number of local players sent (by client)
+    # 2:local players accepted (by server)
+    incomingDataTCPclient=[]
+    arrayIncomingDataTCPclient=[]
 
     while(True):
         print("AI_proc:==========================================================")
         # socket : start
 
-        # pickle.loads()
+        # print('server_proc:waiting for the next event', file=sys.stderr)
+        print(str("AI_proc:"+str(number)+":incomingDataTCPclient"+str(incomingDataTCPclient)), file=sys.stderr)
 
-        outgoingDataTCPclient = pickle.dumps(['MBN_SESSION','MBN_JOIN_REQUIRED'])
+        if(incomingDataTCPclient!=[]):
+            arrayIncomingDataTCPclient = pickle.loads(incomingDataTCPclient)
 
-        s.send(outgoingDataTCPclient)
+        print("AI_proc:"+str(number)+":arrayIncomingDataTCPclient",arrayIncomingDataTCPclient)
+
+        if(arrayIncomingDataTCPclient!=[]):
+            if(arrayIncomingDataTCPclient[0]=='MBN_SESSION'):
+                print("AI_proc:"+str(number)+":if(arrayIncomingDataTCPclient[0]=='MBN_SESSION'):")
+                if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_ACCEPTED'):
+                    # 0:conn accepted (by server)
+                    tcpClientGameState[0]=1
+                if(arrayIncomingDataTCPclient[1]=='MBN_JOIN_REFUSED'):
+                    print("AI_proc:" + str(number) + ":if(tcpClientGameState[0]==1):")
+                    exit()
+                if(tcpClientGameState[0]==1):
+                    print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
+
+        if (tcpClientGameState[0] == 0):
+                outgoingDataTCPclient = pickle.dumps(['MBN_SESSION', 'MBN_JOIN_REQUIRED'])
+
+                s.send(outgoingDataTCPclient)
 
         incomingDataTCPclient = s.recv(1024)
 
 
-        # print('server_proc:waiting for the next event', file=sys.stderr)
-        print(str('AI_proc:'+str(number)+':incomingDataTCPclient'+str(incomingDataTCPclient)), file=sys.stderr)
-
-        # print('AI_proc:outgoingDataTCPclient',outgoingDataTCPclient)
-
-        # s.send('lol1'.encode())
-        # print(s.recv(1024))
 
 
         # socket : end
@@ -940,18 +956,19 @@ def server_proc(port):
                     print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                     if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
                         print("if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
-                        if(slotsLeftOnServer==0):
-                            # 'MBN_JOIN_REFUSED'
-                            print("if(slotsLeftOnServer==0):")
-                            message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
-                        else:
-                            # 'MBN_JOIN_ACCEPTED'
-                            print("!if(slotsLeftOnServer==0):")
-                            print("slotsLeftOnServer",slotsLeftOnServer)
-                            message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
-                            slotsLeftOnServer -=1
-                            print("slotsLeftOnServer",slotsLeftOnServer)
-                            # message_queues[s].put(data)
+                        if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
+                            if(slotsLeftOnServer==0):
+                                # 'MBN_JOIN_REFUSED'
+                                print("if(slotsLeftOnServer==0):")
+                                message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
+                            else:
+                                # 'MBN_JOIN_ACCEPTED'
+                                print("!if(slotsLeftOnServer==0):")
+                                print("slotsLeftOnServer",slotsLeftOnServer)
+                                message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
+                                slotsLeftOnServer -=1
+                                print("slotsLeftOnServer",slotsLeftOnServer)
+                                # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
                         print("!if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
@@ -990,7 +1007,7 @@ def server_proc(port):
                 print('server_proc:  sending {!r} to {}'.format(next_msg,
                                                     s.getpeername()),
                       file=sys.stderr)
-                print("pickle.loads(next_msg)",pickle.loads(next_msg))
+                print("server_proc:pickle.loads(next_msg)",pickle.loads(next_msg))
                 s.send(next_msg)
         # Handle "exceptional conditions"
         for s in exceptional:
@@ -1068,6 +1085,8 @@ if __name__ == '__main__':
     Process(target=AI_proc,args=(2,)).start()
     Process(target=AI_proc,args=(3,)).start()
     Process(target=AI_proc,args=(4,)).start()
+    Process(target=AI_proc,args=(5,)).start()
+    Process(target=AI_proc,args=(6,)).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
