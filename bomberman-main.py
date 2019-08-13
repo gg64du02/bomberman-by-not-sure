@@ -810,6 +810,8 @@ def AI_proc(number):
         # print('server_proc:waiting for the next event', file=sys.stderr)
         print(str("AI_proc:"+str(number)+":incomingDataTCPclient"+str(incomingDataTCPclient)), file=sys.stderr)
 
+        outgoingDataTCPclient = []
+
         if(incomingDataTCPclient!=[]):
             if(incomingDataTCPclient!=b''):
                 print("AI_proc:"+str(number)+":incomingDataTCPclient:"+str(incomingDataTCPclient))
@@ -831,14 +833,21 @@ def AI_proc(number):
                     print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
 
         if (tcpClientGameState[0] == 0):
-                outgoingDataTCPclient = pickle.dumps(['MBN_SESSION', 'MBN_JOIN_REQUIRED'])
+            outgoingDataTCPclient = pickle.dumps(['MBN_SESSION', 'MBN_JOIN_REQUIRED'])
 
+        if(outgoingDataTCPclient!=[]):
+            if(outgoingDataTCPclient!=b''):
                 s.send(outgoingDataTCPclient)
 
+        outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players", Players,
+                                              # "clientSlotKeyboardMapping",clientSlotKeyboardMapping,
+                                              # "listOfBombsFromClient",listOfBombsFromClient,
+                                              "Controls_from_kbd", Controls_from_kbd])
+
+
+
+
         incomingDataTCPclient = s.recv(1024)
-
-
-
 
         # socket : end
 
