@@ -805,7 +805,7 @@ def AI_proc(number):
 
         # pickle.loads()
 
-        outgoingDataTCPclient = pickle.dumps(['CONSTANT',MBN_TCP_CLIENT_JOIN_REQUIRED])
+        outgoingDataTCPclient = pickle.dumps(['MBN_SESSION','MBN_JOIN_REQUIRED'])
 
         s.send(outgoingDataTCPclient)
 
@@ -938,23 +938,23 @@ def server_proc(port):
                     print("server_proc:data",data)
                     arrayIncomingDataTCPServer = pickle.loads(data)
                     print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
-                    if(arrayIncomingDataTCPServer[0]=='CONSTANT'):
-                        print("if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
+                    if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
+                        print("if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                         if(slotsLeftOnServer==0):
-                            # MBN_TCP_SERVER_JOIN_REFUSED
+                            # 'MBN_JOIN_REFUSED'
                             print("if(slotsLeftOnServer==0):")
-                            message_queues[s].put(pickle.dumps(['CONSTANT',MBN_TCP_SERVER_JOIN_REFUSED]))
+                            message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
                         else:
-                            # MBN_TCP_SERVER_JOIN_ACCEPTED
+                            # 'MBN_JOIN_ACCEPTED'
                             print("!if(slotsLeftOnServer==0):")
                             print("slotsLeftOnServer",slotsLeftOnServer)
-                            message_queues[s].put(pickle.dumps(['CONSTANT',MBN_TCP_SERVER_JOIN_ACCEPTED]))
+                            message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                             slotsLeftOnServer -=1
                             print("slotsLeftOnServer",slotsLeftOnServer)
                             # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
-                        print("!if(arrayIncomingDataTCPServer[0]=='CONSTANT'):")
+                        print("!if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
 
                     # A readable client socket has data
                     print('server_proc:  received {!r} from {}'.format(
@@ -1050,7 +1050,7 @@ def server_proc(port):
 
         # pygame.display.update()
         print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
-        clock.tick(60)
+        clock.tick(3)
         st_time = time.time()
         # print('lol')
 
@@ -1118,7 +1118,7 @@ if __name__ == '__main__':
 
         pygame.display.update()
         print('main:time:',str(time.time()-st_time))
-        clock.tick(60)
+        clock.tick(3)
         st_time = time.time()
         # print('lol')
 
