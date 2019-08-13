@@ -811,7 +811,9 @@ def AI_proc(number):
         print(str("AI_proc:"+str(number)+":incomingDataTCPclient"+str(incomingDataTCPclient)), file=sys.stderr)
 
         if(incomingDataTCPclient!=[]):
-            arrayIncomingDataTCPclient = pickle.loads(incomingDataTCPclient)
+            if(incomingDataTCPclient!=b''):
+                print("AI_proc:"+str(number)+":incomingDataTCPclient:"+str(incomingDataTCPclient))
+                arrayIncomingDataTCPclient = pickle.loads(incomingDataTCPclient)
 
         print("AI_proc:"+str(number)+":arrayIncomingDataTCPclient",arrayIncomingDataTCPclient)
 
@@ -956,19 +958,19 @@ def server_proc(port):
                     arrayIncomingDataTCPServer = pickle.loads(data)
                     print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                     if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
-                        print("if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
+                        print("server_proc:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                         if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
                             if(slotsLeftOnServer==0):
                                 # 'MBN_JOIN_REFUSED'
-                                print("if(slotsLeftOnServer==0):")
+                                print("server_proc:if(slotsLeftOnServer==0):")
                                 message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
                             else:
                                 # 'MBN_JOIN_ACCEPTED'
-                                print("!if(slotsLeftOnServer==0):")
-                                print("slotsLeftOnServer",slotsLeftOnServer)
+                                print("server_proc:!if(slotsLeftOnServer==0):")
+                                print("server_proc:slotsLeftOnServer",slotsLeftOnServer)
                                 message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                 slotsLeftOnServer -=1
-                                print("slotsLeftOnServer",slotsLeftOnServer)
+                                print("server_proc:slotsLeftOnServer",slotsLeftOnServer)
                                 # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
@@ -1086,8 +1088,8 @@ if __name__ == '__main__':
     Process(target=AI_proc,args=(2,)).start()
     Process(target=AI_proc,args=(3,)).start()
     Process(target=AI_proc,args=(4,)).start()
-    Process(target=AI_proc,args=(5,)).start()
-    Process(target=AI_proc,args=(6,)).start()
+    # Process(target=AI_proc,args=(5,)).start()
+    # Process(target=AI_proc,args=(6,)).start()
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
