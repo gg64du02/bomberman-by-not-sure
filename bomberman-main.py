@@ -1074,8 +1074,33 @@ if __name__ == '__main__':
     Process(target=AI_proc,args=(2,)).start()
     Process(target=AI_proc,args=(3,)).start()
     Process(target=AI_proc,args=(4,)).start()
-    # Process(target=AI_proc,args=(5,)).start()
-    # Process(target=AI_proc,args=(6,)).start()
+
+
+    import select
+    import socket
+    import sys
+    import queue
+
+    # Create a TCP/IP socket
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # server.setblocking(0)
+    # Bind the socket to the port
+    server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
+    print('starting up on {} port {}'.format(*server_address),
+          file=sys.stderr)
+    time.sleep(3)
+    server.connect(server_address)
+    # Sockets from which we expect to read
+    inputs = [server]
+    # Sockets to which we expect to write
+    outputs = []
+    # Outgoing message queues (socket:Queue)
+    message_queues = {}
+
+    st_time  = time.time()
+
+    end_of_round_time = time.time()
+
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
@@ -1084,6 +1109,77 @@ if __name__ == '__main__':
 
     while(runningMain):
         print("main:==========================================================")
+        print('main:waiting for the next event', file=sys.stderr)
+        readable, writable, exceptional = select.select(inputs,
+                                                        outputs,
+                                                        inputs, 0)
+
+        # Handle inputs
+        for s in readable:
+
+            if s is server:
+                # A "readable" socket is ready to accept a connection
+                connection, client_address = s.accept()
+                print('main:  connection from', client_address,
+                      file=sys.stderr)
+                connection.setblocking(0)
+                inputs.append(connection)
+
+                # Give the connection a queue for data
+                # we want to send
+                message_queues[connection] = queue.Queue()
+
+            else:
+                data = s.recv(1024)
+                if data:
+                    # A readable client socket has data
+                    print('main:  received {!r} from {}'.format(
+                        data, s.getpeername()), file=sys.stderr,
+                    )
+                    message_queues[s].put(data)
+                    # Add output channel for response
+                    if s not in outputs:
+                        outputs.append(s)
+                else:
+                    # Interpret empty result as closed connection
+                    print('main:  closing', client_address,
+                          file=sys.stderr)
+                    # Stop listening for input on the connection
+                    if s in outputs:
+                        outputs.remove(s)
+                    inputs.remove(s)
+                    s.close()
+
+                    # Remove message queue
+                    del message_queues[s]
+        # Handle outputs
+        for s in writable:
+            try:
+                next_msg = message_queues[s].get_nowait()
+            except queue.Empty:
+                # No messages waiting so stop checking
+                # for writability.
+                print('main:  ', s.getpeername(), 'queue empty',
+                      file=sys.stderr)
+                outputs.remove(s)
+            else:
+                print('main:  sending {!r} to {}'.format(next_msg,
+                                                    s.getpeername()),
+                      file=sys.stderr)
+                s.send(next_msg)
+        # Handle "exceptional conditions"
+        for s in exceptional:
+            print('main:exception condition on', s.getpeername(),
+                  file=sys.stderr)
+            # Stop listening for input on the connection
+            inputs.remove(s)
+            if s in outputs:
+                outputs.remove(s)
+            s.close()
+
+            # Remove message queue
+            del message_queues[s]
+
         Controls = keyboardRead()
 
         ColisionCheckAndMovement()
