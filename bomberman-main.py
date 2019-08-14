@@ -1131,13 +1131,13 @@ def menuDisplay():
         white = (255,255,255)
         grey = (200,200,200)
 
-        localGameButtonColor = grey
-        localGameButtonRectangle = (50,50,50,50)
+        localHostGameButtonColor = grey
+        localHostGameButtonRectangle = (50,50,50,50)
         joinGameButtonColor = grey
         joinGameButtonRectangle = (50,150,50,50)
         quitGameButtonColor = grey
         quitGameButtonRectangle = (50,250,50,50)
-        pygame.draw.rect(gameDisplay, localGameButtonColor,localGameButtonRectangle)
+        pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
 
@@ -1145,9 +1145,12 @@ def menuDisplay():
         # print(click)
         mouse = pygame.mouse.get_pos()
 
-        if(isMouseInRect(mouse,localGameButtonRectangle)==True):
-            pygame.draw.rect(gameDisplay, white, localGameButtonRectangle)
+        localHostMenuState = False
+
+        if(isMouseInRect(mouse,localHostGameButtonRectangle)==True):
+            pygame.draw.rect(gameDisplay, white, localHostGameButtonRectangle)
             if(click[0]==1):
+                localHostMenuState = True
                 pass
         if(isMouseInRect(mouse,joinGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, joinGameButtonRectangle)
