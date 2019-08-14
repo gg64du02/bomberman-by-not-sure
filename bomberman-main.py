@@ -1122,6 +1122,8 @@ def menuDisplay():
 
         gameDisplay.fill(gray)
 
+        white = (255,255,255)
+
         localGameButtonColor = (200,200,200)
         localGameButtonRectangle = (50,50,50,50)
         joinGameButtonColor = (200,200,200)
@@ -1135,6 +1137,11 @@ def menuDisplay():
         displayTextWsize("Local/Host",(50+25), (50+25),13)
         displayTextWsize("Join",(50+25), (100+50+25),13)
         displayTextWsize("Quit/Close",(50+25), (200+50+25),13)
+
+        mouse = pygame.mouse.get_pos()
+        if (mouse[0] > quitGameButtonRectangle[0] and mouse[1] > quitGameButtonRectangle[1]):
+            if (mouse[0] < quitGameButtonRectangle[0]+quitGameButtonRectangle[2] and mouse[1] < quitGameButtonRectangle[1]+quitGameButtonRectangle[2]):
+                pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
