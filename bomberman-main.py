@@ -1115,6 +1115,8 @@ def menuDisplay():
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
 
+    localHostMenuState = False
+
     while(True):
 
         for event in pygame.event.get():
@@ -1137,6 +1139,11 @@ def menuDisplay():
         joinGameButtonRectangle = (50,150,50,50)
         quitGameButtonColor = grey
         quitGameButtonRectangle = (50,250,50,50)
+        if(localHostMenuState == True):
+            for i in range(4):
+                numberOfHumansGameButtonColor = grey
+                numberOfHumansGameButtonRectangle = (100+50,100*i+50,50,50)
+                pygame.draw.rect(gameDisplay, numberOfHumansGameButtonColor,numberOfHumansGameButtonRectangle)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
@@ -1144,8 +1151,6 @@ def menuDisplay():
         click = pygame.mouse.get_pressed()
         # print(click)
         mouse = pygame.mouse.get_pos()
-
-        localHostMenuState = False
 
         if(isMouseInRect(mouse,localHostGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, localHostGameButtonRectangle)
@@ -1164,6 +1169,9 @@ def menuDisplay():
         displayTextWsize("Local/Host", (50 + 25), (50 + 25), 13)
         displayTextWsize("Join", (50 + 25), (100 + 50 + 25), 13)
         displayTextWsize("Quit/Close", (50 + 25), (200 + 50 + 25), 13)
+        if(localHostMenuState == True):
+            for i in range(4):
+                displayTextWsize(str(i), (50 + 25 + 100), (100*i + 50 + 25), 20)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
