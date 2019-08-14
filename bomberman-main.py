@@ -1083,6 +1083,13 @@ def server_proc(port):
 
 from multiprocessing import Process, freeze_support
 
+# "architecture"
+# # menu() return parameters to start server/AI processes or connect to one
+# menu()
+# # startProcesses() start a local server and use the infos from menu to start AIs or not
+# startProcesses()
+# # connect to local server
+# display()
 
 if __name__ == '__main__':
     # this is only issued in the main script
