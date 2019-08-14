@@ -1117,6 +1117,7 @@ def menuDisplay():
 
     localHostMenuState = False
     localHostNumberHumansMenuState = False
+    localHostNumberHumans = 0
 
     while(True):
 
@@ -1149,7 +1150,9 @@ def menuDisplay():
                 if (isMouseInRect(mouse, (100+50,100*i+50,50,50)) == True):
                     pygame.draw.rect(gameDisplay, white, (100+50,100*i+50,50,50))
                     if(click[0]==1):
+                        localHostNumberHumans = i
                         pass
+        print("localHostNumberHumans",localHostNumberHumans)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
