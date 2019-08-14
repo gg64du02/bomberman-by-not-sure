@@ -1081,8 +1081,6 @@ def server_proc(port):
     print("server_proc:end")
     pass
 
-from multiprocessing import Process, freeze_support
-
 # "architecture"
 # # menu() return parameters to start server/AI processes or connect to one
 # menu()
@@ -1090,6 +1088,15 @@ from multiprocessing import Process, freeze_support
 # startProcesses()
 # # connect to local server
 # display()
+def menuDisplay():
+    print("menuDisplay:start")
+
+    print("menuDisplay:end")
+
+    pass
+
+from multiprocessing import Process, freeze_support
+
 
 if __name__ == '__main__':
     # this is only issued in the main script
