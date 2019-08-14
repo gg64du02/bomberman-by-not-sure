@@ -1090,10 +1090,41 @@ def server_proc(port):
 # display()
 def menuDisplay():
     print("menuDisplay:start")
+    st_time  = time.time()
 
+    gameDisplay = pygame.display.set_mode((display_width, display_height))
+    pygame.display.set_caption('Bomberman-by-not-sure')
+
+    while(True):
+
+        for event in pygame.event.get():
+            print("event.type", event.type)
+            if event.type == pygame.QUIT:
+                pass
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_TAB:
+                    break
+                pass
+
+        localGameButtonColor = (200,200,200)
+        localGameButtonRectangle = (50,50,50,50)
+        joinGameButtonColor = (200,200,200)
+        joinGameButtonRectangle = (50,150,50,50)
+        quitGameButtonColor = (200,200,200)
+        quitGameButtonRectangle = (50,250,50,50)
+        pygame.draw.rect(gameDisplay, localGameButtonColor,localGameButtonRectangle)
+        pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
+        pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
+
+        pygame.display.update()
+        print('main:time:', str((time.time() - st_time)*1000*1000),' us')
+        clock.tick(60)
+        st_time = time.time()
     print("menuDisplay:end")
 
     pass
+menuDisplay()
+exit()
 
 from multiprocessing import Process, freeze_support
 
