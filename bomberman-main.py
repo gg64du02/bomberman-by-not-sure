@@ -1168,6 +1168,16 @@ def menuDisplay():
                         localHostNumberAI = j
                         chosenTheNumberOfAIState = True
                         pass
+        if(chosenTheNumberOfAIState==True):
+            print("localHostNumberAI",localHostNumberAI)
+            print("localHostNumberHumans",localHostNumberHumans)
+            startGameButtonColor = grey
+            startGameButtonRectangle = (300+50,50,50,50)
+            pygame.draw.rect(gameDisplay, startGameButtonColor,startGameButtonRectangle)
+            if (isMouseInRect(mouse, startGameButtonRectangle) == True):
+                pygame.draw.rect(gameDisplay, white, startGameButtonRectangle)
+                if(click[0]==1):
+                    print("starting the processes")
         print("localHostNumberHumans",localHostNumberHumans)
         print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
@@ -1211,6 +1221,9 @@ def menuDisplay():
                 # print("j",j)
                 displayTextWsize(str(j), (50 + 25 + 100+100), (100*j + 50 + 25), 20)
                 pygame.draw.line(gameDisplay, black, (100+100, 50+25+100*localHostNumberHumans), (100+150, 50+25+100*j), 5)
+
+        if(chosenTheNumberOfAIState==True):
+            displayTextWsize("Start", (50 + 25 + 300), (50 + 25), 20)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
