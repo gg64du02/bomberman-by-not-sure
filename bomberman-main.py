@@ -1119,6 +1119,8 @@ def menuDisplay():
     localHostNumberHumansMenuState = False
     localHostNumberHumans = 0
     chooseTheNumberOfHumansState = False
+    localHostNumberAI = 0
+    chosenTheNumberOfAIState = False
 
     while(True):
 
@@ -1148,19 +1150,26 @@ def menuDisplay():
                 numberOfHumansGameButtonColor = grey
                 numberOfHumansGameButtonRectangle = (100+50,100*i+50,50,50)
                 pygame.draw.rect(gameDisplay, numberOfHumansGameButtonColor,numberOfHumansGameButtonRectangle)
-                if (isMouseInRect(mouse, (100+50,100*i+50,50,50)) == True):
+                if (isMouseInRect(mouse, numberOfHumansGameButtonRectangle) == True):
                     pygame.draw.rect(gameDisplay, white, (100+50,100*i+50,50,50))
                     if(click[0]==1):
                         localHostNumberHumans = i
                         chooseTheNumberOfHumansState = True
+                        chosenTheNumberOfAIState = False
                         pass
         if(chooseTheNumberOfHumansState==True):
             for j in range(4-localHostNumberHumans):
-                print("j",j)
                 numberOfAIButtonColor = grey
                 numberOfAIButtonRectangle = (100+100+50,100*j+50,50,50)
                 pygame.draw.rect(gameDisplay, numberOfAIButtonColor,numberOfAIButtonRectangle)
+                if (isMouseInRect(mouse, numberOfAIButtonRectangle) == True):
+                    pygame.draw.rect(gameDisplay, white, numberOfAIButtonRectangle)
+                    if(click[0]==1):
+                        localHostNumberAI = j
+                        chosenTheNumberOfAIState = True
+                        pass
         print("localHostNumberHumans",localHostNumberHumans)
+        print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
@@ -1174,12 +1183,14 @@ def menuDisplay():
             if(click[0]==1):
                 localHostMenuState = True
                 chooseTheNumberOfHumansState = False
+                chosenTheNumberOfAIState = False
                 pass
         if(isMouseInRect(mouse,joinGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, joinGameButtonRectangle)
             if(click[0]==1):
                 localHostMenuState = False
                 chooseTheNumberOfHumansState = False
+                chosenTheNumberOfAIState = False
                 pass
         if(isMouseInRect(mouse,quitGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
@@ -1197,7 +1208,7 @@ def menuDisplay():
         if(chooseTheNumberOfHumansState==True):
             displayTextWsize("AI", (100+50 + 25 + 100), (0 + 25), 13)
             for j in range(4-localHostNumberHumans):
-                print("j",j)
+                # print("j",j)
                 displayTextWsize(str(j), (50 + 25 + 100+100), (100*j + 50 + 25), 20)
                 pygame.draw.line(gameDisplay, black, (100+100, 50+25+100*localHostNumberHumans), (100+150, 50+25+100*j), 5)
 
