@@ -1098,6 +1098,12 @@ def displayTextWsize(text,x,y,fontSize):
     gameDisplay.blit(TextSurf, TextRect)
     # pass
 
+def isMouseInRect(mouse,rect):
+    if (mouse[0] > rect[0] and mouse[1] > rect[1]):
+        if (mouse[0] < rect[0]+rect[2] and mouse[1] < rect[1]+rect[2]):
+            return True
+    return False
+
 gameDisplay = []
 
 def menuDisplay():
@@ -1123,25 +1129,26 @@ def menuDisplay():
         gameDisplay.fill(gray)
 
         white = (255,255,255)
+        grey = (200,200,200)
 
-        localGameButtonColor = (200,200,200)
+        localGameButtonColor = grey
         localGameButtonRectangle = (50,50,50,50)
-        joinGameButtonColor = (200,200,200)
+        joinGameButtonColor = grey
         joinGameButtonRectangle = (50,150,50,50)
-        quitGameButtonColor = (200,200,200)
+        quitGameButtonColor = grey
         quitGameButtonRectangle = (50,250,50,50)
         pygame.draw.rect(gameDisplay, localGameButtonColor,localGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
 
-        displayTextWsize("Local/Host",(50+25), (50+25),13)
-        displayTextWsize("Join",(50+25), (100+50+25),13)
-        displayTextWsize("Quit/Close",(50+25), (200+50+25),13)
-
         mouse = pygame.mouse.get_pos()
-        if (mouse[0] > quitGameButtonRectangle[0] and mouse[1] > quitGameButtonRectangle[1]):
-            if (mouse[0] < quitGameButtonRectangle[0]+quitGameButtonRectangle[2] and mouse[1] < quitGameButtonRectangle[1]+quitGameButtonRectangle[2]):
-                pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
+
+        if(isMouseInRect(mouse,quitGameButtonRectangle)==True):
+            pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
+
+        displayTextWsize("Local/Host", (50 + 25), (50 + 25), 13)
+        displayTextWsize("Join", (50 + 25), (100 + 50 + 25), 13)
+        displayTextWsize("Quit/Close", (50 + 25), (200 + 50 + 25), 13)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
