@@ -1132,6 +1132,7 @@ def menuDisplay():
 
         white = (255,255,255)
         grey = (200,200,200)
+        black = (0,0,0)
 
         localHostGameButtonColor = grey
         localHostGameButtonRectangle = (50,50,50,50)
@@ -1170,12 +1171,15 @@ def menuDisplay():
         displayTextWsize("Join", (50 + 25), (100 + 50 + 25), 13)
         displayTextWsize("Quit/Close", (50 + 25), (200 + 50 + 25), 13)
         if(localHostMenuState == True):
+            displayTextWsize("Number of humans", (50 + 25 + 100), (0 + 25), 13)
             for i in range(4):
                 displayTextWsize(str(i), (50 + 25 + 100), (100*i + 50 + 25), 20)
+                pygame.draw.line(gameDisplay, black, (100, 50+25), (150, 50+25+100*i), 5)
+        pygame.draw.line(gameDisplay, black, (100, 50+25), (150, 50+25), 5)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
-        clock.tick(3)
+        clock.tick(60)
         st_time = time.time()
     print("menuDisplay:end")
 
