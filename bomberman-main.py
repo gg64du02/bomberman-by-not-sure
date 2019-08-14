@@ -1141,10 +1141,22 @@ def menuDisplay():
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
 
+        click = pygame.mouse.get_pressed()
+        # print(click)
         mouse = pygame.mouse.get_pos()
 
+        if(isMouseInRect(mouse,localGameButtonRectangle)==True):
+            pygame.draw.rect(gameDisplay, white, localGameButtonRectangle)
+            if(click[0]==1):
+                pass
+        if(isMouseInRect(mouse,joinGameButtonRectangle)==True):
+            pygame.draw.rect(gameDisplay, white, joinGameButtonRectangle)
+            if(click[0]==1):
+                pass
         if(isMouseInRect(mouse,quitGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
+            if(click[0]==1):
+                exit()
 
         displayTextWsize("Local/Host", (50 + 25), (50 + 25), 13)
         displayTextWsize("Join", (50 + 25), (100 + 50 + 25), 13)
@@ -1152,7 +1164,7 @@ def menuDisplay():
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
-        clock.tick(60)
+        clock.tick(3)
         st_time = time.time()
     print("menuDisplay:end")
 
