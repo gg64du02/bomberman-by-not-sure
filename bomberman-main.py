@@ -1088,9 +1088,23 @@ def server_proc(port):
 # startProcesses()
 # # connect to local server
 # display()
+
+def displayTextWsize(text,x,y,fontSize):
+    # text = "lol"
+    largeText = pygame.font.Font('freesansbold.ttf',fontSize)
+    TextSurf, TextRect = text_objects(text, largeText)
+    # TextRect.center = ((display_width/2),(display_height/2))
+    TextRect.center = (x,y)
+    gameDisplay.blit(TextSurf, TextRect)
+    # pass
+
+gameDisplay = []
+
 def menuDisplay():
     print("menuDisplay:start")
     st_time  = time.time()
+
+    global gameDisplay
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
@@ -1106,6 +1120,8 @@ def menuDisplay():
                     break
                 pass
 
+        gameDisplay.fill(gray)
+
         localGameButtonColor = (200,200,200)
         localGameButtonRectangle = (50,50,50,50)
         joinGameButtonColor = (200,200,200)
@@ -1115,6 +1131,10 @@ def menuDisplay():
         pygame.draw.rect(gameDisplay, localGameButtonColor,localGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
+
+        displayTextWsize("Local/Host",(50+25), (50+25),13)
+        displayTextWsize("Join",(50+25), (100+50+25),13)
+        displayTextWsize("Quit/Close",(50+25), (200+50+25),13)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
