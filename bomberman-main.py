@@ -1118,6 +1118,7 @@ def menuDisplay():
     localHostMenuState = False
     localHostNumberHumansMenuState = False
     localHostNumberHumans = 0
+    chooseTheNumberOfHumansState = False
 
     while(True):
 
@@ -1151,7 +1152,14 @@ def menuDisplay():
                     pygame.draw.rect(gameDisplay, white, (100+50,100*i+50,50,50))
                     if(click[0]==1):
                         localHostNumberHumans = i
+                        chooseTheNumberOfHumansState = True
                         pass
+        if(chooseTheNumberOfHumansState==True):
+            for j in range(4-localHostNumberHumans):
+                print("j",j)
+                numberOfAIButtonColor = grey
+                numberOfAIButtonRectangle = (100+100+50,100*j+50,50,50)
+                pygame.draw.rect(gameDisplay, numberOfAIButtonColor,numberOfAIButtonRectangle)
         print("localHostNumberHumans",localHostNumberHumans)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
@@ -1165,11 +1173,13 @@ def menuDisplay():
             pygame.draw.rect(gameDisplay, white, localHostGameButtonRectangle)
             if(click[0]==1):
                 localHostMenuState = True
+                chooseTheNumberOfHumansState = False
                 pass
         if(isMouseInRect(mouse,joinGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, joinGameButtonRectangle)
             if(click[0]==1):
                 localHostMenuState = False
+                chooseTheNumberOfHumansState = False
                 pass
         if(isMouseInRect(mouse,quitGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
@@ -1180,10 +1190,16 @@ def menuDisplay():
         displayTextWsize("Join", (50 + 25), (100 + 50 + 25), 13)
         displayTextWsize("Quit/Close", (50 + 25), (200 + 50 + 25), 13)
         if(localHostMenuState == True):
-            displayTextWsize("Number of humans", (50 + 25 + 100), (0 + 25), 13)
+            displayTextWsize("Humans", (50 + 25 + 100), (0 + 25), 13)
             for i in range(4):
                 displayTextWsize(str(i), (50 + 25 + 100), (100*i + 50 + 25), 20)
                 pygame.draw.line(gameDisplay, black, (100, 50+25), (150, 50+25+100*i), 5)
+        if(chooseTheNumberOfHumansState==True):
+            displayTextWsize("AI", (100+50 + 25 + 100), (0 + 25), 13)
+            for j in range(4-localHostNumberHumans):
+                print("j",j)
+                displayTextWsize(str(j), (50 + 25 + 100+100), (100*j + 50 + 25), 20)
+                pygame.draw.line(gameDisplay, black, (100+100, 50+25+100*localHostNumberHumans), (100+150, 50+25+100*j), 5)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
