@@ -1254,7 +1254,11 @@ def menuDisplay():
                  (6,"192.168.2.6"),(7,"192.168.2.6"), (8,"192.168.2.6"), (9,"192.168.2.6"), (10,"192.168.2.6"),
                  (11,"192.168.2.6")]
         for gameIndex in range(len(games)):
-            # print("gameIndex",gameIndex)
+            print("gameIndex",gameIndex)
+            xGameDisplay = 250+(gameIndex%4)*100
+            yGameDisplay = 50+(gameIndex//4)*100
+            pygame.draw.line(gameDisplay, black, (200, 150+25), (xGameDisplay, yGameDisplay+25), 5)
+        for gameIndex in range(len(games)):
             xGameDisplay = 250+(gameIndex%4)*100
             yGameDisplay = 50+(gameIndex//4)*100
             gameButtonColor = grey
