@@ -1247,8 +1247,8 @@ def menuDisplay():
         if(joinLANorInternetState==True):
             displayTextWsize("LAN", 150+25, 150+25, 20)
             displayTextWsize("Internet", 150+25, 250+25, 20)
-            pygame.draw.line(gameDisplay, black, (100, 150+25+50*localHostNumberHumans), (150, 250+25+50*0), 5)
-            pygame.draw.line(gameDisplay, black, (100, 150+25+50*localHostNumberHumans), (150, 150+25+50*0), 5)
+            pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 250+25), 5)
+            pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 150+25), 5)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
