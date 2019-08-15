@@ -1121,6 +1121,7 @@ def menuDisplay():
     chooseTheNumberOfHumansState = False
     localHostNumberAI = 0
     chosenTheNumberOfAIState = False
+    joinLANorInternetState = False
 
     while(True):
 
@@ -1178,6 +1179,15 @@ def menuDisplay():
                 pygame.draw.rect(gameDisplay, white, startGameButtonRectangle)
                 if(click[0]==1):
                     print("starting the processes")
+        if(joinLANorInternetState==True):
+            print("joinLANorInternetState",joinLANorInternetState)
+            LanButtonColor = grey
+            LanButtonRectangle = (150, 150, 50, 50)
+            pygame.draw.rect(gameDisplay, LanButtonColor,LanButtonRectangle)
+            if (isMouseInRect(mouse, LanButtonRectangle) == True):
+                pygame.draw.rect(gameDisplay, white, LanButtonRectangle)
+                if(click[0]==1):
+                    print("joinLANorInternetState")
         print("localHostNumberHumans",localHostNumberHumans)
         print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
@@ -1194,6 +1204,7 @@ def menuDisplay():
                 localHostMenuState = True
                 chooseTheNumberOfHumansState = False
                 chosenTheNumberOfAIState = False
+                joinLANorInternetState = False
                 pass
         if(isMouseInRect(mouse,joinGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, joinGameButtonRectangle)
@@ -1201,6 +1212,7 @@ def menuDisplay():
                 localHostMenuState = False
                 chooseTheNumberOfHumansState = False
                 chosenTheNumberOfAIState = False
+                joinLANorInternetState = True
                 pass
         if(isMouseInRect(mouse,quitGameButtonRectangle)==True):
             pygame.draw.rect(gameDisplay, white, quitGameButtonRectangle)
