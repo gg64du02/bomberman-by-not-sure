@@ -1146,21 +1146,21 @@ def menuDisplay():
         quitGameButtonColor = grey
         quitGameButtonRectangle = (50,250,50,50)
         if(localHostMenuState == True):
-            for i in range(4):
+            for i in range(5):
                 numberOfHumansGameButtonColor = grey
-                numberOfHumansGameButtonRectangle = (100+50,100*i+50,50,50)
+                numberOfHumansGameButtonRectangle = (100+50,50*i+50,50,50)
                 pygame.draw.rect(gameDisplay, numberOfHumansGameButtonColor,numberOfHumansGameButtonRectangle)
                 if (isMouseInRect(mouse, numberOfHumansGameButtonRectangle) == True):
-                    pygame.draw.rect(gameDisplay, white, (100+50,100*i+50,50,50))
+                    pygame.draw.rect(gameDisplay, white, (100+50,50*i+50,50,50))
                     if(click[0]==1):
                         localHostNumberHumans = i
                         chooseTheNumberOfHumansState = True
                         chosenTheNumberOfAIState = False
                         pass
         if(chooseTheNumberOfHumansState==True):
-            for j in range(4-localHostNumberHumans):
+            for j in range(5-localHostNumberHumans):
                 numberOfAIButtonColor = grey
-                numberOfAIButtonRectangle = (100+100+50,100*j+50,50,50)
+                numberOfAIButtonRectangle = (100+100+50,50*j+50,50,50)
                 pygame.draw.rect(gameDisplay, numberOfAIButtonColor,numberOfAIButtonRectangle)
                 if (isMouseInRect(mouse, numberOfAIButtonRectangle) == True):
                     pygame.draw.rect(gameDisplay, white, numberOfAIButtonRectangle)
@@ -1212,15 +1212,15 @@ def menuDisplay():
         displayTextWsize("Quit/Close", (50 + 25), (200 + 50 + 25), 13)
         if(localHostMenuState == True):
             displayTextWsize("Humans", (50 + 25 + 100), (0 + 25), 13)
-            for i in range(4):
-                displayTextWsize(str(i), (50 + 25 + 100), (100*i + 50 + 25), 20)
-                pygame.draw.line(gameDisplay, black, (100, 50+25), (150, 50+25+100*i), 5)
+            for i in range(5):
+                displayTextWsize(str(i), (50 + 25 + 100), (50*i + 50 + 25), 20)
+                pygame.draw.line(gameDisplay, black, (100, 50+25), (150, 50+25+50*i), 5)
         if(chooseTheNumberOfHumansState==True):
             displayTextWsize("AI", (100+50 + 25 + 100), (0 + 25), 13)
-            for j in range(4-localHostNumberHumans):
+            for j in range(5-localHostNumberHumans):
                 # print("j",j)
-                displayTextWsize(str(j), (50 + 25 + 100+100), (100*j + 50 + 25), 20)
-                pygame.draw.line(gameDisplay, black, (100+100, 50+25+100*localHostNumberHumans), (100+150, 50+25+100*j), 5)
+                displayTextWsize(str(j), (50 + 25 + 100+100), (50*j + 50 + 25), 20)
+                pygame.draw.line(gameDisplay, black, (100+100, 50+25+50*localHostNumberHumans), (100+150, 50+25+50*j), 5)
 
         if(chosenTheNumberOfAIState==True):
             displayTextWsize("Start", (50 + 25 + 300), (50 + 25), 20)
