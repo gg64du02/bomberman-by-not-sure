@@ -1241,16 +1241,18 @@ def menuDisplay():
                 displayTextWsize(str(j), (50 + 25 + 100+100), (50*j + 50 + 25), 20)
                 pygame.draw.line(gameDisplay, black, (100+100, 50+25+50*localHostNumberHumans), (100+150, 50+25+50*j), 5)
 
+        # pygame.draw.line(gameDisplay, black, (200, 50+25+50*localHostNumberHumans), (250, 50+25+50*0), 5)
         if(chosenTheNumberOfAIState==True):
             displayTextWsize("Start", (50 + 25 + 300), (50 + 25), 20)
         if(joinLANorInternetState==True):
             displayTextWsize("LAN", 150+25, 150+25, 20)
-        if(joinLANorInternetState==True):
             displayTextWsize("Internet", 150+25, 250+25, 20)
+            pygame.draw.line(gameDisplay, black, (100, 150+25+50*localHostNumberHumans), (150, 250+25+50*0), 5)
+            pygame.draw.line(gameDisplay, black, (100, 150+25+50*localHostNumberHumans), (150, 150+25+50*0), 5)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
-        clock.tick(3)
+        clock.tick(60)
         st_time = time.time()
     print("menuDisplay:end")
 
