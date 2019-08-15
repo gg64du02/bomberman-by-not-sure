@@ -1250,15 +1250,17 @@ def menuDisplay():
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 250+25), 5)
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 150+25), 5)
 
-        games = [(1,"192.168.2.2"),(2,"192.168.2.3"), (3,"192.168.2.4"), (4,"192.168.2.5"), (5,"192.168.2.4"),
+        lanGames = [(1,"192.168.2.2"),(2,"192.168.2.3"), (3,"192.168.2.4"), (4,"192.168.2.5"), (5,"192.168.2.4"),
                  (6,"192.168.2.6"),(7,"192.168.2.6"), (8,"192.168.2.6"), (9,"192.168.2.6"), (10,"192.168.2.6"),
                  (11,"192.168.2.6")]
-        for gameIndex in range(len(games)):
-            print("gameIndex",gameIndex)
+        if(len(lanGames)==0):
+            pygame.draw.line(gameDisplay, black, (200, 150+25), (250, 150+25), 1)
+        for gameIndex in range(len(lanGames)):
+            # print("gameIndex",gameIndex)
             xGameDisplay = 250+(gameIndex%4)*100
             yGameDisplay = 50+(gameIndex//4)*100
-            pygame.draw.line(gameDisplay, black, (200, 150+25), (xGameDisplay, yGameDisplay+25), 5)
-        for gameIndex in range(len(games)):
+            pygame.draw.line(gameDisplay, black, (200, 150+25), (xGameDisplay, yGameDisplay+25), 1)
+        for gameIndex in range(len(lanGames)):
             xGameDisplay = 250+(gameIndex%4)*100
             yGameDisplay = 50+(gameIndex//4)*100
             gameButtonColor = grey
@@ -1268,7 +1270,7 @@ def menuDisplay():
                 pygame.draw.rect(gameDisplay, white, gameButtonRectangle)
                 if(click[0]==1):
                     print("starting the processes")
-            displayTextWsize(games[gameIndex][1], xGameDisplay+25, yGameDisplay+25, 10)
+            displayTextWsize(lanGames[gameIndex][1], xGameDisplay+25, yGameDisplay+25, 10)
 
 
         pygame.display.update()
