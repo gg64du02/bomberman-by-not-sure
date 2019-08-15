@@ -1260,11 +1260,11 @@ def menuDisplay():
             gameButtonColor = grey
             gameButtonRectangle = (xGameDisplay,yGameDisplay,50,50)
             pygame.draw.rect(gameDisplay, gameButtonColor,gameButtonRectangle)
-            displayTextWsize(games[gameIndex][1], xGameDisplay+25, yGameDisplay+25, 10)
             if (isMouseInRect(mouse, gameButtonRectangle) == True):
                 pygame.draw.rect(gameDisplay, white, gameButtonRectangle)
                 if(click[0]==1):
                     print("starting the processes")
+            displayTextWsize(games[gameIndex][1], xGameDisplay+25, yGameDisplay+25, 10)
 
 
         pygame.display.update()
