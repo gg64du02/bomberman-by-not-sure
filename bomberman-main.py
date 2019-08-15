@@ -1123,6 +1123,8 @@ def menuDisplay():
     chosenTheNumberOfAIState = False
     joinLANorInternetState = False
     lanListingGameState = False
+    internetListingGameState = False
+    yListDisplayRayOffset = 0
 
     while(True):
 
@@ -1189,6 +1191,7 @@ def menuDisplay():
                 pygame.draw.rect(gameDisplay, white, LanButtonRectangle)
                 if(click[0]==1):
                     lanListingGameState = True
+                    internetListingGameState = False
                     print("joinLANorInternetState")
             InternetButtonColor = grey
             InternetButtonRectangle = (150, 250, 50, 50)
@@ -1196,6 +1199,8 @@ def menuDisplay():
             if (isMouseInRect(mouse, InternetButtonRectangle) == True):
                 pygame.draw.rect(gameDisplay, white, InternetButtonRectangle)
                 if(click[0]==1):
+                    lanListingGameState = False
+                    internetListingGameState = True
                     print("joinLANorInternetState")
         print("localHostNumberHumans",localHostNumberHumans)
         print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
@@ -1253,17 +1258,28 @@ def menuDisplay():
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 250+25), 5)
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 150+25), 5)
 
-        if(lanListingGameState==True):
-            lanGames = [(1,"192.168.2.2"),(2,"192.168.2.3"), (3,"192.168.2.4"), (4,"192.168.2.5"), (5,"192.168.2.4"),
-                     (6,"192.168.2.6"),(7,"192.168.2.6"), (8,"192.168.2.6"), (9,"192.168.2.6"), (10,"192.168.2.6"),
-                     (11,"192.168.2.6")]
+        lanGames = [(1, "192.168.2.2"), (2, "192.168.2.3"), (3, "192.168.2.4"), (4, "192.168.2.5"), (5, "192.168.2.4"),
+                    (6, "192.168.2.6"), (7, "192.168.2.6"), (8, "192.168.2.6"), (9, "192.168.2.6"), (10, "192.168.2.6"),
+                    (11, "192.168.2.6")]
+        if((lanListingGameState==True) or (internetListingGameState ==True)):
+            if(lanListingGameState == True):
+                lanGames = lanGames
+                yListDisplayRayOffset = 0
+            else:
+                if(internetListingGameState ==True):
+                    # lanGames = internetGames
+                    yListDisplayRayOffset = 100
+                    # debogging purpose
+                    lanGames = lanGames
+                else:
+                    print("something is wrong in the menu")
             if(len(lanGames)==0):
                 pygame.draw.line(gameDisplay, black, (200, 150+25), (250, 150+25), 1)
             for gameIndex in range(len(lanGames)):
                 # print("gameIndex",gameIndex)
                 xGameDisplay = 250+(gameIndex%4)*100
                 yGameDisplay = 50+(gameIndex//4)*100
-                pygame.draw.line(gameDisplay, black, (200, 150+25), (xGameDisplay, yGameDisplay+25), 1)
+                pygame.draw.line(gameDisplay, black, (200, 150+25+yListDisplayRayOffset), (xGameDisplay, yGameDisplay+25), 1)
                 # pygame.draw.line(gameDisplay, black, (200, 250+25), (xGameDisplay, yGameDisplay+25), 1)
             for gameIndex in range(len(lanGames)):
                 xGameDisplay = 250+(gameIndex%4)*100
