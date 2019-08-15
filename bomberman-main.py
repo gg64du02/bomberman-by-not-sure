@@ -1188,6 +1188,13 @@ def menuDisplay():
                 pygame.draw.rect(gameDisplay, white, LanButtonRectangle)
                 if(click[0]==1):
                     print("joinLANorInternetState")
+            InternetButtonColor = grey
+            InternetButtonRectangle = (150, 250, 50, 50)
+            pygame.draw.rect(gameDisplay, InternetButtonColor,InternetButtonRectangle)
+            if (isMouseInRect(mouse, InternetButtonRectangle) == True):
+                pygame.draw.rect(gameDisplay, white, InternetButtonRectangle)
+                if(click[0]==1):
+                    print("joinLANorInternetState")
         print("localHostNumberHumans",localHostNumberHumans)
         print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
@@ -1236,10 +1243,14 @@ def menuDisplay():
 
         if(chosenTheNumberOfAIState==True):
             displayTextWsize("Start", (50 + 25 + 300), (50 + 25), 20)
+        if(joinLANorInternetState==True):
+            displayTextWsize("LAN", 150+25, 150+25, 20)
+        if(joinLANorInternetState==True):
+            displayTextWsize("Internet", 150+25, 250+25, 20)
 
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
-        clock.tick(60)
+        clock.tick(3)
         st_time = time.time()
     print("menuDisplay:end")
 
