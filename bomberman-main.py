@@ -1250,6 +1250,20 @@ def menuDisplay():
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 250+25), 5)
             pygame.draw.line(gameDisplay, black, (100, 150+25), (150, 150+25), 5)
 
+        games = [(1,"192.168.2.2"),(2,"192.168.2.3"), (3,"192.168.2.4"), (4,"192.168.2.4"), (5,"192.168.2.4"), (6,"192.168.2.4"), (7,"192.168.2.4"), (8,"192.168.2.4")]
+        for gameIndex in range(len(games)):
+            print("gameIndex",gameIndex)
+            xGameDisplay = 250+(gameIndex%5)*100
+            yGameDisplay = 50+(gameIndex//5)*100
+            gameButtonColor = grey
+            gameButtonRectangle = (xGameDisplay,yGameDisplay,50,50)
+            pygame.draw.rect(gameDisplay, gameButtonColor,gameButtonRectangle)
+            if (isMouseInRect(mouse, gameButtonRectangle) == True):
+                pygame.draw.rect(gameDisplay, white, gameButtonRectangle)
+                if(click[0]==1):
+                    print("starting the processes")
+
+
         pygame.display.update()
         print('main:time:', str((time.time() - st_time)*1000*1000),' us')
         clock.tick(60)
