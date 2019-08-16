@@ -42,7 +42,7 @@ crashed = False
 
 
 TheMap = currentMap()
-print("TheMap\n",TheMap)
+# print("TheMap\n",TheMap)
 
 def displayMap():
     for tile in tileGen():
@@ -319,7 +319,7 @@ def generatedCrateMap():
             if((100*randomNumber/255)<(pourcentageOfCrate)):
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
-    print("crateMap\n",crateMap)
+    # print("crateMap\n",crateMap)
     # pass
     return crateMap
 crateMap = generatedCrateMap()
