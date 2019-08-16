@@ -181,7 +181,7 @@ def displayAdditionnalBomb(x,y):
     gameDisplay.blit(Tiles[6][3], (32*x,32*y))
 
 def displayItems():
-    print("displayLighters")
+    # print("displayLighters")
     # debugging purpose
     # lighterMapDisplayList.append([4,4])
     for lighter in lighterMapDisplayList:
@@ -291,7 +291,7 @@ def numberOfPlayersAlive():
     for player in Players:
         if (player[2][0]!=0):
             alivePlayersCount +=1
-    print("alivePlayersCount",alivePlayersCount)
+    # print("alivePlayersCount",alivePlayersCount)
     return alivePlayersCount
 
 
@@ -1178,8 +1178,8 @@ def menuDisplay():
                         chosenTheNumberOfAIState = True
                         pass
         if(chosenTheNumberOfAIState==True):
-            print("localHostNumberAI",localHostNumberAI)
-            print("localHostNumberHumans",localHostNumberHumans)
+            # print("localHostNumberAI",localHostNumberAI)
+            # print("localHostNumberHumans",localHostNumberHumans)
             startGameButtonColor = grey
             startGameButtonRectangle = (300+50,50,50,50)
             pygame.draw.rect(gameDisplay, startGameButtonColor,startGameButtonRectangle)
@@ -1190,7 +1190,7 @@ def menuDisplay():
                     mainMenuDisplay = False
                     break
         if(joinLANorInternetState==True):
-            print("joinLANorInternetState",joinLANorInternetState)
+            # print("joinLANorInternetState",joinLANorInternetState)
             LanButtonColor = grey
             LanButtonRectangle = (150, 150, 50, 50)
             pygame.draw.rect(gameDisplay, LanButtonColor,LanButtonRectangle)
@@ -1199,7 +1199,7 @@ def menuDisplay():
                 if(click[0]==1):
                     lanListingGameState = True
                     internetListingGameState = False
-                    print("joinLANorInternetState")
+                    # print("joinLANorInternetState")
             InternetButtonColor = grey
             InternetButtonRectangle = (150, 250, 50, 50)
             pygame.draw.rect(gameDisplay, InternetButtonColor,InternetButtonRectangle)
@@ -1208,9 +1208,9 @@ def menuDisplay():
                 if(click[0]==1):
                     lanListingGameState = False
                     internetListingGameState = True
-                    print("joinLANorInternetState")
-        print("localHostNumberHumans",localHostNumberHumans)
-        print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
+                    # print("joinLANorInternetState")
+        # print("localHostNumberHumans",localHostNumberHumans)
+        # print("chosenTheNumberOfAIState",chosenTheNumberOfAIState)
         pygame.draw.rect(gameDisplay, localHostGameButtonColor,localHostGameButtonRectangle)
         pygame.draw.rect(gameDisplay, joinGameButtonColor,joinGameButtonRectangle)
         pygame.draw.rect(gameDisplay, quitGameButtonColor,quitGameButtonRectangle)
@@ -1297,12 +1297,13 @@ def menuDisplay():
                 if (isMouseInRect(mouse, gameButtonRectangle) == True):
                     pygame.draw.rect(gameDisplay, white, gameButtonRectangle)
                     if(click[0]==1):
+                        mainMenuDisplay = False
                         print("starting the processes")
                 displayTextWsize(lanGames[gameIndex][1], xGameDisplay+25, yGameDisplay+25, 10)
 
 
         pygame.display.update()
-        print('main:time:', str((time.time() - st_time)*1000*1000),' us')
+        # print('main:time:', str((time.time() - st_time)*1000*1000),' us')
         clock.tick(60)
         st_time = time.time()
     print("menuDisplay:end")
@@ -1344,7 +1345,7 @@ if __name__ == '__main__':
         end_of_round_time = time.time()
 
         while(runningMain):
-            print("main:==========================================================")
+            # print("main:==========================================================")
 
             Controls = keyboardRead()
 
@@ -1360,7 +1361,7 @@ if __name__ == '__main__':
             displayCrates()
             displayMap()
             displayBombs()
-            print("main:brokenCrates",brokenCrates)
+            # print("main:brokenCrates",brokenCrates)
             displayBrokenCratesAndUpdateCollision(True)
             playersPickupsItems()
             displayAirBlasts()
@@ -1387,7 +1388,7 @@ if __name__ == '__main__':
             # print("hitboxes():\n",hitboxes())
 
             pygame.display.update()
-            print('main:time:',str(time.time()-st_time))
+            # print('main:time:',str(time.time()-st_time))
             clock.tick(60)
             st_time = time.time()
             # print('lol')
