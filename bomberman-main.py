@@ -809,7 +809,7 @@ def AI_proc(number):
         # socket : start
 
         # print('server_proc:waiting for the next event', file=sys.stderr)
-        print(str("AI_proc:"+str(number)+":incomingDataTCPclient"+str(incomingDataTCPclient)), file=sys.stderr)
+        # print(str("AI_proc:"+str(number)+":incomingDataTCPclient "+str(incomingDataTCPclient)), file=sys.stderr)
 
         outgoingDataTCPclient = []
 
@@ -1054,7 +1054,7 @@ def server_proc(port):
             runningMain = False
             print("server_proc:issuing the esc key")
 
-        print("server_proc:brokenCrates",brokenCrates)
+        # print("server_proc:brokenCrates",brokenCrates)
         displayBrokenCratesAndUpdateCollision(False)
         playersPickupsItems()
         # displayAirBlasts()
@@ -1074,7 +1074,7 @@ def server_proc(port):
         # print("hitboxes():\n",hitboxes())
 
         # pygame.display.update()
-        print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
+        # print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
         clock.tick(3)
         st_time = time.time()
         # print('lol')
