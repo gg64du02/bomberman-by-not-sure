@@ -777,7 +777,7 @@ import pickle
 import sys
 
 def AI_proc(number):
-    print("AI_proc:start")# TCP connexion handling
+    print("AI_proc:"+str(number)+":start")# TCP connexion handling
 
     # unsure that the server is started
     time.sleep(1)
@@ -1328,69 +1328,69 @@ if __name__ == '__main__':
         for aiIndex in range(localHostNumberAI):
             print("aiIndex",aiIndex)
             Process(target=AI_proc,args=(aiIndex,)).start()
-    # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-    # Process(target=AI_proc,args=(2,)).start()
-    # Process(target=AI_proc,args=(3,)).start()
-    # Process(target=AI_proc,args=(4,)).start()
+        # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        # Process(target=AI_proc,args=(2,)).start()
+        # Process(target=AI_proc,args=(3,)).start()
+        # Process(target=AI_proc,args=(4,)).start()
 
-    st_time  = time.time()
+        st_time  = time.time()
 
-    end_of_round_time = time.time()
+        end_of_round_time = time.time()
 
 
-    gameDisplay = pygame.display.set_mode((display_width, display_height))
-    pygame.display.set_caption('Bomberman-by-not-sure')
+        gameDisplay = pygame.display.set_mode((display_width, display_height))
+        pygame.display.set_caption('Bomberman-by-not-sure')
 
-    end_of_round_time = time.time()
+        end_of_round_time = time.time()
 
-    while(runningMain):
-        print("main:==========================================================")
+        while(runningMain):
+            print("main:==========================================================")
 
-        Controls = keyboardRead()
+            Controls = keyboardRead()
 
-        ColisionCheckAndMovement()
+            ColisionCheckAndMovement()
 
-        if(keyboard.is_pressed('esc')):
-            runningMain = False
-            print("main:issuing the esc key")
+            if(keyboard.is_pressed('esc')):
+                runningMain = False
+                print("main:issuing the esc key")
 
-        gameDisplay.fill(gray)
-        # crate(0,0)
+            gameDisplay.fill(gray)
+            # crate(0,0)
 
-        displayCrates()
-        displayMap()
-        displayBombs()
-        print("main:brokenCrates",brokenCrates)
-        displayBrokenCratesAndUpdateCollision(True)
-        playersPickupsItems()
-        displayAirBlasts()
-        # done:Score display is slow
-        if(boolDisplayScores == True):
-            print("main:displayScores()")
-            displayScores()
-            # debugging/testing purposes
-            # newRound()
-        # done: needs to be debugged
-        displayPlayers()
-        displayItems()
-        # if more than 1 players are alive, the round can continue
-        if(numberOfPlayersAlive()>1):
-            end_of_round_time = time.time()
-        if((time.time() - end_of_round_time)*1000>3000):
-            newRound()
-        # for debugging purpose for now
-        # diplayAllAirBlast()
-        # print("airBlastDisplay\n",airBlastDisplay)
+            displayCrates()
+            displayMap()
+            displayBombs()
+            print("main:brokenCrates",brokenCrates)
+            displayBrokenCratesAndUpdateCollision(True)
+            playersPickupsItems()
+            displayAirBlasts()
+            # done:Score display is slow
+            if(boolDisplayScores == True):
+                print("main:displayScores()")
+                displayScores()
+                # debugging/testing purposes
+                # newRound()
+            # done: needs to be debugged
+            displayPlayers()
+            displayItems()
+            # if more than 1 players are alive, the round can continue
+            if(numberOfPlayersAlive()>1):
+                end_of_round_time = time.time()
+            if((time.time() - end_of_round_time)*1000>3000):
+                newRound()
+            # for debugging purpose for now
+            # diplayAllAirBlast()
+            # print("airBlastDisplay\n",airBlastDisplay)
 
-        checkForExplodingBomb()
+            checkForExplodingBomb()
 
-        # print("hitboxes():\n",hitboxes())
+            # print("hitboxes():\n",hitboxes())
 
-        pygame.display.update()
-        print('main:time:',str(time.time()-st_time))
-        clock.tick(60)
-        st_time = time.time()
-        # print('lol')
+            pygame.display.update()
+            print('main:time:',str(time.time()-st_time))
+            clock.tick(60)
+            st_time = time.time()
+            # print('lol')
 
-    pygame.quit()
-    quit()
+        pygame.quit()
+        quit()
