@@ -1106,25 +1106,30 @@ def isMouseInRect(mouse,rect):
 
 gameDisplay = []
 
+localHostNumberHumans = 0
+localHostNumberAI = 0
+
 def menuDisplay():
     print("menuDisplay:start")
     st_time  = time.time()
 
     global gameDisplay
+    global mainMenuDisplay
 
     gameDisplay = pygame.display.set_mode((display_width, display_height))
     pygame.display.set_caption('Bomberman-by-not-sure')
 
     localHostMenuState = False
     localHostNumberHumansMenuState = False
-    localHostNumberHumans = 0
     chooseTheNumberOfHumansState = False
-    localHostNumberAI = 0
     chosenTheNumberOfAIState = False
     joinLANorInternetState = False
     lanListingGameState = False
     internetListingGameState = False
     yListDisplayRayOffset = 0
+
+    global localHostNumberHumans
+    global localHostNumberAI
 
     while(True):
 
@@ -1182,6 +1187,8 @@ def menuDisplay():
                 pygame.draw.rect(gameDisplay, white, startGameButtonRectangle)
                 if(click[0]==1):
                     print("starting the processes")
+                    mainMenuDisplay = False
+                    break
         if(joinLANorInternetState==True):
             print("joinLANorInternetState",joinLANorInternetState)
             LanButtonColor = grey
@@ -1301,8 +1308,8 @@ def menuDisplay():
     print("menuDisplay:end")
 
     pass
-menuDisplay()
-exit()
+# menuDisplay()
+# # exit()
 
 from multiprocessing import Process, freeze_support
 
@@ -1311,10 +1318,20 @@ if __name__ == '__main__':
     # this is only issued in the main script
     freeze_support()
     # Process(target=server_proc).start()
-    Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-    Process(target=AI_proc,args=(2,)).start()
-    Process(target=AI_proc,args=(3,)).start()
-    Process(target=AI_proc,args=(4,)).start()
+    mainMenuDisplay = True
+    while(True):
+        while(mainMenuDisplay==True):
+            menuDisplay()
+        # if(once)
+        Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        time.sleep(1)
+        for aiIndex in range(localHostNumberAI):
+            print("aiIndex",aiIndex)
+            Process(target=AI_proc,args=(aiIndex,)).start()
+    # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+    # Process(target=AI_proc,args=(2,)).start()
+    # Process(target=AI_proc,args=(3,)).start()
+    # Process(target=AI_proc,args=(4,)).start()
 
     st_time  = time.time()
 
