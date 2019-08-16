@@ -728,7 +728,8 @@ def keyboardRead():
     global boolDisplayScores
 
     for event in pygame.event.get():
-        print("event.type",event.type)
+        if(event.type!=4):
+            print("event.type",event.type)
         if event.type == pygame.QUIT:
             pass
         if event.type == pygame.KEYDOWN:
@@ -1134,7 +1135,8 @@ def menuDisplay():
     while(True):
 
         for event in pygame.event.get():
-            print("event.type", event.type)
+            if(event.type!=4):
+                print("event.type", event.type)
             if event.type == pygame.QUIT:
                 pass
             if event.type == pygame.KEYDOWN:
