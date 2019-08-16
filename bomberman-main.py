@@ -52,7 +52,7 @@ def displayMap():
 
 # =============================TILES====================
 Tiles = [[[] for lol in range(16)] for lil in range(16)]
-print(Tiles)
+# print(Tiles)
 
 image = Image.open("./skin/Tile.png")
 # PIL image
