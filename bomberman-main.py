@@ -1327,17 +1327,17 @@ if __name__ == '__main__':
             menuDisplay()
         # if(once)
         # terminate()
-        Process(target=server_proc, args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-        # server_proc = Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,))
+        # import multiprocessing
+        # server_proc = multiprocessing.Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,))
         # server_proc.start()
         # time.sleep(10)
         # print(".terminate()")
-        # server_proc.terminate()
-
-        # time.sleep(1)
-        # for aiIndex in range(localHostNumberAI):
-        #     print("aiIndex",aiIndex)
-        #     Process(target=AI_proc,args=(aiIndex,)).start()
+        # # server_proc.terminate()
+        Process(target=server_proc, args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        time.sleep(1)
+        for aiIndex in range(localHostNumberAI):
+            print("aiIndex",aiIndex)
+            Process(target=AI_proc,args=(aiIndex,)).start()
         # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         # Process(target=AI_proc,args=(2,)).start()
         # Process(target=AI_proc,args=(3,)).start()
