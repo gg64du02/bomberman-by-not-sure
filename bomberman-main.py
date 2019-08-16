@@ -1326,11 +1326,18 @@ if __name__ == '__main__':
         while(mainMenuDisplay==True):
             menuDisplay()
         # if(once)
-        Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-        time.sleep(1)
-        for aiIndex in range(localHostNumberAI):
-            print("aiIndex",aiIndex)
-            Process(target=AI_proc,args=(aiIndex,)).start()
+        # terminate()
+        Process(target=server_proc, args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        # server_proc = Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,))
+        # server_proc.start()
+        # time.sleep(10)
+        # print(".terminate()")
+        # server_proc.terminate()
+
+        # time.sleep(1)
+        # for aiIndex in range(localHostNumberAI):
+        #     print("aiIndex",aiIndex)
+        #     Process(target=AI_proc,args=(aiIndex,)).start()
         # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         # Process(target=AI_proc,args=(2,)).start()
         # Process(target=AI_proc,args=(3,)).start()
