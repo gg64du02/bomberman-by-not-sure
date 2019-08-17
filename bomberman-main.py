@@ -940,10 +940,10 @@ def server_proc(ip_on_an_interface,port):
     # TODO: multithread on port with port listenning
 
     while(True):
-        print("server_proc:==========================================================")
+        # print("server_proc:==========================================================")
         # select : start
 
-        print('server_proc:waiting for the next event', file=sys.stderr)
+        # print('server_proc:waiting for the next event', file=sys.stderr)
         readable, writable, exceptional = select.select(inputs,
                                                         outputs,
                                                         inputs, 0)
@@ -1076,7 +1076,7 @@ def server_proc(ip_on_an_interface,port):
 
         # pygame.display.update()
         # print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
-        clock.tick(3)
+        clock.tick(6)
         st_time = time.time()
         # print('lol')
 
@@ -1307,7 +1307,7 @@ def menuDisplay():
 
         pygame.display.update()
         # print('main:time:', str((time.time() - st_time)*1000*1000),' us')
-        clock.tick(60)
+        clock.tick(6)
         st_time = time.time()
     print("menuDisplay:end")
 
@@ -1389,7 +1389,7 @@ if __name__ == '__main__':
 
             pygame.display.update()
             # print('main:time:',str(time.time()-st_time))
-            clock.tick(60)
+            clock.tick(3)
             st_time = time.time()
             # print('lol')
 
