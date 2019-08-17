@@ -979,10 +979,10 @@ def server_proc(port):
                             else:
                                 # 'MBN_JOIN_ACCEPTED'
                                 print("server_proc:!if(slotsLeftOnServer==0):")
-                                print("server_proc:slotsLeftOnServer",slotsLeftOnServer)
+                                print("server_proc:slotsLeftOnServer:before",slotsLeftOnServer)
                                 message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                 slotsLeftOnServer -=1
-                                print("server_proc:slotsLeftOnServer",slotsLeftOnServer)
+                                print("server_proc:slotsLeftOnServer:after",slotsLeftOnServer)
                                 # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
@@ -1333,6 +1333,7 @@ if __name__ == '__main__':
         # time.sleep(10)
         # print(".terminate()")
         # # server_proc.terminate()
+        # todo: set the params of server_proc (localhost, IP with interface whick can reach internet)
         Process(target=server_proc, args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         time.sleep(1)
         for aiIndex in range(localHostNumberAI):
