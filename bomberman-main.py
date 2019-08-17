@@ -1400,7 +1400,7 @@ if __name__ == '__main__':
                 if s is server:
                     # A "readable" socket is ready to accept a connection
                     connection, client_address = s.accept()
-                    print('server_proc:  connection from', client_address,
+                    print('mainMenuDisplay:  connection from', client_address,
                           file=sys.stderr)
                     connection.setblocking(0)
                     inputs.append(connection)
@@ -1413,23 +1413,23 @@ if __name__ == '__main__':
                     data = s.recv(1024)
                     if data:
                         incomingDataTCPServer = data
-                        print("server_proc:data",data)
+                        print("mainMenuDisplay:data",data)
                         arrayIncomingDataTCPServer = pickle.loads(data)
-                        print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
+                        print("mainMenuDisplay:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                         if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
-                            print("server_proc:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
+                            print("mainMenuDisplay:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                             if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
                                 if(slotsLeftOnServer==0):
                                     # 'MBN_JOIN_REFUSED'
-                                    print("server_proc:if(slotsLeftOnServer==0):")
+                                    print("mainMenuDisplay:if(slotsLeftOnServer==0):")
                                     message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
                                 else:
                                     # 'MBN_JOIN_ACCEPTED'
-                                    print("server_proc:!if(slotsLeftOnServer==0):")
-                                    print("server_proc:slotsLeftOnServer:before",slotsLeftOnServer)
+                                    print("mainMenuDisplay:!if(slotsLeftOnServer==0):")
+                                    print("mainMenuDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
                                     message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                     slotsLeftOnServer -=1
-                                    print("server_proc:slotsLeftOnServer:after",slotsLeftOnServer)
+                                    print("mainMenuDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
                                     # message_queues[s].put(data)
                             # slotsLeftOnServer
                         else:
@@ -1443,7 +1443,7 @@ if __name__ == '__main__':
                             # outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS", 1])
 
                         # A readable client socket has data
-                        print('server_proc:  received {!r} from {}'.format(
+                        print('mainMenuDisplay:  received {!r} from {}'.format(
                             data, s.getpeername()), file=sys.stderr,
                         )
                         # message_queues[s].put(data)
@@ -1452,7 +1452,7 @@ if __name__ == '__main__':
                             outputs.append(s)
                     else:
                         # Interpret empty result as closed connection
-                        print('server_proc:  closing', client_address,
+                        print('mainMenuDisplay:  closing', client_address,
                               file=sys.stderr)
                         # Stop listening for input on the connection
                         if s in outputs:
@@ -1469,18 +1469,18 @@ if __name__ == '__main__':
                 except queue.Empty:
                     # No messages waiting so stop checking
                     # for writability.
-                    print('server_proc:  ', s.getpeername(), 'queue empty',
+                    print('mainMenuDisplay:  ', s.getpeername(), 'queue empty',
                           file=sys.stderr)
                     outputs.remove(s)
                 else:
-                    print('server_proc:  sending {!r} to {}'.format(next_msg,
+                    print('mainMenuDisplay:  sending {!r} to {}'.format(next_msg,
                                                         s.getpeername()),
                           file=sys.stderr)
-                    print("server_proc:pickle.loads(next_msg)",pickle.loads(next_msg))
+                    print("mainMenuDisplay:pickle.loads(next_msg)",pickle.loads(next_msg))
                     s.send(next_msg)
             # Handle "exceptional conditions"
             for s in exceptional:
-                print('server_proc:exception condition on', s.getpeername(),
+                print('mainMenuDisplay:exception condition on', s.getpeername(),
                       file=sys.stderr)
                 # Stop listening for input on the connection
                 inputs.remove(s)
