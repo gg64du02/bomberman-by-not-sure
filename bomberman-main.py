@@ -918,7 +918,7 @@ def server_proc(ip_on_an_interface,port):
     # Bind the socket to the port
     server_address = (ip_on_an_interface, DEFAULT_HOSTING_A_SERVER_PORT)
     # server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
-    print('starting up on {} port {}'.format(*server_address),
+    print('server_proc:starting up on {} port {}'.format(*server_address),
           file=sys.stderr)
     server.bind(server_address)
     # Listen for incoming connections
