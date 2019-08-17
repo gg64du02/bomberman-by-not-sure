@@ -1339,7 +1339,8 @@ if __name__ == '__main__':
     while(True):
         while(mainMenuDisplay==True):
             menuDisplay()
-        # todo: set the params of server_proc (localhost, IP with interface whick can reach internet)
+        # todo: merge the server and client (Can be AI or the display) select code to allow for easier dev
+        # todo: connect the display to allow the debugging
         # server_ip = '192.168.1.99'
         server_ip = IP_on_LAN
         Process(target=server_proc, args=(server_ip,DEFAULT_HOSTING_A_SERVER_PORT,)).start()
