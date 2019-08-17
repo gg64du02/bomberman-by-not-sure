@@ -1315,8 +1315,21 @@ def menuDisplay():
 # menuDisplay()
 # # exit()
 
-from multiprocessing import Process, freeze_support
+import socket
 
+# trying to figure out the IP on the LAN network
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+try:
+    # doesn't even have to be reachable
+    s.connect(('10.255.255.255', 1))
+    IP_on_LAN = s.getsockname()[0]
+except:
+    IP_on_LAN = '127.0.0.1'
+finally:
+    s.close()
+print("IP_on_LAN", IP_on_LAN)
+
+from multiprocessing import Process, freeze_support
 
 if __name__ == '__main__':
     # this is only issued in the main script
@@ -1327,7 +1340,8 @@ if __name__ == '__main__':
         while(mainMenuDisplay==True):
             menuDisplay()
         # todo: set the params of server_proc (localhost, IP with interface whick can reach internet)
-        server_ip = '192.168.1.99'
+        # server_ip = '192.168.1.99'
+        server_ip = IP_on_LAN
         Process(target=server_proc, args=(server_ip,DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         time.sleep(1)
         for aiIndex in range(localHostNumberAI):
