@@ -777,14 +777,14 @@ from MultiBN import *
 import pickle
 import sys
 
-def AI_proc(number):
+def AI_proc(server_ip,number):
     print("AI_proc:"+str(number)+":start")# TCP connexion handling
 
     # unsure that the server is started
     time.sleep(1)
     import socket
 
-    server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
+    server_address = (server_ip, DEFAULT_HOSTING_A_SERVER_PORT)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(server_address)
     print("AI_proc:"+str(number)+":socket",s)
@@ -904,7 +904,7 @@ def AI_proc(number):
     print("AI_proc:end")
     pass
 
-def server_proc(port):
+def server_proc(ip_on_an_interface,port):
     print("server_proc:start")
 
     import select
@@ -916,7 +916,8 @@ def server_proc(port):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setblocking(0)
     # Bind the socket to the port
-    server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
+    server_address = (ip_on_an_interface, DEFAULT_HOSTING_A_SERVER_PORT)
+    # server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
     print('starting up on {} port {}'.format(*server_address),
           file=sys.stderr)
     server.bind(server_address)
@@ -1334,11 +1335,13 @@ if __name__ == '__main__':
         # print(".terminate()")
         # # server_proc.terminate()
         # todo: set the params of server_proc (localhost, IP with interface whick can reach internet)
-        Process(target=server_proc, args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        # Process(target=server_proc, args=('localhost',DEFAULT_HOSTING_A_SERVER_PORT,)).start()
+        server_ip = '192.168.1.99'
+        Process(target=server_proc, args=(server_ip,DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         time.sleep(1)
         for aiIndex in range(localHostNumberAI):
             print("aiIndex",aiIndex)
-            Process(target=AI_proc,args=(aiIndex,)).start()
+            Process(target=AI_proc,args=(server_ip,aiIndex,)).start()
         # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         # Process(target=AI_proc,args=(2,)).start()
         # Process(target=AI_proc,args=(3,)).start()
