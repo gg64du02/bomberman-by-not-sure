@@ -1326,26 +1326,13 @@ if __name__ == '__main__':
     while(True):
         while(mainMenuDisplay==True):
             menuDisplay()
-        # if(once)
-        # terminate()
-        # import multiprocessing
-        # server_proc = multiprocessing.Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,))
-        # server_proc.start()
-        # time.sleep(10)
-        # print(".terminate()")
-        # # server_proc.terminate()
         # todo: set the params of server_proc (localhost, IP with interface whick can reach internet)
-        # Process(target=server_proc, args=('localhost',DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         server_ip = '192.168.1.99'
         Process(target=server_proc, args=(server_ip,DEFAULT_HOSTING_A_SERVER_PORT,)).start()
         time.sleep(1)
         for aiIndex in range(localHostNumberAI):
             print("aiIndex",aiIndex)
             Process(target=AI_proc,args=(server_ip,aiIndex,)).start()
-        # Process(target=server_proc,args=(DEFAULT_HOSTING_A_SERVER_PORT,)).start()
-        # Process(target=AI_proc,args=(2,)).start()
-        # Process(target=AI_proc,args=(3,)).start()
-        # Process(target=AI_proc,args=(4,)).start()
 
         st_time  = time.time()
 
