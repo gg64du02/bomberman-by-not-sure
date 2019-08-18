@@ -805,7 +805,7 @@ def AI_proc(server_ip,number):
     arrayIncomingDataTCPclient=[]
 
     while(True):
-        print("AI_proc:"+str(number)+":==========================================================")
+        print("AI_proc:==========================================================")
         # socket : start
 
         # print('server_proc:waiting for the next event', file=sys.stderr)
@@ -848,11 +848,9 @@ def AI_proc(server_ip,number):
         #                                       "Controls_from_kbd", Controls_from_kbd])
 
 
-        print("AI_proc:"+str(number)+":incomingDataTCPclient = s.recv(1024):before")
+
 
         incomingDataTCPclient = s.recv(1024)
-
-        print("AI_proc:"+str(number)+":incomingDataTCPclient = s.recv(1024):after")
 
         # socket : end
 
@@ -932,9 +930,6 @@ def server_proc(ip_on_an_interface,port):
     # Outgoing message queues (socket:Queue)
     message_queues = {}
 
-    async_socket_list = []
-    async_socket_time = time.time()
-
     # number of slots left on server
     slotsLeftOnServer = 4
 
@@ -985,10 +980,10 @@ def server_proc(ip_on_an_interface,port):
                             else:
                                 # 'MBN_JOIN_ACCEPTED'
                                 print("server_proc:!if(slotsLeftOnServer==0):")
-                                # print("server_proc:slotsLeftOnServer:before",slotsLeftOnServer)
+                                print("server_proc:slotsLeftOnServer:before",slotsLeftOnServer)
                                 message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                 slotsLeftOnServer -=1
-                                # print("server_proc:slotsLeftOnServer:after",slotsLeftOnServer)
+                                print("server_proc:slotsLeftOnServer:after",slotsLeftOnServer)
                                 # message_queues[s].put(data)
                         # slotsLeftOnServer
                     else:
@@ -1025,8 +1020,6 @@ def server_proc(ip_on_an_interface,port):
         for s in writable:
             try:
                 next_msg = message_queues[s].get_nowait()
-                if s not in async_socket_list:
-                    async_socket_list.append(s)
             except queue.Empty:
                 # No messages waiting so stop checking
                 # for writability.
@@ -1034,7 +1027,6 @@ def server_proc(ip_on_an_interface,port):
                       file=sys.stderr)
                 outputs.remove(s)
             else:
-                print("async_socket_list",async_socket_list)
                 print('server_proc:  sending {!r} to {}'.format(next_msg,
                                                     s.getpeername()),
                       file=sys.stderr)
@@ -1053,14 +1045,6 @@ def server_proc(ip_on_an_interface,port):
             # Remove message queue
             del message_queues[s]
         # time.sleep(1)
-
-        if(async_socket_time+3<time.time()):
-            for socket_temp in async_socket_list:
-                print("server_proc:socket_temp",socket_temp)
-                print("server_proc:if(async_socket_time+3<time.time()):")
-                # message_queues[socket_temp].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
-                message_queues[socket_temp].put(pickle.dumps(['lol',':before',':after']))
-                async_socket_time = time.time()
 
         # select : end
         Controls = keyboardRead()
@@ -1442,10 +1426,10 @@ if __name__ == '__main__':
                                 else:
                                     # 'MBN_JOIN_ACCEPTED'
                                     print("mainMenuDisplay:!if(slotsLeftOnServer==0):")
-                                    # print("mainMenuDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
+                                    print("mainMenuDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
                                     message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                     slotsLeftOnServer -=1
-                                    # print("mainMenuDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
+                                    print("mainMenuDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
                                     # message_queues[s].put(data)
                             # slotsLeftOnServer
                         else:
