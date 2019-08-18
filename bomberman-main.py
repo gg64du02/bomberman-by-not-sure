@@ -808,7 +808,7 @@ def AI_proc(server_ip,number):
         print("AI_proc:==========================================================")
         # socket : start
 
-        # print('server_proc:waiting for the next event', file=sys.stderr)
+        # print('AI_proc:waiting for the next event', file=sys.stderr)
         # print(str("AI_proc:"+str(number)+":incomingDataTCPclient "+str(incomingDataTCPclient)), file=sys.stderr)
 
         outgoingDataTCPclient = []
@@ -833,6 +833,11 @@ def AI_proc(server_ip,number):
                 if(tcpClientGameState[0]==1):
                     print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
                     outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS",1])
+            if(arrayIncomingDataTCPclient[0]=='MBN_DATA'):
+                if(arrayIncomingDataTCPclient[1]=='Players'):
+                    print("AI_proc:"+str(number)+":Players:received:",arrayIncomingDataTCPclient[2])
+                    outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players",Players])
+
 
 
         if (tcpClientGameState[0] == 0):
@@ -944,6 +949,7 @@ def server_proc(ip_on_an_interface,port):
         # select : start
 
         # print('server_proc:waiting for the next event', file=sys.stderr)
+        # put a ts+0.016<time.time on the select.select() feature maybe ?
         readable, writable, exceptional = select.select(inputs,
                                                         outputs,
                                                         inputs, 0)
@@ -989,8 +995,11 @@ def server_proc(ip_on_an_interface,port):
                     else:
                         print("!if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                     if(arrayIncomingDataTCPServer[0]=='MBN_DATA'):
+                        print("server_proc:arrayIncomingDataTCPServer:",arrayIncomingDataTCPServer)
                         if(arrayIncomingDataTCPServer[1]=='NUMBER_OF_LOCAL_PLAYERS'):
-                            # message_queues[s].put(pickle.dumps(['MBN_DATA','clientSlotKeyboardMapping',clientSlotKeyboardMapping]))
+                            message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+                        if (arrayIncomingDataTCPServer[1] == 'Players'):
+                            message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
 
                             pass
 
