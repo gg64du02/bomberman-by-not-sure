@@ -1404,6 +1404,10 @@ if __name__ == '__main__':
 
         end_of_round_time = time.time()
 
+        print("gameDisplay:1")
+
+        kickstartTheDisplay = False
+
         while(runningMain):
             print("gameDisplay:==========================================================")
             # =========================================================================
@@ -1412,10 +1416,22 @@ if __name__ == '__main__':
                                                             outputs,
                                                             inputs, 0)
 
+            print("gameDisplay:2")
+
+            print("gameDisplay:readable, writable, exceptional",readable, writable, exceptional)
+            print("gameDisplay:server",server)
+
+            server.send(pickle.dumps(['MBN_DATA', "Players", Players]))
+            # if(kickstartTheDisplay==True):
+            #     # ask the server for an update
+            # message_queues[s].put(pickle.dumps(['MBN_DATA', "Players", Players]))
+
             # Handle inputs
             for s in readable:
+                print("gameDisplay:readable:3")
 
                 if s is server:
+                    print("gameDisplay:4")
                     # A "readable" socket is ready to accept a connection
                     connection, client_address = s.accept()
                     print('gameDisplay:  connection from', client_address,
@@ -1428,7 +1444,10 @@ if __name__ == '__main__':
                     message_queues[connection] = queue.Queue()
 
                 else:
+                    print("gameDisplay:readable:5")
                     data = s.recv(1024)
+                    print("gameDisplay:readable:6")
+
                     if data:
                         incomingDataTCPServer = data
                         print("gameDisplay:data",data)
@@ -1459,6 +1478,7 @@ if __name__ == '__main__':
                             # if(arrayIncomingDataTCPclient[1]=='Players'):
                             #     arrayIncomingDataTCPclient[2]
                                 print("gameDisplay:arrayIncomingDataTCPServer" ,arrayIncomingDataTCPServer)
+                                kickstartTheDisplay = True
 
                                 pass
 
@@ -1486,6 +1506,7 @@ if __name__ == '__main__':
                         del message_queues[s]
             # Handle outputs
             for s in writable:
+
                 try:
                     next_msg = message_queues[s].get_nowait()
                 except queue.Empty:
