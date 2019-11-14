@@ -838,6 +838,13 @@ def AI_proc(server_ip,number):
                     print("AI_proc:"+str(number)+":Players:received:",arrayIncomingDataTCPclient[2])
                     outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players",Players])
 
+                    # print("AI_proc:" + str(number) + ":current infos:" + str(arrayIncomingDataTCPclient[2][number]))
+                    # tmpPlayers = arrayIncomingDataTCPclient[2][number]
+                    # print("AI_proc:" + str(number) +"tmpPlayers:"+str(tmpPlayers))
+                    # if(abs(tmpPlayers[0][0]-Players[number][0][0])<64):
+                    #     if(abs(tmpPlayers[0][1]-Players[number][0][1])<64):
+                    #         Players[number] = tmpPlayers
+
 
 
         if (tcpClientGameState[0] == 0):
