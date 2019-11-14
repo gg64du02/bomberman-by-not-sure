@@ -11,6 +11,8 @@ import random
 # image processing and skin loading
 from PIL import Image
 
+# make the display on what's going on the server
+
 def currentMap():
     map = np.ones((15,20))
     for tile in tileGen():
@@ -1377,7 +1379,7 @@ if __name__ == '__main__':
         # Bind the socket to the port
         server_address = (server_ip, DEFAULT_HOSTING_A_SERVER_PORT)
         # server_address = ('localhost', DEFAULT_HOSTING_A_SERVER_PORT)
-        print('mainMenuDisplay:starting up on {} port {}'.format(*server_address),
+        print('gameDisplay:starting up on {} port {}'.format(*server_address),
               file=sys.stderr)
         server.connect(server_address)
         # server.bind(server_address)
@@ -1403,7 +1405,7 @@ if __name__ == '__main__':
         end_of_round_time = time.time()
 
         while(runningMain):
-            print("main:==========================================================")
+            print("gameDisplay:==========================================================")
             # =========================================================================
             # =========================================================================
             readable, writable, exceptional = select.select(inputs,
@@ -1416,7 +1418,7 @@ if __name__ == '__main__':
                 if s is server:
                     # A "readable" socket is ready to accept a connection
                     connection, client_address = s.accept()
-                    print('mainMenuDisplay:  connection from', client_address,
+                    print('gameDisplay:  connection from', client_address,
                           file=sys.stderr)
                     connection.setblocking(0)
                     inputs.append(connection)
@@ -1429,23 +1431,23 @@ if __name__ == '__main__':
                     data = s.recv(1024)
                     if data:
                         incomingDataTCPServer = data
-                        print("mainMenuDisplay:data",data)
+                        print("gameDisplay:data",data)
                         arrayIncomingDataTCPServer = pickle.loads(data)
-                        print("mainMenuDisplay:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
+                        print("gameDisplay:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                         if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
-                            print("mainMenuDisplay:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
+                            print("gameDisplay:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                             if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
                                 if(slotsLeftOnServer==0):
                                     # 'MBN_JOIN_REFUSED'
-                                    print("mainMenuDisplay:if(slotsLeftOnServer==0):")
+                                    print("gameDisplay:if(slotsLeftOnServer==0):")
                                     message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
                                 else:
                                     # 'MBN_JOIN_ACCEPTED'
-                                    print("mainMenuDisplay:!if(slotsLeftOnServer==0):")
-                                    print("mainMenuDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
+                                    print("gameDisplay:!if(slotsLeftOnServer==0):")
+                                    print("gameDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
                                     message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
                                     slotsLeftOnServer -=1
-                                    print("mainMenuDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
+                                    print("gameDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
                                     # message_queues[s].put(data)
                             # slotsLeftOnServer
                         else:
@@ -1454,12 +1456,16 @@ if __name__ == '__main__':
                             if(arrayIncomingDataTCPServer[1]=='NUMBER_OF_LOCAL_PLAYERS'):
                                 # message_queues[s].put(pickle.dumps(['MBN_DATA','clientSlotKeyboardMapping',clientSlotKeyboardMapping]))
 
+                            # if(arrayIncomingDataTCPclient[1]=='Players'):
+                            #     arrayIncomingDataTCPclient[2]
+                                print("gameDisplay:arrayIncomingDataTCPServer" ,arrayIncomingDataTCPServer)
+
                                 pass
 
                             # outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS", 1])
 
                         # A readable client socket has data
-                        print('mainMenuDisplay:  received {!r} from {}'.format(
+                        print('gameDisplay:  received {!r} from {}'.format(
                             data, s.getpeername()), file=sys.stderr,
                         )
                         # message_queues[s].put(data)
@@ -1468,7 +1474,7 @@ if __name__ == '__main__':
                             outputs.append(s)
                     else:
                         # Interpret empty result as closed connection
-                        print('mainMenuDisplay:  closing', client_address,
+                        print('gameDisplay:  closing', client_address,
                               file=sys.stderr)
                         # Stop listening for input on the connection
                         if s in outputs:
@@ -1485,18 +1491,18 @@ if __name__ == '__main__':
                 except queue.Empty:
                     # No messages waiting so stop checking
                     # for writability.
-                    print('mainMenuDisplay:  ', s.getpeername(), 'queue empty',
+                    print('gameDisplay:  ', s.getpeername(), 'queue empty',
                           file=sys.stderr)
                     outputs.remove(s)
                 else:
-                    print('mainMenuDisplay:  sending {!r} to {}'.format(next_msg,
+                    print('gameDisplay:  sending {!r} to {}'.format(next_msg,
                                                         s.getpeername()),
                           file=sys.stderr)
-                    print("mainMenuDisplay:pickle.loads(next_msg)",pickle.loads(next_msg))
+                    print("gameDisplay:pickle.loads(next_msg)",pickle.loads(next_msg))
                     s.send(next_msg)
             # Handle "exceptional conditions"
             for s in exceptional:
-                print('mainMenuDisplay:exception condition on', s.getpeername(),
+                print('gameDisplay:exception condition on', s.getpeername(),
                       file=sys.stderr)
                 # Stop listening for input on the connection
                 inputs.remove(s)
@@ -1517,7 +1523,7 @@ if __name__ == '__main__':
 
             if(keyboard.is_pressed('esc')):
                 runningMain = False
-                print("main:issuing the esc key")
+                print("gameDisplay:issuing the esc key")
 
             gameDisplay.fill(gray)
             # crate(0,0)
@@ -1531,7 +1537,7 @@ if __name__ == '__main__':
             displayAirBlasts()
             # done:Score display is slow
             if(boolDisplayScores == True):
-                print("main:displayScores()")
+                print("gameDisplay:displayScores()")
                 displayScores()
                 # debugging/testing purposes
                 # newRound()
