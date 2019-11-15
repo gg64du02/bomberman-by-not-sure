@@ -953,6 +953,9 @@ def server_proc(ip_on_an_interface,port):
 
     # TODO: multithread on port with port listening
 
+    # for testing, debugging
+    # iii = 0
+
     while(True):
         # print("server_proc:==========================================================")
         # select : start
@@ -962,6 +965,12 @@ def server_proc(ip_on_an_interface,port):
         readable, writable, exceptional = select.select(inputs,
                                                         outputs,
                                                         inputs, 0)
+        
+        # for testing, debugging
+        # Players[0][0] = [32 * (iii), 32 * (iii*2)]
+        # iii+=1
+        # if(iii>8):
+        #     iii=0
 
         # Handle inputs
         for s in readable:
@@ -1094,7 +1103,7 @@ def server_proc(ip_on_an_interface,port):
 
         # pygame.display.update()
         # print('server_proc:time:',str((time.time()-st_time)*1000*1000),'us')
-        clock.tick(6)
+        clock.tick(60)
         st_time = time.time()
         # print('lol')
 
@@ -1427,7 +1436,7 @@ if __name__ == '__main__':
             print("gameDisplay:dataGameDisplay:dataGameDisplay",dataGameDisplay)
             tmpIncomingInfo = pickle.loads(dataGameDisplay)
             print("gameDisplay:tmpIncomingInfo[2]",tmpIncomingInfo[2])
-            
+            Players = tmpIncomingInfo[2]
             # if(kickstartTheDisplay==True):
             #     # ask the server for an update
             # message_queues[s].put(pickle.dumps(['MBN_DATA', "Players", Players]))
