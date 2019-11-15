@@ -1425,6 +1425,9 @@ if __name__ == '__main__':
 
             dataGameDisplay = server.recv(1024)
             print("gameDisplay:dataGameDisplay:dataGameDisplay",dataGameDisplay)
+            tmpIncomingInfo = pickle.loads(dataGameDisplay)
+            print("gameDisplay:tmpIncomingInfo[2]",tmpIncomingInfo[2])
+            
             # if(kickstartTheDisplay==True):
             #     # ask the server for an update
             # message_queues[s].put(pickle.dumps(['MBN_DATA', "Players", Players]))
