@@ -965,7 +965,7 @@ def server_proc(ip_on_an_interface,port):
         readable, writable, exceptional = select.select(inputs,
                                                         outputs,
                                                         inputs, 0)
-        
+
         # for testing, debugging
         # Players[0][0] = [32 * (iii), 32 * (iii*2)]
         # iii+=1
@@ -1018,6 +1018,8 @@ def server_proc(ip_on_an_interface,port):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
                         if (arrayIncomingDataTCPServer[1] == 'Players'):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+
+                            # message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
 
                             pass
 
@@ -1440,118 +1442,6 @@ if __name__ == '__main__':
             # if(kickstartTheDisplay==True):
             #     # ask the server for an update
             # message_queues[s].put(pickle.dumps(['MBN_DATA', "Players", Players]))
-
-            # # Handle inputs
-            # for s in readable:
-            #     print("gameDisplay:readable:3")
-            #
-            #     if s is server:
-            #         print("gameDisplay:4")
-            #         # A "readable" socket is ready to accept a connection
-            #         connection, client_address = s.accept()
-            #         print('gameDisplay:  connection from', client_address,
-            #               file=sys.stderr)
-            #         connection.setblocking(0)
-            #         inputs.append(connection)
-            #
-            #         # Give the connection a queue for data
-            #         # we want to send
-            #         message_queues[connection] = queue.Queue()
-            #
-            #     else:
-            #         print("gameDisplay:readable:5")
-            #         data = s.recv(1024)
-            #         print("gameDisplay:readable:6")
-            #
-            #         if data:
-            #             incomingDataTCPServer = data
-            #             print("gameDisplay:data",data)
-            #             arrayIncomingDataTCPServer = pickle.loads(data)
-            #             print("gameDisplay:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
-            #             if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
-            #                 print("gameDisplay:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
-            #                 if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
-            #                     if(slotsLeftOnServer==0):
-            #                         # 'MBN_JOIN_REFUSED'
-            #                         print("gameDisplay:if(slotsLeftOnServer==0):")
-            #                         message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_REFUSED']))
-            #                     else:
-            #                         # 'MBN_JOIN_ACCEPTED'
-            #                         print("gameDisplay:!if(slotsLeftOnServer==0):")
-            #                         print("gameDisplay:slotsLeftOnServer:before",slotsLeftOnServer)
-            #                         message_queues[s].put(pickle.dumps(['MBN_SESSION','MBN_JOIN_ACCEPTED']))
-            #                         slotsLeftOnServer -=1
-            #                         print("gameDisplay:slotsLeftOnServer:after",slotsLeftOnServer)
-            #                         # message_queues[s].put(data)
-            #                 # slotsLeftOnServer
-            #             else:
-            #                 print("!if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
-            #             if(arrayIncomingDataTCPServer[0]=='MBN_DATA'):
-            #                 if(arrayIncomingDataTCPServer[1]=='NUMBER_OF_LOCAL_PLAYERS'):
-            #                     # message_queues[s].put(pickle.dumps(['MBN_DATA','clientSlotKeyboardMapping',clientSlotKeyboardMapping]))
-            #
-            #                 # if(arrayIncomingDataTCPclient[1]=='Players'):
-            #                 #     arrayIncomingDataTCPclient[2]
-            #                     print("gameDisplay:arrayIncomingDataTCPServer" ,arrayIncomingDataTCPServer)
-            #                     kickstartTheDisplay = True
-            #
-            #                     pass
-            #
-            #                 # outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS", 1])
-            #
-            #             # A readable client socket has data
-            #             print('gameDisplay:  received {!r} from {}'.format(
-            #                 data, s.getpeername()), file=sys.stderr,
-            #             )
-            #             # message_queues[s].put(data)
-            #             # Add output channel for response
-            #             if s not in outputs:
-            #                 outputs.append(s)
-            #         else:
-            #             # Interpret empty result as closed connection
-            #             print('gameDisplay:  closing', client_address,
-            #                   file=sys.stderr)
-            #             # Stop listening for input on the connection
-            #             if s in outputs:
-            #                 outputs.remove(s)
-            #             inputs.remove(s)
-            #             s.close()
-            #
-            #             # Remove message queue
-            #             del message_queues[s]
-            # # Handle outputs
-            # for s in writable:
-            #
-            #     try:
-            #         next_msg = message_queues[s].get_nowait()
-            #     except queue.Empty:
-            #         # No messages waiting so stop checking
-            #         # for writability.
-            #         print('gameDisplay:  ', s.getpeername(), 'queue empty',
-            #               file=sys.stderr)
-            #         outputs.remove(s)
-            #     else:
-            #         print('gameDisplay:  sending {!r} to {}'.format(next_msg,
-            #                                             s.getpeername()),
-            #               file=sys.stderr)
-            #         print("gameDisplay:pickle.loads(next_msg)",pickle.loads(next_msg))
-            #         s.send(next_msg)
-            # # Handle "exceptional conditions"
-            # for s in exceptional:
-            #     print('gameDisplay:exception condition on', s.getpeername(),
-            #           file=sys.stderr)
-            #     # Stop listening for input on the connection
-            #     inputs.remove(s)
-            #     if s in outputs:
-            #         outputs.remove(s)
-            #     s.close()
-            #
-            #     # Remove message queue
-            #     del message_queues[s]
-            # # time.sleep(1)
-
-            # =========================================================================
-            # =========================================================================
 
             Controls = keyboardRead()
 
