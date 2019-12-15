@@ -322,6 +322,7 @@ def generatedCrateMap():
                 if(crateMap[yTile,xTile]==1):
                     crateMap[yTile, xTile] = 0
     # print("crateMap\n",crateMap)
+    crateMap = crateMap.astype(np.uint8)
     # pass
     return crateMap
 crateMap = generatedCrateMap()
@@ -1018,6 +1019,10 @@ def server_proc(ip_on_an_interface,port):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
                         if (arrayIncomingDataTCPServer[1] == 'Players'):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+
+                            print("server_proc:crateMap",crateMap)
+
+                            # 20*15
 
                             # message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
 
