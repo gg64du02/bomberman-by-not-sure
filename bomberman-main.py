@@ -398,6 +398,7 @@ def ColisionCheckAndMovement():
         step = 8
 
         # ==============================================================
+        # print("ColisionCheckAndMovement:player:"+str(player))
         yTmp = player[0][1]
         xTmp = player[0][0]
         if(player[2][0]==1):
@@ -848,6 +849,11 @@ def AI_proc(server_ip,number):
                     #     if(abs(tmpPlayers[0][1]-Players[number][0][1])<64):
                     #         Players[number] = tmpPlayers
 
+                if (arrayIncomingDataTCPclient[1] == 'crateMap'):
+                    global crateMap
+                    # print("AI_proc:" + str(number) +":type(crateMap)"+ str(type(crateMap)))
+                    crateMap = arrayIncomingDataTCPclient[2]
+                    # print("AI_proc:" + str(number) +":type(crateMap)"+ str(type(crateMap)))
 
 
         if (tcpClientGameState[0] == 0):
@@ -870,6 +876,14 @@ def AI_proc(server_ip,number):
         # socket : end
 
         Controls = keyboardRead()
+
+        Controls_from_kbd[number][0][0] = 0
+        Controls_from_kbd[number][0][1] = 0
+        Controls_from_kbd[number][0][2] = 0
+        Controls_from_kbd[number][0][3] = 0
+        Controls_from_kbd[number][0][random.randint(0,3)] = 1
+
+        print("AI_proc:" + str(number) +":Controls_from_kbd:"+str(Controls_from_kbd))
 
         ColisionCheckAndMovement()
 
@@ -1024,7 +1038,7 @@ def server_proc(ip_on_an_interface,port):
 
                             # 20*15
 
-                            # message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
+                            message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
 
                             pass
 
