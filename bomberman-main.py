@@ -842,6 +842,10 @@ def AI_proc(server_ip,number):
                     print("AI_proc:"+str(number)+":Players:received:",arrayIncomingDataTCPclient[2])
                     outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players",Players])
 
+                    # for playerNumber in range(0,3):
+                    #     if playerNumber != number:
+                    #         Players[number] = arrayIncomingDataTCPclient[2][number]
+
                     # print("AI_proc:" + str(number) + ":current infos:" + str(arrayIncomingDataTCPclient[2][number]))
                     # tmpPlayers = arrayIncomingDataTCPclient[2][number]
                     # print("AI_proc:" + str(number) +"tmpPlayers:"+str(tmpPlayers))
@@ -877,6 +881,7 @@ def AI_proc(server_ip,number):
 
         Controls = keyboardRead()
 
+        # debug purpose: random
         Controls_from_kbd[number][0][0] = 0
         Controls_from_kbd[number][0][1] = 0
         Controls_from_kbd[number][0][2] = 0
@@ -971,6 +976,8 @@ def server_proc(ip_on_an_interface,port):
     # for testing, debugging
     # iii = 0
 
+    global Players
+
     while(True):
         # print("server_proc:==========================================================")
         # select : start
@@ -1036,9 +1043,11 @@ def server_proc(ip_on_an_interface,port):
 
                             print("server_proc:crateMap",crateMap)
 
+                            Players = arrayIncomingDataTCPServer[2]
+
                             # 20*15
 
-                            message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
+                            # message_queues[s].put(pickle.dumps(['MBN_DATA',"crateMap",crateMap]))
 
                             pass
 
