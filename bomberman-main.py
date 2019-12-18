@@ -1054,7 +1054,7 @@ def server_proc(ip_on_an_interface,port):
 
                             print("server_proc:crateMap",crateMap)
 
-                            for player_s_port,index in zip(whoIsInControl_AIsPort,range(0,3)):
+                            for player_s_port,index in zip(whoIsInControl_AIsPort,range(0,4)):
                                 if(player_s_port!=[]):
                                     if(player_s_port==[s.getpeername()]):
                                         Players[index] = arrayIncomingDataTCPServer[2][index]
