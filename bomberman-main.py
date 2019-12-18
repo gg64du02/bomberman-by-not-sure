@@ -794,6 +794,9 @@ def AI_proc(server_ip,number):
     print("AI_proc:"+str(number)+":socket",s)
     # s.setblocking(0.016)
 
+    # debugging purpose
+    # exit()
+
     st_time  = time.time()
 
     end_of_round_time = time.time()
@@ -836,7 +839,7 @@ def AI_proc(server_ip,number):
                     exit()
                 if(tcpClientGameState[0]==1):
                     print("AI_proc:"+str(number)+":if(tcpClientGameState[0]==1):")
-                    outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS",1])
+                    outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "NUMBER_OF_LOCAL_PLAYERS",1,number])
             if(arrayIncomingDataTCPclient[0]=='MBN_DATA'):
                 if(arrayIncomingDataTCPclient[1]=='Players'):
                     print("AI_proc:"+str(number)+":Players:received:",arrayIncomingDataTCPclient[2])
@@ -978,6 +981,8 @@ def server_proc(ip_on_an_interface,port):
 
     global Players
 
+    whoIsInControl_AIsPort=[[],[],[],[]]
+
     while(True):
         # print("server_proc:==========================================================")
         # select : start
@@ -993,6 +998,8 @@ def server_proc(ip_on_an_interface,port):
         # iii+=1
         # if(iii>8):
         #     iii=0
+        # print("server_proc:inputs:"+str(inputs))
+
 
         # Handle inputs
         for s in readable:
@@ -1038,12 +1045,22 @@ def server_proc(ip_on_an_interface,port):
                         print("server_proc:arrayIncomingDataTCPServer:",arrayIncomingDataTCPServer)
                         if(arrayIncomingDataTCPServer[1]=='NUMBER_OF_LOCAL_PLAYERS'):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+                            if(len(arrayIncomingDataTCPServer)==4):
+                                print("server_proc:getpeername():"+str(s.getpeername()))
+                                whoIsInControl_AIsPort[arrayIncomingDataTCPServer[3]] = [s.getpeername()]
+                                print("whoIsInControl_AIsPort:"+str(whoIsInControl_AIsPort))
                         if (arrayIncomingDataTCPServer[1] == 'Players'):
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
 
                             print("server_proc:crateMap",crateMap)
 
-                            Players = arrayIncomingDataTCPServer[2]
+                            for player_s_port,index in zip(whoIsInControl_AIsPort,range(0,3)):
+                                if(player_s_port!=[]):
+                                    if(player_s_port==[s.getpeername()]):
+                                        Players[index] = arrayIncomingDataTCPServer[2][index]
+                                        pass
+                                    # if()
+                            # Players = arrayIncomingDataTCPServer[2]
 
                             # 20*15
 
