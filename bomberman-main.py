@@ -23,6 +23,7 @@ def currentMap():
             else:
                 if((tile[0]+1)%2==1):
                     map[tile[1],tile[0]]=0
+    map = map.astype(np.uint8)
     return map
 
 def tileGen():
@@ -1059,7 +1060,7 @@ def server_proc(ip_on_an_interface,port):
                             # message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
                             message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players,"crateMap",crateMap]))
 
-                            print("server_proc:crateMap",crateMap)
+                            # print("server_proc:crateMap",crateMap)
 
                             for player_s_port,index in zip(whoIsInControl_AIsPort,range(0,4)):
                                 if(player_s_port!=[]):
@@ -1540,9 +1541,14 @@ if __name__ == '__main__':
 
             pygame.display.update()
             # print('main:time:',str(time.time()-st_time))
-            clock.tick(3)
+            clock.tick(60)
             st_time = time.time()
             # print('lol')
+
+            # debugging purpose
+            print("gameDisplay:globals()" + str(globals()))
+            print("gameDisplay:locals()" + str(locals()))
+            print("gameDisplay:dir()" + str(dir()))
 
         pygame.quit()
         quit()
