@@ -776,7 +776,6 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
-
 def isIndexesRange(point):
     isInsideIndexRange = False
     if (point[1] >= 0):
@@ -788,7 +787,7 @@ def isIndexesRange(point):
     return isInsideIndexRange
 
 from skimage import measure
-def aiDecideWhatToDo(playerNumber):
+def aiDecideWhatToDo(playerNumber,potentialPath):
     print("\naiDecideWhatToDo\n")
     global Controls_from_kbd
     print("\naiDecideWhatToDo:str(playerNumber):",str(playerNumber))
@@ -808,46 +807,38 @@ def aiDecideWhatToDo(playerNumber):
         if(isIndexesRange(target)==True):
             # print("aiDecideWhatToDo:",playerNumber,":target:",target)
             targetsOnTheGrid.append(target)
-    print("aiDecideWhatToDo:",playerNumber,":targetsOnTheGrid:",targetsOnTheGrid)
-
-
-    # closest_node1 = closest_node(player2indexes, potentialPathList)
-    # neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-    # neighborTiles = np.subtract([player2indexes[0], player2indexes[1]], neighbors)
-    # best_bomb_spot = []
-    # bestBombSpotPos = []
-    # worstBombSpotPos = []
-    # regionSizePreviousMax = 300
-    # regionSizePreviousMin = 1
-    # st_time_oneStepToPutBomb1 = time.time()
-    # for i, j in neighborTiles:
-    #     if (isIndexesRange((i, j))):
-    #         currentTileState = potentialPath[(i, j)]
-    #         if (int(currentTileState) == 1):
-    #             # supposing we put a bomb
-    #             potentialPath[(i, j)] = 0
-    #             playerYindex = player2indexes[0]
-    #             playerXindex = player2indexes[1]
-    #             labeled = measure.label(potentialPath, background=False, connectivity=1)
-    #             label = labeled[playerYindex, playerXindex]  # known pixel location
-    #             rp = measure.regionprops(labeled)
-    #             props = rp[label - 1]  # background is labeled 0, not in rp
-    #             regionSize = len(props.coords)
-    #             best_bomb_spot.append(regionSize)
-    #             if (regionSizePreviousMax > regionSize):
-    #                 regionSizePreviousMax = regionSize
-    #                 bestBombSpotPos = (i, j)
-    #             if (regionSizePreviousMin < regionSize):
-    #                 regionSizePreviousMin = regionSize
-    #                 worstBombSpotPos = (i, j)
-    #             # restoring the tile
-    #             potentialPath[(i, j)] = 1
-    #             potentialPath[(i, j)] = currentTileState
-    #
-    #         else:
-    #             # print("!if(int(currentTileState)==1):")
-    #             pass
-
+    # print("aiDecideWhatToDo:",playerNumber,":targetsOnTheGrid:",targetsOnTheGrid)
+    best_bomb_spot = []
+    bestBombSpotPos = []
+    worstBombSpotPos = []
+    regionSizePreviousMax = 300
+    regionSizePreviousMin = 1
+    for testTarget in targetsOnTheGrid:
+        # print("aiDecideWhatToDo:",playerNumber,":testTarget:",testTarget)
+        currentTileState = potentialPath[(testTarget[0],testTarget[1])]
+        # print("currentTileState",currentTileState)
+        if (int(currentTileState) == 1):
+            # supposing we put a bomb
+            potentialPath[(testTarget[0],testTarget[1])] = 0
+            playerYindex = testTarget[0]
+            playerXindex = testTarget[1]
+            labeled = measure.label(potentialPath, background=False, connectivity=1)
+            label = labeled[playerYindex, playerXindex]  # known pixel location
+            rp = measure.regionprops(labeled)
+            props = rp[label - 1]  # background is labeled 0, not in rp
+            regionSize = len(props.coords)
+            best_bomb_spot.append(regionSize)
+            if (regionSizePreviousMax > regionSize):
+                regionSizePreviousMax = regionSize
+                bestBombSpotPos = testTarget
+            if (regionSizePreviousMin < regionSize):
+                regionSizePreviousMin = regionSize
+                worstBombSpotPos = testTarget
+            # restoring the tile
+            potentialPath[(testTarget[0],testTarget[1])] = 1
+            potentialPath[(testTarget[0],testTarget[1])] = currentTileState
+        pass
+    print("aiDecideWhatToDo:",playerNumber,":bestBombSpotPos:",bestBombSpotPos)
 
     pass
 
@@ -982,7 +973,7 @@ def AI_proc(server_ip,number):
         # print("AI_proc:" + str(number) +":Controls_from_kbd:"+str(Controls_from_kbd))
         print("AI_proc:" + str(number) +":str(Players[number]):"+str(Players[number]))
 
-        aiDecideWhatToDo(number)
+        aiDecideWhatToDo(number,crateMap)
 
         # make sure the proper keys are pressed at this point====================================
 
