@@ -399,8 +399,9 @@ def ColisionCheckAndMovement():
 
         # ==============================================================
         # print("ColisionCheckAndMovement:player:"+str(player))
-        yTmp = player[0][1]
-        xTmp = player[0][0]
+        yTmp = int(player[0][1])
+        xTmp = int(player[0][0])
+        # print("yTmp,xTmp",yTmp,xTmp)
         if(player[2][0]==1):
         # if(player[2]==1):
             # s
@@ -811,6 +812,8 @@ def AI_proc(server_ip,number):
     incomingDataTCPclient=[]
     arrayIncomingDataTCPclient=[]
 
+    global crateMap
+
     while(True):
         print("AI_proc:==========================================================")
         # socket : start
@@ -845,6 +848,10 @@ def AI_proc(server_ip,number):
                     print("AI_proc:"+str(number)+":Players:received:",arrayIncomingDataTCPclient[2])
                     outgoingDataTCPclient = pickle.dumps(['MBN_DATA', "Players",Players])
 
+                if(len(arrayIncomingDataTCPclient)==5):
+                    if (arrayIncomingDataTCPclient[3] == 'crateMap'):
+                        crateMap = arrayIncomingDataTCPclient[4]
+
                     # for playerNumber in range(0,3):
                     #     if playerNumber != number:
                     #         Players[number] = arrayIncomingDataTCPclient[2][number]
@@ -857,7 +864,6 @@ def AI_proc(server_ip,number):
                     #         Players[number] = tmpPlayers
 
                 if (arrayIncomingDataTCPclient[1] == 'crateMap'):
-                    global crateMap
                     # print("AI_proc:" + str(number) +":type(crateMap)"+ str(type(crateMap)))
                     crateMap = arrayIncomingDataTCPclient[2]
                     # print("AI_proc:" + str(number) +":type(crateMap)"+ str(type(crateMap)))
@@ -1048,9 +1054,10 @@ def server_proc(ip_on_an_interface,port):
                             if(len(arrayIncomingDataTCPServer)==4):
                                 print("server_proc:getpeername():"+str(s.getpeername()))
                                 whoIsInControl_AIsPort[arrayIncomingDataTCPServer[3]] = [s.getpeername()]
-                                print("whoIsInControl_AIsPort:"+str(whoIsInControl_AIsPort))
+                                print("server_proc:whoIsInControl_AIsPort:"+str(whoIsInControl_AIsPort))
                         if (arrayIncomingDataTCPServer[1] == 'Players'):
-                            message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+                            # message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players]))
+                            message_queues[s].put(pickle.dumps(['MBN_DATA',"Players",Players,"crateMap",crateMap]))
 
                             print("server_proc:crateMap",crateMap)
 
@@ -1484,6 +1491,9 @@ if __name__ == '__main__':
             tmpIncomingInfo = pickle.loads(dataGameDisplay)
             print("gameDisplay:tmpIncomingInfo[2]",tmpIncomingInfo[2])
             Players = tmpIncomingInfo[2]
+            if(len(tmpIncomingInfo)==5):
+                if(tmpIncomingInfo[3]=='crateMap'):
+                    crateMap = tmpIncomingInfo[4]
             # if(kickstartTheDisplay==True):
             #     # ask the server for an update
             # message_queues[s].put(pickle.dumps(['MBN_DATA', "Players", Players]))
