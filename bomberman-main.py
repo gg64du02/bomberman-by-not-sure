@@ -776,6 +776,17 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
+
+def isIndexesRange(point):
+    isInsideIndexRange = False
+    if (point[1] >= 0):
+        if (point[1] < 20):
+            if (point[0] >= 0):
+                if (point[0] < 15):
+                    # print("ii in (0,0) and (19,15)")
+                    isInsideIndexRange = True
+    return isInsideIndexRange
+
 from skimage import measure
 def aiDecideWhatToDo(playerNumber):
     print("\naiDecideWhatToDo\n")
@@ -784,6 +795,21 @@ def aiDecideWhatToDo(playerNumber):
     print("\naiDecideWhatToDo:str(Players):",str(Players))
     foePlayers = [Players[i] for i in range(0,4) if i != playerNumber]
     print("aiDecideWhatToDo:foePlayers",foePlayers)
+    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    potentialTargets = [np.subtract([int(foePlayer[0][0]/32), int(foePlayer[0][1]/32)], neighbors) for foePlayer in foePlayers]
+    # print("aiDecideWhatToDo:potentialTargets",potentialTargets)
+    potentialTargetsList = []
+    for potentialTargetsArray in potentialTargets:
+        for insideCell in potentialTargetsArray:
+            potentialTargetsList.append(insideCell)
+    # print("aiDecideWhatToDo:potentialTargetsList",potentialTargetsList)
+    targetsOnTheGrid = []
+    for target in potentialTargetsList:
+        if(isIndexesRange(target)==True):
+            # print("aiDecideWhatToDo:",playerNumber,":target:",target)
+            targetsOnTheGrid.append(target)
+    print("aiDecideWhatToDo:",playerNumber,":targetsOnTheGrid:",targetsOnTheGrid)
+
 
     # closest_node1 = closest_node(player2indexes, potentialPathList)
     # neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -821,6 +847,8 @@ def aiDecideWhatToDo(playerNumber):
     #         else:
     #             # print("!if(int(currentTileState)==1):")
     #             pass
+
+
     pass
 
 # if
