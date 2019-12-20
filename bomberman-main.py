@@ -929,8 +929,44 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
         targetPosition = bestBombSpotPos
     else:
         # search for the closest node to attack for any potential target
-        # targetPosition = closest_node1
-        pass
+
+        if(playerNumber!=0):
+            closest_node0 = distance.cdist([(int(Players[0][0][1] / 32), int(Players[0][0][0] / 32))],
+                                       potentialPathList).argmin()
+        else:
+            closest_node0 = []
+
+        if(playerNumber!=1):
+            closest_node1 = distance.cdist([(int(Players[1][0][1] / 32), int(Players[1][0][0] / 32))],
+                                           potentialPathList).argmin()
+        else:
+            closest_node1 = []
+
+        if(playerNumber!=2):
+            closest_node2 = distance.cdist([(int(Players[2][0][1] / 32), int(Players[2][0][0] / 32))],
+                                           potentialPathList).argmin()
+        else:
+            closest_node2 = []
+
+        if(playerNumber!=3):
+            closest_node3 = distance.cdist([(int(Players[3][0][1] / 32), int(Players[3][0][0] / 32))],
+                                           potentialPathList).argmin()
+        else:
+            closest_node3 = []
+
+        CNs = [closest_node0,closest_node1,closest_node2,closest_node3]
+        # print("aiDecideWhatToDo:",playerNumber,":CNs",CNs)
+        CNs.remove([])
+        # print("aiDecideWhatToDo:",playerNumber,":CNs",CNs)
+        # print("potentialPathList:",playerNumber,":potentialPathList",potentialPathList)
+        closestNodePos = potentialPathList[min(CNs)]
+        print("aiDecideWhatToDo:",playerNumber,":closestNodePos:",closestNodePos)
+
+        targetPosition = closestNodePos
+
+
+        # # targetPosition = closest_node1
+        # pass
     #
     # print(Players[playerNumber])
     # print(Players[playerNumber][0],Players[playerNumber][1])
@@ -999,7 +1035,7 @@ def AI_proc(server_ip,number):
                 print("AI_proc:"+str(number)+":incomingDataTCPclient:"+str(incomingDataTCPclient))
                 arrayIncomingDataTCPclient = pickle.loads(incomingDataTCPclient)
 
-        print("AI_proc:"+str(number)+":arrayIncomingDataTCPclient",arrayIncomingDataTCPclient)
+        # print("AI_proc:"+str(number)+":arrayIncomingDataTCPclient",arrayIncomingDataTCPclient)
 
         if(arrayIncomingDataTCPclient!=[]):
             if(arrayIncomingDataTCPclient[0]=='MBN_SESSION'):
@@ -1290,7 +1326,7 @@ def server_proc(ip_on_an_interface,port):
                 print('server_proc:  sending {!r} to {}'.format(next_msg,
                                                     s.getpeername()),
                       file=sys.stderr)
-                print("server_proc:pickle.loads(next_msg)",pickle.loads(next_msg))
+                # print("server_proc:pickle.loads(next_msg)",pickle.loads(next_msg))
                 s.send(next_msg)
         # Handle "exceptional conditions"
         for s in exceptional:
