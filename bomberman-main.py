@@ -862,17 +862,145 @@ def closest_node(node, nodes):
     # print("nodes", nodes)
     # print("type(node):",type(node))
     closest_index = distance.cdist([node], nodes).argmin()
-    return nodes[closest_index]
+    return nodes[closest_index]# MoveToTheTileNextToMe(player1indexes,node)
+import numpy
+from heapq import *
+# credits:http://code.activestate.com/recipes/578919-python-a-pathfinding-with-binary-heap/
+def heuristic(a, b):
+    return (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2
+def astar(array, start, goal):
+    # neighbors = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+    print("(start, goal):",(start, goal))
+
+    close_set = set()
+    came_from = {}
+    gscore = {start: 0}
+    fscore = {start: heuristic(start, goal)}
+    oheap = []
+
+    heappush(oheap, (fscore[start], start))
+
+    while oheap:
+
+        current = heappop(oheap)[1]
+
+        if current == goal:
+            data = []
+            while current in came_from:
+                data.append(current)
+                current = came_from[current]
+            return data
+
+        close_set.add(current)
+        for i, j in neighbors:
+            neighbor = current[0] + i, current[1] + j
+            tentative_g_score = gscore[current] + heuristic(current, neighbor)
+            if 0 <= neighbor[0] < array.shape[0]:
+                if 0 <= neighbor[1] < array.shape[1]:
+                    if array[neighbor[0]][neighbor[1]] == 1:
+                        continue
+                else:
+                    # array bound y walls
+                    continue
+            else:
+                # array bound x walls
+                continue
+
+            if neighbor in close_set and tentative_g_score >= gscore.get(neighbor, 0):
+                continue
+
+            if tentative_g_score < gscore.get(neighbor, 0) or neighbor not in [i[1] for i in oheap]:
+                came_from[neighbor] = current
+                gscore[neighbor] = tentative_g_score
+                fscore[neighbor] = tentative_g_score + heuristic(neighbor, goal)
+                heappush(oheap, (fscore[neighbor], neighbor))
+
+    return False
+# rightward (0,1)
+# left (0,-1)
+# left (0,-1)
+# downward (1,0)
+# upward (-1,0)
+def MoveToTheTileNextToMe(playerPos, nextStepPos,playerNumber):
+    global Controls_from_kbd
+    print("MoveToTheTileNextToMe:Controls_from_kbd",Controls_from_kbd)
+    print("MoveToTheTileNextToMe:",playerPos, nextStepPos)
+    # timePress = 0.15
+    # timePress = 0.10+random.randint(5)*0.01
+    # timePress = 0.10+random.randint(10)*0.01
+    # timePress = random.randint(5)*0.01
+
+    # Controls_from_kbd[playerNumber][0][i] = 0
+    Controls_from_kbd[playerNumber][0][0] = 0
+    Controls_from_kbd[playerNumber][0][1] = 0
+    Controls_from_kbd[playerNumber][0][2] = 0
+    Controls_from_kbd[playerNumber][0][3] = 0
+    # upward
+    if(playerPos[0]>nextStepPos[0]):
+        # Controls_from_kbd[playerNumber][0][2] = 1
+        Controls_from_kbd[playerNumber][0][3] = 1
+        # keyboard.press('e')
+        # time.sleep(timePress)
+        # keyboard.release('e')
+    # downward
+    if(playerPos[0]<nextStepPos[0]):
+        # Controls_from_kbd[playerNumber][0][3] = 1
+        Controls_from_kbd[playerNumber][0][2] = 1
+        # keyboard.press('d')
+        # time.sleep(timePress)
+        # keyboard.release('d')
+    # rightward
+    if(playerPos[1]<nextStepPos[1]):
+        # Controls_from_kbd[playerNumber][0][0] = 1
+        Controls_from_kbd[playerNumber][0][1] = 1
+        # keyboard.press('f')
+        # time.sleep(timePress)
+        # keyboard.release('f')
+    # leftward
+    if (playerPos[1] > nextStepPos[1]):
+        # Controls_from_kbd[playerNumber][0][1] = 1
+        Controls_from_kbd[playerNumber][0][0] = 1
+        # keyboard.press('s')
+        # time.sleep(timePress)
+        # keyboard.release('s')
+    print("MoveToTheTileNextToMe:Controls_from_kbd[playerNumber][0]",Controls_from_kbd[playerNumber][0])
+
+    pass
+def GoToPositionOneStep(player1indexes,closestNodeToEnemy,potentialPath,blastinPositions,playerNumber):
+
+    # potentialPath.shape Out[2]: (15, 20)
+    notPotentialPath = np.ones_like(potentialPath)
+    np.place(notPotentialPath,potentialPath>0,0)
+
+    print("GoToPositionOneStep:player1indexes:",player1indexes)
+    nextSteps = astar(notPotentialPath,(player1indexes[0],player1indexes[1]),(closestNodeToEnemy[0],closestNodeToEnemy[1]))
+    # print("nextSteps:",nextSteps)
+
+    global previousPlayer1Position
+    global pathLength
+
+    if(nextSteps!=False):
+        if(len(nextSteps)!=0):
+            nextStep = nextSteps[len(nextSteps)-1]
+            print("nextStep:",nextStep)
+            if((blastinPositions[nextStep]==0)or(blastinPositions[player1indexes]==1)):
+                MoveToTheTileNextToMe(player1indexes,nextStep,playerNumber)
+                previousPlayer1Position = player1indexes
+                pathLength = len(nextSteps)
+        else:
+            pass
 
 
 from skimage import measure
 def aiDecideWhatToDo(playerNumber,potentialPath):
     regionSize, potentialPathList, potentialPath = availiablePathToControlledPlayer(crateMap,
                                                                                     Players[playerNumber][0])
-    print("\naiDecideWhatToDo\n")
+    print("aiDecideWhatToDo")
     global Controls_from_kbd
-    print("\naiDecideWhatToDo:str(playerNumber):",str(playerNumber))
-    print("\naiDecideWhatToDo:str(Players):",str(Players))
+    print("aiDecideWhatToDo:str(playerNumber):",str(playerNumber))
+    print("aiDecideWhatToDo:str(Players):",str(Players))
     foePlayers = [Players[i] for i in range(0,4) if i != playerNumber]
     print("aiDecideWhatToDo:foePlayers",foePlayers)
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -964,6 +1092,14 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
 
         targetPosition = closestNodePos
 
+        if (blastinPositions[targetPosition[0], targetPosition[1]] == 0):
+            # print("if(blastinPositions[targetPosition[0],targetPosition[1]]==0):")
+            # print(targetPosition,player1indexes)
+            controledAI =(int(Players[playerNumber][0][1] / 32), int(Players[playerNumber][0][0] / 32))
+            if (np.array_equal(targetPosition,controledAI )):
+                GoToPositionOneStep(controledAI, previousPlayer1Position, potentialPath, blastinPositions,playerNumber)
+            else:
+                GoToPositionOneStep(controledAI, targetPosition, potentialPath, blastinPositions,playerNumber)
 
         # # targetPosition = closest_node1
         # pass
@@ -1022,7 +1158,7 @@ def AI_proc(server_ip,number):
     global crateMap
 
     while(True):
-        print("AI_proc:==========================================================")
+        # print("AI_proc:"+str(number)+"::==========================================================")
         # socket : start
 
         # print('AI_proc:waiting for the next event', file=sys.stderr)
@@ -1032,7 +1168,7 @@ def AI_proc(server_ip,number):
 
         if(incomingDataTCPclient!=[]):
             if(incomingDataTCPclient!=b''):
-                print("AI_proc:"+str(number)+":incomingDataTCPclient:"+str(incomingDataTCPclient))
+                # print("AI_proc:"+str(number)+":incomingDataTCPclient:"+str(incomingDataTCPclient))
                 arrayIncomingDataTCPclient = pickle.loads(incomingDataTCPclient)
 
         # print("AI_proc:"+str(number)+":arrayIncomingDataTCPclient",arrayIncomingDataTCPclient)
@@ -1103,7 +1239,7 @@ def AI_proc(server_ip,number):
         Controls_from_kbd[number][0][1] = 0
         Controls_from_kbd[number][0][2] = 0
         Controls_from_kbd[number][0][3] = 0
-        Controls_from_kbd[number][0][random.randint(0,3)] = 1
+        # Controls_from_kbd[number][0][random.randint(0,3)] = 1
 
         # print("AI_proc:" + str(number) +":Controls_from_kbd[number][0]:"+str(Controls_from_kbd[number][0]))
         print("AI_proc:" + str(number) +":Controls_from_kbd[number]:"+str(Controls_from_kbd[number]))
@@ -1243,7 +1379,7 @@ def server_proc(ip_on_an_interface,port):
                     incomingDataTCPServer = data
                     print("server_proc:data",data)
                     arrayIncomingDataTCPServer = pickle.loads(data)
-                    print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
+                    # print("server_proc:arrayIncomingDataTCPServer",arrayIncomingDataTCPServer)
                     if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):
                         print("server_proc:if(arrayIncomingDataTCPServer[0]=='MBN_SESSION'):")
                         if(arrayIncomingDataTCPServer[1]=='MBN_JOIN_REQUIRED'):
