@@ -776,6 +776,75 @@ def keyboardRead():
                         else:
                             Controls_from_kbd[playerNumber][1][0]=0
 
+def convertToIndexesGetPlayerPosition(getPlayerPosition):
+    print("getPlayerPosition",getPlayerPosition)
+    playerXindex = int((getPlayerPosition[0]/32))
+    playerYindex = int((getPlayerPosition[1]/32))
+    return (playerXindex,playerYindex)
+def availiablePathToControlledPlayer(availiablePath, getPlayerPosition):
+    playerIndexPos = convertToIndexesGetPlayerPosition(getPlayerPosition)
+    # playerYindex = playerIndexPos[0]
+    # playerXindex = playerIndexPos[1]
+    playerYindex = playerIndexPos[1]
+    playerXindex = playerIndexPos[0]
+    # print(playerYindex,playerXindex)
+    # print("getPlayerPosition:",getPlayerPosition)
+    # print("availiablePath.shape:",availiablePath.shape)
+    labeled = measure.label(availiablePath, background=False, connectivity=1)
+    # reversed X,Y why ?
+    # print("labeled.shape:",labeled.shape)
+    # on the bottom line
+    label = labeled[playerYindex, playerXindex]  # known pixel location
+    rp = measure.regionprops(labeled)
+    props = rp[label - 1]  # background is labeled 0, not in rp
+    # props.bbox  # (min_row, min_col, max_row, max_col)
+    # props.image  # array matching the bbox sub-image
+    # print(len(props.coords))  # list of (row,col) pixel indices
+    regionSize = len(props.coords)
+    availiablePathRet = np.zeros((15,20))
+    connectedCoords = props.coords
+    for coord in connectedCoords:
+        availiablePathRet[coord[0],coord[1]] = 1
+
+    return regionSize,connectedCoords,availiablePathRet
+def potentialPathWithinBlasts(listOfBombs,potentialPath):
+    pathInBlasts = np.zeros_like(potentialPath)
+    for bombPosition in listOfBombs:
+        yBomb = bombPosition[0]
+        xBomb = bombPosition[1]
+
+        # notsorted
+        # TODO: sort the result
+        # upwward, downward, rightward, leftward
+        for i in range(4):
+            xTmp = xBomb
+            yTmp = yBomb
+
+            tileBombOnce = True
+            # DONE bugfix: while ((potentialPath[xTmp, yTmp] == 1) & (isIndexesRange((xTmp, yTmp)))):
+            # DONE bugfix: IndexError: index 15 is out of bounds for axis 0 with size 15
+            while ((potentialPath[yTmp, xTmp] == 1) and (isIndexesRange((yTmp, xTmp))==True) or tileBombOnce ==True):
+                tileBombOnce = False
+                pathInBlasts[yTmp, xTmp] = 1
+                if (i == 0):
+                    xTmp += 1
+                    if(isIndexesRange((0,xTmp))==False):
+                        break
+                if (i == 1):
+                    xTmp -= 1
+                    if(isIndexesRange((0,xTmp))==False):
+                        break
+                if (i == 2):
+                    yTmp += 1
+                    if(isIndexesRange((yTmp,0))==False):
+                        break
+                if (i == 3):
+                    yTmp -= 1
+                    if(isIndexesRange((yTmp,0))==False):
+                        break
+                # print("[yTmp, xTmp]:",[yTmp, xTmp])
+
+    return pathInBlasts
 def isIndexesRange(point):
     isInsideIndexRange = False
     if (point[1] >= 0):
@@ -785,9 +854,21 @@ def isIndexesRange(point):
                     # print("ii in (0,0) and (19,15)")
                     isInsideIndexRange = True
     return isInsideIndexRange
+from scipy.spatial import distance
+def closest_node(node, nodes):
+    # not done: debug(crash): use cheat engine to pause the game to debug it and trigger the bug: xb-2 must be 2 dimensions
+    # nodes must not be empty
+    # print("node", node)
+    # print("nodes", nodes)
+    # print("type(node):",type(node))
+    closest_index = distance.cdist([node], nodes).argmin()
+    return nodes[closest_index]
+
 
 from skimage import measure
 def aiDecideWhatToDo(playerNumber,potentialPath):
+    regionSize, potentialPathList, potentialPath = availiablePathToControlledPlayer(crateMap,
+                                                                                    Players[playerNumber][0])
     print("\naiDecideWhatToDo\n")
     global Controls_from_kbd
     print("\naiDecideWhatToDo:str(playerNumber):",str(playerNumber))
@@ -813,6 +894,7 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
     worstBombSpotPos = []
     regionSizePreviousMax = 300
     regionSizePreviousMin = 1
+    # find if we can pin down someone easily
     for testTarget in targetsOnTheGrid:
         # print("aiDecideWhatToDo:",playerNumber,":testTarget:",testTarget)
         currentTileState = potentialPath[(testTarget[0],testTarget[1])]
@@ -839,6 +921,25 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
             potentialPath[(testTarget[0],testTarget[1])] = currentTileState
         pass
     print("aiDecideWhatToDo:",playerNumber,":bestBombSpotPos:",bestBombSpotPos)
+    blastinPositions = potentialPathWithinBlasts(listOfBombs, potentialPath)
+    # print("blastinPositions",blastinPositions)
+    # print("blastinPositions.shape",blastinPositions.shape)
+
+    if(bestBombSpotPos!=[]):
+        targetPosition = bestBombSpotPos
+    else:
+        # search for the closest node to attack for any potential target
+        # targetPosition = closest_node1
+        pass
+    #
+    # print(Players[playerNumber])
+    # print(Players[playerNumber][0],Players[playerNumber][1])
+    # print(int(Players[playerNumber][0][1]/32),int(Players[playerNumber][0][0]/32))
+    # if(blastinPositions[int(Players[playerNumber][0][1]/32),int(Players[playerNumber][0][0]/32)]==0):
+    #     print("HEY")
+    #     pass
+
+    targetPosition = bestBombSpotPos
 
     pass
 
