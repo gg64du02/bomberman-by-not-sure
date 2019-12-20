@@ -1235,10 +1235,10 @@ def AI_proc(server_ip,number):
 
         # make sure the proper keys are pressed at this point====================================
         # debug purpose: random
-        Controls_from_kbd[number][0][0] = 0
-        Controls_from_kbd[number][0][1] = 0
-        Controls_from_kbd[number][0][2] = 0
-        Controls_from_kbd[number][0][3] = 0
+        # Controls_from_kbd[number][0][0] = 0
+        # Controls_from_kbd[number][0][1] = 0
+        # Controls_from_kbd[number][0][2] = 0
+        # Controls_from_kbd[number][0][3] = 0
         # Controls_from_kbd[number][0][random.randint(0,3)] = 1
 
         # print("AI_proc:" + str(number) +":Controls_from_kbd[number][0]:"+str(Controls_from_kbd[number][0]))
