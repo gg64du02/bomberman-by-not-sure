@@ -516,6 +516,7 @@ def tryingToPutBomb(player):
         else:
             listOfBombs.append([[yPos,xPos],time.time(),player[1][1],player[3][0]])
             Players[player[3][0]][1][0] -=1
+# TODO: fix the mix up between coords and timestamp in the blastin function
 
 def checkForExplodingBomb():
     # in: (global) listOfBombs
@@ -823,6 +824,7 @@ def potentialPathWithinBlasts(listOfBombs,potentialPath):
             tileBombOnce = True
             # DONE bugfix: while ((potentialPath[xTmp, yTmp] == 1) & (isIndexesRange((xTmp, yTmp)))):
             # DONE bugfix: IndexError: index 15 is out of bounds for axis 0 with size 15
+            print("yTmp, xTmp",yTmp, xTmp)
             while ((potentialPath[yTmp, xTmp] == 1) and (isIndexesRange((yTmp, xTmp))==True) or tileBombOnce ==True):
                 tileBombOnce = False
                 pathInBlasts[yTmp, xTmp] = 1
@@ -984,7 +986,7 @@ def GoToPositionOneStep(player1indexes,closestNodeToEnemy,potentialPath,blastinP
     if(nextSteps!=False):
         if(len(nextSteps)!=0):
             nextStep = nextSteps[len(nextSteps)-1]
-            print("nextStep:",nextStep)
+            print(playerNumber,"nextStep:",nextStep)
             if((blastinPositions[nextStep]==0)or(blastinPositions[player1indexes]==1)):
                 MoveToTheTileNextToMe(player1indexes,nextStep,playerNumber)
                 previousPlayer1Position = player1indexes
@@ -1000,7 +1002,7 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
     print("aiDecideWhatToDo")
     global Controls_from_kbd
     print("aiDecideWhatToDo:str(playerNumber):",str(playerNumber))
-    print("aiDecideWhatToDo:str(Players):",str(Players))
+    print("aiDecideWhatToDo:",playerNumber,"str(Players):",str(Players))
     foePlayers = [Players[i] for i in range(0,4) if i != playerNumber]
     print("aiDecideWhatToDo:foePlayers",foePlayers)
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -1091,14 +1093,19 @@ def aiDecideWhatToDo(playerNumber,potentialPath):
         print("aiDecideWhatToDo:",playerNumber,":closestNodePos:",closestNodePos)
 
         targetPosition = closestNodePos
+        global Controls_from_kbd
 
         if (blastinPositions[targetPosition[0], targetPosition[1]] == 0):
             # print("if(blastinPositions[targetPosition[0],targetPosition[1]]==0):")
             # print(targetPosition,player1indexes)
             controledAI =(int(Players[playerNumber][0][1] / 32), int(Players[playerNumber][0][0] / 32))
+            print("aiDecideWhatToDo:",playerNumber,":listOfBombs:",listOfBombs)
             if (np.array_equal(targetPosition,controledAI )):
-                GoToPositionOneStep(controledAI, previousPlayer1Position, potentialPath, blastinPositions,playerNumber)
+                # GoToPositionOneStep(controledAI, previousPlayer1Position, potentialPath, blastinPositions,playerNumber)
+                Controls_from_kbd[playerNumber][1][0] = 1
+                pass
             else:
+                # Controls_from_kbd[playerNumber][1][0] = 0
                 GoToPositionOneStep(controledAI, targetPosition, potentialPath, blastinPositions,playerNumber)
 
         # # targetPosition = closest_node1
